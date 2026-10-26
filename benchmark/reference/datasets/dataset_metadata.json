@@ -1,0 +1,1055 @@
+{
+  "description": "Dataset labels for the Dataset catalog page. category is a single major category (no subcategories).",
+  "datasets": [
+    {
+      "key": "AI4I-Maintenance",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "AI4I 2020 Predictive Maintenance Dataset",
+      "source_url": "https://www.kaggle.com/datasets/stephanmatzka/predictive-maintenance-dataset-ai4i-2020"
+    },
+    {
+      "key": "Air-Quality",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Air Quality UCI Dataset",
+      "source_url": "https://www.kaggle.com/datasets/dakshbhalala/uci-air-quality-dataset"
+    },
+    {
+      "key": "Air-pressure-1min",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "NEON Barometric Pressure (DP1.00004.001)",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00004.001/RELEASE-2022"
+    },
+    {
+      "key": "Air-pressure-30min",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "NEON Barometric Pressure (DP1.00004.001)",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00004.001/RELEASE-2022"
+    },
+    {
+      "key": "Air-sensor",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "InfluxDB 2.0 Sample Data",
+      "source_url": "https://github.com/influxdata/influxdb2-sample-data"
+    },
+    {
+      "key": "Arade",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Arade)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Bimbo",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Bimbo)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Bar-Crawl",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Bar Crawl: Detecting Heavy Drinking",
+      "source_url": "https://archive.ics.uci.edu/dataset/515/bar+crawl+detecting+heavy+drinking"
+    },
+    {
+      "key": "Bird-migration",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Movebank: Animal Tracking (Kaggle)",
+      "source_url": "https://www.kaggle.com/datasets/pulkit8595/movebank-animal-tracking"
+    },
+    {
+      "key": "Bitcoin-price",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "InfluxDB 2.0 Sample Data",
+      "source_url": "https://github.com/influxdata/influxdb2-sample-data"
+    },
+    {
+      "key": "books",
+      "category": "Others",
+      "data_type": "",
+      "source": "Amazon book popularity data (SOSD, LeCo evaluation suite)",
+      "source_url": "https://learned.systems/sosd"
+    },
+    {
+      "key": "fb",
+      "category": "Others",
+      "data_type": "",
+      "source": "Facebook social graph sorted edge IDs (200M 64-bit integers, SOSD / LeCo evaluation suite)",
+      "source_url": "https://learned.systems/sosd"
+    },
+    {
+      "key": "rating",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "MovieLens user–movie ratings (recommender-system benchmark)",
+      "source_url": "https://grouplens.org/datasets/movielens/"
+    },
+    {
+      "key": "realtor",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "USA Real Estate Dataset (Realtor.com listings via Kaggle)",
+      "source_url": "https://www.kaggle.com/datasets/ahmedshahriarsakib/usa-real-estate-dataset"
+    },
+    {
+      "key": "Blockchain-tr",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Blockchair Bitcoin Transactions",
+      "source_url": "https://gz.blockchair.com/bitcoin/transactions"
+    },
+    {
+      "key": "City-temp",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Daily Temperature of Major Cities",
+      "source_url": "https://www.kaggle.com/datasets/sudalairajkumar/daily-temperature-ofmajor-cities"
+    },
+    {
+      "key": "CityMaxCapita",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Public BI Benchmark (CityMaxCapita)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Climate_Weather",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Brazil INMET hourly meteorological observations (five regions: central-west, north, northeast, south, southeast)",
+      "source_url": "https://portal.inmet.gov.br/dadohistorico"
+    },
+    {
+      "key": "Comments",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Udemy course review comments (online education marketplace)",
+      "source_url": "https://github.com/yhliu918/Learn-to-Compress"
+    },
+    {
+      "key": "CMSprovider",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (CMSprovider)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "World-City",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "World Cities of different countries",
+      "source_url": "https://www.kaggle.com/datasets/kuntalmaity/world-city"
+    },
+    {
+      "key": "Cpu-usage",
+      "category": "Cloud & Infrastructure",
+      "data_type": "",
+      "source": "AliCloud MySQL CPU metric (Camel)",
+      "source_url": ""
+    },
+    {
+      "key": "Dewpoint-temp-1min",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Relative humidity above water on-buoy (NEON DP1.20271.001)",
+      "source_url": "https://data.neonscience.org/data-products/DP1.20271.001/RELEASE-2022"
+    },
+    {
+      "key": "Dewpoint-temp-30min",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Relative humidity above water on-buoy (NEON DP1.20271.001)",
+      "source_url": "https://data.neonscience.org/data-products/DP1.20271.001/RELEASE-2022"
+    },
+    {
+      "key": "Disk-usage",
+      "category": "Cloud & Infrastructure",
+      "data_type": "",
+      "source": "AliCloud MySQL disk metric (Camel)",
+      "source_url": ""
+    },
+    {
+      "key": "ercot",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "",
+      "source_url": ""
+    },
+    {
+      "key": "exchange_rate",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "",
+      "source_url": ""
+    },
+    {
+      "key": "Food-prices",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Global Food Prices Database (WFP)",
+      "source_url": "https://data.humdata.org/dataset/wfp-food-prices"
+    },
+    {
+      "key": "HOUSE",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "Individual Household Electric Power Consumption (UCI Machine Learning Repository)",
+      "source_url": "https://doi.org/10.24432/C58K54"
+    },
+    {
+      "key": "IR-bio-temp-1minute",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "NEON IR Biological Temperature",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00005.001/RELEASE-2022"
+    },
+    {
+      "key": "IR-bio-temp-30minute",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "NEON IR Biological Temperature",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00005.001/RELEASE-2022"
+    },
+    {
+      "key": "linear",
+      "category": "Others",
+      "data_type": "",
+      "source": "Synthetic linear-distribution sorted integers",
+      "source_url": "https://github.com/yhliu918/Learn-to-Compress"
+    },
+    {
+      "key": "normal",
+      "category": "Others",
+      "data_type": "",
+      "source": "Synthetic normal-distribution sorted integers",
+      "source_url": "https://github.com/yhliu918/Learn-to-Compress"
+    },
+    {
+      "key": "Mem-usage",
+      "category": "Cloud & Infrastructure",
+      "data_type": "",
+      "source": "AliCloud MySQL memory metric (Camel)",
+      "source_url": ""
+    },
+    {
+      "key": "m4_daily",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "M4 forecasting competition",
+      "source_url": "https://mofc.unic.ac.cy/m4/"
+    },
+    {
+      "key": "m4_hourly",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "M4 forecasting competition",
+      "source_url": "https://mofc.unic.ac.cy/m4/"
+    },
+    {
+      "key": "m4_monthly",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "M4 forecasting competition",
+      "source_url": "https://mofc.unic.ac.cy/m4/"
+    },
+    {
+      "key": "monash_australian_electricity",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "Monash Forecasting Repository — Australian Electricity Demand (5 states, half-hourly)",
+      "source_url": "https://zenodo.org/records/4659727"
+    },
+    {
+      "key": "Metro-Traffic",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Metro Interstate Traffic Volume",
+      "source_url": "https://www.kaggle.com/code/ramyahr/metro-interstate-traffic-volume"
+    },
+    {
+      "key": "meteoblue",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Historical Weather Data",
+      "source_url": "https://www.meteoblue.com/en/weather/archive/export/basel_switzerland"
+    },
+    {
+      "key": "NYC_Yellow_Taxi_Trip",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "NYC TLC Yellow Taxi Trip Records",
+      "source_url": "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
+    },
+    {
+      "key": "PM10-dust-30minutes",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Dust and particulate size distribution",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00017.001/RELEASE-2022"
+    },
+    {
+      "key": "PM10-dust-60minutes",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "Dust and particulate size distribution",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00017.001/RELEASE-2022"
+    },
+    {
+      "key": "poi",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Points of Interest POI Database",
+      "source_url": "https://www.kaggle.com/datasets/ehallmar/points-of-interest-poi-database"
+    },
+    {
+      "key": "SSD-bench",
+      "category": "Cloud & Infrastructure",
+      "data_type": "",
+      "source": "SSD and HDD Benchmarks",
+      "source_url": "https://www.kaggle.com/datasets/alanjo/ssd-and-hdd-benchmarks"
+    },
+    {
+      "key": "Stocks-DE",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Financial data set used in INFORE project",
+      "source_url": "https://zenodo.org/record/3886895#.Y4DdzHZByM_"
+    },
+    {
+      "key": "Stocks-Germany",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "German stock market tick sample (INFORE Stocks-DE family)",
+      "source_url": "https://zenodo.org/record/3886895#.Y4DdzHZByM_"
+    },
+    {
+      "key": "Stocks-UK",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Financial data set used in INFORE project",
+      "source_url": "https://zenodo.org/record/3886895#.Y4DdzHZByM_"
+    },
+    {
+      "key": "Stocks-USA",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Financial data set used in INFORE project",
+      "source_url": "https://zenodo.org/record/3886895#.Y4DdzHZByM_"
+    },
+    {
+      "key": "UCR",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "UCR Time Series Anomaly Archive (ECG, power demand, climate sensors, and other monitoring series)",
+      "source_url": "https://www.cs.ucr.edu/~eamonn/time_series_data_2018/"
+    },
+    {
+      "key": "Uberlandia",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Uberlandia)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "USCensus",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (USCensus)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "solar_wind",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Solar wind IMF and plasma parameters (minute cadence, GSE/GSM coordinates)",
+      "source_url": "https://omniweb.gsfc.nasa.gov/"
+    },
+    {
+      "key": "vehicle-charge",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Electric Vehicle Charging Dataset",
+      "source_url": "https://www.kaggle.com/datasets/michaelbryantds/electric-vehicle-chargingdataset"
+    },
+    {
+      "key": "wiki_ts",
+      "category": "Others",
+      "data_type": "",
+      "source": "Wikipedia page edit timestamps",
+      "source_url": "https://github.com/yhliu918/Learn-to-Compress"
+    },
+    {
+      "key": "Wind-speed",
+      "category": "Climate & Weather",
+      "data_type": "",
+      "source": "2D wind speed and direction",
+      "source_url": "https://data.neonscience.org/data-products/DP1.00001.001/RELEASE-2022"
+    },
+    {
+      "key": "Wins",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Wins)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "YaleLanguages",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark — Yale University language-course enrollment workbook (Tableau Public)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "1year",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "UCI Polish Companies Bankruptcy (1st forecasting year financial ratios; mlcourse.ai data/)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "DSL-StrongPasswordData",
+      "category": "Others",
+      "data_type": "",
+      "source": "Password keystroke timing features (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "Rail_Insurance_Claims",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Rail travel segment records (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "adult",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "UCI Adult (Census Income)",
+      "source_url": "https://archive.ics.uci.edu/dataset/2/adult"
+    },
+    {
+      "key": "agaricus-lepiota.data",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "UCI Mushroom (Agaricus Lepiota morphology; mlcourse.ai)",
+      "source_url": "https://archive.ics.uci.edu/dataset/73/mushroom"
+    },
+    {
+      "key": "bank",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "UCI Bank Marketing",
+      "source_url": "https://archive.ics.uci.edu/dataset/222/bank+marketing"
+    },
+    {
+      "key": "credit_scoring_sample",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Credit scoring sample rows (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "credit_scoring_test",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Credit scoring test features (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "credit_scoring_train",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Credit scoring training set (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "ehresp_2014",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "MEPS Event History / EHRS 2014 (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "flight_delays_test",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "US flight delay features, test split (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "flight_delays_train",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "US flight delay features with delay label (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "hmeq",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "HMEQ home equity loan performance (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "medium_posts",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Medium.com post metadata (mlcourse.ai Kaggle in-class competition)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "mlbootcamp5_train",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Open ML Boot Camp cardiovascular screening (clinical exam features; mlcourse.ai assignment 2)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "prolongation_service_train",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Tax prolongation service records (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "scores",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Video game sales rankings (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "spam",
+      "category": "Others",
+      "data_type": "",
+      "source": "SMS Spam Collection (ham/spam message text; mlcourse.ai)",
+      "source_url": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+    },
+    {
+      "key": "spooky_authors",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Kaggle Spooky Author Identification — author list (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "spooky_writer_sample_submission",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Kaggle Spooky Author Identification — sample submission (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "spooky_writer_test",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Kaggle Spooky Author Identification — test excerpts (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "spooky_writer_train",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Kaggle Spooky Author Identification — training excerpts (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "vgsales",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Video game sales by rank and platform (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "video_games_sales",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Video game sales with critic and user scores (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "weights_heights",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Height and weight measurements (mlcourse.ai)",
+      "source_url": "https://github.com/Yorko/mlcourse.ai"
+    },
+    {
+      "key": "winequality-white",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "UCI Wine Quality — white Vinho Verde physicochemical tests (mlcourse.ai)",
+      "source_url": "https://archive.ics.uci.edu/dataset/186/wine+quality"
+    },
+    {
+      "key": "acs_wht_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (ACS white-light imaging, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "astro_mhd_f64",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (astrophysics MHD simulation, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "astro_pt_f64",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (astrophysics pressure/temperature, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "h3d_temp_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (3D temperature field, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "hdr_night_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (HDR night scene, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "hst_wfc3_ir_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (Hubble WFC3 IR, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "hst_wfc3_uvis_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (Hubble WFC3 UVIS, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpcds_web_f32",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPC-DS web sales, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpch_order_f64",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPC-H orders, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "ts_gas_f32",
+      "category": "Energy & Power",
+      "data_type": "",
+      "source": "FCBench time series dataset (gas sensor readings, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "turbulence_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (turbulence simulation, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "wave_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (wave simulation, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "wesad_chest_f64",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "FCBench time series dataset (WESAD chest physiological signals, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "g24_78_usb2_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (G24-78 USB imaging, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "hdr_palermo_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (HDR Palermo scene, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "jw_mirimage_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (JWST MIRI image, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "spitzer_irac_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench observation dataset (Spitzer IRAC, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "miranda3d_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (Miranda 3D simulation, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "num_brain_f64",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (numerical brain simulation, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "num_control_f64",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (numerical control simulation, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "rsim_f32",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "FCBench HPC dataset (RSIM simulation, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "jane_street_f64",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench time series dataset (Jane Street market features, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "phone_gyro_f64",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "FCBench time series dataset (phone gyroscope, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "spain_gas_price_f64",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench time series dataset (Spain gas price, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpcds_catalog_f32",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPC-DS catalog sales, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpcds_store_f32",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPC-DS store sales, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpch_lineitem_f32",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPC-H lineitem, float32)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpcxbb_store_f64",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPCx-BB store, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "tpcxbb_web_f64",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "FCBench database benchmark (TPCx-BB web, float64)",
+      "source_url": "https://github.com/hpdps-group/FCBench"
+    },
+    {
+      "key": "CommonGovernment",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (CommonGovernment)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Corporations",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Corporations)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Eixo",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Eixo)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Euro2016",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Euro2016)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Food",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Food)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Generico",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Generico)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "HashTags",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (HashTags)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Hatred",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Hatred)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "IGlocations1",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Public BI Benchmark (IGlocations1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "IGlocations2",
+      "category": "Geoscience & Space",
+      "data_type": "",
+      "source": "Public BI Benchmark (IGlocations2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Medicare1",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Medicare1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Medicare2",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Medicare2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Medicare3",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Medicare3)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "MedPayment1",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (MedPayment1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "MedPayment2",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (MedPayment2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Motos",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Motos)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "MulheresMil",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (MulheresMil)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "NYC",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (NYC)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "PanCreactomy1",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (PanCreactomy1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "PanCreactomy2",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (PanCreactomy2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Physicians",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Physicians)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Provider",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Provider)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "RealEstate1",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (RealEstate1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "RealEstate2",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (RealEstate2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Redfin1",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Redfin1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Redfin2",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Redfin2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Redfin3",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Redfin3)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Redfin4",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Redfin4)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Rentabilidad",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Rentabilidad)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Romance",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Romance)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "SalariesFrance",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (SalariesFrance)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "TableroSistemaPenal",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (TableroSistemaPenal)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Taxpayer",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Taxpayer)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "Telco",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (Telco)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "TrainsUK1",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Public BI Benchmark (TrainsUK1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "TrainsUK2",
+      "category": "Transport & Mobility",
+      "data_type": "",
+      "source": "Public BI Benchmark (TrainsUK2)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    },
+    {
+      "key": "MLB",
+      "category": "Finance & Economics",
+      "data_type": "",
+      "source": "Public BI Benchmark (MLB player statistics, MLB_1)",
+      "source_url": "https://event.cwi.nl/da/PublicBIbenchmark/"
+    }
+  ]
+}

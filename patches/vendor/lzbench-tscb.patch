@@ -1,0 +1,3699 @@
+diff --git a/bench/buggy_codecs.cpp b/bench/buggy_codecs.cpp
+index e2e8657..1eb2a16 100644
+--- a/bench/buggy_codecs.cpp
++++ b/bench/buggy_codecs.cpp
+@@ -19,6 +19,13 @@
+ #include "lz/libcsc/csc_dec.h"
+ #include <string.h> // memcpy
+ 
++int g_csc_ablation_mode = 0;
++
++extern "C" void lzbench_csc_set_ablation_mode(int mode)
++{
++    g_csc_ablation_mode = mode;
++}
++
+ struct MemSeqStream
+ {
+     union {
+@@ -64,6 +71,11 @@ int64_t lzbench_csc_compress(char *inbuf, size_t insize, char *outbuf, size_t ou
+         dict_size = insize;
+ 
+     CSCEncProps_Init(&p, dict_size, codec_options->level);
++    p.ablation_mode = (uint8_t)g_csc_ablation_mode;
++    if (p.ablation_mode == CSC_ABLATION_NO_DELTA)
++        p.DLTFilter = 0;
++    if (p.ablation_mode == CSC_ABLATION_NO_DICTIONARY)
++        p.TXTFilter = 0;
+     CSCEnc_WriteProperties(&p, (uint8_t*)outbuf, 0);
+ 
+     isss.is.Read = stdio_read;
+diff --git a/bench/lz_codecs.cpp b/bench/lz_codecs.cpp
+index 5f62010..4e372f8 100644
+--- a/bench/lz_codecs.cpp
++++ b/bench/lz_codecs.cpp
+@@ -513,7 +513,11 @@ int64_t lzbench_lzham_decompress(char *inbuf, size_t insize, char *outbuf, size_
+     decomp_params.m_struct_size = sizeof(decomp_params);
+     decomp_params.m_dict_size_log2 = dict_size_log?dict_size_log:26;
+ 
+-    lzham_decompress_memory(&decomp_params, (uint8_t*)outbuf, &outsize, (const lzham_uint8 *)inbuf, insize, &comp_adler32);
++    const lzham_decompress_status_t status = lzham_decompress_memory(
++        &decomp_params, (uint8_t*)outbuf, &outsize,
++        (const lzham_uint8 *)inbuf, insize, &comp_adler32);
++    if (status != LZHAM_DECOMP_STATUS_SUCCESS)
++        fprintf(stderr, "LZHAM decompression failed with status %d\n", status);
+     return outsize;
+ }
+ 
+@@ -584,6 +588,16 @@ int64_t lzbench_lzlib_compress(char *inbuf, size_t insize, char *outbuf, size_t
+   if( LZ_compress_close( encoder ) < 0 ) error = true;
+   if (error) return 0;
+ 
++  if (LZ_get_ablation_mode() == 2)
++    {
++    if (new_pos <= 26) return 0;
++    const uint8_t dictionary_code = obuf[5];
++    const int core_size = new_pos - 6 - 20;
++    memmove(obuf + 1, obuf + 6, core_size);
++    obuf[0] = dictionary_code;
++    return core_size + 1;
++    }
++
+   return new_pos;
+ }
+ 
+@@ -597,10 +611,26 @@ int64_t lzbench_lzlib_decompress(char *inbuf, size_t insize, char *outbuf, size_
+   int written = 0;
+   bool error = false;
+   uint8_t *data = (uint8_t*)inbuf;
++  uint8_t *framed_data = NULL;
++
++  if (LZ_get_ablation_mode() == 2)
++    {
++    if (insize < 1) return 0;
++    framed_data = (uint8_t *)malloc(insize + 25);
++    if (!framed_data) return 0;
++    framed_data[0] = 'L'; framed_data[1] = 'Z';
++    framed_data[2] = 'I'; framed_data[3] = 'P';
++    framed_data[4] = 1;
++    framed_data[5] = (uint8_t)inbuf[0];
++    memcpy(framed_data + 6, inbuf + 1, insize - 1);
++    memset(framed_data + 5 + insize, 0, 20);
++    data = framed_data;
++    insize += 25;
++    }
+ 
+ 
+   if( !decoder || LZ_decompress_errno( decoder ) != LZ_ok )
+-    { LZ_decompress_close( decoder ); return 0; }
++    { LZ_decompress_close( decoder ); free(framed_data); return 0; }
+ 
+   while( true )
+     {
+@@ -625,6 +655,8 @@ int64_t lzbench_lzlib_decompress(char *inbuf, size_t insize, char *outbuf, size_
+ 
+   if( LZ_decompress_close( decoder ) < 0 ) error = true;
+ 
++  free(framed_data);
++
+   return new_pos;
+ }
+ 
+diff --git a/bench/symmetric_codecs.cpp b/bench/symmetric_codecs.cpp
+index 91bbd3a..255f4c8 100644
+--- a/bench/symmetric_codecs.cpp
++++ b/bench/symmetric_codecs.cpp
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include "codecs.h"
++#include <string.h>
+ 
+ 
+ #ifndef BENCH_REMOVE_BSC
+@@ -173,12 +174,20 @@ int64_t lzbench_bzip3_decompress(char *inbuf, size_t insize, char *outbuf, size_
+ #ifndef BENCH_REMOVE_PPMD
+ #include "misc/7-zip/Ppmd8.h"
+ 
++static int g_ppmd_ablation_mode = 0;
++
++extern "C" void lzbench_ppmd_set_ablation_mode(int mode)
++{
++    g_ppmd_ablation_mode = mode;
++}
++
+ int64_t lzbench_ppmd_compress(char* inbuf, size_t insize, char* outbuf, size_t outsize, codec_options_t *codec_options)
+ {
+     struct CharWriter
+     {
+         IByteOut streamOut;
+         char* ptr;
++        bool discard;
+ 
+         static void* pmalloc(ISzAllocPtr ip, size_t size)
+         {
+@@ -195,7 +204,8 @@ int64_t lzbench_ppmd_compress(char* inbuf, size_t insize, char* outbuf, size_t o
+         static void write(const IByteOut* p, Byte b)
+         {
+             CharWriter* cw = (CharWriter*)p;
+-            *cw->ptr++ = (char)b;
++            if (!cw->discard)
++                *cw->ptr++ = (char)b;
+         }
+     };
+ 
+@@ -209,6 +219,7 @@ int64_t lzbench_ppmd_compress(char* inbuf, size_t insize, char* outbuf, size_t o
+     CharWriter cw;
+     cw.streamOut.Write = &CharWriter::write;
+     cw.ptr = outbuf;
++    cw.discard = false;
+     CPpmd8 ppmd;
+     ppmd.Stream.Out = &cw.streamOut;
+     ISzAlloc ialloc = { CharWriter::pmalloc, CharWriter::pfree };
+@@ -221,6 +232,16 @@ int64_t lzbench_ppmd_compress(char* inbuf, size_t insize, char* outbuf, size_t o
+     ppmd.Stream.Out->Write(&cw.streamOut, wPPMd & 0xff);
+     ppmd.Stream.Out->Write(&cw.streamOut, wPPMd >> 8);
+ 
++    if (g_ppmd_ablation_mode) {
++        memcpy(cw.ptr, inbuf, insize);
++        cw.ptr += insize;
++        cw.discard = true;
++        for (size_t i = 0; i < insize; ++i)
++            Ppmd8_EncodeSymbol(&ppmd, (unsigned char)inbuf[i]);
++        Ppmd8_Free(&ppmd, &ialloc);
++        return insize + 2;
++    }
++
+     for (size_t i = 0; i < insize; ++i)
+         Ppmd8_EncodeSymbol(&ppmd, (unsigned char)inbuf[i]);
+     Ppmd8_EncodeSymbol(&ppmd, -1); /* EndMark */
+@@ -269,6 +290,13 @@ int64_t lzbench_ppmd_decompress(char* inbuf, size_t insize, char* outbuf, size_t
+     const int memMb = ((wPPMd >> 4) & 0xff) + 1;
+     const int restoreMethod = wPPMd >> 12;
+ 
++    if (g_ppmd_ablation_mode) {
++        if (insize < 2 || insize - 2 != outsize)
++            return 0;
++        memcpy(outbuf, inbuf + 2, outsize);
++        return outsize;
++    }
++
+     CPpmd8 ppmd;
+     ppmd.Stream.In = &cr.streamIn;
+     ISzAlloc ialloc = { CharReader::pmalloc, CharReader::pfree };
+diff --git a/bwt/bzip2/bzlib.c b/bwt/bzip2/bzlib.c
+index 2178655..eff3ee1 100644
+--- a/bwt/bzip2/bzlib.c
++++ b/bwt/bzip2/bzlib.c
+@@ -30,6 +30,13 @@
+ 
+ #include "bzlib_private.h"
+ 
++Int32 bzip2_ablation_mode = 0;
++
++void BZ_API(BZ2_setAblationMode) ( int mode )
++{
++   bzip2_ablation_mode = mode;
++}
++
+ 
+ /*---------------------------------------------------*/
+ /*--- Compression stuff                           ---*/
+diff --git a/bwt/bzip2/bzlib.h b/bwt/bzip2/bzlib.h
+index 8966a6c..cadb5b2 100644
+--- a/bwt/bzip2/bzlib.h
++++ b/bwt/bzip2/bzlib.h
+@@ -211,7 +211,7 @@ BZ_EXTERN int BZ_API(BZ2_bzBuffToBuffCompress) (
+       int           workFactor 
+    );
+ 
+-BZ_EXTERN int BZ_API(BZ2_bzBuffToBuffDecompress) ( 
++BZ_EXTERN int BZ_API(BZ2_bzBuffToBuffDecompress) (
+       char*         dest, 
+       unsigned int* destLen,
+       char*         source, 
+@@ -220,6 +220,8 @@ BZ_EXTERN int BZ_API(BZ2_bzBuffToBuffDecompress) (
+       int           verbosity 
+    );
+ 
++BZ_EXTERN void BZ_API(BZ2_setAblationMode) ( int mode );
++
+ 
+ /*--
+    Code contributed by Yoshioka Tsuneo (tsuneo@rr.iij4u.or.jp)
+diff --git a/bwt/bzip2/bzlib_private.h b/bwt/bzip2/bzlib_private.h
+index 3755a6f..8120b1c 100644
+--- a/bwt/bzip2/bzlib_private.h
++++ b/bwt/bzip2/bzlib_private.h
+@@ -332,6 +332,8 @@ BZ2_hbMakeCodeLengths ( UChar*, Int32*, Int32, Int32 );
+ #define BZ_X_CCRC_2      48
+ #define BZ_X_CCRC_3      49
+ #define BZ_X_CCRC_4      50
++#define BZ_X_MTF_DIRECT_1 51
++#define BZ_X_MTF_DIRECT_2 52
+ 
+ 
+ 
+@@ -356,6 +358,10 @@ typedef
+       UChar    state_out_ch;
+       Int32    state_out_len;
+       Bool     blockRandomised;
++      Bool     ablationNoRunLength;
++      Bool     ablationNoSymbolRecode;
++      Bool     ablationNoHuffman;
++      Int32    ablationDirectPrev;
+       BZ_RAND_DECLS;
+ 
+       /* the buffer for bit stream reading */
+diff --git a/bwt/bzip2/compress.c b/bwt/bzip2/compress.c
+index 5dfa002..f5cc94a 100644
+--- a/bwt/bzip2/compress.c
++++ b/bwt/bzip2/compress.c
+@@ -119,11 +119,13 @@ void makeMaps_e ( EState* s )
+ static
+ void generateMTFValues ( EState* s )
+ {
++   extern Int32 bzip2_ablation_mode;
+    UChar   yy[256];
+    Int32   i, j;
+    Int32   zPend;
+    Int32   wr;
+    Int32   EOB;
++   Int32   directPrev = -1;
+ 
+    /* 
+       After sorting (eg, here),
+@@ -167,7 +169,28 @@ void generateMTFValues ( EState* s )
+       ll_i = s->unseqToSeq[block[j]];
+       AssertD ( ll_i < s->nInUse, "generateMTFValues(2a)" );
+ 
+-      if (yy[0] == ll_i) { 
++      if (bzip2_ablation_mode == 3) {
++         if (directPrev == ll_i) {
++            mtfv[wr] = BZ_RUNA;
++            s->mtfFreq[BZ_RUNA]++;
++         } else {
++            mtfv[wr] = ll_i + 1;
++            s->mtfFreq[ll_i + 1]++;
++            directPrev = ll_i;
++         }
++         wr++;
++      } else if (bzip2_ablation_mode == 2) {
++         UChar selected;
++         Int32 mtf_index;
++         for (j = 0; yy[j] != ll_i; j++) { };
++         mtf_index = j;
++         selected = yy[j];
++         while (j > 0) { yy[j] = yy[j-1]; j--; };
++         yy[0] = selected;
++         mtfv[wr] = mtf_index + 1;
++         wr++;
++         s->mtfFreq[mtf_index + 1]++;
++      } else if (yy[0] == ll_i) {
+          zPend++;
+       } else {
+ 
+@@ -209,7 +232,7 @@ void generateMTFValues ( EState* s )
+       }
+    }
+ 
+-   if (zPend > 0) {
++   if (bzip2_ablation_mode != 2 && bzip2_ablation_mode != 3 && zPend > 0) {
+       zPend--;
+       while (True) {
+          if (zPend & 1) {
+@@ -238,6 +261,7 @@ void generateMTFValues ( EState* s )
+ static
+ void sendMTFValues ( EState* s )
+ {
++   extern Int32 bzip2_ablation_mode;
+    Int32 v, t, i, j, gs, ge, totc, bt, bc, iter;
+    Int32 nSelectors, alphaSize, minLen, maxLen, selCtr;
+    Int32 nGroups, nBytes;
+@@ -514,6 +538,11 @@ void sendMTFValues ( EState* s )
+          VPrintf1( "      bytes: mapping %d, ", s->numZ-nBytes );
+    }
+ 
++   if (bzip2_ablation_mode == 4) {
++      for (i = 0; i < s->nMTF; i++) bsW(s, 9, mtfv[i]);
++      return;
++   }
++
+    /*--- Now the selectors. ---*/
+    nBytes = s->numZ;
+    bsW ( s, 3, nGroups );
+@@ -601,6 +630,7 @@ void sendMTFValues ( EState* s )
+ /*---------------------------------------------------*/
+ void BZ2_compressBlock ( EState* s, Bool is_last_block )
+ {
++   extern Int32 bzip2_ablation_mode;
+    if (s->nblock > 0) {
+ 
+       BZ_FINALISE_CRC ( s->blockCRC );
+@@ -613,7 +643,13 @@ void BZ2_compressBlock ( EState* s, Bool is_last_block )
+                    "combined CRC = 0x%08x, size = %d\n",
+                    s->blockNo, s->blockCRC, s->combinedCRC, s->nblock );
+ 
+-      BZ2_blockSort ( s );
++      if (bzip2_ablation_mode == 1) {
++         Int32 i;
++         for (i = 0; i < s->nblock; i++) s->ptr[i] = i + 1;
++         s->origPtr = 0;
++      } else {
++         BZ2_blockSort ( s );
++      }
+    }
+ 
+    s->zbits = (UChar*) (&((UChar*)s->arr2)[s->nblock]);
+@@ -645,9 +681,12 @@ void BZ2_compressBlock ( EState* s, Bool is_last_block )
+          so as to maintain backwards compatibility with
+          older versions of bzip2.
+       --*/
+-      bsW(s,1,0);
++      bsW(s,1,bzip2_ablation_mode == 1);
+ 
+-      bsW ( s, 24, s->origPtr );
++      bsW ( s, 24, s->origPtr |
++            (bzip2_ablation_mode == 2 ? 0x800000 : 0) |
++            (bzip2_ablation_mode == 3 ? 0x400000 : 0) |
++            (bzip2_ablation_mode == 4 ? 0x200000 : 0) );
+       generateMTFValues ( s );
+       sendMTFValues ( s );
+    }
+diff --git a/bwt/bzip2/decompress.c b/bwt/bzip2/decompress.c
+index a1a0bac..a592811 100644
+--- a/bwt/bzip2/decompress.c
++++ b/bwt/bzip2/decompress.c
+@@ -73,32 +73,40 @@ void makeMaps_d ( DState* s )
+ /*---------------------------------------------------*/
+ #define GET_MTF_VAL(label1,label2,lval)           \
+ {                                                 \
+-   if (groupPos == 0) {                           \
+-      groupNo++;                                  \
+-      if (groupNo >= nSelectors)                  \
+-         RETURN(BZ_DATA_ERROR);                   \
+-      groupPos = BZ_G_SIZE;                       \
+-      gSel = s->selector[groupNo];                \
+-      gMinlen = s->minLens[gSel];                 \
+-      gLimit = &(s->limit[gSel][0]);              \
+-      gPerm = &(s->perm[gSel][0]);                \
+-      gBase = &(s->base[gSel][0]);                \
++   if (s->ablationNoHuffman) {                    \
++      zn = 9;                                     \
++   } else {                                       \
++      if (groupPos == 0) {                        \
++         groupNo++;                               \
++         if (groupNo >= nSelectors)               \
++            RETURN(BZ_DATA_ERROR);                \
++         groupPos = BZ_G_SIZE;                    \
++         gSel = s->selector[groupNo];             \
++         gMinlen = s->minLens[gSel];              \
++         gLimit = &(s->limit[gSel][0]);           \
++         gPerm = &(s->perm[gSel][0]);             \
++         gBase = &(s->base[gSel][0]);             \
++      }                                           \
++      groupPos--;                                 \
++      zn = gMinlen;                               \
+    }                                              \
+-   groupPos--;                                    \
+-   zn = gMinlen;                                  \
+    GET_BITS(label1, zvec, zn);                    \
+-   while (1) {                                    \
+-      if (zn > 20 /* the longest code */)         \
++   if (s->ablationNoHuffman) {                    \
++      lval = zvec;                                \
++   } else {                                       \
++      while (1) {                                 \
++         if (zn > 20 /* the longest code */)      \
++            RETURN(BZ_DATA_ERROR);                \
++         if (zvec <= gLimit[zn]) break;           \
++         zn++;                                    \
++         GET_BIT(label2, zj);                     \
++         zvec = (zvec << 1) | zj;                 \
++      };                                          \
++      if (zvec - gBase[zn] < 0                    \
++          || zvec - gBase[zn] >= BZ_MAX_ALPHA_SIZE) \
+          RETURN(BZ_DATA_ERROR);                   \
+-      if (zvec <= gLimit[zn]) break;              \
+-      zn++;                                       \
+-      GET_BIT(label2, zj);                        \
+-      zvec = (zvec << 1) | zj;                    \
+-   };                                             \
+-   if (zvec - gBase[zn] < 0                       \
+-       || zvec - gBase[zn] >= BZ_MAX_ALPHA_SIZE)  \
+-      RETURN(BZ_DATA_ERROR);                      \
+-   lval = gPerm[zvec - gBase[zn]];                \
++      lval = gPerm[zvec - gBase[zn]];             \
++   }                                              \
+ }
+ 
+ 
+@@ -258,6 +266,12 @@ Int32 BZ2_decompress ( DState* s )
+       GET_UCHAR(BZ_X_ORIGPTR_3, uc);
+       s->origPtr = (s->origPtr << 8) | ((Int32)uc);
+ 
++      s->ablationNoRunLength = (s->origPtr & 0x800000) != 0;
++      s->ablationNoSymbolRecode = (s->origPtr & 0x400000) != 0;
++      s->ablationNoHuffman = (s->origPtr & 0x200000) != 0;
++      s->ablationDirectPrev = -1;
++      s->origPtr &= 0x1fffff;
++
+       if (s->origPtr < 0)
+          RETURN(BZ_DATA_ERROR);
+       if (s->origPtr > 10 + 100000*s->blockSize100k) 
+@@ -283,6 +297,7 @@ Int32 BZ2_decompress ( DState* s )
+       if (s->nInUse == 0) RETURN(BZ_DATA_ERROR);
+       alphaSize = s->nInUse+2;
+ 
++      if (!s->ablationNoHuffman) {
+       /*--- Now the selectors ---*/
+       GET_BITS(BZ_X_SELECTOR_1, nGroups, 3);
+       if (nGroups < 2 || nGroups > BZ_N_GROUPS) RETURN(BZ_DATA_ERROR);
+@@ -351,6 +366,7 @@ Int32 BZ2_decompress ( DState* s )
+          );
+          s->minLens[t] = minLen;
+       }
++      }
+ 
+       /*--- Now the MTF values ---*/
+ 
+@@ -382,7 +398,27 @@ Int32 BZ2_decompress ( DState* s )
+ 
+          if (nextSym == EOB) break;
+ 
+-         if (nextSym == BZ_RUNA || nextSym == BZ_RUNB) {
++         if (s->ablationNoSymbolRecode) {
++            if (nextSym == BZ_RUNA) {
++               if (s->ablationDirectPrev < 0) RETURN(BZ_DATA_ERROR);
++               uc = (UChar)s->ablationDirectPrev;
++            } else {
++               if (nextSym < 1 || nextSym > s->nInUse) RETURN(BZ_DATA_ERROR);
++               uc = (UChar)(nextSym - 1);
++               s->ablationDirectPrev = uc;
++            }
++            if (nblock >= nblockMAX) RETURN(BZ_DATA_ERROR);
++            s->unzftab[s->seqToUnseq[uc]]++;
++            if (s->smallDecompress)
++               s->ll16[nblock] = (UInt16)(s->seqToUnseq[uc]); else
++               s->tt[nblock] = (UInt32)(s->seqToUnseq[uc]);
++            nblock++;
++            GET_MTF_VAL(BZ_X_MTF_DIRECT_1, BZ_X_MTF_DIRECT_2, nextSym);
++            continue;
++         }
++
++         if (!s->ablationNoRunLength &&
++             (nextSym == BZ_RUNA || nextSym == BZ_RUNB)) {
+ 
+             es = -1;
+             N = 1;
+@@ -424,6 +460,9 @@ Int32 BZ2_decompress ( DState* s )
+ 
+          } else {
+ 
++            if (s->ablationNoRunLength && nextSym < 1)
++               RETURN(BZ_DATA_ERROR);
++
+             if (nblock >= nblockMAX) RETURN(BZ_DATA_ERROR);
+ 
+             /*-- uc = MTF ( nextSym-1 ) --*/
+@@ -562,6 +601,18 @@ Int32 BZ2_decompress ( DState* s )
+ 
+       } else {
+ 
++         if (s->blockRandomised) {
++            for (i = 0; i < nblock; i++) {
++               s->tt[i] = (s->tt[i] & 0xff) |
++                          ((UInt32)(((i + 1) == nblock) ? 0 : (i + 1)) << 8);
++            }
++            s->tPos = 0;
++            s->nblock_used = 0;
++            s->blockRandomised = False;
++            BZ_GET_FAST(s->k0); s->nblock_used++;
++            RETURN(BZ_OK);
++         }
++
+          /*-- compute the T^(-1) vector --*/
+          for (i = 0; i < nblock; i++) {
+             uc = (UChar)(s->tt[i] & 0xff);
+diff --git a/bwt/bzip3/include/libbz3.h b/bwt/bzip3/include/libbz3.h
+index af447e7..9e102a2 100644
+--- a/bwt/bzip3/include/libbz3.h
++++ b/bwt/bzip3/include/libbz3.h
+@@ -78,6 +78,11 @@ BZIP3_API const char * bz3_strerror(struct bz3_state * state);
+  */
+ BZIP3_API struct bz3_state * bz3_new(int32_t block_size);
+ 
++/** Select a source-ablation mode for low-level block experiments.
++ * 0 keeps the standard format, 1 bypasses BWT, 2 bypasses arithmetic coding,
++ * 3 bypasses RLE, and 4 bypasses LZP matching. */
++BZIP3_API void bz3_set_ablation_mode(struct bz3_state * state, int mode);
++
+ /**
+  * @brief Free the memory occupied by a block encoder state.
+  */
+diff --git a/bwt/bzip3/src/libbz3.c b/bwt/bzip3/src/libbz3.c
+index edba06c..ac6cf70 100644
+--- a/bwt/bzip3/src/libbz3.c
++++ b/bwt/bzip3/src/libbz3.c
+@@ -501,6 +501,7 @@ struct bz3_state {
+     s32 *sais_array, *lzp_lut;
+     state * cm_state;
+     s8 last_error;
++    s8 ablation_mode;
+ };
+ 
+ BZIP3_API s8 bz3_last_error(struct bz3_state * state) { return state->last_error; }
+@@ -563,10 +564,15 @@ BZIP3_API struct bz3_state * bz3_new(s32 block_size) {
+     bz3_state->block_size = block_size;
+ 
+     bz3_state->last_error = BZ3_OK;
++    bz3_state->ablation_mode = 0;
+ 
+     return bz3_state;
+ }
+ 
++BZIP3_API void bz3_set_ablation_mode(struct bz3_state * state, int mode) {
++    state->ablation_mode = (mode >= 0 && mode <= 4) ? (s8)mode : 0;
++}
++
+ BZIP3_API void bz3_free(struct bz3_state * state) {
+     free(state->swap_buffer);
+     free(state->sais_array);
+@@ -606,36 +612,52 @@ BZIP3_API s32 bz3_encode_block(struct bz3_state * state, u8 * buffer, s32 data_s
+     s8 model = 0;
+     s32 lzp_size, rle_size;
+ 
+-    rle_size = mrlec(b1, data_size, b2);
+-    if (rle_size < data_size) {
+-        swap(b1, b2);
+-        data_size = rle_size;
+-        model |= 4;
++    if (state->ablation_mode != 3) {
++        rle_size = mrlec(b1, data_size, b2);
++        if (rle_size < data_size) {
++            swap(b1, b2);
++            data_size = rle_size;
++            model |= 4;
++        }
+     }
+ 
+-    lzp_size = lzp_compress(b1, b2, data_size, state->lzp_lut);
+-    if (lzp_size > 0 && lzp_size < data_size) {
+-        swap(b1, b2);
+-        data_size = lzp_size;
+-        model |= 2;
++    if (state->ablation_mode != 4) {
++        lzp_size = lzp_compress(b1, b2, data_size, state->lzp_lut);
++        if (lzp_size > 0 && lzp_size < data_size) {
++            swap(b1, b2);
++            data_size = lzp_size;
++            model |= 2;
++        }
+     }
+ 
+-    s32 bwt_idx = libsais_bwt(b1, b2, state->sais_array, data_size, 0, NULL);
+-    if (bwt_idx < 0) {
+-        state->last_error = BZ3_ERR_BWT;
+-        return -1;
++    s32 bwt_idx = 0;
++    if (state->ablation_mode == 1) {
++        memcpy(b2, b1, data_size);
++        model |= 8;
++    } else {
++        bwt_idx = libsais_bwt(b1, b2, state->sais_array, data_size, 0, NULL);
++        if (bwt_idx < 0) {
++            state->last_error = BZ3_ERR_BWT;
++            return -1;
++        }
+     }
+ 
++    if (state->ablation_mode == 2) model |= 16;
++
+     // Compute the amount of overhead dwords.
+     s32 overhead = 2;           // CRC32 + BWT index
+     if (model & 2) overhead++;  // LZP
+     if (model & 4) overhead++;  // RLE
+ 
+-    begin(state->cm_state);
+-    state->cm_state->out_queue = b1 + overhead * 4 + 1;
+-    state->cm_state->output_ptr = 0;
+-    encode_bytes(state->cm_state, b2, data_size);
+-    data_size = state->cm_state->output_ptr;
++    if (model & 16) {
++        memcpy(b1 + overhead * 4 + 1, b2, data_size);
++    } else {
++        begin(state->cm_state);
++        state->cm_state->out_queue = b1 + overhead * 4 + 1;
++        state->cm_state->output_ptr = 0;
++        encode_bytes(state->cm_state, b2, data_size);
++        data_size = state->cm_state->output_ptr;
++    }
+ 
+     // Write the header. Starting with common entries.
+     write_neutral_s32(b1, crc32);
+@@ -739,12 +761,19 @@ BZIP3_API s32 bz3_decode_block(struct bz3_state * state, u8 * buffer, size_t buf
+     // Decode the data.
+     u8 *b1 = buffer, *b2 = state->swap_buffer;
+ 
+-    begin(state->cm_state);
+-    state->cm_state->in_queue = b1 + p * 4 + 1;
+-    state->cm_state->input_ptr = 0;
+-    state->cm_state->input_max = compressed_size;
+-
+-    decode_bytes(state->cm_state, b2, size_before_bwt);
++    if (model & 16) {
++        if (compressed_size != size_before_bwt) {
++            state->last_error = BZ3_ERR_MALFORMED_HEADER;
++            return -1;
++        }
++        memcpy(b2, b1 + p * 4 + 1, size_before_bwt);
++    } else {
++        begin(state->cm_state);
++        state->cm_state->in_queue = b1 + p * 4 + 1;
++        state->cm_state->input_ptr = 0;
++        state->cm_state->input_max = compressed_size;
++        decode_bytes(state->cm_state, b2, size_before_bwt);
++    }
+     swap(b1, b2);
+ 
+     if (bwt_idx > size_before_bwt) {
+@@ -752,14 +781,16 @@ BZIP3_API s32 bz3_decode_block(struct bz3_state * state, u8 * buffer, size_t buf
+         return -1;
+     }
+ 
+-    // Undo BWT
+-    memset(state->sais_array, 0, sizeof(s32) * BWT_BOUND(state->block_size));
+-    memset(b2, 0, size_before_bwt); // buffer b2, swap b1
+-    if (libsais_unbwt(b1, b2, state->sais_array, size_before_bwt, NULL, bwt_idx) < 0) {
+-        state->last_error = BZ3_ERR_BWT;
+-        return -1;
++    // Undo BWT unless the source-ablation stream explicitly bypassed it.
++    if (!(model & 8)) {
++        memset(state->sais_array, 0, sizeof(s32) * BWT_BOUND(state->block_size));
++        memset(b2, 0, size_before_bwt); // buffer b2, swap b1
++        if (libsais_unbwt(b1, b2, state->sais_array, size_before_bwt, NULL, bwt_idx) < 0) {
++            state->last_error = BZ3_ERR_BWT;
++            return -1;
++        }
++        swap(b1, b2);
+     }
+-    swap(b1, b2);
+ 
+     s32 size_src = size_before_bwt;
+ 
+diff --git a/lz/fast-lzma2/fast-lzma2.h b/lz/fast-lzma2/fast-lzma2.h
+index 1ad31fe..21c1d8f 100644
+--- a/lz/fast-lzma2/fast-lzma2.h
++++ b/lz/fast-lzma2/fast-lzma2.h
+@@ -80,8 +80,10 @@ FL2LIB_API const char* FL2LIB_CALL FL2_versionString(void);
+  *  @return : compressed size written into `dst` (<= `dstCapacity),
+  *            or an error code if it fails (which can be tested using FL2_isError()). */
+ FL2LIB_API size_t FL2LIB_CALL FL2_compress(void* dst, size_t dstCapacity,
+-    const void* src, size_t srcSize,
+-    int compressionLevel);
++                                           const void* src, size_t srcSize,
++                                           int compressionLevel);
++
++FL2LIB_API void FL2LIB_CALL FL2_setAblationMode(int mode);
+ 
+ FL2LIB_API size_t FL2LIB_CALL FL2_compressMt(void* dst, size_t dstCapacity,
+     const void* src, size_t srcSize,
+diff --git a/lz/fast-lzma2/lzma2_dec.c b/lz/fast-lzma2/lzma2_dec.c
+index 80bfcd7..0b9b66b 100644
+--- a/lz/fast-lzma2/lzma2_dec.c
++++ b/lz/fast-lzma2/lzma2_dec.c
+@@ -22,16 +22,18 @@ Modified for FL2 by Conor McCarthy */
+ 
+ #define RC_INIT_SIZE 5
+ 
+-#define NORMALIZE if (range < kTopValue) { range <<= 8; code = (code << 8) | (*buf++); }
++extern int g_fl2_ablation_mode;
+ 
+-#define IF_BIT_0(p) ttt = *(p); NORMALIZE; bound = (range >> kNumBitModelTotalBits) * ttt; if (code < bound)
+-#define UPDATE_0(p) range = bound; *(p) = (LZMA2_prob)(ttt + ((kBitModelTotal - ttt) >> kNumMoveBits));
+-#define UPDATE_1(p) range -= bound; code -= bound; *(p) = (LZMA2_prob)(ttt - (ttt >> kNumMoveBits));
++#define NORMALIZE if (g_fl2_ablation_mode != 3 && range < kTopValue) { range <<= 8; code = (code << 8) | (*buf++); }
++
++#define IF_BIT_0(p) ttt = *(p); if (g_fl2_ablation_mode == 3) { if (range == 0) { code = *buf++; range = 8; } bound = (code >> 7) & 1; code <<= 1; --range; } else { NORMALIZE; bound = (range >> kNumBitModelTotalBits) * ttt; } if (g_fl2_ablation_mode == 3 ? bound == 0 : code < bound)
++#define UPDATE_0(p) if (g_fl2_ablation_mode == 3) { *(p) = (LZMA2_prob)(ttt + ((kBitModelTotal - ttt) >> kNumMoveBits)); } else { range = bound; *(p) = (LZMA2_prob)(ttt + ((kBitModelTotal - ttt) >> kNumMoveBits)); }
++#define UPDATE_1(p) if (g_fl2_ablation_mode == 3) { *(p) = (LZMA2_prob)(ttt - (ttt >> kNumMoveBits)); } else { range -= bound; code -= bound; *(p) = (LZMA2_prob)(ttt - (ttt >> kNumMoveBits)); }
+ #define GET_BIT2(p, i, A0, A1) IF_BIT_0(p) \
+     { UPDATE_0(p); i = (i + i); A0; } else \
+     { UPDATE_1(p); i = (i + i) + 1; A1; }
+ 
+-#if defined __x86_64__s || defined _M_X64
++#if 0
+ 
+ #define USE_CMOV
+ 
+@@ -181,6 +183,8 @@ typedef enum
+ 
+ static BYTE LZMA_tryDummy(const LZMA2_DCtx *const p)
+ {
++    if (g_fl2_ablation_mode == 3)
++        return p->buf != NULL;
+     const LZMA2_prob *probs = GET_PROBS;
+ 	unsigned state = p->state;
+ 	U32 range = p->range;
+@@ -337,7 +341,6 @@ static BYTE LZMA_tryDummy(const LZMA2_DCtx *const p)
+                         NORMALIZE_CHECK;
+                         range >>= 1;
+                         code -= range & (((code - range) >> 31) - 1);
+-                        /* if (code >= range) code -= range; */
+                     } while (--num_direct_bits != 0);
+                     prob = probs + Align;
+                     num_direct_bits = kNumAlignBits;
+@@ -632,14 +635,23 @@ static int LZMA_decodeReal_3(LZMA2_DCtx *p, size_t limit, const BYTE *buf_limit)
+                     num_direct_bits -= kNumAlignBits;
+                     do
+                     {
+-                        NORMALIZE
+-                        range >>= 1;
+-
+-                        U32 t;
+-                        code -= range;
+-                        t = (0 - ((U32)code >> 31));
+-                        distance = (distance << 1) + (t + 1);
+-                        code += range & t;
++                        if (g_fl2_ablation_mode == 3)
++                        {
++                            if (range == 0) { code = *buf++; range = 8; }
++                            distance = (distance << 1) + ((code >> 7) & 1);
++                            code <<= 1;
++                            --range;
++                        }
++                        else
++                        {
++                            NORMALIZE
++                            range >>= 1;
++                            U32 t;
++                            code -= range;
++                            t = (0 - ((U32)code >> 31));
++                            distance = (distance << 1) + (t + 1);
++                            code += range & t;
++                        }
+                     } while (--num_direct_bits != 0);
+                     prob = probs + Align;
+                     distance <<= kNumAlignBits;
+@@ -768,7 +780,7 @@ static size_t LZMA_decodeReal2(LZMA2_DCtx *const p, size_t const limit, const BY
+             U32 const rem = p->prop.dic_size - p->processed_pos;
+             if (limit - p->dic_pos > rem)
+                 limit2 = p->dic_pos + rem;
+-            if (p->processed_pos == 0)
++            if (p->processed_pos == 0 && g_fl2_ablation_mode != 3)
+                 if (p->code >= kBadRepCode)
+                     return FL2_ERROR(corruption_detected);
+         }
+@@ -832,6 +844,14 @@ static size_t LZMA_decodeToDic(LZMA2_DCtx *const p, size_t const dic_limit, cons
+ 
+     if (p->need_flush)
+     {
++        if (g_fl2_ablation_mode == 3)
++        {
++            p->code = 0;
++            p->range = 0;
++            p->need_flush = 0;
++        }
++        else
++        {
+         if (in_size < RC_INIT_SIZE)
+         {
+             return LZMA_STATUS_NEEDS_MORE_INPUT;
+@@ -848,12 +868,14 @@ static size_t LZMA_decodeToDic(LZMA2_DCtx *const p, size_t const dic_limit, cons
+         in_size -= RC_INIT_SIZE;
+         p->range = 0xFFFFFFFF;
+         p->need_flush = 0;
++        }
+     }
+ 
+     while (1) {
+         if (p->dic_pos >= dic_limit)
+         {
+-            if (p->remain_len == 0 && p->code == 0) {
++            if (p->remain_len == 0 &&
++                (g_fl2_ablation_mode == 3 || p->code == 0)) {
+                 return LZMA_STATUS_FINISHED;
+             }
+             return LZMA_STATUS_NOT_FINISHED;
+diff --git a/lz/fast-lzma2/lzma2_enc.c b/lz/fast-lzma2/lzma2_enc.c
+index da2e09b..bf8f1fa 100644
+--- a/lz/fast-lzma2/lzma2_enc.c
++++ b/lz/fast-lzma2/lzma2_enc.c
+@@ -125,6 +125,13 @@ static const BYTE kShortRepNextStates[kNumStates] = { 9, 9, 9, 9, 9, 9, 9, 11, 1
+ #include "fastpos_table.h"
+ #include "radix_get.h"
+ 
++int g_fl2_ablation_mode = 0;
++
++void FL2_setAblationMode(int mode)
++{
++    g_fl2_ablation_mode = mode;
++}
++
+ /* Probabilities and prices for encoding match lengths.
+  * Two objects of this type are needed, one for normal matches
+  * and another for rep matches.
+@@ -1911,6 +1918,15 @@ static size_t LZMA2_encodeChunk(LZMA2_ECtx *const enc,
+     FL2_dataBlock const block,
+     size_t const pos, size_t const uncompressed_end)
+ {
++    if (g_fl2_ablation_mode == 1) {
++        size_t cur = pos;
++        while (cur < uncompressed_end && enc->rc.out_index < enc->chunk_limit) {
++            LZMA_encodeLiteralBuf(enc, block.data, cur);
++            ++cur;
++        }
++        return cur;
++    }
++
+     /* Template-like inline functions */
+     if (enc->strategy == FL2_fast) {
+         if (tbl->is_struct) {
+@@ -1992,6 +2008,9 @@ size_t LZMA2_encode(LZMA2_ECtx *const enc,
+         LZMA2_encStates saved_states;
+         size_t next_index;
+ 
++        if (g_fl2_ablation_mode == 2 && pos != start)
++            LZMA_encoderStates_Reset(&enc->states, enc->lc, enc->lp, enc->fast_length);
++
+         RC_reset(&enc->rc);
+         RC_setOutputBuffer(&enc->rc, out_dest + header_size);
+ 
+@@ -2047,7 +2066,8 @@ size_t LZMA2_encode(LZMA2_ECtx *const enc,
+         header[1] = (BYTE)((uncompressed_size - 1) >> 8);
+         header[2] = (BYTE)(uncompressed_size - 1);
+         /* Output an uncompressed chunk if necessary */
+-        if (incompressible || uncompressed_size + 3 <= compressed_size + header_size) {
++        if (g_fl2_ablation_mode != 3 &&
++            (incompressible || uncompressed_size + 3 <= compressed_size + header_size)) {
+             DEBUGLOG(6, "Storing chunk : was %u => %u", (unsigned)uncompressed_size, (unsigned)compressed_size);
+ 
+             header[0] = (pos == 0) ? kChunkUncompressedDictReset : kChunkUncompressed;
+@@ -2069,6 +2089,8 @@ size_t LZMA2_encode(LZMA2_ECtx *const enc,
+                 header[0] = kChunkCompressedFlag | kChunkAllReset;
+             else if (encode_properties)
+                 header[0] = kChunkCompressedFlag | kChunkStatePropertiesReset;
++            else if (g_fl2_ablation_mode == 2)
++                header[0] = kChunkCompressedFlag | kChunkStateReset;
+             else
+                 header[0] = kChunkCompressedFlag | kChunkNothingReset;
+ 
+@@ -2080,7 +2102,9 @@ size_t LZMA2_encode(LZMA2_ECtx *const enc,
+                 encode_properties = 0;
+             }
+         }
+-        if (incompressible || uncompressed_size + 3 <= compressed_size + (compressed_size >> kRandomFilterMarginBits) + header_size) {
++        if (g_fl2_ablation_mode != 3 &&
++            (incompressible || uncompressed_size + 3 <= compressed_size +
++             (compressed_size >> kRandomFilterMarginBits) + header_size)) {
+             /* Test the next chunk for compressibility */
+             incompressible = LZMA2_isChunkIncompressible(tbl, block, next_index, enc->strategy);
+         }
+diff --git a/lz/fast-lzma2/range_enc.c b/lz/fast-lzma2/range_enc.c
+index 3139770..7541943 100644
+--- a/lz/fast-lzma2/range_enc.c
++++ b/lz/fast-lzma2/range_enc.c
+@@ -116,6 +116,8 @@ void RC_reset(RC_encoder* const rc)
+     rc->range = (U32)-1;
+     rc->cache_size = 0;
+     rc->cache = 0;
++    rc->raw_byte = 0;
++    rc->raw_bits = 0;
+ }
+ 
+ #ifdef __64BIT__
+@@ -197,6 +199,13 @@ void RC_encodeBitTreeReverse(RC_encoder* const rc, LZMA2_prob *const probs, unsi
+ void FORCE_NOINLINE RC_encodeDirect(RC_encoder* const rc, unsigned value, unsigned bit_count)
+ {
+ 	assert(bit_count > 0);
++	if (g_fl2_ablation_mode == 3) {
++		do {
++			--bit_count;
++			RC_encodeRawBit(rc, (value >> bit_count) & 1);
++		} while (bit_count != 0);
++		return;
++	}
+ 	do {
+         rc->range >>= 1;
+ 		--bit_count;
+@@ -208,4 +217,3 @@ void FORCE_NOINLINE RC_encodeDirect(RC_encoder* const rc, unsigned value, unsign
+ 	} while (bit_count != 0);
+ }
+ 
+-
+diff --git a/lz/fast-lzma2/range_enc.h b/lz/fast-lzma2/range_enc.h
+index 1d9a50d..2cf6a59 100644
+--- a/lz/fast-lzma2/range_enc.h
++++ b/lz/fast-lzma2/range_enc.h
+@@ -44,8 +44,23 @@ typedef struct
+ 	U64 low;
+ 	U32 range;
+ 	BYTE cache;
++	BYTE raw_byte;
++	BYTE raw_bits;
+ } RC_encoder;
+ 
++extern int g_fl2_ablation_mode;
++
++HINT_INLINE
++void RC_encodeRawBit(RC_encoder* const rc, unsigned const bit)
++{
++    rc->raw_byte = (BYTE)((rc->raw_byte << 1) | (bit != 0));
++    if (++rc->raw_bits == 8) {
++        rc->out_buffer[rc->out_index++] = rc->raw_byte;
++        rc->raw_byte = 0;
++        rc->raw_bits = 0;
++    }
++}
++
+ void RC_reset(RC_encoder* const rc);
+ 
+ void RC_setOutputBuffer(RC_encoder* const rc, BYTE *const out_buffer);
+@@ -62,6 +77,12 @@ HINT_INLINE
+ void RC_encodeBit0(RC_encoder* const rc, LZMA2_prob *const rprob)
+ {
+ 	unsigned prob = *rprob;
++    if (g_fl2_ablation_mode == 3) {
++        RC_encodeRawBit(rc, 0);
++        prob += (kBitModelTotal - prob) >> kNumMoveBits;
++        *rprob = (LZMA2_prob)prob;
++        return;
++    }
+     rc->range = (rc->range >> kNumBitModelTotalBits) * prob;
+ 	prob += (kBitModelTotal - prob) >> kNumMoveBits;
+ 	*rprob = (LZMA2_prob)prob;
+@@ -75,6 +96,12 @@ HINT_INLINE
+ void RC_encodeBit1(RC_encoder* const rc, LZMA2_prob *const rprob)
+ {
+ 	unsigned prob = *rprob;
++    if (g_fl2_ablation_mode == 3) {
++        RC_encodeRawBit(rc, 1);
++        prob -= prob >> kNumMoveBits;
++        *rprob = (LZMA2_prob)prob;
++        return;
++    }
+ 	U32 new_bound = (rc->range >> kNumBitModelTotalBits) * prob;
+     rc->low += new_bound;
+     rc->range -= new_bound;
+@@ -90,6 +117,15 @@ HINT_INLINE
+ void RC_encodeBit(RC_encoder* const rc, LZMA2_prob *const rprob, unsigned const bit)
+ {
+ 	unsigned prob = *rprob;
++    if (g_fl2_ablation_mode == 3) {
++        RC_encodeRawBit(rc, bit);
++        if (bit != 0)
++            prob -= prob >> kNumMoveBits;
++        else
++            prob += (kBitModelTotal - prob) >> kNumMoveBits;
++        *rprob = (LZMA2_prob)prob;
++        return;
++    }
+ 	if (bit != 0) {
+ 		U32 const new_bound = (rc->range >> kNumBitModelTotalBits) * prob;
+         rc->low += new_bound;
+@@ -151,6 +187,14 @@ unsigned RC_getReverseTreePrice(const LZMA2_prob* const prob_table, unsigned bit
+ HINT_INLINE
+ void RC_flush(RC_encoder* const rc)
+ {
++    if (g_fl2_ablation_mode == 3) {
++        if (rc->raw_bits != 0) {
++            rc->out_buffer[rc->out_index++] = (BYTE)(rc->raw_byte << (8 - rc->raw_bits));
++            rc->raw_byte = 0;
++            rc->raw_bits = 0;
++        }
++        return;
++    }
+     for (int i = 0; i < 5; ++i)
+         RC_shiftLow(rc);
+ }
+@@ -159,4 +203,4 @@ void RC_flush(RC_encoder* const rc)
+ }
+ #endif
+ 
+-#endif /* RANGE_ENCODER_H */
+\ No newline at end of file
++#endif /* RANGE_ENCODER_H */
+diff --git a/lz/gipfeli/decompress.cc b/lz/gipfeli/decompress.cc
+index 5946f0e..77b53f0 100644
+--- a/lz/gipfeli/decompress.cc
++++ b/lz/gipfeli/decompress.cc
+@@ -211,8 +211,18 @@ bool Gipfeli::InternalRawUncompress(
+     uint32 commands_size = UNALIGNED_LOAD16(ip);
+     ip += 2;
+ 
++    const bool raw_commands = (commands_size & 0x8000u) != 0;
++    commands_size &= 0x7fffu;
++
+     uint32* commands = decompressor_state_->ReallocateCommands(commands_size);
+-    ip = DecompressCommands(ip, ip_end, commands_size, commands);
++    if (raw_commands) {
++      const size_t command_bytes = commands_size * sizeof(uint32);
++      if (PREDICT_FALSE(static_cast<size_t>(ip_end - ip) < command_bytes)) return false;
++      memcpy(commands, ip, command_bytes);
++      ip += command_bytes;
++    } else {
++      ip = DecompressCommands(ip, ip_end, commands_size, commands);
++    }
+     if (PREDICT_FALSE(ip + 4 > ip_end)) {
+       return false;
+     }
+@@ -401,10 +411,21 @@ bool Gipfeli::InternalRawUncompressStream(
+       return writer.OnError();
+     }
+ 
++    const bool raw_commands = (commands_size & 0x8000u) != 0;
++    commands_size &= 0x7fffu;
++
+     uint32* commands = decompressor_state_->ReallocateCommands(commands_size);
+-    if (PREDICT_FALSE(!DecompressCommandsStream(
+-            &reader, commands_size, commands))) {
+-      return writer.OnError();
++    if (raw_commands) {
++      const char* raw = reader.Read(reinterpret_cast<char*>(commands),
++                                    commands_size * sizeof(uint32));
++      if (PREDICT_FALSE(raw == NULL)) return writer.OnError();
++      if (raw != reinterpret_cast<const char*>(commands))
++        memcpy(commands, raw, commands_size * sizeof(uint32));
++    } else {
++      if (PREDICT_FALSE(!DecompressCommandsStream(
++              &reader, commands_size, commands))) {
++        return writer.OnError();
++      }
+     }
+ 
+     if (PREDICT_FALSE((buf = reader.Read(scratch, 4)) == NULL)) {
+diff --git a/lz/gipfeli/entropy.cc b/lz/gipfeli/entropy.cc
+index 96d025b..80ce5fd 100644
+--- a/lz/gipfeli/entropy.cc
++++ b/lz/gipfeli/entropy.cc
+@@ -306,6 +306,7 @@ char* Entropy::Compress(const uint8* __restrict content,
+   uint64 bit_buffer_64 = 0;
+ 
+   bool use_entropy_code = false;
++  const bool raw_commands = GetLZ77AblationMode() == LZ77_ABLATION_RAW_COMMANDS;
+   // We do not use entropy coding for literals if the size of the content is
+   // small. Using entropy coding brings overhead (up to 44 bytes) and can save
+   // at most 25% of the size of the content.
+@@ -313,15 +314,22 @@ char* Entropy::Compress(const uint8* __restrict content,
+     SampleContent(content, content_size, mask);
+     use_entropy_code = CountSamples(mask);
+   }
++  if (GetLZ77AblationMode() == LZ77_ABLATION_NO_LITERAL_ENTROPY)
++    use_entropy_code = false;
+ 
+   if (use_entropy_code) {
+     // We decided to compress the data.
+-    UNALIGNED_STORE16(output, commands_size);
++    UNALIGNED_STORE16(output, commands_size | (raw_commands ? 0x8000u : 0u));
+     output += 2;
+ 
+     // Compress Backward references and write them to the output.
+-    CompressCommands(commands, commands_size, output);
+-    output += GetWriteBitsOutputSize() * sizeof(uint64);
++    if (raw_commands) {
++      memcpy(output, commands, commands_size * sizeof(uint32));
++      output += commands_size * sizeof(uint32);
++    } else {
++      CompressCommands(commands, commands_size, output);
++      output += GetWriteBitsOutputSize() * sizeof(uint64);
++    }
+ 
+     // Build the conversion table for Literals from the sampled data.
+     int assign_value[256];
+@@ -373,12 +381,17 @@ char* Entropy::Compress(const uint8* __restrict content,
+     // We decided not to compress the content (according to sample it
+     // seems not compressible).
+ 
+-    UNALIGNED_STORE16(output, commands_size);
++    UNALIGNED_STORE16(output, commands_size | (raw_commands ? 0x8000u : 0u));
+     output += 2;
+ 
+     // Compress Backward references (guess: there are not many of them).
+-    CompressCommands(commands, commands_size, output);
+-    output += GetWriteBitsOutputSize() * sizeof(uint64);
++    if (raw_commands) {
++      memcpy(output, commands, commands_size * sizeof(uint32));
++      output += commands_size * sizeof(uint32);
++    } else {
++      CompressCommands(commands, commands_size, output);
++      output += GetWriteBitsOutputSize() * sizeof(uint64);
++    }
+ 
+     // Stores 0 as the bitmask for entropy encoding, which means that
+     // there is no entropy encoding.
+diff --git a/lz/gipfeli/entropy.h b/lz/gipfeli/entropy.h
+index 0402912..a337ff8 100644
+--- a/lz/gipfeli/entropy.h
++++ b/lz/gipfeli/entropy.h
+@@ -6,6 +6,7 @@
+ #include <string>
+ 
+ #include "stubs-internal.h"
++#include "lz77.h"
+ 
+ namespace util {
+ namespace compression {
+@@ -68,8 +69,11 @@ class Entropy {
+     // 64-bit words needed to encode the content.
+     const int content_words = (content_size * kMaxContentBits + 63) / 64;
+ 
+-    return kCommandsLenSize + kMaxLitLenTableSize +
++    const int packed_size = kCommandsLenSize + kMaxLitLenTableSize +
+         (command_words + content_words) * sizeof(uint64);
++    const int raw_command_size = kCommandsLenSize + kMaxLitLenTableSize +
++        commands_size * sizeof(uint32) + content_words * sizeof(uint64);
++    return packed_size > raw_command_size ? packed_size : raw_command_size;
+   }
+ 
+   // All methods below are not private only to allow easier testing
+diff --git a/lz/gipfeli/lz77.cc b/lz/gipfeli/lz77.cc
+index 656419d..e634d0a 100644
+--- a/lz/gipfeli/lz77.cc
++++ b/lz/gipfeli/lz77.cc
+@@ -12,6 +12,16 @@ namespace util {
+ namespace compression {
+ namespace gipfeli {
+ 
++static int lz77_ablation_mode = LZ77_ABLATION_NONE;
++
++void SetLZ77AblationMode(int mode) {
++  lz77_ablation_mode = mode;
++}
++
++int GetLZ77AblationMode() {
++  return lz77_ablation_mode;
++}
++
+ namespace {
+ 
+ // Any hash function will produce a valid compressed bitstream, but a good
+@@ -120,6 +130,16 @@ void LZ77::CompressFragment(const char* input,
+   // [next_emit, ip_end) after the main loop.
+   const char* next_emit = ip;
+ 
++  if (lz77_ablation_mode == LZ77_ABLATION_NO_MATCH) {
++    op = EmitLiteral(input, input_size, false, op, commands_current);
++    ++commands_current;
++    *content = content_;
++    *content_size = op - content_;
++    *commands = commands_;
++    *commands_size = commands_current - commands_;
++    return;
++  }
++
+   const int shift = 32 - table_bits_;
+   const size_t kInputMarginBytes = 15;
+   if (PREDICT_TRUE(input_size >= kInputMarginBytes)) {
+@@ -159,7 +179,8 @@ void LZ77::CompressFragment(const char* input,
+       do {
+         ip = next_ip;
+         const uint32 hash = next_hash;
+-        const int bytes_between_hash_lookups = skip++ >> 5;
++        const int bytes_between_hash_lookups =
++            lz77_ablation_mode == LZ77_ABLATION_FIXED_SCAN ? 1 : skip++ >> 5;
+         next_ip = ip + bytes_between_hash_lookups;
+         if (PREDICT_FALSE(next_ip > ip_limit)) {
+           goto emit_remainder;
+diff --git a/lz/gipfeli/lz77.h b/lz/gipfeli/lz77.h
+index a4f6819..a2064b8 100644
+--- a/lz/gipfeli/lz77.h
++++ b/lz/gipfeli/lz77.h
+@@ -65,6 +65,17 @@ class LZ77 {
+   DISALLOW_COPY_AND_ASSIGN(LZ77);
+ };
+ 
++enum LZ77AblationMode {
++  LZ77_ABLATION_NONE = 0,
++  LZ77_ABLATION_NO_MATCH = 1,
++  LZ77_ABLATION_FIXED_SCAN = 2,
++  LZ77_ABLATION_RAW_COMMANDS = 3,
++  LZ77_ABLATION_NO_LITERAL_ENTROPY = 4,
++};
++
++void SetLZ77AblationMode(int mode);
++int GetLZ77AblationMode();
++
+ // Compression code chops up the input into blocks of at most kBlockSize.
+ // At the same time we allow back-references up to kBlockSize, i.e.
+ // we have the sliding window approach which allow us to back-reference
+diff --git a/lz/libcsc/csc_coder.cpp b/lz/libcsc/csc_coder.cpp
+index 225a025..5e65993 100644
+--- a/lz/libcsc/csc_coder.cpp
++++ b/lz/libcsc/csc_coder.cpp
+@@ -14,6 +14,7 @@ int Coder::Init(MemIO *io, ISzAlloc *alloc)
+ 
+     rc_size_ = bc_size_ = 0;
+     bc_curbits_ = bc_curval_ =0;
++    raw_curbits_ = raw_curval_ = 0;
+ 
+     outsize_ = 0;
+ 
+@@ -39,12 +40,21 @@ void Coder::Destroy()
+ 
+ void Coder::Flush()
+ {
+-    for (int i=0;i<5;i++) // One more byte for EOF
+-    {
+-        RC_ShiftLow();
++    if (g_csc_ablation_mode == CSC_ABLATION_NO_RANGE_CODER) {
++        if (raw_curbits_ != 0) {
++            *prc_++ = (raw_curval_ << (8 - raw_curbits_)) & 0xFF;
++            rc_size_++;
++        }
++        *prc_++ = 0;
++        rc_size_++;
++    } else {
++        for (int i=0;i<5;i++) // One more byte for EOF
++        {
++            RC_ShiftLow();
++        }
++        prc_++;
++        rc_size_++;
+     }
+-    prc_++;
+-    rc_size_++;
+ 
+     //one more byte for bitcoder is to prevent overflow while reading
+     for(int i = 0; i < 2; i++) {
+@@ -69,10 +79,29 @@ void Coder::Flush()
+     rc_code_=0;
+     rc_size_ = bc_size_ = 0;
+     bc_curbits_ = bc_curval_ = 0;
++    raw_curbits_ = raw_curval_ = 0;
+     prc_ = rc_buf_;
+     pbc_ = bc_buf_;
+ }
+ 
++void Coder::EncRawBit(uint32_t val)
++{
++    raw_curval_ = (raw_curval_ << 1) | (val != 0);
++    raw_curbits_++;
++    if (raw_curbits_ == 8) {
++        *prc_++ = raw_curval_;
++        rc_size_++;
++        if (rc_size_ == rc_bufsize_) {
++            outsize_ += rc_size_;
++            if (io_->WriteRCData(rc_buf_, rc_size_) != (int)rc_size_)
++                throw (int)WRITE_ERROR;
++            rc_size_ = 0;
++            prc_ = rc_buf_;
++        }
++        raw_curbits_ = raw_curval_ = 0;
++    }
++}
++
+ void Coder::EncDirect16(uint32_t val,uint32_t len)
+ {
+     bc_curval_ = (bc_curval_ << len) | val;
+@@ -110,4 +139,3 @@ void Coder::RC_ShiftLow(void)
+     rc_cachesize_++;
+     rc_low_ = (uint32_t)rc_low_ << 8;
+ }
+-
+diff --git a/lz/libcsc/csc_coder.h b/lz/libcsc/csc_coder.h
+index b84b07b..cb957fd 100644
+--- a/lz/libcsc/csc_coder.h
++++ b/lz/libcsc/csc_coder.h
+@@ -33,6 +33,7 @@ public:
+     }
+ 
+     void EncDirect16(uint32_t val,uint32_t len);
++    void EncRawBit(uint32_t val);
+ 
+     void RC_ShiftLow(void);
+ 
+@@ -51,6 +52,8 @@ public:
+     // for bit coder
+     uint32_t bc_curbits_;
+     uint32_t bc_curval_;    
++    uint32_t raw_curbits_;
++    uint32_t raw_curval_;
+ 
+     //the i/o pointer of range coder and bit coder
+     uint8_t *prc_;
+@@ -65,19 +68,24 @@ public:
+ 
+ 
+ #define EncodeBit(coder,v,p) do {\
+-    uint32_t newBound = (coder->rc_range_ >> 12) * p;\
+-    if (v) {\
+-        coder->rc_range_ = newBound;\
+-        p += (0xFFF - p) >> 5;\
++    if (g_csc_ablation_mode == CSC_ABLATION_NO_RANGE_CODER) {\
++        coder->EncRawBit(v);\
++        if (v) p += (0xFFF - p) >> 5;\
++        else p -= p >> 5;\
+     } else {\
+-        coder->rc_low_ += newBound;\
+-        coder->rc_range_ -= newBound;\
+-        p -= p >> 5;\
+-    }\
+-    \
+-    if (coder->rc_range_ < (1 << 24)) {\
+-        coder->rc_range_ <<= 8;\
+-        coder->RC_ShiftLow();\
++        uint32_t newBound = (coder->rc_range_ >> 12) * p;\
++        if (v) {\
++            coder->rc_range_ = newBound;\
++            p += (0xFFF - p) >> 5;\
++        } else {\
++            coder->rc_low_ += newBound;\
++            coder->rc_range_ -= newBound;\
++            p -= p >> 5;\
++        }\
++        if (coder->rc_range_ < (1 << 24)) {\
++            coder->rc_range_ <<= 8;\
++            coder->RC_ShiftLow();\
++        }\
+     }}while(0)
+ 
+ #define EncodeDirect(x,v,l) do{if ((l) <= 16)\
+@@ -88,4 +96,3 @@ public:
+     }}while(0)
+ 
+ #endif
+-
+diff --git a/lz/libcsc/csc_common.h b/lz/libcsc/csc_common.h
+index c469c5c..722a73e 100644
+--- a/lz/libcsc/csc_common.h
++++ b/lz/libcsc/csc_common.h
+@@ -60,7 +60,20 @@ typedef struct _CSCProps {
+     uint8_t DLTFilter;
+     uint8_t TXTFilter;
+     uint8_t EXEFilter;
++
++    // Runtime-only source ablation mode; it is not serialized into the stream.
++    uint8_t ablation_mode;
+ } CSCProps;
+ 
+-#endif
++enum {
++    CSC_ABLATION_NONE = 0,
++    CSC_ABLATION_NO_DELTA = 1,
++    CSC_ABLATION_NO_DICTIONARY = 2,
++    CSC_ABLATION_NO_LZ_MATCH = 3,
++    CSC_ABLATION_FIXED_MATCH_POLICY = 4,
++    CSC_ABLATION_NO_RANGE_CODER = 5,
++};
+ 
++extern int g_csc_ablation_mode;
++
++#endif
+diff --git a/lz/libcsc/csc_dec.cpp b/lz/libcsc/csc_dec.cpp
+index a48aede..ec6a58c 100644
+--- a/lz/libcsc/csc_dec.cpp
++++ b/lz/libcsc/csc_dec.cpp
+@@ -8,6 +8,12 @@
+ #include <string.h>
+ 
+ #define DecodeBit(coder, v, p) do{\
++    if (g_csc_ablation_mode == CSC_ABLATION_NO_RANGE_CODER) {\
++        uint32_t raw_bit_ = coder->coder_decode_raw_bit();\
++        if (raw_bit_) p += (0xFFF-p) >> 5;\
++        else p -= p >> 5;\
++        v = v + v + raw_bit_;\
++    } else {\
+     if (coder->rc_range_<(1<<24)) {\
+         coder->rc_range_<<=8;\
+         coder->rc_code_=(coder->rc_code_<<8)+*coder->prc_++;\
+@@ -32,6 +38,7 @@
+         p -= p >> 5;\
+         v = v + v;\
+     }\
++    }\
+ } while(0)
+ 
+ #define DecodeDirect(x,v,l) do{if ((l) <= 16)\
+@@ -62,6 +69,22 @@ static const uint32_t rev16_table_[16] = {
+ 
+ class CSCDecoder
+ {
++    uint32_t coder_decode_raw_bit() {
++        if (raw_curbits_ == 0) {
++            if (rc_size_ >= rc_bufsize_) {
++                outsize_ += rc_size_;
++                if (io_->ReadRCData(rc_buf_, rc_bufsize_) < 0)
++                    throw (int)READ_ERROR;
++                rc_size_ = 0;
++                prc_ = rc_buf_;
++            }
++            raw_curval_ = *prc_++;
++            rc_size_++;
++            raw_curbits_ = 8;
++        }
++        return (raw_curval_ >> --raw_curbits_) & 1;
++    }
++
+     uint32_t coder_decode_direct(uint32_t len) {
+ 
+ #define BCRCheckBound() do{if (bc_size_ >= bc_bufsize_) \
+@@ -319,6 +342,7 @@ public:
+ 
+         rc_size_ = bc_size_ = 0;
+         bc_curbits_ = bc_curval_ =0;
++        raw_curbits_ = raw_curval_ = 0;
+ 
+         outsize_ = 0;
+ 
+@@ -328,8 +352,9 @@ public:
+         p_lit_ = NULL;
+         filters_ = NULL;
+ 
+-        prc_ = rc_buf_ = (uint8_t *)alloc_->Alloc(alloc_, csc_blocksize);
+-        pbc_ = bc_buf_ = (uint8_t *)alloc_->Alloc(alloc_, csc_blocksize);
++        rc_bufsize_ = bc_bufsize_ = csc_blocksize;
++        prc_ = rc_buf_ = (uint8_t *)alloc_->Alloc(alloc_, rc_bufsize_);
++        pbc_ = bc_buf_ = (uint8_t *)alloc_->Alloc(alloc_, bc_bufsize_);
+         if (!prc_ || !pbc_)
+             goto FREE_ON_ERROR;
+ 
+@@ -337,12 +362,14 @@ public:
+             io_->ReadBCData(bc_buf_, bc_bufsize_) < 0)
+             goto FREE_ON_ERROR;
+ 
+-        rc_code_ = ((uint32_t)prc_[1] << 24) 
+-            | ((uint32_t)prc_[2] << 16) 
+-            | ((uint32_t)prc_[3] << 8) 
+-            | ((uint32_t)prc_[4]);
+-        prc_ += 5;
+-        rc_size_ += 5;
++        if (g_csc_ablation_mode != CSC_ABLATION_NO_RANGE_CODER) {
++            rc_code_ = ((uint32_t)prc_[1] << 24) 
++                | ((uint32_t)prc_[2] << 16) 
++                | ((uint32_t)prc_[3] << 8) 
++                | ((uint32_t)prc_[4]);
++            prc_ += 5;
++            rc_size_ += 5;
++        }
+ 
+         // model
+         p_lit_ = (uint32_t*)alloc_->Alloc(alloc_, 256 * 256 * sizeof(uint32_t));
+@@ -434,6 +461,8 @@ private:
+     // for bit coder
+     uint32_t bc_curbits_;
+     uint32_t bc_curval_;    
++    uint32_t raw_curbits_;
++    uint32_t raw_curval_;
+ 
+     //the i/o pointer of range coder and bit coder
+     uint8_t *prc_;
+@@ -664,6 +693,7 @@ int CSCDecoder::Decompress(uint8_t *dst, uint32_t *size, uint32_t max_bsize)
+         outsize_ += bc_size_ + rc_size_;
+         rc_size_ = bc_size_ = 0;
+         bc_curbits_ = bc_curval_ =0;
++        raw_curbits_ = raw_curval_ = 0;
+         prc_ = rc_buf_;
+         pbc_ = bc_buf_;
+ 
+@@ -671,12 +701,14 @@ int CSCDecoder::Decompress(uint8_t *dst, uint32_t *size, uint32_t max_bsize)
+             io_->ReadBCData(bc_buf_, bc_bufsize_) < 0)
+             return -1;
+ 
+-        rc_code_ = ((uint32_t)prc_[1] << 24) 
+-            | ((uint32_t)prc_[2] << 16) 
+-            | ((uint32_t)prc_[3] << 8) 
+-            | ((uint32_t)prc_[4]);
+-        prc_ += 5;
+-        rc_size_ += 5;
++        if (g_csc_ablation_mode != CSC_ABLATION_NO_RANGE_CODER) {
++            rc_code_ = ((uint32_t)prc_[1] << 24) 
++                | ((uint32_t)prc_[2] << 16) 
++                | ((uint32_t)prc_[3] << 8) 
++                | ((uint32_t)prc_[4]);
++            prc_ += 5;
++            rc_size_ += 5;
++        }
+     }
+     return ret;
+ }
+@@ -775,5 +807,3 @@ int CSCDec_Decode(CSCDecHandle p,
+     csc->alloc->Free(csc->alloc, buf);
+     return ret;
+ }
+-
+-
+diff --git a/lz/libcsc/csc_enc.cpp b/lz/libcsc/csc_enc.cpp
+index c4a85d1..3b75891 100644
+--- a/lz/libcsc/csc_enc.cpp
++++ b/lz/libcsc/csc_enc.cpp
+@@ -24,6 +24,7 @@ void CSCEncProps_Init(CSCProps *p, uint32_t dict_size, int level)
+     p->DLTFilter = 1;
+     p->TXTFilter = 1;
+     p->EXEFilter = 1;
++    p->ablation_mode = CSC_ABLATION_NONE;
+     p->csc_blocksize = 64 * KB;
+     p->raw_blocksize = 2 * MB;
+ 
+@@ -201,4 +202,3 @@ int CSCEnc_Encode_Flush(CSCEncHandle p)
+     }
+     return 0;
+ }
+-
+diff --git a/lz/libcsc/csc_encoder_main.cpp b/lz/libcsc/csc_encoder_main.cpp
+index 64cd808..2416cd7 100644
+--- a/lz/libcsc/csc_encoder_main.cpp
++++ b/lz/libcsc/csc_encoder_main.cpp
+@@ -38,6 +38,10 @@ void CSCEncoder::compress_block(uint8_t *src,uint32_t size, uint32_t type)
+         return;
+ 
+     uint8_t cur_lz_mode = p_.lz_mode;
++    if (p_.ablation_mode == CSC_ABLATION_NO_LZ_MATCH)
++        cur_lz_mode = 6;
++    else if (p_.ablation_mode == CSC_ABLATION_FIXED_MATCH_POLICY)
++        cur_lz_mode = 1;
+ 
+     if (type == DT_NORMAL) {
+         model_.EncodeInt(type);
+@@ -175,4 +179,3 @@ int64_t CSCEncoder::GetCompressedSize()
+ {
+     return (coder_.outsize_ + coder_.rc_size_ + coder_.bc_size_);
+ }
+-
+diff --git a/lz/libcsc/csc_lz.cpp b/lz/libcsc/csc_lz.cpp
+index e35508a..40e220d 100644
+--- a/lz/libcsc/csc_lz.cpp
++++ b/lz/libcsc/csc_lz.cpp
+@@ -83,6 +83,14 @@ void LZ::EncodeNormal(uint8_t *src, uint32_t size, uint32_t lz_mode)
+             mf_.SetArg(1, 1, 0, good_len_);
+             compress_mf_skip(cur_block_size);
+             mf_.SetArg(bt_cyc_, ht_cyc_, 1, good_len_);
++        } else if (lz_mode == 6) {
++            // Keep the native literal model and match-finder state while
++            // bypassing every LZ match candidate.
++            for (uint32_t j = 0; j < cur_block_size; ++j) {
++                model_->EncodeLiteral(wnd_[wnd_curpos_]);
++                mf_.SlidePos(wnd_curpos_, 1, cur_block_size - j);
++                ++wnd_curpos_;
++            }
+         } else {
+             printf("Error!");
+             exit(0);
+@@ -361,4 +369,3 @@ void LZ::ap_backward(int end)
+     rep_dist_[3] = apunits_[end].rep_dist[3];
+ }
+ 
+-
+diff --git a/lz/libzling/libzling.cpp b/lz/libzling/libzling.cpp
+index 73aa2cf..2bcc9c1 100644
+--- a/lz/libzling/libzling.cpp
++++ b/lz/libzling/libzling.cpp
+@@ -70,6 +70,20 @@ static const int kSentinelLen        = kMatchMaxLen + 16;
+ static const int kBlockSizeIn      = 16777216;
+ static const int kBlockSizeRolz    = 262144;
+ static const int kBlockSizeHuffman = 393216;
++static const int kBlockSizeEncoded = 2 * kBlockSizeRolz;
++
++namespace {
++int g_zling_entropy_ablation_mode = 0;
++int g_zling_block_state_ablation_mode = 0;
++}
++
++void SetZlingEntropyAblationMode(int mode) {
++    g_zling_entropy_ablation_mode = mode;
++}
++
++void SetZlingBlockStateAblationMode(int mode) {
++    g_zling_block_state_ablation_mode = mode;
++}
+ 
+ /* codebuf: manipulate code (u64) buffer.
+  *  Input();
+@@ -114,7 +128,7 @@ struct EncodeResource {
+     EncodeResource(): lzencoder(NULL), ibuf(NULL), obuf(NULL), tbuf(NULL) {
+         try {
+             ibuf = new unsigned char[kBlockSizeIn + kSentinelLen];
+-            obuf = new unsigned char[kBlockSizeHuffman + kSentinelLen];
++            obuf = new unsigned char[kBlockSizeEncoded + kSentinelLen];
+             tbuf = new uint16_t[kBlockSizeRolz + kSentinelLen];
+             lzencoder = new ZlingRolzEncoder();
+ 
+@@ -142,7 +156,7 @@ struct DecodeResource {
+     DecodeResource(): lzdecoder(NULL), ibuf(NULL), obuf(NULL), tbuf(NULL) {
+         try {
+             ibuf = new unsigned char[kBlockSizeIn + kSentinelLen];
+-            obuf = new unsigned char[kBlockSizeHuffman + kSentinelLen];
++            obuf = new unsigned char[kBlockSizeEncoded + kSentinelLen];
+             tbuf = new uint16_t[kBlockSizeRolz + kSentinelLen];
+             lzdecoder = new ZlingRolzDecoder();
+ 
+@@ -200,11 +214,29 @@ int Encode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handl
+             outputter->PutChar(kFlagRolzContinue);
+             CHECK_IO_ERROR(outputter);
+ 
++            if (g_zling_block_state_ablation_mode) {
++                res.lzencoder->Reset();
++            }
++
+             // ROLZ encode
+             // ============================================================
+             int encpos_old = encpos;
+             rlen = res.lzencoder->Encode(current_level, res.ibuf, res.tbuf, ilen, kBlockSizeRolz, &encpos);
+ 
++            if (g_zling_entropy_ablation_mode) {
++                olen = rlen * static_cast<int>(sizeof(uint16_t));
++                memcpy(res.obuf, res.tbuf, olen);
++                outputter->PutUInt32(encpos); CHECK_IO_ERROR(outputter);
++                outputter->PutUInt32(rlen);   CHECK_IO_ERROR(outputter);
++                outputter->PutUInt32(static_cast<uint32_t>(olen) | 0x80000000u);
++                CHECK_IO_ERROR(outputter);
++                for (int ooff = 0; !outputter->IsErr() && ooff < olen; ) {
++                    ooff += outputter->PutData(res.obuf + ooff, olen - ooff);
++                    CHECK_IO_ERROR(outputter);
++                }
++                continue;
++            }
++
+             // HUFFMAN encode
+             // ============================================================
+             ZlingCodebuf codebuf;
+@@ -323,7 +355,10 @@ int Decode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handl
+             rlen   = inputter->GetUInt32(); CHECK_IO_ERROR(inputter);
+             olen   = inputter->GetUInt32(); CHECK_IO_ERROR(inputter);
+ 
+-            if (rlen > kBlockSizeRolz || olen > kBlockSizeHuffman) {
++            const bool raw_tokens = (static_cast<uint32_t>(olen) & 0x80000000u) != 0;
++            olen = static_cast<int>(static_cast<uint32_t>(olen) & 0x7fffffffu);
++
++            if (rlen > kBlockSizeRolz || olen > kBlockSizeEncoded) {
+                 throw std::runtime_error("baidu::zling::Decode(): invalid block size.");
+             }
+             for (int ooff = 0; !inputter->IsEnd() && ooff < olen; ) {
+@@ -331,6 +366,12 @@ int Decode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handl
+                 CHECK_IO_ERROR(inputter);
+             }
+ 
++            if (raw_tokens) {
++                if (olen != rlen * static_cast<int>(sizeof(uint16_t))) {
++                    throw std::runtime_error("baidu::zling::Decode(): invalid raw token stream.");
++                }
++                memcpy(res.tbuf, res.obuf, olen);
++            } else {
+             // HUFFMAN DECODE
+             // ============================================================
+             ZlingCodebuf codebuf;
+@@ -400,9 +441,13 @@ int Decode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handl
+                     }
+                 }
+             }
++            }
+ 
+             // ROLZ decode
+             // ============================================================
++            if (g_zling_block_state_ablation_mode) {
++                res.lzdecoder->Reset();
++            }
+             if (res.lzdecoder->Decode(res.tbuf, res.ibuf, rlen, encpos, &decpos) == -1) { /* error: lz.Decode failed */
+                 throw std::runtime_error("baidu::zling::Decode(): lzdecode failed.");
+             }
+diff --git a/lz/libzling/libzling.h b/lz/libzling/libzling.h
+index dd68381..28cc71b 100644
+--- a/lz/libzling/libzling.h
++++ b/lz/libzling/libzling.h
+@@ -43,6 +43,8 @@ namespace zling {
+ 
+ int Encode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handler = NULL, int level = 0);
+ int Decode(Inputter* inputter, Outputter* outputter, ActionHandler* action_handler = NULL);
++void SetZlingEntropyAblationMode(int mode);
++void SetZlingBlockStateAblationMode(int mode);
+ 
+ }  // namespace zling
+ }  // namespace baidu
+diff --git a/lz/libzling/libzling_lz.cpp b/lz/libzling/libzling_lz.cpp
+index 19a6949..dc00c34 100644
+--- a/lz/libzling/libzling_lz.cpp
++++ b/lz/libzling/libzling_lz.cpp
+@@ -40,6 +40,14 @@ namespace baidu {
+ namespace zling {
+ namespace lz {
+ 
++namespace {
++int g_zling_lz_ablation_mode = kZlingLZAblationNone;
++}
++
++void SetZlingLZAblationMode(int mode) {
++    g_zling_lz_ablation_mode = mode;
++}
++
+ static const unsigned char mtfinit[] = {
+ #   include "tables/table_mtfinit.inc"  /* include auto-generated constant tables */
+ };
+@@ -155,7 +163,8 @@ template<int kMatchDepth, int kLazyMatch1Depth, int kLazyMatch2Depth> int ZlingR
+         int match_len;
+ 
+         // encode as match
+-        if (ipos + kMatchMaxLen + 16 < ilen) {  // avoid overflow
++        if (g_zling_lz_ablation_mode != kZlingLZAblationNoMatch &&
++                ipos + kMatchMaxLen + 16 < ilen) {  // avoid overflow
+             if (MatchAndUpdate<kMatchDepth, kLazyMatch1Depth, kLazyMatch2Depth>(ibuf, ipos, &match_idx, &match_len)) {
+                 obuf[opos++] = 258 + match_len - kMatchMinLen;
+                 obuf[opos++] = match_idx;
+diff --git a/lz/libzling/libzling_lz.h b/lz/libzling/libzling_lz.h
+index ba66997..7d7ba39 100644
+--- a/lz/libzling/libzling_lz.h
++++ b/lz/libzling/libzling_lz.h
+@@ -47,6 +47,13 @@ static const int kMatchMinLenEnableLazy = 128;
+ static const int kMatchMinLen = 4;
+ static const int kMatchMaxLen = 259;
+ 
++enum ZlingLZAblationMode {
++    kZlingLZAblationNone = 0,
++    kZlingLZAblationNoMatch = 1,
++};
++
++void SetZlingLZAblationMode(int mode);
++
+ class ZlingMTFEncoder {
+ public:
+     ZlingMTFEncoder();
+diff --git a/lz/lzfse/lzvn.h b/lz/lzfse/lzvn.h
+index 22e2ccf..8da278f 100644
+--- a/lz/lzfse/lzvn.h
++++ b/lz/lzfse/lzvn.h
+@@ -63,6 +63,18 @@ size_t lzvn_encode_buffer(void *__restrict dst, size_t dst_size,
+                           const void *__restrict src, size_t src_size,
+                           void *__restrict work);
+ 
++/*! Source-ablation entry points. The first disables match generation while
++ * retaining native LZVN literal tokens. The second retains the native match
++ * finder and parsing decisions while replacing the compact token format with
++ * an explicitly byte-aligned representation. */
++size_t lzvn_encode_buffer_without_matches(void *__restrict dst, size_t dst_size,
++                                          const void *__restrict src,
++                                          size_t src_size);
++size_t lzvn_encode_buffer_token_ablation(void *__restrict dst, size_t dst_size,
++                                         const void *__restrict src,
++                                         size_t src_size,
++                                         void *__restrict work);
++
+ /*! @abstract Get the required scratch buffer size to decompress using LZVN. */
+ size_t lzvn_decode_scratch_size() LZFSE_LIB_API;
+ 
+diff --git a/lz/lzfse/lzvn_encode_base.c b/lz/lzfse/lzvn_encode_base.c
+index c86b551..79ee788 100644
+--- a/lz/lzfse/lzvn_encode_base.c
++++ b/lz/lzfse/lzvn_encode_base.c
+@@ -179,6 +179,39 @@ OUT_FULL:
+   return q1;
+ }
+ 
++static inline void lzvn_store_u32(unsigned char *dst, uint32_t value) {
++  dst[0] = (unsigned char)value;
++  dst[1] = (unsigned char)(value >> 8);
++  dst[2] = (unsigned char)(value >> 16);
++  dst[3] = (unsigned char)(value >> 24);
++}
++
++static inline unsigned char *emit_token_ablation_match(
++    const unsigned char *p, unsigned char *q, unsigned char *q1, size_t L,
++    size_t M, size_t D) {
++  if (L > UINT32_MAX || M > UINT32_MAX || D > UINT32_MAX ||
++      q1 - q < (ptrdiff_t)(13 + L))
++    return q1;
++  *q++ = 1;
++  lzvn_store_u32(q, (uint32_t)L);
++  q += 4;
++  lzvn_store_u32(q, (uint32_t)M);
++  q += 4;
++  lzvn_store_u32(q, (uint32_t)D);
++  q += 4;
++  return lzvn_copy8(q, p, L);
++}
++
++static inline unsigned char *emit_token_ablation_literal(
++    const unsigned char *p, unsigned char *q, unsigned char *q1, size_t L) {
++  if (L > UINT32_MAX || q1 - q < (ptrdiff_t)(5 + L))
++    return q1;
++  *q++ = 0;
++  lzvn_store_u32(q, (uint32_t)L);
++  q += 4;
++  return lzvn_copy8(q, p, L);
++}
++
+ // ===============================================================
+ // Conversions
+ 
+@@ -313,8 +346,12 @@ static inline lzvn_offset lzvn_emit_match(lzvn_encoder_state *state,
+   size_t M = (size_t)match.M;                              // match length
+   size_t D = (size_t)match.D;                              // match distance
+   size_t D_prev = (size_t)state->d_prev; // previously emitted match distance
+-  unsigned char *dst = emit(state->src + state->src_literal, state->dst,
+-                            state->dst_end, L, M, D, D_prev);
++  unsigned char *dst = state->token_ablation_mode
++                           ? emit_token_ablation_match(
++                                 state->src + state->src_literal, state->dst,
++                                 state->dst_end, L, M, D)
++                           : emit(state->src + state->src_literal, state->dst,
++                                  state->dst_end, L, M, D, D_prev);
+   // Check if DST is full
+   if (dst >= state->dst_end) {
+     return 0; // FULL
+@@ -334,8 +371,12 @@ static inline lzvn_offset lzvn_emit_match(lzvn_encoder_state *state,
+ static inline lzvn_offset lzvn_emit_literal(lzvn_encoder_state *state,
+                                             lzvn_offset n) {
+   size_t L = (size_t)n;
+-  unsigned char *dst = emit_literal(state->src + state->src_literal, state->dst,
+-                                    state->dst_end, L);
++  unsigned char *dst = state->token_ablation_mode
++                           ? emit_token_ablation_literal(
++                                 state->src + state->src_literal, state->dst,
++                                 state->dst_end, L)
++                           : emit_literal(state->src + state->src_literal,
++                                          state->dst, state->dst_end, L);
+   // Check if DST is full
+   if (dst >= state->dst_end)
+     return 0; // FULL
+@@ -351,6 +392,12 @@ static inline lzvn_offset lzvn_emit_literal(lzvn_encoder_state *state,
+  * @return number of bytes written to \p dst. May be 0 if there is no more space
+  * in \p dst to emit the instruction. */
+ static inline lzvn_offset lzvn_emit_end_of_stream(lzvn_encoder_state *state) {
++  if (state->token_ablation_mode) {
++    if (state->dst_end < state->dst + 1)
++      return 0;
++    *state->dst++ = 2;
++    return 1;
++  }
+   // Do we have 8 byte in dst?
+   if (state->dst_end < state->dst + 8)
+     return 0; // FULL
+@@ -591,3 +638,64 @@ size_t lzvn_encode_buffer(void *__restrict dst, size_t dst_size,
+     return 0;      // could not encode entire input stream = fail
+   return dst_used; // return encoded size
+ }
++
++size_t lzvn_encode_buffer_without_matches(void *__restrict dst, size_t dst_size,
++                                          const void *__restrict src,
++                                          size_t src_size) {
++  if (dst_size < 8 || src_size > LZVN_ENCODE_MAX_SRC_SIZE)
++    return 0;
++  lzvn_encoder_state state;
++  memset(&state, 0, sizeof(state));
++  state.src = src;
++  state.src_begin = 0;
++  state.src_end = (lzvn_offset)src_size;
++  state.src_literal = 0;
++  state.dst = dst;
++  state.dst_begin = dst;
++  state.dst_end = (unsigned char *)dst + dst_size - 8;
++  if (lzvn_emit_literal(&state, state.src_end) == 0 && src_size != 0)
++    return 0;
++  state.dst_end = (unsigned char *)dst + dst_size;
++  if (lzvn_emit_end_of_stream(&state) == 0)
++    return 0;
++  return (size_t)(state.dst - state.dst_begin);
++}
++
++size_t lzvn_encode_buffer_token_ablation(void *__restrict dst, size_t dst_size,
++                                         const void *__restrict src,
++                                         size_t src_size,
++                                         void *__restrict work) {
++  if (dst_size < 5 || src_size > LZVN_ENCODE_MAX_SRC_SIZE || work == NULL)
++    return 0;
++  unsigned char *output = dst;
++  output[0] = 'L';
++  output[1] = 'Z';
++  output[2] = 'T';
++  output[3] = 'A';
++
++  lzvn_encoder_state state;
++  memset(&state, 0, sizeof(state));
++  state.src = src;
++  state.src_begin = 0;
++  state.src_end = (lzvn_offset)src_size;
++  state.src_literal = 0;
++  state.src_current = 0;
++  state.dst = output + 4;
++  state.dst_begin = output;
++  state.dst_end = output + dst_size - 1;
++  state.table = work;
++  state.token_ablation_mode = 1;
++
++  if (src_size >= LZVN_ENCODE_MIN_SRC_SIZE) {
++    state.src_current_end = (lzvn_offset)src_size - LZVN_ENCODE_MIN_MARGIN;
++    lzvn_init_table(&state);
++    lzvn_encode(&state);
++  }
++  if (lzvn_emit_literal(&state, state.src_end - state.src_literal) == 0 &&
++      state.src_literal != state.src_end)
++    return 0;
++  state.dst_end = output + dst_size;
++  if (lzvn_emit_end_of_stream(&state) == 0)
++    return 0;
++  return (size_t)(state.dst - state.dst_begin);
++}
+diff --git a/lz/lzfse/lzvn_encode_base.h b/lz/lzfse/lzvn_encode_base.h
+index 1b93d0e..6ab19ad 100644
+--- a/lz/lzfse/lzvn_encode_base.h
++++ b/lz/lzfse/lzvn_encode_base.h
+@@ -106,6 +106,11 @@ typedef struct {
+   // The number of entries in the table is LZVN_ENCODE_HASH_VALUES.
+   lzvn_encode_entry_type *table;
+ 
++  // Zero selects the native LZVN token stream. The source-ablation harness
++  // uses one to retain the upstream match finder while bypassing only the
++  // native token representation.
++  int token_ablation_mode;
++
+ } lzvn_encoder_state;
+ 
+ /*! @abstract Encode source to destination.
+@@ -113,4 +118,13 @@ typedef struct {
+  *  The call ensures \c src_literal is never left too far behind \c src_current. */
+ void lzvn_encode(lzvn_encoder_state *state);
+ 
++size_t lzvn_encode_buffer_without_matches(void *__restrict dst, size_t dst_size,
++                                          const void *__restrict src,
++                                          size_t src_size);
++
++size_t lzvn_encode_buffer_token_ablation(void *__restrict dst, size_t dst_size,
++                                         const void *__restrict src,
++                                         size_t src_size,
++                                         void *__restrict work);
++
+ #endif // LZVN_ENCODE_BASE_H
+diff --git a/lz/lzham/include/lzham.h b/lz/lzham/include/lzham.h
+index 2030fc9..10c81a7 100644
+--- a/lz/lzham/include/lzham.h
++++ b/lz/lzham/include/lzham.h
+@@ -215,6 +215,8 @@ extern "C" {
+       size_t src_len,
+       lzham_uint32 *pAdler32);
+ 
++   LZHAM_DLL_EXPORT void LZHAM_CDECL lzham_set_ablation_mode(int mode);
++
+    // Decompression
+    typedef enum
+    {
+diff --git a/lz/lzham/lzhamcomp/lzham_lzcomp_internal.cpp b/lz/lzham/lzhamcomp/lzham_lzcomp_internal.cpp
+index 5f44c5b..8badc20 100644
+--- a/lz/lzham/lzhamcomp/lzham_lzcomp_internal.cpp
++++ b/lz/lzham/lzhamcomp/lzham_lzcomp_internal.cpp
+@@ -22,6 +22,7 @@
+ 
+ namespace lzham
+ {
++   extern int g_lzham_ablation_mode;
+    static comp_settings s_level_settings[cCompressionLevelCount] =
+    {
+       // cCompressionLevelFastest
+@@ -1269,7 +1270,9 @@ namespace lzham
+ 
+       parse_thread_state &parse_state = m_parse_thread_state[parse_job_index];
+ 
+-      if ((m_params.m_lzham_compress_flags & LZHAM_COMP_FLAG_EXTREME_PARSING) && (m_params.m_compression_level == cCompressionLevelUber))
++      if (g_lzham_ablation_mode == 2)
++         greedy_parse(parse_state);
++      else if ((m_params.m_lzham_compress_flags & LZHAM_COMP_FLAG_EXTREME_PARSING) && (m_params.m_compression_level == cCompressionLevelUber))
+          extreme_parse(parse_state);
+       else
+          optimal_parse(parse_state);
+diff --git a/lz/lzham/lzhamcomp/lzham_match_accel.cpp b/lz/lzham/lzhamcomp/lzham_match_accel.cpp
+index da5ed33..84147ab 100644
+--- a/lz/lzham/lzhamcomp/lzham_match_accel.cpp
++++ b/lz/lzham/lzhamcomp/lzham_match_accel.cpp
+@@ -6,6 +6,7 @@
+ 
+ namespace lzham
+ {
++   extern int g_lzham_ablation_mode;
+    static inline uint32 hash2_to_12(uint c0, uint c1)
+    {
+       return c0 ^ (c1 << 4);
+@@ -380,6 +381,9 @@ namespace lzham
+ 
+    uint search_accelerator::get_len2_match(uint lookahead_ofs)
+    {
++      if (g_lzham_ablation_mode == 1)
++         return 0;
++
+       if ((m_fill_lookahead_size - lookahead_ofs) < 2)
+          return 0;
+ 
+@@ -505,6 +509,9 @@ namespace lzham
+ 
+    dict_match* search_accelerator::find_matches(uint lookahead_ofs, bool spin)
+    {
++      if (g_lzham_ablation_mode == 1)
++         return NULL;
++
+       LZHAM_ASSERT(lookahead_ofs < m_lookahead_size);
+ 
+       const uint match_ref_ofs = static_cast<uint>(m_lookahead_pos - m_fill_lookahead_pos + lookahead_ofs);
+diff --git a/lz/lzham/lzhamdecomp/lzham_symbol_codec.cpp b/lz/lzham/lzhamdecomp/lzham_symbol_codec.cpp
+index 5623584..2251cfe 100644
+--- a/lz/lzham/lzhamdecomp/lzham_symbol_codec.cpp
++++ b/lz/lzham/lzhamdecomp/lzham_symbol_codec.cpp
+@@ -13,6 +13,8 @@
+ 
+ namespace lzham
+ {
++   extern int g_lzham_ablation_mode;
++
+    // Using a fixed table to convert from scaled probability to scaled bits for determinism across compilers/run-time libs/platforms.
+    uint32 g_prob_cost[cSymbolCodecArithProbScale] = 
+    {
+@@ -821,8 +823,16 @@ namespace lzham
+       LZHAM_ASSERT(m_mode == cEncoding);
+       LZHAM_ASSERT(model.m_encoding);
+ 
+-      if (!record_put_bits(model.m_codes[sym], model.m_code_sizes[sym]))
++      if (g_lzham_ablation_mode == 3)
++      {
++         const uint fixed_bits = ablation_fixed_symbol_bits(model.m_total_syms);
++         if (!record_put_bits(sym, fixed_bits))
++            return false;
++      }
++      else if (!record_put_bits(model.m_codes[sym], model.m_code_sizes[sym]))
++      {
+          return false;
++      }
+ 
+       uint freq = model.m_sym_freq[sym];
+       freq++;
+@@ -1236,6 +1246,28 @@ namespace lzham
+       LZHAM_ASSERT(m_mode == cDecoding);
+       LZHAM_ASSERT(!model.m_encoding);
+ 
++      if (g_lzham_ablation_mode == 3)
++      {
++         const uint sym = decode_bits(ablation_fixed_symbol_bits(model.m_total_syms));
++         if (sym >= model.m_total_syms)
++         {
++            LZHAM_ASSERT(0);
++            return 0;
++         }
++
++         uint freq = model.m_sym_freq[sym];
++         freq++;
++         model.m_sym_freq[sym] = static_cast<uint16>(freq);
++         LZHAM_ASSERT(freq <= UINT16_MAX);
++
++         if (--model.m_symbols_until_update == 0)
++         {
++            m_total_model_updates++;
++            model.update_tables();
++         }
++         return sym;
++      }
++
+       const prefix_coding::decoder_tables* pTables = model.m_pDecode_tables;
+ 
+       while (m_bit_count < (cBitBufSize - 8))
+diff --git a/lz/lzham/lzhamdecomp/lzham_symbol_codec.h b/lz/lzham/lzhamdecomp/lzham_symbol_codec.h
+index b3f398f..a705499 100644
+--- a/lz/lzham/lzhamdecomp/lzham_symbol_codec.h
++++ b/lz/lzham/lzhamdecomp/lzham_symbol_codec.h
+@@ -25,6 +25,15 @@ namespace lzham
+    inline bit_cost_t convert_to_scaled_bitcost(uint bits) { LZHAM_ASSERT(bits <= 255); uint32 scaled_bits = bits << cBitCostScaleShift; return static_cast<bit_cost_t>(scaled_bits); }
+ 
+    extern uint32 g_prob_cost[cSymbolCodecArithProbScale];
++   extern int g_lzham_ablation_mode;
++
++   inline uint ablation_fixed_symbol_bits(uint total_syms)
++   {
++      uint bits = 0;
++      for (uint n = total_syms - 1; n != 0; n >>= 1)
++         ++bits;
++      return bits ? bits : 1;
++   }
+ 
+    class raw_quasi_adaptive_huffman_data_model
+    {
+@@ -440,6 +449,19 @@ namespace lzham
+          bit_buf |= (static_cast<symbol_codec::bit_buf_t>(c) << (symbol_codec::cBitBufSize - bit_count)); \
+       } \
+    } \
++   if (g_lzham_ablation_mode == 3) \
++   { \
++      uint fixedBits = ablation_fixed_symbol_bits(pModel->m_total_syms); \
++      result = static_cast<uint>(bit_buf >> (symbol_codec::cBitBufSize - fixedBits)); \
++      bit_buf <<= fixedBits; \
++      bit_count -= fixedBits; \
++      if (result >= pModel->m_total_syms) result = 0; \
++      uint fixedFreq = pModel->m_sym_freq[result] + 1; \
++      pModel->m_sym_freq[result] = static_cast<uint16>(fixedFreq); \
++      if (--pModel->m_symbols_until_update == 0) pModel->update_tables(); \
++   } \
++   else \
++   { \
+    uint k = static_cast<uint>((bit_buf >> (symbol_codec::cBitBufSize - 16)) + 1); \
+    uint len; \
+    if (LZHAM_BUILTIN_EXPECT(k <= pTables->m_table_max_code, 1)) \
+@@ -471,6 +493,7 @@ namespace lzham
+    { \
+       pModel->update_tables(); \
+    } \
++   } \
+ }
+ #else
+ #define LZHAM_SYMBOL_CODEC_DECODE_ADAPTIVE_HUFFMAN(codec, result, model) \
+@@ -497,6 +520,19 @@ namespace lzham
+       bit_count += 8; \
+       bit_buf |= (static_cast<symbol_codec::bit_buf_t>(c) << (symbol_codec::cBitBufSize - bit_count)); \
+    } \
++   if (g_lzham_ablation_mode == 3) \
++   { \
++      uint fixedBits = ablation_fixed_symbol_bits(pModel->m_total_syms); \
++      result = static_cast<uint>(bit_buf >> (symbol_codec::cBitBufSize - fixedBits)); \
++      bit_buf <<= fixedBits; \
++      bit_count -= fixedBits; \
++      if (result >= pModel->m_total_syms) result = 0; \
++      uint fixedFreq = pModel->m_sym_freq[result] + 1; \
++      pModel->m_sym_freq[result] = static_cast<uint16>(fixedFreq); \
++      if (--pModel->m_symbols_until_update == 0) pModel->update_tables(); \
++   } \
++   else \
++   { \
+    uint k = static_cast<uint>((bit_buf >> (symbol_codec::cBitBufSize - 16)) + 1); \
+    uint len; \
+    if (LZHAM_BUILTIN_EXPECT(k <= pTables->m_table_max_code, 1)) \
+@@ -528,6 +564,7 @@ namespace lzham
+    { \
+       pModel->update_tables(); \
+    } \
++   } \
+ }
+ #endif
+ 
+diff --git a/lz/lzham/lzhamlib/lzham_lib.cpp b/lz/lzham/lzhamlib/lzham_lib.cpp
+index 11f5481..9d2fe1f 100644
+--- a/lz/lzham/lzhamlib/lzham_lib.cpp
++++ b/lz/lzham/lzhamlib/lzham_lib.cpp
+@@ -4,6 +4,15 @@
+ #include "lzham_decomp.h"
+ #include "lzham_comp.h"
+ 
++namespace lzham {
++int g_lzham_ablation_mode = 0;
++}
++
++extern "C" void LZHAM_CDECL lzham_set_ablation_mode(int mode)
++{
++   lzham::g_lzham_ablation_mode = mode;
++}
++
+ extern "C" lzham_uint32 LZHAM_CDECL lzham_get_version(void)
+ {
+    return LZHAM_DLL_VERSION;
+diff --git a/lz/lzjb/lzjb2010.c b/lz/lzjb/lzjb2010.c
+index 76c0503..fc83886 100644
+--- a/lz/lzjb/lzjb2010.c
++++ b/lz/lzjb/lzjb2010.c
+@@ -76,8 +76,8 @@ lzjb_compress2010(uchar_t *s_start, uchar_t *d_start, size_t s_len, size_t d_len
+ 		hash += hash >> 9;
+ 		hash += hash >> 5;
+ 		hp = &lempel[hash & (LEMPEL_SIZE - 1)];
+-		offset = (intptr_t)(src - *hp) & OFFSET_MASK;
+-		*hp = (uint16_t)(uintptr_t)src;
++		offset = ((size_t)(src - s_start) - *hp) & OFFSET_MASK;
++		*hp = (uint16_t)(size_t)(src - s_start);
+ 		cpy = src - offset;
+ 		if (cpy >= (uchar_t *)s_start && cpy != src &&
+ 		    src[0] == cpy[0] && src[1] == cpy[1] && src[2] == cpy[2]) {
+diff --git a/lz/lzlib/decoder.c b/lz/lzlib/decoder.c
+index 83a128c..47c4d0a 100644
+--- a/lz/lzlib/decoder.c
++++ b/lz/lzlib/decoder.c
+@@ -25,6 +25,10 @@ static int LZd_try_check_trailer( LZ_decoder * const d )
+   d->check_trailer_pending = false;
+   d->member_finished = true;
+ 
++  extern int lzlib_ablation_mode;
++  if( lzlib_ablation_mode == 2 )
++    return Rd_read_data( d->rdec, trailer, Lt_size ) == Lt_size ? 0 : 3;
++
+   if( Rd_read_data( d->rdec, trailer, Lt_size ) == Lt_size &&
+       Lt_get_data_crc( trailer ) == LZd_crc( d ) &&
+       Lt_get_data_size( trailer ) == LZd_data_position( d ) &&
+diff --git a/lz/lzlib/decoder.h b/lz/lzlib/decoder.h
+index f880849..60106bc 100644
+--- a/lz/lzlib/decoder.h
++++ b/lz/lzlib/decoder.h
+@@ -27,8 +27,12 @@ typedef struct Range_decoder
+   uint32_t range;
+   bool at_stream_end;
+   bool reload_pending;
++  uint8_t raw_byte;
++  uint8_t raw_bits;
+   } Range_decoder;
+ 
++extern int lzlib_ablation_mode;
++
+ static inline bool Rd_init( Range_decoder * const rdec )
+   {
+   if( !Cb_init( &rdec->cb, 65536 + rd_min_available_bytes ) ) return false;
+@@ -37,6 +41,8 @@ static inline bool Rd_init( Range_decoder * const rdec )
+   rdec->range = 0xFFFFFFFFU;
+   rdec->at_stream_end = false;
+   rdec->reload_pending = false;
++  rdec->raw_byte = 0;
++  rdec->raw_bits = 0;
+   return true;
+   }
+ 
+@@ -69,7 +75,8 @@ static inline unsigned long long Rd_purge( Range_decoder * const rdec )
+ 
+ static inline void Rd_reset( Range_decoder * const rdec )
+   { Cb_reset( &rdec->cb );
+-    rdec->member_position = 0; rdec->at_stream_end = false; }
++    rdec->member_position = 0; rdec->at_stream_end = false;
++    rdec->raw_byte = 0; rdec->raw_bits = 0; }
+ 
+ 
+ /* Seek for a member header and update 'get'. Set '*skippedp' to the number
+@@ -135,6 +142,13 @@ static inline bool Rd_unread_data( Range_decoder * const rdec,
+ 
+ static int Rd_try_reload( Range_decoder * const rdec )
+   {
++  if( lzlib_ablation_mode == 3 && rdec->reload_pending )
++    {
++    rdec->reload_pending = false;
++    rdec->raw_byte = 0;
++    rdec->raw_bits = 0;
++    return 1;
++    }
+   if( rdec->reload_pending && Rd_available_bytes( rdec ) >= 5 )
+     {
+     rdec->reload_pending = false;
+@@ -151,6 +165,7 @@ static int Rd_try_reload( Range_decoder * const rdec )
+ 
+ static inline void Rd_normalize( Range_decoder * const rdec )
+   {
++  if( lzlib_ablation_mode == 3 ) return;
+   if( rdec->range <= 0x00FFFFFFU )
+     { rdec->range <<= 8; rdec->code = (rdec->code << 8) | Rd_get_byte( rdec ); }
+   }
+@@ -158,6 +173,20 @@ static inline void Rd_normalize( Range_decoder * const rdec )
+ static inline unsigned Rd_decode( Range_decoder * const rdec,
+                                   const int num_bits )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    unsigned symbol = 0;
++    int i;
++    for( i = 0; i < num_bits; ++i )
++      {
++      if( rdec->raw_bits == 0 )
++        { rdec->raw_byte = Rd_get_byte( rdec ); rdec->raw_bits = 8; }
++      symbol = ( symbol << 1 ) | ( ( rdec->raw_byte >> 7 ) & 1 );
++      rdec->raw_byte <<= 1;
++      --rdec->raw_bits;
++      }
++    return symbol;
++    }
+   unsigned symbol = 0;
+   int i;
+   for( i = num_bits; i > 0; --i )
+@@ -176,6 +205,15 @@ static inline unsigned Rd_decode( Range_decoder * const rdec,
+ static inline unsigned Rd_decode_bit( Range_decoder * const rdec,
+                                       Bit_model * const probability )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    const unsigned bit = Rd_decode( rdec, 1 );
++    if( !bit )
++      *probability += ( bit_model_total - *probability ) >> bit_model_move_bits;
++    else
++      *probability -= *probability >> bit_model_move_bits;
++    return bit;
++    }
+   Rd_normalize( rdec );
+   const uint32_t bound = ( rdec->range >> bit_model_total_bits ) * *probability;
+   if( rdec->code < bound )
+@@ -196,6 +234,11 @@ static inline unsigned Rd_decode_bit( Range_decoder * const rdec,
+ static inline void Rd_decode_symbol_bit( Range_decoder * const rdec,
+                          Bit_model * const probability, unsigned * symbol )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    *symbol = ( *symbol << 1 ) | Rd_decode_bit( rdec, probability );
++    return;
++    }
+   Rd_normalize( rdec );
+   *symbol <<= 1;
+   const uint32_t bound = ( rdec->range >> bit_model_total_bits ) * *probability;
+@@ -217,6 +260,13 @@ static inline void Rd_decode_symbol_bit_reversed( Range_decoder * const rdec,
+                          Bit_model * const probability, unsigned * model,
+                          unsigned * symbol, const int i )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    const unsigned bit = Rd_decode_bit( rdec, probability );
++    *model = ( *model << 1 ) | bit;
++    *symbol |= bit << i;
++    return;
++    }
+   Rd_normalize( rdec );
+   *model <<= 1;
+   const uint32_t bound = ( rdec->range >> bit_model_total_bits ) * *probability;
+diff --git a/lz/lzlib/encoder.c b/lz/lzlib/encoder.c
+index 442670a..dbfab25 100644
+--- a/lz/lzlib/encoder.c
++++ b/lz/lzlib/encoder.c
+@@ -164,6 +164,7 @@ static int LZe_sequence_optimizer( LZ_encoder * const e,
+                                    const int reps[num_rep_distances],
+                                    const State state )
+   {
++  extern int lzlib_ablation_mode;
+   int num_pairs, num_trials;
+   int i, rep, len;
+ 
+@@ -174,6 +175,14 @@ static int LZe_sequence_optimizer( LZ_encoder * const e,
+     }
+   else
+     num_pairs = LZe_read_match_distances( e );
++
++  if( lzlib_ablation_mode == 1 )
++    {
++    e->trials[0].price = 1;
++    e->trials[0].dis4 = -1;
++    if( !Mb_move_pos( &e->eb.mb ) ) return 0;
++    return 1;
++    }
+   const int main_len = (num_pairs > 0) ? e->pairs[num_pairs-1].len : 0;
+ 
+   int replens[num_rep_distances];
+diff --git a/lz/lzlib/encoder_base.h b/lz/lzlib/encoder_base.h
+index b4a6f02..7af4b5b 100644
+--- a/lz/lzlib/encoder_base.h
++++ b/lz/lzlib/encoder_base.h
+@@ -320,9 +320,25 @@ typedef struct Range_encoder
+   uint32_t range;
+   unsigned ff_count;
+   uint8_t cache;
++  uint8_t raw_byte;
++  uint8_t raw_bits;
+   Lzip_header header;
+   } Range_encoder;
+ 
++extern int lzlib_ablation_mode;
++
++static inline void Re_put_raw_bit( Range_encoder * const renc,
++                                   const bool bit )
++  {
++  renc->raw_byte = ( renc->raw_byte << 1 ) | bit;
++  if( ++renc->raw_bits == 8 )
++    {
++    Cb_put_byte( &renc->cb, renc->raw_byte );
++    renc->raw_byte = 0;
++    renc->raw_bits = 0;
++    }
++  }
++
+ static inline void Re_shift_low( Range_encoder * const renc )
+   {
+   if( renc->low >> 24 != 0xFF )
+@@ -346,6 +362,8 @@ static inline void Re_reset( Range_encoder * const renc,
+   renc->range = 0xFFFFFFFFU;
+   renc->ff_count = 0;
+   renc->cache = 0;
++  renc->raw_byte = 0;
++  renc->raw_bits = 0;
+   Lh_set_dictionary_size( renc->header, dictionary_size );
+   int i; for( i = 0; i < Lh_size; ++i ) Cb_put_byte( &renc->cb, renc->header[i] );
+   }
+@@ -381,6 +399,16 @@ static inline int Re_read_data( Range_encoder * const renc,
+ 
+ static inline void Re_flush( Range_encoder * const renc )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    if( renc->raw_bits != 0 )
++      {
++      Cb_put_byte( &renc->cb, renc->raw_byte << ( 8 - renc->raw_bits ) );
++      renc->raw_byte = 0;
++      renc->raw_bits = 0;
++      }
++    return;
++    }
+   int i; for( i = 0; i < 5; ++i ) Re_shift_low( renc );
+   renc->low = 0;
+   renc->range = 0xFFFFFFFFU;
+@@ -391,6 +419,13 @@ static inline void Re_flush( Range_encoder * const renc )
+ static inline void Re_encode( Range_encoder * const renc,
+                               const int symbol, const int num_bits )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    unsigned mask;
++    for( mask = 1U << ( num_bits - 1 ); mask > 0; mask >>= 1 )
++      Re_put_raw_bit( renc, symbol & mask );
++    return;
++    }
+   unsigned mask;
+   for( mask = 1 << ( num_bits - 1 ); mask > 0; mask >>= 1 )
+     {
+@@ -403,6 +438,15 @@ static inline void Re_encode( Range_encoder * const renc,
+ static inline void Re_encode_bit( Range_encoder * const renc,
+                                   Bit_model * const probability, const bool bit )
+   {
++  if( lzlib_ablation_mode == 3 )
++    {
++    Re_put_raw_bit( renc, bit );
++    if( !bit )
++      *probability += (bit_model_total - *probability) >> bit_model_move_bits;
++    else
++      *probability -= *probability >> bit_model_move_bits;
++    return;
++    }
+   const uint32_t bound = ( renc->range >> bit_model_total_bits ) * *probability;
+   if( !bit )
+     {
+diff --git a/lz/lzlib/lzlib.c b/lz/lzlib/lzlib.c
+index 3dd2566..c9bf995 100644
+--- a/lz/lzlib/lzlib.c
++++ b/lz/lzlib/lzlib.c
+@@ -24,6 +24,12 @@
+ 
+ #include "lzlib.h"
+ #include "lzip.h"
++
++int lzlib_ablation_mode = 0;
++
++void LZ_set_ablation_mode( const int mode ) { lzlib_ablation_mode = mode; }
++int LZ_get_ablation_mode( void ) { return lzlib_ablation_mode; }
++
+ #include "cbuffer.c"
+ #include "decoder.h"
+ #include "decoder.c"
+diff --git a/lz/lzlib/lzlib.h b/lz/lzlib/lzlib.h
+index 926124a..d50794c 100644
+--- a/lz/lzlib/lzlib.h
++++ b/lz/lzlib/lzlib.h
+@@ -35,6 +35,8 @@ typedef enum LZ_Errno
+ 
+ 
+ int LZ_api_version( void );				/* new in 1.12 */
++void LZ_set_ablation_mode( int mode );
++int LZ_get_ablation_mode( void );
+ const char * LZ_version( void );
+ const char * LZ_strerror( const LZ_Errno lz_errno );
+ 
+diff --git a/lz/lzsse/lzsse8/lzsse8.cpp b/lz/lzsse/lzsse8/lzsse8.cpp
+index a5682a1..e9ffd17 100644
+--- a/lz/lzsse/lzsse8/lzsse8.cpp
++++ b/lz/lzsse/lzsse8/lzsse8.cpp
+@@ -682,6 +682,8 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+ 
+     outputCursor += CONTROL_BLOCK_SIZE;
+ 
++    _mm_storeu_si128( reinterpret_cast< __m128i* >( currentControlBlock ), _mm_setzero_si128() );
++
+     bool lastControlIsNop = false;
+ 
+     // Loop through the data until we hit the end of one of the buffers (minus the end padding literals)
+@@ -735,10 +737,15 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+                 // Start a new control block if we need one.
+                 if ( currentControlCount == CONTROLS_PER_BLOCK )
+                 {
++                    if ( outputCursor > outputEarlyEnd - CONTROL_BLOCK_SIZE )
++                    {
++                        memcpy( output, input, inputLength );
++                        return inputLength;
++                    }
+                     currentControlBlock  = outputCursor;
+                     outputCursor        += CONTROL_BLOCK_SIZE;
+ 
+-                    _mm_storeu_si128( reinterpret_cast< __m128i* >( outputCursor ), _mm_setzero_si128() );
++                    _mm_storeu_si128( reinterpret_cast< __m128i* >( currentControlBlock ), _mm_setzero_si128() );
+ 
+                     currentControlCount  = 0;
+ 
+@@ -778,10 +785,15 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+             // control in the match.
+             if ( currentControlCount == CONTROLS_PER_BLOCK )
+             {
++                if ( outputCursor > outputEarlyEnd - CONTROL_BLOCK_SIZE )
++                {
++                    memcpy( output, input, inputLength );
++                    return inputLength;
++                }
+                 currentControlBlock  = outputCursor;
+                 outputCursor        += CONTROL_BLOCK_SIZE;
+ 
+-                _mm_storeu_si128( reinterpret_cast< __m128i* >( outputCursor ), _mm_setzero_si128() );
++                _mm_storeu_si128( reinterpret_cast< __m128i* >( currentControlBlock ), _mm_setzero_si128() );
+ 
+                 currentControlCount  = 0;
+ 
+@@ -820,10 +832,15 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+                     // Check if we need to start a new control block
+                     if ( currentControlCount == CONTROLS_PER_BLOCK )
+                     {
++                        if ( outputCursor > outputEarlyEnd - CONTROL_BLOCK_SIZE )
++                        {
++                            memcpy( output, input, inputLength );
++                            return inputLength;
++                        }
+                         currentControlBlock = outputCursor;
+                         outputCursor       += CONTROL_BLOCK_SIZE;
+ 
+-                        _mm_storeu_si128( reinterpret_cast<__m128i*>( outputCursor ), _mm_setzero_si128() );
++                        _mm_storeu_si128( reinterpret_cast<__m128i*>( currentControlBlock ), _mm_setzero_si128() );
+ 
+                         currentControlCount = 0;
+ 
+@@ -849,7 +866,7 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+                         currentControlBlock[ currentControlCount >> 1 ] =
+                             ( currentControlBlock[ currentControlCount >> 1 ] >> 4 ) | ( static_cast<uint8_t>( toEncode ) << 4 );
+ 
+-                        if ( currentControlBlock == 0 && toEncode == 0 )
++                        if ( currentControlCount == 0 && toEncode == 0 )
+                         {
+                             lastControlIsNop = true;
+                         }
+@@ -884,10 +901,15 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+                 // Check if the control block is full and we need start a new one.
+                 if ( currentControlCount == CONTROLS_PER_BLOCK )
+                 {
++                    if ( outputCursor > outputEarlyEnd - CONTROL_BLOCK_SIZE )
++                    {
++                        memcpy( output, input, inputLength );
++                        return inputLength;
++                    }
+                     currentControlBlock  = outputCursor;
+                     outputCursor        += CONTROL_BLOCK_SIZE;
+ 
+-                    _mm_storeu_si128( reinterpret_cast< __m128i* >( outputCursor ), _mm_setzero_si128() );
++                    _mm_storeu_si128( reinterpret_cast< __m128i* >( currentControlBlock ), _mm_setzero_si128() );
+ 
+                     currentControlCount  = 0;
+ 
+@@ -947,7 +969,7 @@ size_t LZSSE8_CompressFast( LZSSE8_FastParseState* state, const void* inputChar,
+                 currentControlBlock = outputCursor;
+                 outputCursor       += CONTROL_BLOCK_SIZE;
+ 
+-                _mm_storeu_si128( reinterpret_cast< __m128i* >( outputCursor ), _mm_setzero_si128() );
++                _mm_storeu_si128( reinterpret_cast< __m128i* >( currentControlBlock ), _mm_setzero_si128() );
+ 
+                 currentControlCount = 0;
+             }
+diff --git a/lz/tornado/LZ77_Coder.cpp b/lz/tornado/LZ77_Coder.cpp
+index 9267c52..6a77e5b 100644
+--- a/lz/tornado/LZ77_Coder.cpp
++++ b/lz/tornado/LZ77_Coder.cpp
+@@ -150,6 +150,74 @@ struct LZ77_ByteDecoder : InputByteStream
+ };
+ 
+ 
++// Fixed-width token coder used by the match-token-format ablation. Matching
++// and parsing remain unchanged; only the serialized literal/match records are
++// replaced with an explicit, decoder-visible representation.
++struct LZ77_FixedCoder : OutputByteStream
++{
++    LZ77_FixedCoder (int coder, CALLBACK_FUNC *callback, void *auxdata, UINT chunk, UINT pad)
++        : OutputByteStream (callback, auxdata, chunk, pad) {}
++
++    void finish() { OutputByteStream::finish(); }
++    void before_shift(BYTE *p) {}
++    void after_shift (BYTE *p) {}
++
++    int encode (int len, byte *current, byte *match, const int MINLEN)
++    {
++        if (len == IMPOSSIBLE_LEN) {
++            put8(2);
++            return 1;
++        }
++        if (len < MINLEN) {
++            put8(0);
++            put8(*current);
++            return 0;
++        }
++        put8(1);
++        put32(static_cast<uint32>(len));
++        put32(static_cast<uint32>(current - match));
++        return 1;
++    }
++
++    static const bool support_tables = FALSE;
++    void encode_table (int type, int len)
++    {
++        CHECK (FREEARC_ERRCODE_INTERNAL, FALSE,
++               (s,"Fatal error: encode_table() isn't implemented in this coder"));
++    }
++
++    PRICE lit_price (UINT c) { return 16; }
++    PRICE match_price (int len, int dist) { return 72; }
++    static const bool support_repdist = FALSE;
++    PRICE repdist_price(int,int) { return 0; }
++};
++
++
++struct LZ77_FixedDecoder : InputByteStream
++{
++    uint token;
++
++    LZ77_FixedDecoder (CALLBACK_FUNC *callback, void *auxdata, UINT bufsize)
++        : InputByteStream(callback, auxdata, bufsize), token(0) {}
++
++    uint is_literal (void)
++    {
++        token = getc();
++        return token == 0;
++    }
++
++    uint getchar (void) { return getc(); }
++    uint getlen (const uint MINLEN)
++    {
++        return token == 2 ? IMPOSSIBLE_LEN : get32();
++    }
++    uint getdist (void)
++    {
++        return token == 2 ? IMPOSSIBLE_DIST : get32();
++    }
++};
++
++
+ // Variable-length data coder *********************************************************************
+ 
+ // We support up to a 256 codes, which encodes values
+diff --git a/lz/tornado/OptimalParsing.cpp b/lz/tornado/OptimalParsing.cpp
+index fc25a52..fc4229c 100644
+--- a/lz/tornado/OptimalParsing.cpp
++++ b/lz/tornado/OptimalParsing.cpp
+@@ -96,6 +96,7 @@ struct OptimalParser : Coder
+         // Evaluate literal: price[p+1] = price[p] + the *p literal price
+         evaluate (p, 1, 0, price + Coder::lit_price(*p));
+         stat_only (cnt_eval_lit++);
++        if (tornado_ablation_mode == 1 || tornado_ablation_mode == 2) return len;
+         if (!Coder::support_repdist || src==0)  return len;
+ 
+         // Get the last match distance and pointer to the previous distances
+@@ -142,6 +143,18 @@ struct OptimalParser : Coder
+ 
+     UINT evaluate_matches (BYTE *p, int len, DISTANCE *matches, DISTANCE *matches_end)
+     {
++        if (tornado_ablation_mode == 1) return len;
++        if (tornado_ablation_mode == 2 && matches < matches_end)
++        {
++            PRICE price = prices[p-basep];
++            int match_len = *(matches_end - 2);
++            DISTANCE dist = *(matches_end - 1);
++            match_len = mymin(match_len, int(lastp-p));
++            for ( ; len <= match_len; len++)
++                evaluate(p, len, dist,
++                         price + Coder::match_price(len-OPTIMAL_PARSER_MIN_MATCH_LEN, dist));
++            return len;
++        }
+         if (matches < matches_end)
+         {
+             PRICE price = prices[p-basep];     // Price of the current position
+@@ -235,7 +248,11 @@ int tor_compress_chunk_optimal (PackMethod &m, CALLBACK_FUNC *callback, void *au
+     if (mf.error() != FREEARC_OK)  return mf.error();
+     // Coder will encode LZ output into bits and put them to outstream
+     // Data should be written in HUGE_BUFFER_SIZE chunks (at least) plus chunk*2 bytes should be allocated to ensure that no buffer overflow may occur (because we flush() data only after processing each 'chunk' input bytes)
+-    OptimalParser<Coder>  coder (buf, bufend, m.encoding_method, callback, auxdata, tornado_compressor_outbuf_size (m.buffer, bytes_to_compress), compress_all_at_once? 0:chunk*2, m.fast_bytes);
++    const UINT coder_pad = compress_all_at_once ? 0 :
++        (m.encoding_method == FIXEDCODER ? m.buffer * 2 : chunk * 2);
++    OptimalParser<Coder>  coder (buf, bufend, m.encoding_method, callback, auxdata,
++                                 tornado_compressor_outbuf_size (m.buffer, bytes_to_compress),
++                                 coder_pad, m.fast_bytes);
+     if (coder.error() != FREEARC_OK)  return coder.error();
+     BYTE *table_end  = coder.support_tables && m.find_tables? buf : buf+m.buffer+LOOKAHEAD;    // The end of last data table processed
+     BYTE *last_found = buf;                             // Last position where data table was found
+diff --git a/lz/tornado/Tornado.cpp b/lz/tornado/Tornado.cpp
+index 257506a..3c6ec01 100644
+--- a/lz/tornado/Tornado.cpp
++++ b/lz/tornado/Tornado.cpp
+@@ -14,6 +14,8 @@ typedef UINT PRICE;
+ typedef uint32 DISTANCE;
+ const int MAX_MATCHES = 2048+256+16;  // maximum length of hash row plus a few low-order matches from auxiliary MFs
+ 
++extern int tornado_ablation_mode;
++
+ #include "MatchFinder.cpp"
+ #include "EntropyCoder.cpp"
+ #include "LZ77_Coder.cpp"
+@@ -44,7 +46,7 @@ int tor_compress   (PackMethod &m, CALLBACK_FUNC *callback, void *auxdata);
+ int tor_decompress (CALLBACK_FUNC *callback, void *auxdata);
+ }
+ 
+-enum { STORING=0, BYTECODER=1, BITCODER=2, HUFCODER=3, ARICODER=4 };
++enum { STORING=0, BYTECODER=1, BITCODER=2, HUFCODER=3, ARICODER=4, FIXEDCODER=5 };
+ enum { GREEDY=1, LAZY=2, OPTIMAL=4 };
+ enum { NON_CACHING_MF=0, CACHING_MF4_DUB=1, CYCLED_MF4_DUB=2
+      ,  CYCLED_MF4= 4,  CYCLED_MF5= 5,  CYCLED_MF6= 6,  CYCLED_MF7= 7
+@@ -124,7 +126,7 @@ bool is_tornado_method_valid (PackMethod &method)
+     if (!(  MIN_HASH_SIZE<=method.hashsize        && method.hashsize-1     <=MAX_HASH_SIZE-1))          return false;
+     if (!(              1<=method.hash_row_width  && method.hash_row_width <=MAX_HASH_ROW_WIDTH))       return false;
+     if (!(              1<=method.update_step     && method.update_step    <=MAX_UPDATE_STEP))          return false;
+-    if (!(      BYTECODER<=method.encoding_method && method.encoding_method<=ARICODER))                 return false;
++    if (!(      BYTECODER<=method.encoding_method && method.encoding_method<=FIXEDCODER))               return false;
+     if (!(              0<=method.hash3           && method.hash3          <=2))                        return false;
+     if (!(method.match_parser==GREEDY || method.match_parser==LAZY  || method.match_parser==OPTIMAL))   return false;
+     if (method.hash3==0 && method.match_parser==OPTIMAL)                                                return false;
+@@ -267,6 +269,7 @@ int tor_compress_chunk (PackMethod &m, CALLBACK_FUNC *callback, void *auxdata, b
+         // Find match length and position
+         UINT len = mf.find_matchlen (p, matchend, 0);
+         BYTE *q  = mf.get_matchptr();
++        if (tornado_ablation_mode == 1) len = 0;
+         // Encode either match or literal
+         coder.set_context(p[-1]);
+         if (!coder.encode (len, p, q, mf.min_length())) {      // literal encoded
+@@ -365,6 +368,8 @@ int tor_compress2o (PackMethod &m, CALLBACK_FUNC *callback, void *auxdata, void
+                     return tor_compress3o <MatchFinder, LZ77_Coder <HuffmanEncoder<EOB_CODE> > > (m, callback, auxdata, buf, bytes_to_compress);
+     case ARICODER:  // Arithmetic encoding
+                     return tor_compress3o <MatchFinder, LZ77_Coder <ArithCoder<EOB_CODE> >     > (m, callback, auxdata, buf, bytes_to_compress);
++    case FIXEDCODER: // Fixed-width literal/match records for token-format ablation
++                    return tor_compress3o <MatchFinder, LZ77_FixedCoder>                         (m, callback, auxdata, buf, bytes_to_compress);
+     default:        return FREEARC_ERRCODE_INVALID_COMPRESSOR;
+     }
+ }
+@@ -382,6 +387,8 @@ int tor_compress2 (PackMethod &m, CALLBACK_FUNC *callback, void *auxdata, void *
+                     return tor_compress3 <MatchFinder, LZ77_Coder <HuffmanEncoder<EOB_CODE> > > (m, callback, auxdata, buf, bytes_to_compress);
+     case ARICODER:  // Arithmetic encoding
+                     return tor_compress3 <MatchFinder, LZ77_Coder <ArithCoder<EOB_CODE> >     > (m, callback, auxdata, buf, bytes_to_compress);
++    case FIXEDCODER: // Fixed-width literal/match records for token-format ablation
++                    return tor_compress3 <MatchFinder, LZ77_FixedCoder>                         (m, callback, auxdata, buf, bytes_to_compress);
+     default:        return FREEARC_ERRCODE_INVALID_COMPRESSOR;
+     }
+ }
+@@ -481,6 +488,9 @@ int tor_compress (PackMethod &m, CALLBACK_FUNC *callback, void *auxdata, void *b
+         return tor_compress0_optimal <CombineMF <CachingMatchFinder<6>, Hash3<MatchFinderN<4>,16,12,TRUE> > ,
+                                       LZ77_DynamicCoder > (m, callback, auxdata, buf, bytes_to_compress);
+     // -16
++    } else if (m.hash3==2 && m.match_finder==BT_MF5 && m.match_parser==OPTIMAL && m.encoding_method==FIXEDCODER) {
++        return tor_compress0_optimal <CombineMF <BinaryTreeMatchFinder<5>, Hash3<ExactMatchFinder<4>,16,12,TRUE> > ,
++                                      LZ77_FixedCoder > (m, callback, auxdata, buf, bytes_to_compress);
+     } else if (m.hash3==2 && m.match_finder==BT_MF5 && m.match_parser==OPTIMAL ) {
+         return tor_compress0_optimal <CombineMF <BinaryTreeMatchFinder<5>, Hash3<ExactMatchFinder<4>,16,12,TRUE> > ,
+                                       LZ77_DynamicCoder > (m, callback, auxdata, buf, bytes_to_compress);
+@@ -629,6 +639,9 @@ int tor_decompress (CALLBACK_FUNC *callback, void *auxdata, void *buf, int bytes
+     case ARICODER:
+             return tor_decompress0 <LZ77_Decoder <ArithDecoder<EOB_CODE> >   > (callback, auxdata, bufsize, minlen);
+ 
++    case FIXEDCODER:
++            return tor_decompress0 <LZ77_FixedDecoder> (callback, auxdata, bufsize, minlen);
++
+     default:
+             errcode = FREEARC_ERRCODE_BAD_COMPRESSED_DATA;
+     }}
+diff --git a/lz/tornado/tor_test.cpp b/lz/tornado/tor_test.cpp
+index 23079f2..31ac462 100644
+--- a/lz/tornado/tor_test.cpp
++++ b/lz/tornado/tor_test.cpp
+@@ -42,6 +42,12 @@
+ 
+ 
+ int compress_all_at_once = 0; 
++int tornado_ablation_mode = 0;
++
++void tor_set_ablation_mode(int mode)
++{
++    tornado_ablation_mode = mode;
++}
+ 
+ struct Results 
+ {
+@@ -78,6 +84,7 @@ int ReadWriteCallback (const char *what, void *buf, int size, void *r_)
+ 		r.outpos += size;
+ 		return size;
+ 	}
++    return size;
+ 
+   } else if (strequ(what,"done")) {
+     // Print final compression statistics
+@@ -117,8 +124,13 @@ uint32_t tor_compress(uint8_t method, uint8_t* inbuf, uint32_t inlen, uint8_t* o
+ 		m = second_Tornado_method[method-20];
+ 	else
+ 		m = std_Tornado_method[method];
++
++    if (tornado_ablation_mode == 3)
++        m.encoding_method = BYTECODER;
++    else if (tornado_ablation_mode == 4)
++        m.encoding_method = FIXEDCODER;
+ 			
+-	m.buffer = mymin (m.buffer, r.inlen+LOOKAHEAD*2);
++	m.buffer = mymax (MIN_BUFFER_SIZE, mymin (m.buffer, r.inlen+LOOKAHEAD*2));
+ 	int result = tor_compress (m, ReadWriteCallback, &r, NULL, -1); 
+ 	return r.outpos;
+ }
+diff --git a/lz/tornado/tor_test.h b/lz/tornado/tor_test.h
+index 46a4251..2ef8bb8 100644
+--- a/lz/tornado/tor_test.h
++++ b/lz/tornado/tor_test.h
+@@ -2,8 +2,8 @@
+ #define TOR_TEST_H
+ 
+ uint32_t tor_decompress(uint8_t* inbuf, uint32_t inlen, uint8_t* outbuf, uint32_t outlen);
++void tor_set_ablation_mode(int mode);
+ uint32_t tor_compress(uint8_t method, uint8_t* inbuf, uint32_t inlen, uint8_t* outbuf, uint32_t outlen);
+ 
+ #endif
+ 
+-
+diff --git a/lz/xz/src/liblzma/api/lzma.h b/lz/xz/src/liblzma/api/lzma.h
+index 6ca6e50..509e27f 100644
+--- a/lz/xz/src/liblzma/api/lzma.h
++++ b/lz/xz/src/liblzma/api/lzma.h
+@@ -207,6 +207,8 @@
+ #	define LZMA_API(type) LZMA_API_IMPORT type LZMA_API_CALL
+ #endif
+ 
++LZMA_API(void) lzma_tscb_set_ablation_mode(int mode);
++
+ 
+ /***********
+  * nothrow *
+diff --git a/lz/xz/src/liblzma/lzma/lzma_encoder.c b/lz/xz/src/liblzma/lzma/lzma_encoder.c
+index 543ca32..4114d76 100644
+--- a/lz/xz/src/liblzma/lzma/lzma_encoder.c
++++ b/lz/xz/src/liblzma/lzma/lzma_encoder.c
+@@ -12,6 +12,14 @@
+ 
+ #include "lzma2_encoder.h"
+ #include "lzma_encoder_private.h"
++
++int lzma_tscb_ablation_mode = 0;
++
++void
++lzma_tscb_set_ablation_mode(int mode)
++{
++	lzma_tscb_ablation_mode = mode;
++}
+ #include "fastpos.h"
+ 
+ 
+@@ -370,11 +378,17 @@ lzma_lzma_encode(lzma_lzma1_encoder *restrict coder, lzma_mf *restrict mf,
+ 		uint32_t len;
+ 		uint32_t back;
+ 
+-		if (coder->fast_mode)
++		if (lzma_tscb_ablation_mode == 1) {
++			uint32_t matches_count;
++			(void)mf_find(mf, &matches_count, coder->matches);
++			back = UINT32_MAX;
++			len = 1;
++		} else if (coder->fast_mode || lzma_tscb_ablation_mode == 2) {
+ 			lzma_lzma_optimum_fast(coder, mf, &back, &len);
+-		else
++		} else {
+ 			lzma_lzma_optimum_normal(coder, mf, &back, &len,
+ 					(uint32_t)(coder->uncomp_size));
++		}
+ 
+ 		encode_symbol(coder, mf, back, len,
+ 				(uint32_t)(coder->uncomp_size));
+diff --git a/lz/xz/src/liblzma/rangecoder/range_decoder.h b/lz/xz/src/liblzma/rangecoder/range_decoder.h
+index a8aca90..99ff949 100644
+--- a/lz/xz/src/liblzma/rangecoder/range_decoder.h
++++ b/lz/xz/src/liblzma/rangecoder/range_decoder.h
+@@ -15,6 +15,8 @@
+ 
+ #include "range_common.h"
+ 
++extern int lzma_tscb_ablation_mode;
++
+ 
+ // Choose the range decoder variants to use using a bitmask.
+ // If no bits are set, only the basic version is used.
+@@ -69,6 +71,8 @@ typedef struct {
+ 	uint32_t range;
+ 	uint32_t code;
+ 	uint32_t init_bytes_left;
++	uint8_t raw_byte;
++	uint8_t raw_bits;
+ } lzma_range_decoder;
+ 
+ 
+@@ -77,6 +81,10 @@ static inline lzma_ret
+ rc_read_init(lzma_range_decoder *rc, const uint8_t *restrict in,
+ 		size_t *restrict in_pos, size_t in_size)
+ {
++	if (lzma_tscb_ablation_mode == 3) {
++		rc->init_bytes_left = 0;
++		return LZMA_STREAM_END;
++	}
+ 	while (rc->init_bytes_left > 0) {
+ 		if (*in_pos == in_size)
+ 			return LZMA_OK;
+@@ -129,6 +137,8 @@ do { \
+ 	(range_decoder).range = UINT32_MAX; \
+ 	(range_decoder).code = 0; \
+ 	(range_decoder).init_bytes_left = 5; \
++	(range_decoder).raw_byte = 0; \
++	(range_decoder).raw_bits = 0; \
+ } while (0)
+ 
+ 
+@@ -136,7 +146,7 @@ do { \
+ /// the input stream is corrupt. So checking this can catch some corrupt
+ /// files especially if they don't have any other integrity check.
+ #define rc_is_finished(range_decoder) \
+-	((range_decoder).code == 0)
++	(lzma_tscb_ablation_mode == 3 || (range_decoder).code == 0)
+ 
+ 
+ // Read the next input byte if needed.
+@@ -179,15 +189,32 @@ do { \
+ ///     }
+ ///
+ #define rc_if_0(prob) \
+-	rc_normalize(); \
+-	rc_bound = (rc.range >> RC_BIT_MODEL_TOTAL_BITS) * (prob); \
+-	if (rc.code < rc_bound)
++	if (lzma_tscb_ablation_mode == 3) { \
++		if (rc.raw_bits == 0) { rc.raw_byte = *rc_in_ptr++; rc.raw_bits = 8; } \
++		rc_bound = (rc.raw_byte >> 7) & 1; \
++		rc.raw_byte <<= 1; \
++		--rc.raw_bits; \
++	} else { \
++		rc_normalize(); \
++		rc_bound = (rc.range >> RC_BIT_MODEL_TOTAL_BITS) * (prob); \
++	} \
++	if (lzma_tscb_ablation_mode == 3 ? rc_bound == 0 : rc.code < rc_bound)
+ 
+ 
+ #define rc_if_0_safe(prob, seq) \
+-	rc_normalize_safe(seq); \
+-	rc_bound = (rc.range >> RC_BIT_MODEL_TOTAL_BITS) * (prob); \
+-	if (rc.code < rc_bound)
++	if (lzma_tscb_ablation_mode == 3) { \
++		if (rc.raw_bits == 0) { \
++			if (rc_in_ptr == rc_in_end) { coder->sequence = seq; goto out; } \
++			rc.raw_byte = *rc_in_ptr++; rc.raw_bits = 8; \
++		} \
++		rc_bound = (rc.raw_byte >> 7) & 1; \
++		rc.raw_byte <<= 1; \
++		--rc.raw_bits; \
++	} else { \
++		rc_normalize_safe(seq); \
++		rc_bound = (rc.range >> RC_BIT_MODEL_TOTAL_BITS) * (prob); \
++	} \
++	if (lzma_tscb_ablation_mode == 3 ? rc_bound == 0 : rc.code < rc_bound)
+ 
+ 
+ /// Update the range decoder state and the used probability variable to
+@@ -197,7 +224,7 @@ do { \
+ /// at least on x86-64, the first version is slightly faster as C code.
+ #define rc_update_0(prob) \
+ do { \
+-	rc.range = rc_bound; \
++	if (lzma_tscb_ablation_mode != 3) rc.range = rc_bound; \
+ 	prob += (RC_BIT_MODEL_TOTAL - (prob)) >> RC_MOVE_BITS; \
+ 	/* prob -= ((prob) + RC_BIT_MODEL_OFFSET) >> RC_MOVE_BITS; */ \
+ } while (0)
+@@ -207,8 +234,7 @@ do { \
+ /// match a decoded bit of 1.
+ #define rc_update_1(prob) \
+ do { \
+-	rc.range -= rc_bound; \
+-	rc.code -= rc_bound; \
++	if (lzma_tscb_ablation_mode != 3) { rc.range -= rc_bound; rc.code -= rc_bound; } \
+ 	prob -= (prob) >> RC_MOVE_BITS; \
+ } while (0)
+ 
+@@ -365,25 +391,40 @@ do { \
+ // perfectly portable: rc_bound = (uint32_t)((int32_t)rc.code >> 31);
+ #define rc_direct(dest, count_var) \
+ do { \
+-	dest = (dest << 1) + 1; \
+-	rc_normalize(); \
+-	rc.range >>= 1; \
+-	rc.code -= rc.range; \
+-	rc_bound = UINT32_C(0) - (rc.code >> 31); \
+-	dest += rc_bound; \
+-	rc.code += rc.range & rc_bound; \
++	if (lzma_tscb_ablation_mode == 3) { \
++		if (rc.raw_bits == 0) { rc.raw_byte = *rc_in_ptr++; rc.raw_bits = 8; } \
++		dest = (dest << 1) | ((rc.raw_byte >> 7) & 1); \
++		rc.raw_byte <<= 1; --rc.raw_bits; \
++	} else { \
++		dest = (dest << 1) + 1; \
++		rc_normalize(); \
++		rc.range >>= 1; \
++		rc.code -= rc.range; \
++		rc_bound = UINT32_C(0) - (rc.code >> 31); \
++		dest += rc_bound; \
++		rc.code += rc.range & rc_bound; \
++	} \
+ } while (--count_var > 0)
+ 
+ 
+ 
+ #define rc_direct_safe(dest, count_var, seq) \
+ do { \
+-	rc_normalize_safe(seq); \
+-	rc.range >>= 1; \
+-	rc.code -= rc.range; \
+-	rc_bound = UINT32_C(0) - (rc.code >> 31); \
+-	rc.code += rc.range & rc_bound; \
+-	dest = (dest << 1) + (rc_bound + 1); \
++	if (lzma_tscb_ablation_mode == 3) { \
++		if (rc.raw_bits == 0) { \
++			if (rc_in_ptr == rc_in_end) { coder->sequence = seq; goto out; } \
++			rc.raw_byte = *rc_in_ptr++; rc.raw_bits = 8; \
++		} \
++		dest = (dest << 1) | ((rc.raw_byte >> 7) & 1); \
++		rc.raw_byte <<= 1; --rc.raw_bits; \
++	} else { \
++		rc_normalize_safe(seq); \
++		rc.range >>= 1; \
++		rc.code -= rc.range; \
++		rc_bound = UINT32_C(0) - (rc.code >> 31); \
++		rc.code += rc.range & rc_bound; \
++		dest = (dest << 1) + (rc_bound + 1); \
++	} \
+ } while (--count_var > 0)
+ 
+ 
+diff --git a/lz/xz/src/liblzma/rangecoder/range_encoder.h b/lz/xz/src/liblzma/rangecoder/range_encoder.h
+index 8f62a47..2395ceb 100644
+--- a/lz/xz/src/liblzma/rangecoder/range_encoder.h
++++ b/lz/xz/src/liblzma/rangecoder/range_encoder.h
+@@ -16,6 +16,8 @@
+ #include "range_common.h"
+ #include "price.h"
+ 
++extern int lzma_tscb_ablation_mode;
++
+ 
+ /// Maximum number of symbols that can be put pending into lzma_range_encoder
+ /// structure between calls to lzma_rc_encode(). For LZMA, 48+5 is enough
+@@ -28,6 +30,8 @@ typedef struct {
+ 	uint64_t cache_size;
+ 	uint32_t range;
+ 	uint8_t cache;
++	uint8_t raw_byte;
++	uint8_t raw_bits;
+ 
+ 	/// Number of bytes written out by rc_encode() -> rc_shift_low()
+ 	uint64_t out_total;
+@@ -60,6 +64,8 @@ rc_reset(lzma_range_encoder *rc)
+ 	rc->cache_size = 1;
+ 	rc->range = UINT32_MAX;
+ 	rc->cache = 0;
++	rc->raw_byte = 0;
++	rc->raw_bits = 0;
+ 	rc->out_total = 0;
+ 	rc->count = 0;
+ 	rc->pos = 0;
+@@ -193,6 +199,48 @@ rc_encode(lzma_range_encoder *rc,
+ {
+ 	assert(rc->count <= RC_SYMBOLS_MAX);
+ 
++	if (lzma_tscb_ablation_mode == 3) {
++		while (rc->pos < rc->count) {
++			const int symbol = rc->symbols[rc->pos];
++			if (symbol == RC_FLUSH) {
++				if (rc->raw_bits != 0) {
++					if (*out_pos == out_size)
++						return true;
++					out[(*out_pos)++] = rc->raw_byte << (8 - rc->raw_bits);
++					++rc->out_total;
++				}
++				rc_reset(rc);
++				return false;
++			}
++
++			if (rc->raw_bits == 7 && *out_pos == out_size)
++				return true;
++
++			const uint32_t bit = symbol == RC_BIT_1 || symbol == RC_DIRECT_1;
++			if (symbol == RC_BIT_0 || symbol == RC_BIT_1) {
++				probability prob = *rc->probs[rc->pos];
++				if (bit)
++					prob -= prob >> RC_MOVE_BITS;
++				else
++					prob += (RC_BIT_MODEL_TOTAL - prob) >> RC_MOVE_BITS;
++				*rc->probs[rc->pos] = prob;
++			}
++
++			rc->raw_byte = (uint8_t)((rc->raw_byte << 1) | bit);
++			++rc->raw_bits;
++			++rc->pos;
++			if (rc->raw_bits == 8) {
++				out[(*out_pos)++] = rc->raw_byte;
++				++rc->out_total;
++				rc->raw_byte = 0;
++				rc->raw_bits = 0;
++			}
++		}
++		rc->count = 0;
++		rc->pos = 0;
++		return false;
++	}
++
+ 	while (rc->pos < rc->count) {
+ 		// Normalize
+ 		if (rc->range < RC_TOP_VALUE) {
+@@ -267,6 +315,13 @@ static inline bool
+ rc_encode_dummy(const lzma_range_encoder *rc, uint64_t out_limit)
+ {
+ 	assert(rc->count <= RC_SYMBOLS_MAX);
++	if (lzma_tscb_ablation_mode == 3) {
++		uint64_t bits = rc->raw_bits;
++		for (size_t pos = rc->pos; pos < rc->count; ++pos)
++			if (rc->symbols[pos] != RC_FLUSH)
++				++bits;
++		return rc->out_total + (bits + 7) / 8 > out_limit;
++	}
+ 
+ 	uint64_t low = rc->low;
+ 	uint64_t cache_size = rc->cache_size;
+@@ -343,6 +398,13 @@ rc_encode_dummy(const lzma_range_encoder *rc, uint64_t out_limit)
+ static inline uint64_t
+ rc_pending(const lzma_range_encoder *rc)
+ {
++	if (lzma_tscb_ablation_mode == 3) {
++		uint64_t bits = rc->raw_bits;
++		for (size_t pos = rc->pos; pos < rc->count; ++pos)
++			if (rc->symbols[pos] != RC_FLUSH)
++				++bits;
++		return (bits + 7) / 8;
++	}
+ 	return rc->cache_size + 5 - 1;
+ }
+ 
+diff --git a/misc/glza/GLZAcomp.c b/misc/glza/GLZAcomp.c
+index 8931039..bd9bf89 100644
+--- a/misc/glza/GLZAcomp.c
++++ b/misc/glza/GLZAcomp.c
+@@ -28,6 +28,14 @@ limitations under the License.
+ #include "GLZAformat.h"
+ #include "GLZAcompress.h"
+ #include "GLZAencode.h"
++#include "GLZAmodel.h"
++
++static int glza_ablation_mode = 0;
++
++void GLZA_set_ablation_mode(int mode) {
++  glza_ablation_mode = mode;
++  GLZAmodel_set_ablation_mode(mode);
++}
+ 
+ 
+ uint8_t GLZAcomp(size_t insize, uint8_t * inbuf, size_t * outsize_ptr, uint8_t *outbuf, FILE * fd,
+@@ -57,6 +65,7 @@ uint8_t GLZAcomp(size_t insize, uint8_t * inbuf, size_t * outsize_ptr, uint8_t *
+   if (status == 0)
+     return(0);
+   tempsize = *outsize_ptr;
++  GLZAcompress_set_ablation_mode(glza_ablation_mode);
+   status = GLZAcompress(tempsize, outsize_ptr, &temp2buf, params);
+   if (status == 0)
+     return(0);
+diff --git a/misc/glza/GLZAcomp.h b/misc/glza/GLZAcomp.h
+index 0e430b6..aeffc43 100644
+--- a/misc/glza/GLZAcomp.h
++++ b/misc/glza/GLZAcomp.h
+@@ -3,6 +3,7 @@ extern "C" {
+ #endif
+   uint8_t GLZAcomp(size_t insize, uint8_t * inbuf, size_t * outsize_ptr, uint8_t * outbuf,
+       FILE * fd, struct param_data * params);
++  void GLZA_set_ablation_mode(int mode);
+ #if defined (__cplusplus)
+ }
+ #endif
+diff --git a/misc/glza/GLZAcompress.c b/misc/glza/GLZAcompress.c
+index 5400beb..2f3e19c 100644
+--- a/misc/glza/GLZAcompress.c
++++ b/misc/glza/GLZAcompress.c
+@@ -2458,6 +2458,12 @@ void *substitute_thread(void *arg) {
+ }
+ 
+ 
++static int glza_compress_ablation_mode = 0;
++
++void GLZAcompress_set_ablation_mode(int mode) {
++  glza_compress_ablation_mode = mode;
++}
++
+ uint8_t GLZAcompress(size_t in_size, size_t * outsize_ptr, uint8_t ** iobuf, struct param_data * params) {
+   const uint8_t INSERT_SYMBOL_CHAR = 0xFE;
+   const uint8_t DEFINE_SYMBOL_CHAR = 0xFF;
+@@ -2735,6 +2741,9 @@ uint8_t GLZAcompress(size_t in_size, size_t * outsize_ptr, uint8_t ** iobuf, str
+   scan_cycle = 0;
+   scan_mode = ((cap_encoded == 0) && ((UTF8_compliant == 0) || (fast_mode == 0))) || (create_words == 0);
+ 
++  if (glza_compress_ablation_mode == 1)
++    goto finalize_grammar;
++
+   do {
+ top_main_loop:
+     next_new_symbol_number = num_terminals + num_rules;
+@@ -4537,6 +4546,7 @@ main_overlap_check_loop_end:
+       max_scores = 100 * num_candidates;
+   } while ((num_candidates != 0) && (num_terminals + num_rules < max_rules));
+ 
++finalize_grammar:
+   if (fast_mode != 0) {
+     free(score_map);
+     free(candidates_position);
+diff --git a/misc/glza/GLZAcompress.h b/misc/glza/GLZAcompress.h
+index 2ca0fd4..d59f219 100644
+--- a/misc/glza/GLZAcompress.h
++++ b/misc/glza/GLZAcompress.h
+@@ -1 +1,2 @@
+ uint8_t GLZAcompress(size_t insize, size_t * outsize_ptr, uint8_t ** iobuf, struct param_data * params);
++void GLZAcompress_set_ablation_mode(int mode);
+diff --git a/misc/glza/GLZAdecode.c b/misc/glza/GLZAdecode.c
+index 415a916..02795fc 100644
+--- a/misc/glza/GLZAdecode.c
++++ b/misc/glza/GLZAdecode.c
+@@ -63,7 +63,7 @@ struct bin_data {
+   uint16_t fbob;
+   uint32_t sym_list_size;
+   struct sym_data * symbol_data;
+-} bin_data[0x100][26];
++} bin_data[0x100][27];
+ 
+ struct sym_data {
+   uint32_t string_index;
+diff --git a/misc/glza/GLZAencode.c b/misc/glza/GLZAencode.c
+index 819812b..d3e0d04 100644
+--- a/misc/glza/GLZAencode.c
++++ b/misc/glza/GLZAencode.c
+@@ -1861,8 +1861,12 @@ uint8_t GLZAencode(size_t in_size, uint8_t * inbuf, size_t * outsize_ptr, uint8_
+     for (i = min_code_length ; i < max_regular_code_length ; i++) {
+       int32_t len_adj_profit = -(sd[ranked_symbols[index_last_length[i]]].count - 1);
+       for (j = i + 2 ; j <= max_regular_code_length ; j++) {
+-        len_adj_profit += sd[ranked_symbols[index_last_length[j - 1] + 1]].count - 1;
+-        if (index_last_length[j] != index_last_length[j - 1] + 1) {
++        int32_t next_ranked_index = index_last_length[j - 1] + 1;
++        if (next_ranked_index >= (int32_t)num_new_symbols)
++          break;
++        len_adj_profit += sd[ranked_symbols[next_ranked_index]].count - 1;
++        if ((index_last_length[j] != next_ranked_index)
++            && (next_ranked_index + 1 < (int32_t)num_new_symbols)) {
+           int32_t next_symbol_profit = sd[ranked_symbols[index_last_length[j - 1] + 2]].count - 1;
+           if (len_adj_profit + next_symbol_profit > max_len_adj_profit) {
+             max_len_adj_profit = len_adj_profit + next_symbol_profit;
+diff --git a/misc/glza/GLZAmodel.c b/misc/glza/GLZAmodel.c
+index 594aa7e..287d54c 100644
+--- a/misc/glza/GLZAmodel.c
++++ b/misc/glza/GLZAmodel.c
+@@ -44,6 +44,39 @@ struct first_char_data {
+ };
+ struct first_char_data FirstCharData[4][0x100][0x100];
+ uint8_t NumBaseSymbols = 0;
++static int glza_model_ablation_mode = 0;
++
++void GLZAmodel_set_ablation_mode(int mode) {
++  glza_model_ablation_mode = mode;
++}
++
++static void RawPut8(uint8_t value) {
++  OutBuffer[OutCharNum++] = value;
++}
++
++static void RawPut16(uint16_t value) {
++  RawPut8((uint8_t)(value >> 8));
++  RawPut8((uint8_t)value);
++}
++
++static void RawPut32(uint32_t value) {
++  RawPut16((uint16_t)(value >> 16));
++  RawPut16((uint16_t)value);
++}
++
++static uint8_t RawGet8() {
++  return InBuffer[InCharNum++];
++}
++
++static uint16_t RawGet16() {
++  uint16_t value = (uint16_t)RawGet8() << 8;
++  return value | RawGet8();
++}
++
++static uint32_t RawGet32() {
++  uint32_t value = (uint32_t)RawGet16() << 16;
++  return value | RawGet16();
++}
+ 
+ uint32_t ReadLow() {return(low);}
+ uint32_t ReadRange() {return(range);}
+@@ -448,11 +481,15 @@ void InitBaseSymbolCap(uint8_t BaseSymbol, uint8_t * symbol_lengths) {
+ }
+ 
+ void IncreaseRange(uint32_t low_ranges, uint32_t ranges) {
++  if (glza_model_ablation_mode == 2)
++    return;
+   low -= range * low_ranges;
+   range *= ranges;
+ }
+ 
+ void DoubleRange(uint8_t low_ranges) {
++  if (glza_model_ablation_mode == 2)
++    return;
+   low -= range * low_ranges;
+   range *= 2;
+ }
+@@ -462,6 +499,8 @@ void WriteOutBuffer(uint8_t value) {
+ }
+ 
+ void NormalizeEncoder(uint32_t bot) {
++  if (glza_model_ablation_mode == 2)
++    return;
+   while ((low ^ (low + range)) < TOP || (range < bot && ((range = -low & (bot - 1)), 1))) {
+     OutBuffer[OutCharNum++] = (uint8_t)(low >> 24);
+     range <<= 8;
+@@ -471,6 +510,7 @@ void NormalizeEncoder(uint32_t bot) {
+ }
+ 
+ void EncodeDictTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(0); return; }
+   NormalizeEncoder(FREQ_SYM_TYPE_BOT1);
+   uint32_t extra_range = range & (FREQ_SYM_TYPE_BOT1 - 1);
+   if (QueueSize != 0)
+@@ -484,6 +524,7 @@ void EncodeDictTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSize
+ }
+ 
+ void EncodeDictType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(0); return; }
+   NormalizeEncoder(8 * FREQ_SYM_TYPE_BOT3);
+   uint32_t extra_range = range & (8 * FREQ_SYM_TYPE_BOT3 - 1);
+   if (QueueSize != 0)
+@@ -503,6 +544,7 @@ void EncodeDictType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint16
+ }
+ 
+ void EncodeNewTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(1); return; }
+   NormalizeEncoder(FREQ_SYM_TYPE_BOT1);
+   uint32_t extra_range = range & (FREQ_SYM_TYPE_BOT1 - 1);
+   uint16_t FreqMtf = FREQ_SYM_TYPE_BOT1 - FreqSymTypePriorType[Context1][0] - FreqSymTypePriorType[Context1][1];
+@@ -518,6 +560,7 @@ void EncodeNewTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSize)
+ }
+ 
+ void EncodeNewType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(1); return; }
+   NormalizeEncoder(8 * FREQ_SYM_TYPE_BOT3);
+   uint32_t extra_range = range & (8 * FREQ_SYM_TYPE_BOT3 - 1);
+   if (QueueSize != 0)
+@@ -538,6 +581,7 @@ void EncodeNewType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint16_
+ }
+ 
+ void EncodeMtfTypeBinary(uint8_t Context1, uint8_t Context2) {
++  if (glza_model_ablation_mode == 2) { RawPut8(2); return; }
+   NormalizeEncoder(FREQ_SYM_TYPE_BOT1);
+   uint32_t extra_range = range & (FREQ_SYM_TYPE_BOT1 - 1);
+   uint16_t delta = FreqSymTypePriorType[Context1][0] + FreqSymTypePriorType[Context1][1];
+@@ -549,6 +593,7 @@ void EncodeMtfTypeBinary(uint8_t Context1, uint8_t Context2) {
+ }
+ 
+ void EncodeMtfType(uint8_t Context1, uint8_t Context2, uint8_t Context3) {
++  if (glza_model_ablation_mode == 2) { RawPut8(2); return; }
+   NormalizeEncoder(8 * FREQ_SYM_TYPE_BOT3);
+   uint32_t extra_range = range & (8 * FREQ_SYM_TYPE_BOT3 - 1);
+   uint16_t delta = FreqSymTypePriorType[Context1][0] + FreqSymTypePriorType[Context1][1]
+@@ -566,6 +611,7 @@ void EncodeMtfType(uint8_t Context1, uint8_t Context2, uint8_t Context3) {
+ }
+ 
+ void EncodeMtfFirst(uint8_t Context, uint8_t First, uint16_t QueueSizeOther, uint16_t QueueSizeSpace, uint16_t QueueSizeAz) {
++  if (glza_model_ablation_mode == 2) { RawPut8(First); return; }
+   uint16_t delta;
+   NormalizeEncoder(0x1000);
+   if (First == 0) {
+@@ -645,6 +691,7 @@ void EncodeMtfFirst(uint8_t Context, uint8_t First, uint16_t QueueSizeOther, uin
+ }
+ 
+ void EncodeMtfPos(uint8_t position, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(position); return; }
+   NormalizeEncoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_other > QueueSize)
+     unused_queue_freq_other += FreqMtfPos[0][--last_queue_size_other];
+@@ -700,6 +747,7 @@ void EncodeMtfPos(uint8_t position, uint16_t QueueSize) {
+ 
+ 
+ void EncodeMtfPosAz(uint8_t position, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(position); return; }
+   NormalizeEncoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_az > QueueSize)
+     unused_queue_freq_az += FreqMtfPos[2][--last_queue_size_az];
+@@ -753,6 +801,7 @@ void EncodeMtfPosAz(uint8_t position, uint16_t QueueSize) {
+ }
+ 
+ void EncodeMtfPosSpace(uint8_t position, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(position); return; }
+   NormalizeEncoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_space > QueueSize)
+     unused_queue_freq_space += FreqMtfPos[1][--last_queue_size_space];
+@@ -806,6 +855,7 @@ void EncodeMtfPosSpace(uint8_t position, uint16_t QueueSize) {
+ }
+ 
+ void EncodeMtfPosOther(uint8_t position, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) { RawPut8(position); return; }
+   NormalizeEncoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_other > QueueSize)
+     unused_queue_freq_other += FreqMtfPos[0][--last_queue_size_other];
+@@ -858,6 +908,7 @@ void EncodeMtfPosOther(uint8_t position, uint16_t QueueSize) {
+ }
+ 
+ void EncodeSID(uint8_t Context, uint8_t SIDSymbol) {
++  if (glza_model_ablation_mode == 2) { RawPut8(SIDSymbol); return; }
+   NormalizeEncoder(FREQ_SID_BOT);
+   if (SIDSymbol == 0) {
+     range = FreqSID[Context][0] * (range / RangeScaleSID[Context]);
+@@ -877,6 +928,7 @@ void EncodeSID(uint8_t Context, uint8_t SIDSymbol) {
+ }
+ 
+ void EncodeExtraSID(uint32_t ExtraSymbols) {
++  if (glza_model_ablation_mode == 2) { RawPut32(ExtraSymbols); return; }
+   int64_t code;
+   uint32_t j;
+   uint8_t range_multiplier;
+@@ -923,6 +975,7 @@ void EncodeExtraSID(uint32_t ExtraSymbols) {
+ }
+ 
+ void EncodeINST(uint8_t Context, uint8_t SIDSymbol, uint8_t Symbol) {
++  if (glza_model_ablation_mode == 2) { RawPut8(Symbol); return; }
+   NormalizeEncoder(FREQ_INST_BOT);
+   uint32_t extra_range = range;
+   range /= RangeScaleINST[Context][SIDSymbol];
+@@ -957,6 +1010,7 @@ void EncodeINST(uint8_t Context, uint8_t SIDSymbol, uint8_t Symbol) {
+ }
+ 
+ void EncodeERG(uint16_t Context1, uint16_t Context2, uint8_t Symbol) {
++  if (glza_model_ablation_mode == 2) { RawPut8(Symbol); return; }
+   NormalizeEncoder(FREQ_ERG_BOT);
+   if (Symbol == 0) {
+     range = (FreqERG[0] + FreqERG[Context1] + FreqERG[Context2]) * (range >> 13);
+@@ -974,6 +1028,7 @@ void EncodeERG(uint16_t Context1, uint16_t Context2, uint8_t Symbol) {
+ }
+ 
+ void EncodeGoMtf(uint16_t Context1, uint8_t Context2, uint8_t Symbol) {
++  if (glza_model_ablation_mode == 2) { RawPut8(Symbol); return; }
+   NormalizeEncoder(FREQ_GO_MTF_BOT);
+ uint32_t extra_range = range & (FREQ_GO_MTF_BOT - 1);
+   Context1 += 0xF0 * Context2;
+@@ -994,6 +1049,7 @@ uint32_t extra_range = range & (FREQ_GO_MTF_BOT - 1);
+ }
+ 
+ void EncodeWordTag(uint8_t Symbol, uint8_t Context) {
++  if (glza_model_ablation_mode == 2) { RawPut8(Symbol); return; }
+   NormalizeEncoder(FREQ_WORD_TAG_BOT);
+   if (Symbol == 0) {
+     range = FreqWordTag[Context] * (range >> 12);
+@@ -1007,6 +1063,7 @@ void EncodeWordTag(uint8_t Symbol, uint8_t Context) {
+ }
+ 
+ void EncodeShortDictionarySymbol(uint16_t BinNum, uint16_t DictionaryBins, uint16_t CodeBins) {
++  if (glza_model_ablation_mode == 2) { RawPut16(BinNum); return; }
+   NormalizeEncoder(1 << 12);
+   low += BinNum * (range /= DictionaryBins);
+   range *= (uint32_t)CodeBins;
+@@ -1015,6 +1072,7 @@ void EncodeShortDictionarySymbol(uint16_t BinNum, uint16_t DictionaryBins, uint1
+ 
+ void EncodeLongDictionarySymbol(uint32_t BinCode, uint16_t BinNum, uint16_t DictionaryBins, uint8_t CodeLength,
+     uint16_t CodeBins) {
++  if (glza_model_ablation_mode == 2) { RawPut16(BinNum); RawPut32(BinCode); return; }
+   NormalizeEncoder((uint32_t)1 << 12);
+   low += BinNum * (range /= DictionaryBins);
+   NormalizeEncoder((uint32_t)1 << CodeLength);
+@@ -1024,12 +1082,14 @@ void EncodeLongDictionarySymbol(uint32_t BinCode, uint16_t BinNum, uint16_t Dict
+ }
+ 
+ void EncodeBaseSymbol(uint32_t BaseSymbol, uint32_t NumBaseSymbols, uint32_t NormBaseSymbols) {
++  if (glza_model_ablation_mode == 2) { RawPut32(BaseSymbol); return; }
+   NormalizeEncoder(NormBaseSymbols);
+   low += BaseSymbol * (range /= NumBaseSymbols);
+   return;
+ }
+ 
+ void EncodeFirstChar(uint8_t FirstChar, uint8_t SymType, uint8_t LastChar) {
++  if (glza_model_ablation_mode == 2) { RawPut8(FirstChar); return; }
+   uint16_t *RangeScalePtr = &RangeScaleFirstChar[SymType][LastChar];
+   uint32_t extra_range;
+   struct first_char_data * FCDataPtr = &FirstCharData[SymType][LastChar][0];
+@@ -1073,6 +1133,7 @@ void EncodeFirstChar(uint8_t FirstChar, uint8_t SymType, uint8_t LastChar) {
+ }
+ 
+ void EncodeFirstCharBinary(uint8_t FirstChar, uint8_t LastChar) {
++  if (glza_model_ablation_mode == 2) { RawPut8(FirstChar); return; }
+   uint8_t SectionIndex = 0;
+   uint16_t *RangeScalePtr = &RangeScaleFirstChar[0][LastChar];
+   uint32_t extra_range;
+@@ -1156,6 +1217,8 @@ void InitEncoder(uint8_t max_base_code, uint8_t num_inst_codes, uint8_t cap_enco
+ }
+ 
+ void FinishEncoder() {
++  if (glza_model_ablation_mode == 2)
++    return;
+   OutBuffer[OutCharNum++] = (uint8_t)(low >> 24);
+   OutBuffer[OutCharNum++] = (uint8_t)(low >> 16);
+   OutBuffer[OutCharNum++] = (uint8_t)(low >> 8);
+@@ -1163,6 +1226,8 @@ void FinishEncoder() {
+ }
+ 
+ void NormalizeDecoder(uint32_t bot) {
++  if (glza_model_ablation_mode == 2)
++    return;
+   while ((low ^ (low + range)) < TOP || (range < (bot) && ((range = -low & ((bot) - 1)), 1))) {
+     code = (code << 8) | InBuffer[InCharNum++];
+     low <<= 8;
+@@ -1171,6 +1236,7 @@ void NormalizeDecoder(uint32_t bot) {
+ }
+ 
+ uint8_t DecodeSymTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint32_t DictRange;
+   NormalizeDecoder(FREQ_SYM_TYPE_BOT1);
+   uint32_t extra_range = range & (FREQ_SYM_TYPE_BOT1 - 1);
+@@ -1215,6 +1281,7 @@ uint8_t DecodeSymTypeBinary(uint8_t Context1, uint8_t Context2, uint16_t QueueSi
+ }
+ 
+ uint8_t DecodeSymType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint32_t DictRange;
+   NormalizeDecoder(8 * FREQ_SYM_TYPE_BOT3);
+   uint32_t extra_range = range & (8 * FREQ_SYM_TYPE_BOT3 - 1);
+@@ -1290,6 +1357,7 @@ uint8_t DecodeSymType(uint8_t Context1, uint8_t Context2, uint8_t Context3, uint
+ }
+ 
+ uint8_t DecodeMtfFirst(uint8_t Context, uint16_t QueueSizeOther, uint16_t QueueSizeSpace, uint16_t QueueSizeAz) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint16_t delta;
+   uint16_t Freq0, Freq1;
+   NormalizeDecoder(0x1000);
+@@ -1357,6 +1425,7 @@ uint8_t DecodeMtfFirst(uint8_t Context, uint16_t QueueSizeOther, uint16_t QueueS
+ }
+ 
+ uint8_t DecodeMtfPos(uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_other > QueueSize)
+     unused_queue_freq_other += FreqMtfPos[0][--last_queue_size_other];
+@@ -1412,6 +1481,7 @@ uint8_t DecodeMtfPos(uint16_t QueueSize) {
+ }
+ 
+ uint8_t DecodeMtfPosAz(uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_az > QueueSize)
+     unused_queue_freq_az += FreqMtfPos[2][--last_queue_size_az];
+@@ -1468,6 +1538,7 @@ uint8_t DecodeMtfPosAz(uint16_t QueueSize) {
+ }
+ 
+ uint8_t DecodeMtfPosSpace(uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_space > QueueSize)
+     unused_queue_freq_space += FreqMtfPos[1][--last_queue_size_space];
+@@ -1525,6 +1596,7 @@ uint8_t DecodeMtfPosSpace(uint16_t QueueSize) {
+ }
+ 
+ uint8_t DecodeMtfPosOther(uint16_t QueueSize) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_MTF_POS_BOT);
+   if (last_queue_size_other > QueueSize)
+     unused_queue_freq_other += FreqMtfPos[0][--last_queue_size_other];
+@@ -1581,6 +1653,7 @@ uint8_t DecodeMtfPosOther(uint16_t QueueSize) {
+ }
+ 
+ uint8_t DecodeSID(uint8_t Context) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_SID_BOT);
+   range /= RangeScaleSID[Context];
+   count = code - low;
+@@ -1606,6 +1679,7 @@ uint8_t DecodeSID(uint8_t Context) {
+ 
+ 
+ uint32_t DecodeExtraSID() {
++  if (glza_model_ablation_mode == 2) return RawGet32();
+   uint32_t ExtraSID;
+   NormalizeDecoder((uint32_t)1 << 9);
+   uint16_t input = (code - low) / (range >>= 9);
+@@ -1665,6 +1739,7 @@ uint32_t DecodeExtraSID() {
+ 
+ 
+ uint8_t DecodeINST(uint8_t Context, uint8_t SIDSymbol) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_INST_BOT);
+   uint32_t extra_range = range;
+   range /= RangeScaleINST[Context][SIDSymbol];
+@@ -1702,6 +1777,7 @@ uint8_t DecodeINST(uint8_t Context, uint8_t SIDSymbol) {
+ }
+ 
+ uint8_t DecodeERG(uint16_t Context1, uint16_t Context2) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   NormalizeDecoder(FREQ_ERG_BOT);
+   if ((FreqERG[0] + FreqERG[Context1] + FreqERG[Context2]) * (range >>= 13) > code - low) {
+     range *= FreqERG[0] + FreqERG[Context1] + FreqERG[Context2];
+@@ -1720,6 +1796,7 @@ uint8_t DecodeERG(uint16_t Context1, uint16_t Context2) {
+ }
+ 
+ uint8_t DecodeGoMtf(uint16_t Context1, uint8_t Context2) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint8_t go_mtf;
+   NormalizeDecoder(FREQ_GO_MTF_BOT);
+   uint32_t extra_range = range & (FREQ_GO_MTF_BOT - 1);
+@@ -1743,6 +1820,7 @@ uint8_t DecodeGoMtf(uint16_t Context1, uint8_t Context2) {
+ }
+ 
+ uint8_t DecodeWordTag(uint8_t Context) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint8_t Tag;
+   NormalizeDecoder(FREQ_WORD_TAG_BOT);
+   if (FreqWordTag[Context] * (range >>= 12) > code - low) {
+@@ -1759,6 +1837,7 @@ uint8_t DecodeWordTag(uint8_t Context) {
+ }
+ 
+ uint16_t DecodeBin(uint16_t Bins) {
++  if (glza_model_ablation_mode == 2) return RawGet16();
+   uint16_t BinNum;
+   NormalizeDecoder((uint32_t)1 << 12);
+   BinNum = (code - low) / (range /= Bins);
+@@ -1767,6 +1846,7 @@ uint16_t DecodeBin(uint16_t Bins) {
+ }
+ 
+ uint32_t DecodeBinCode(uint8_t Bits) {
++  if (glza_model_ablation_mode == 2) return RawGet32();
+   NormalizeDecoder((uint32_t)1 << Bits);
+   uint32_t BinCode = (code - low) / (range >>= Bits);
+   low += BinCode * range;
+@@ -1774,6 +1854,7 @@ uint32_t DecodeBinCode(uint8_t Bits) {
+ }
+ 
+ uint32_t DecodeBaseSymbol(uint32_t NumBaseSymbols) {
++  if (glza_model_ablation_mode == 2) return RawGet32();
+   NormalizeDecoder(NumBaseSymbols);
+   range /= NumBaseSymbols;
+   uint32_t BaseSymbol = (code - low) / range;
+@@ -1782,6 +1863,7 @@ uint32_t DecodeBaseSymbol(uint32_t NumBaseSymbols) {
+ }
+ 
+ uint32_t DecodeBaseSymbolCap(uint32_t NumBaseSymbols) {
++  if (glza_model_ablation_mode == 2) return RawGet32();
+   NormalizeDecoder(NumBaseSymbols);
+   range /= NumBaseSymbols - 24;
+   uint32_t BaseSymbol = (code - low) / range;
+@@ -1790,6 +1872,7 @@ uint32_t DecodeBaseSymbolCap(uint32_t NumBaseSymbols) {
+ }
+ 
+ uint8_t DecodeFirstChar(uint8_t SymType, uint8_t LastChar) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint8_t FirstChar;
+   uint16_t *RangeScalePtr = &RangeScaleFirstChar[SymType][LastChar];
+   uint32_t extra_range;
+@@ -1836,6 +1919,7 @@ uint8_t DecodeFirstChar(uint8_t SymType, uint8_t LastChar) {
+ }
+ 
+ uint8_t DecodeFirstCharBinary(uint8_t LastChar) {
++  if (glza_model_ablation_mode == 2) return RawGet8();
+   uint8_t FirstChar, SectionIndex;
+   uint16_t *RangeScalePtr = &RangeScaleFirstChar[0][LastChar];
+   uint32_t extra_range, temp;
+@@ -1892,8 +1976,11 @@ void InitDecoder(uint8_t max_base_code, uint8_t num_inst_codes, uint8_t cap_enco
+   MaxInstCode = num_inst_codes - 1;
+   InBuffer = inbuf;
+   code = 0, range = -1;
+-  for (low = 4; low != 0; low--)
+-    code = (code << 8) | InBuffer[InCharNum++];
++  if (glza_model_ablation_mode == 2)
++    low = 0;
++  else
++    for (low = 4; low != 0; low--)
++      code = (code << 8) | InBuffer[InCharNum++];
+   StartModelSymType(use_mtf, cap_encoded);
+   StartModelMtfFirst();
+   StartModelMtfPos();
+diff --git a/misc/glza/GLZAmodel.h b/misc/glza/GLZAmodel.h
+index 576ab2e..574d21a 100644
+--- a/misc/glza/GLZAmodel.h
++++ b/misc/glza/GLZAmodel.h
+@@ -17,6 +17,7 @@ enum { LEVEL0 = 0, LEVEL0_CAP = 1, LEVEL1 = 2, LEVEL1_CAP = 3 };
+ 
+ uint32_t ReadLow();
+ uint32_t ReadRange();
++void GLZAmodel_set_ablation_mode(int mode);
+ void NormalizeEncoder(uint32_t bot);
+ void NormalizeDecoder(uint32_t bot);
+ void InitFirstChar(uint8_t FirstChar, uint8_t code_length);

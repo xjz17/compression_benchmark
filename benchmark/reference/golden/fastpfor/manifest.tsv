@@ -1,0 +1,5 @@
+filename	values_len	bytes_len
+fastpfor_float_n512.bin	512	2004
+fastpfor_float_n64.bin	64	324
+fastpfor_int_n512.bin	512	724
+fastpfor_int_n64.bin	64	132

@@ -1,0 +1,65 @@
+{
+  "schema": "native-lz-defaults-v1",
+  "parameters": {
+    "min_match": 8,
+    "max_match": 256
+  },
+  "fixed_parameters": {
+    "window": 32768,
+    "length_bias": 3,
+    "parser": "aligned8_greedy"
+  },
+  "search_domain": {
+    "min_match": [
+      8,
+      16,
+      24,
+      32,
+      64
+    ],
+    "max_match": [
+      8,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64,
+      72,
+      80,
+      88,
+      96,
+      104,
+      112,
+      120,
+      128,
+      136,
+      144,
+      152,
+      160,
+      168,
+      176,
+      184,
+      192,
+      200,
+      208,
+      216,
+      224,
+      232,
+      240,
+      248,
+      256
+    ],
+    "constraint": "min_match <= max_match",
+    "candidate_count": 147,
+    "step_bytes": 8
+  },
+  "criterion": {
+    "objective": "minimize sum of complete calibration frame bytes over all 60 blocks",
+    "tie_break": "ascending (min_match, max_match)",
+    "timing_used_for_selection": false,
+    "frame_header_bytes": 36,
+    "frame_layout": "NLC1 + uint32le window/search_min/search_max/length_bias + uint64le raw_size/payload_size + ctrl8 payload"
+  }
+}

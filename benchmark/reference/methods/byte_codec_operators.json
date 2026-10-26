@@ -1,0 +1,149 @@
+{
+  "description": "General-purpose byte-codec operator groups for the Methods page operator matrix. These are intentionally coarse-grained so byte-based pipelines stay comparable without exposing every codec-specific token or wrapper detail.",
+  "operators": [
+    {
+      "id": "block_transform",
+      "name": "block transform",
+      "description": "Block-wise reversible transforms that improve locality before coding.",
+      "example": "Bzip2 uses BWT; BSC uses a block-sorting transform; Kanzi selects among transform front ends.",
+      "numeric_example": "A block like 'banana$' is reordered so repeated symbols become adjacent.",
+      "good_ratio_example": "Good: a block transform reorders structured bytes so equal symbols group together; Before: [98,97,110,97,110,97,36]; After bits: bwt_bytes=01100001 01101110 01101110 01100010 00100100 01100001 01100001.",
+      "poor_ratio_example": "Poor: a block transform cannot create much locality from random bytes; Before: [81,57,35,109,65,48]; After bits: transformed=00111001 01101101 00100011 01010001 00110000 01000001."
+    },
+    {
+      "id": "symbol_recode",
+      "name": "symbol recoding",
+      "description": "Post-transform symbol recoding such as move-to-front or run-length preparation.",
+      "example": "Bzip2 and Bzip3 recode BWT output with MTF-style ranks before statistical coding.",
+      "numeric_example": "Repeated transformed symbols become ranks [0, 0, 0, 1], exposing runs and small integers.",
+      "good_ratio_example": "Good: symbol recoding maps repeated transformed symbols to tiny ranks; Before: [3,3,3,4,3]; After bits: ranks=00 00 00 01 01.",
+      "poor_ratio_example": "Poor: symbol recoding remains wide when ranks are uniform; Before: [7,2,14,5]; After bits: ranks=0111 0010 1110 0101."
+    },
+    {
+      "id": "run_length",
+      "name": "run length",
+      "description": "Run-length encoding, replace consecutive identical values or transformed symbols with value-count records.",
+      "example": "TsFile RLE encodes repeated values, while Bzip2 applies the same operator to symbols after BWT/MTF-style recoding.",
+      "numeric_example": "Values [7, 7, 7, 2, 2] become runs (7, 3) and (2, 2).",
+      "good_ratio_example": "Good: run-length stores repeated transformed symbols as symbol,count pairs; Before: [0,0,0,0,0,2,2,2]; After bits: symbol,count=00 101 10 011.",
+      "poor_ratio_example": "Poor: run-length adds a count field to alternating symbols; Before: [0,1,0,1,0,1]; After bits: symbol,count=00 001 01 001 00 001 01 001 00 001 01 001."
+    },
+    {
+      "id": "lz_match",
+      "name": "lz matching",
+      "description": "Dictionary-window match/copy discovery, including LZ77, LZSS, LZMA, LZVN, LZO, NRV, and related variants.",
+      "example": "LZ4 finds a previous substring and emits an offset/length copy instead of literal bytes.",
+      "numeric_example": "'abcabc' can become literals 'abc' plus a copy with offset 3 and length 3.",
+      "good_ratio_example": "Good: lz match emits literals once and then copies a repeated substring; Before: [97,98,99,97,98,99]; After bits: literal=0 01100001 01100010 01100011, match=1 00000011 00000011.",
+      "poor_ratio_example": "Poor: lz match falls back to literals when no previous substring matches; Before: [81,57,35,109]; After bits: literals=0 01010001 0 00111001 0 00100011 0 01101101."
+    },
+    {
+      "id": "match_parse_policy",
+      "name": "match policy",
+      "description": "Greedy, lazy, repeat-offset, position-state, or level-controlled decisions that choose which match to emit.",
+      "example": "Zstd uses repeat previous offsets; LZMA uses position-state models; FastLZ chooses greedy matches.",
+      "numeric_example": "At byte i, a greedy parser takes length 4 now, while a lazy parser may wait for length 6 at i+1.",
+      "good_ratio_example": "Good: match policy chooses the longest useful copy among overlapping candidates; Before: [97,98,99,97,98,99,97,98,99]; After bits: literal=0 01100001 01100010 01100011, match=1 00000011 00000110.",
+      "poor_ratio_example": "Poor: match policy has no choice when the block has no candidates; Before: [65,66,67,68]; After bits: literals=0 01000001 0 01000010 0 01000011 0 01000100."
+    },
+    {
+      "id": "match_window_model",
+      "name": "window model",
+      "description": "Window-size, hash-table, chunking, or embedded-memory constraints around match discovery.",
+      "example": "Lizard widens the match window; LZF uses a small hash table; ZXC uses a tiny embedded window.",
+      "numeric_example": "A 2 KB embedded window can reference offset 1800, while a 4 MB window can reference much farther back.",
+      "good_ratio_example": "Good: the window model allows a repeat inside the window to be encoded as an offset; Before: [65,66,67,68,0,0,0,0,65,66,67,68] with window=8; After bits: literal=01000001 01000010 01000011 01000100, match=1 00001000 00000100.",
+      "poor_ratio_example": "Poor: the window model emits literals when the repeat distance exceeds the window; Before: [65,66,67,68,0,0,0,0,65,66,67,68] with window=4; After bits: literals=01000001 01000010 01000011 01000100 00000000 00000000 00000000 00000000 01000001 01000010 01000011 01000100."
+    },
+    {
+      "id": "match_token_format",
+      "name": "match tokens",
+      "description": "Byte-aligned token formats for literal runs, match lengths, offsets, and copy commands.",
+      "example": "LZ4 uses nibble-split length tokens; Snappy uses tag bytes; LZF and QuickLZ use compact fixed token layouts.",
+      "numeric_example": "A token may encode literal length 3, copy offset 256, and match length 5.",
+      "good_ratio_example": "Good: match tokens pack one long copy command instead of many bytes; Before: [97,98,99,97,98,99,97,98,99]; After bits: token=1, len=00001001, offset=00000011.",
+      "poor_ratio_example": "Poor: match tokens cost overhead when fragments are tiny; Before: [97,88,97,89]; After bits: token_stream=0 01100001 0 01011000 1 00000001 00000010 0 01011001."
+    },
+    {
+      "id": "integer_code",
+      "name": "integer coding",
+      "description": "Variable-length integer coding for lengths, offsets, or block metadata.",
+      "example": "Snappy and LZ4-family formats use varint-style extensions for long lengths.",
+      "numeric_example": "Length 300 becomes continuation bytes 0xAC 0x02.",
+      "good_ratio_example": "Good: integer coding writes small lengths and offsets in one byte each; Before: [3,4,5,7]; After bits: 00000011 00000100 00000101 00000111.",
+      "poor_ratio_example": "Poor: integer coding expands large metadata into multi-byte varints; Before: [128,129,300]; After bits: 10000000 00000001 10000001 00000001 10101100 00000010."
+    },
+    {
+      "id": "bitstream_pack",
+      "name": "bitstream packing",
+      "description": "Bit-level packing of flags, literals, matches, or control codes.",
+      "example": "BriefLZ, LZJB, and UCL NRV2b pack match/literal control information below byte granularity.",
+      "numeric_example": "A flag bit marks match vs literal, followed by bit-packed offset and length fields.",
+      "good_ratio_example": "Good: bitstream packing interleaves sub-byte flags and 3-bit lengths; Before: flags=[1,0,1,1], lengths=[2,3,1,4]; After bits: 1 010 0 011 1 001 1 100.",
+      "poor_ratio_example": "Poor: bitstream packing gives little gain when fields already need full bytes; Before: [145,47,200]; After bits: 10010001 00101111 11001000."
+    },
+    {
+      "id": "entropy_huffman",
+      "name": "huffman coding",
+      "description": "Static, dynamic, adaptive, or context-selected Huffman-family coding.",
+      "example": "gzip builds dynamic Huffman trees; Brotli selects context-conditioned Huffman trees.",
+      "numeric_example": "Symbol A with count 40 gets a shorter code than symbol B with count 10.",
+      "good_ratio_example": "Good: Huffman coding assigns the frequent symbol the shortest code; Before: [65,65,65,66,67]; After bits: codebook={65:0,66:10,67:11}, stream=0 0 0 10 11.",
+      "poor_ratio_example": "Poor: Huffman coding approaches fixed-width coding on uniform symbols; Before: [65,66,67,68]; After bits: codebook={65:00,66:01,67:10,68:11}, stream=00 01 10 11."
+    },
+    {
+      "id": "entropy_range",
+      "name": "range coding",
+      "description": "Range or arithmetic coding driven by probability models.",
+      "example": "LZMA and PPMD8 encode model probabilities with a range coder.",
+      "numeric_example": "A symbol with probability 0.25 narrows the coding range to one quarter of its previous width.",
+      "good_ratio_example": "Good: range coding narrows the coding interval quickly for predictable symbols; Before: [0,0,0,0,1] with p(0)=0.8; After bits: final_tag=00101.",
+      "poor_ratio_example": "Poor: range coding needs a longer tag when symbols are near-uniform; Before: [0,1,2,3] with p(each)=0.25; After bits: final_tag=00011011."
+    },
+    {
+      "id": "entropy_fse",
+      "name": "fse/ans coding",
+      "description": "Finite State or tANS-style table coding.",
+      "example": "Zstd uses FSE for match-related symbols; standalone ANS uses tANS directly.",
+      "numeric_example": "A high-frequency symbol consumes about one bit in a table-driven ANS state update.",
+      "good_ratio_example": "Good: FSE/ANS coding uses a short table path for the dominant symbol; Before: [3,3,3,4,3,5]; After bits: table_codes=0 0 0 10 0 11.",
+      "poor_ratio_example": "Poor: FSE/ANS coding becomes close to fixed-width when the distribution is flat; Before: [0,1,2,3]; After bits: table_codes=00 01 10 11."
+    },
+    {
+      "id": "entropy_special",
+      "name": "special coding",
+      "description": "Codec-specific or selectable coding back ends that are not simply Huffman, range, or FSE.",
+      "example": "BSC uses QLFC, Bzip3 uses a selectable coding library, Kanzi selects among multiple coding back ends, and Zling has its own coding stage.",
+      "numeric_example": "A codec-specific probability pass maps token frequencies to compact code words for one block.",
+      "good_ratio_example": "Good: special coding maps a block-specific dominant token to a short code; Before: [0,0,0,1,0,2]; After bits: codebook={0:0,1:10,2:11}, stream=0 0 0 10 0 11.",
+      "poor_ratio_example": "Poor: special coding has little room to shorten a uniform block; Before: [0,1,2,3]; After bits: codebook={0:00,1:01,2:10,3:11}, stream=00 01 10 11."
+    },
+    {
+      "id": "literal_entropy",
+      "name": "literal coding",
+      "description": "Separate coding for literal bytes, distinct from match length or offset coding.",
+      "example": "Zstd Huffman-codes literal bytes separately while FSE handles sequence symbols.",
+      "numeric_example": "Literals [72, 105] are coded by a literal tree, while a later match token bypasses that tree.",
+      "good_ratio_example": "Good: literal coding gives common literal bytes shorter codes; Before: [32,101,32,116]; After bits: codebook={32:0,101:10,116:11}, stream=0 10 0 11.",
+      "poor_ratio_example": "Poor: literal coding cannot shorten random-looking literals much; Before: [145,47,200,68]; After bits: literals=10010001 00101111 11001000 01000100."
+    },
+    {
+      "id": "block_state_control",
+      "name": "block/state",
+      "description": "Chunking, state resets, streaming flushes, or level-selected state transitions.",
+      "example": "LZMA2 resets state between chunks; Zling compresses independent chunks; streaming gzip may flush partial blocks.",
+      "numeric_example": "At a 64 KB boundary, the encoder closes one chunk and starts the next with a reset dictionary.",
+      "good_ratio_example": "Good: block/state control reuses state across a homogeneous block; Before: [7,7,7,7,7,7,7,7]; After bits: block_header=0001, reuse=1, payload=111 111 111 111 111 111 111 111.",
+      "poor_ratio_example": "Poor: block/state control pays reset headers for tiny mixed blocks; Before: [7,2,9,4]; After bits: reset_block=0001 0111 0001 0010 0001 1001 0001 0100."
+    },
+    {
+      "id": "container_frame",
+      "name": "container framing",
+      "description": "Outer byte-stream framing, checksums, member records, or wire protocol metadata.",
+      "example": "gzip adds header and CRC32; zlib adds Adler32; lzip and LZ4 frame their payloads.",
+      "numeric_example": "A DEFLATE payload is wrapped with a magic header, checksum, and original-size trailer.",
+      "good_ratio_example": "Good: container framing amortizes header bits over a larger compressed payload; Before: [1,1,1,1,1,1,1,1]; After bits: header=10101010, payload=0001 1000, checksum=00001111.",
+      "poor_ratio_example": "Poor: container framing dominates a tiny payload; Before: [1,2]; After bits: header=10101010, payload=00000001 00000010, checksum=00000011."
+    }
+  ]
+}

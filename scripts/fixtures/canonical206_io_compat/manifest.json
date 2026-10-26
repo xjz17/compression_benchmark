@@ -1,0 +1,2179 @@
+{
+  "schema": "canonical206-io-compat-fixtures-v1",
+  "registry_version": "cpp-canonical-206-v1",
+  "old_policy_count": 206,
+  "target_policy_count": 182,
+  "merged_group_count": 15,
+  "interface_count": 39,
+  "source_sha256": {
+    "scripts/primitive_operator_action_runtime.py": "1813ab6455dc9690fff673fd5ae1facb52f32fcebb9805febf48ac4a8d0df601",
+    "scripts/unified_action_runtime.py": "8071b53d1b38734cf11c39dc399bb42a017ebfdcc60a3c615bc71c83e1efe044"
+  },
+  "audit_sha256": "27dc7a8db1c1853d3613fda33ddf456a4a759e0c0e0864ee881fed25c1c2e4e6",
+  "groups": [
+    {
+      "member_ids": [
+        80,
+        86
+      ],
+      "document_id": "A008",
+      "family": "scaling",
+      "name_en": "Exact Decimal Scaling"
+    },
+    {
+      "member_ids": [
+        2,
+        112,
+        146
+      ],
+      "document_id": "A015",
+      "family": "frame_of_reference",
+      "name_en": "Whole Stream Minimum FOR"
+    },
+    {
+      "member_ids": [
+        3,
+        144
+      ],
+      "document_id": "A019",
+      "family": "value_reorder",
+      "name_en": "Stable Value Sort"
+    },
+    {
+      "member_ids": [
+        7,
+        84,
+        94,
+        111
+      ],
+      "document_id": "A037",
+      "family": "delta",
+      "name_en": "Previous Value Modular Delta"
+    },
+    {
+      "member_ids": [
+        8,
+        97,
+        102
+      ],
+      "document_id": "A044",
+      "family": "xor",
+      "name_en": "Previous Word XOR"
+    },
+    {
+      "member_ids": [
+        28,
+        99
+      ],
+      "document_id": "A045",
+      "family": "xor",
+      "name_en": "Chimp128 History XOR"
+    },
+    {
+      "member_ids": [
+        98,
+        103
+      ],
+      "document_id": "A054",
+      "family": "trailing_zero_pack",
+      "name_en": "Reusable XOR Window Packing"
+    },
+    {
+      "member_ids": [
+        108,
+        110
+      ],
+      "document_id": "A056",
+      "family": "trailing_zero_pack",
+      "name_en": "Nibble Residual Byte Packing"
+    },
+    {
+      "member_ids": [
+        11,
+        91,
+        95
+      ],
+      "document_id": "A062",
+      "family": "zigzag",
+      "name_en": "ZigZag Mapping"
+    },
+    {
+      "member_ids": [
+        158,
+        159,
+        160
+      ],
+      "document_id": "A066",
+      "family": "block_transform",
+      "name_en": "Byte Shuffle (element width 1/4/8 B, reference)"
+    },
+    {
+      "member_ids": [
+        14,
+        167
+      ],
+      "document_id": "A072",
+      "family": "run_length",
+      "name_en": "Value/Count Run-Length Encoding (reference)"
+    },
+    {
+      "member_ids": [
+        59,
+        188
+      ],
+      "document_id": "A131",
+      "family": "match_token_format",
+      "name_en": "Native-LZ ctrl8 / offset16 / len8 (bias 5)"
+    },
+    {
+      "member_ids": [
+        163,
+        164
+      ],
+      "document_id": "A158",
+      "family": "block_state_control",
+      "name_en": "Magic and Length Envelope"
+    },
+    {
+      "member_ids": [
+        133,
+        134,
+        135
+      ],
+      "document_id": "A176",
+      "family": "container_frame",
+      "name_en": "Stored Container Parts Assembly"
+    },
+    {
+      "member_ids": [
+        170,
+        171,
+        172,
+        205
+      ],
+      "document_id": "A177",
+      "family": "container_frame",
+      "name_en": "Magic and Length Container"
+    }
+  ],
+  "records": [
+    {
+      "old_policy_id": 2,
+      "old_canonical_name": "op.frame_of_reference.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_002_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_002_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_002_encoded.bin",
+        "kind": "bytes",
+        "count": 189,
+        "sha256": "158f56ce2425f9c071fc3936983021b74e71218840099fbb9484d54c4d63800c"
+      },
+      "inverse": {
+        "file": "old_002_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_002_wire.bin",
+        "kind": "bytes",
+        "count": 46,
+        "sha256": "e08aa271eb3eead5253f8b5fdcf138bce2dfdbef41c5ec001be3bc0c3c38324c"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.frame_of_reference.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 3,
+      "old_canonical_name": "op.value_reorder.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_003_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_003_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_003_encoded.bin",
+        "kind": "bytes",
+        "count": 236,
+        "sha256": "240445fed1c8158c0c777f5dc4b69c20dfcc77b4f5934dd38a0e7c5d42c536c6"
+      },
+      "inverse": {
+        "file": "old_003_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_003_wire.bin",
+        "kind": "bytes",
+        "count": 98,
+        "sha256": "e484b6d7a91f2064d121eb3ba190077379a369555b1eb02d03334e55258c30b0"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.value_reorder.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 7,
+      "old_canonical_name": "op.delta.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_007_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_007_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_007_encoded.bin",
+        "kind": "bytes",
+        "count": 179,
+        "sha256": "98a7bc89dac246f44a28ca43af1c7b7baf6e596950250349ddd0c98ba191007b"
+      },
+      "inverse": {
+        "file": "old_007_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_007_wire.bin",
+        "kind": "bytes",
+        "count": 49,
+        "sha256": "910604ed254397753c5d347f6c2f34bb2916053ab89a1a1d28f53128a03d6d57"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.delta.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 8,
+      "old_canonical_name": "op.xor.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_008_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_008_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_008_encoded.bin",
+        "kind": "bytes",
+        "count": 175,
+        "sha256": "88ebb7cdcb041ba5a97811402176ccbaaea2db32a263e09c508632262039b9c3"
+      },
+      "inverse": {
+        "file": "old_008_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_008_wire.bin",
+        "kind": "bytes",
+        "count": 47,
+        "sha256": "bd2781d474516f2414383bb95058254ce1d4348f969f0243d04a1196887ae61b"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.xor.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 11,
+      "old_canonical_name": "op.zigzag.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_011_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_011_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_011_encoded.bin",
+        "kind": "bytes",
+        "count": 173,
+        "sha256": "1ac925eebea9892fdee002fbf0b8b1d816e28cb474953c1dd3951ad708f9cacb"
+      },
+      "inverse": {
+        "file": "old_011_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_011_wire.bin",
+        "kind": "bytes",
+        "count": 42,
+        "sha256": "0edfe38cf5c53a0ee0e806df1775eaa08bdb2f27e5db9dd5aefbafdebc783d5e"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.zigzag.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 14,
+      "old_canonical_name": "op.run_length.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_014_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_014_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_014_encoded.bin",
+        "kind": "bytes",
+        "count": 184,
+        "sha256": "c616b73d0b8ce4d0886e22ad9716a6e0e10e4a6e0590e3880a00df70cee81297"
+      },
+      "inverse": {
+        "file": "old_014_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_014_wire.bin",
+        "kind": "bytes",
+        "count": 49,
+        "sha256": "848235ed9a2b0b2a97607c3aff2073e70809f34edfefa84efc1639720f244298"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.run_length.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 28,
+      "old_canonical_name": "op.xor.chimp_history128.reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_028_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_028_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_028_encoded.bin",
+        "kind": "bytes",
+        "count": 247,
+        "sha256": "5546b50d5d20600e60493301c5f23c0112c22733fa62ee44023e5c7520c5d96d"
+      },
+      "inverse": {
+        "file": "old_028_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_028_wire.bin",
+        "kind": "bytes",
+        "count": 102,
+        "sha256": "4f2038c8007efbf420a3849288a7653c0b71a40128e3162dedcdf7baa10c2419"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.xor.chimp_history128.reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 59,
+      "old_canonical_name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        66,
+        53,
+        56
+      ],
+      "root": {
+        "file": "old_059_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_059_input.bin",
+        "kind": "bytes",
+        "count": 749,
+        "sha256": "2cd00155edd10f3097540412deba626d2327135a39112a5a1d34f560cd7d1b70"
+      },
+      "encoded": {
+        "file": "old_059_encoded.bin",
+        "kind": "bytes",
+        "count": 913,
+        "sha256": "e2ffbdbd357acf154ae8945e73d1f6907225cfd558a0d6a618629a715fe0bc29"
+      },
+      "inverse": {
+        "file": "old_059_inverse.bin",
+        "kind": "bytes",
+        "count": 749,
+        "sha256": "2cd00155edd10f3097540412deba626d2327135a39112a5a1d34f560cd7d1b70"
+      },
+      "codec_wire": {
+        "file": "old_059_wire.bin",
+        "kind": "bytes",
+        "count": 122,
+        "sha256": "d7033b4120a0fed3ea01d9b1be8b8c27f39b56074d58aea4af8fef2aa2412c16"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5"
+        ],
+        "max_point": 2,
+        "native_lz_stage_context": {
+          "max_match": 186,
+          "min_match": 5,
+          "packet_role": 3,
+          "raw_size": 436,
+          "window": 32768
+        },
+        "source_count": 749,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 248,
+        "upstream_result_header": {
+          "actions": [
+            "op.match_parse_policy.native_lz.aligned8_greedy"
+          ],
+          "max_point": 2,
+          "source_count": 786,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 461,
+          "upstream_result_header": {
+            "actions": [
+              "op.lz_match.native_lz.aligned8.min5.max186"
+            ],
+            "max_point": 2,
+            "source_count": 615,
+            "source_kind": "bytes",
+            "stage_input_payload_count": 461,
+            "upstream_result_header": {
+              "actions": [
+                "op.match_window_model.native_lz.window32768"
+              ],
+              "max_point": 2,
+              "source_count": 436,
+              "source_kind": "bytes",
+              "stage_input_payload_count": 436
+            }
+          }
+        }
+      }
+    },
+    {
+      "old_policy_id": 80,
+      "old_canonical_name": "op.scaling.ts_2diff.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_080_root.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "input": {
+        "file": "old_080_input.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "encoded": {
+        "file": "old_080_encoded.bin",
+        "kind": "bytes",
+        "count": 200,
+        "sha256": "c0398f1365422b2a60644e659ee273d889b4daa97fd6e033eb9df22b2615914c"
+      },
+      "inverse": {
+        "file": "old_080_inverse.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "codec_wire": {
+        "file": "old_080_wire.bin",
+        "kind": "bytes",
+        "count": 65,
+        "sha256": "8797b323e8eeb7512a8a37dba7528f4256cf1da31f3c4aaab2915f7958727500"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.scaling.ts_2diff.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 6,
+        "source_kind": "float64",
+        "stage_input_payload_count": 6
+      }
+    },
+    {
+      "old_policy_id": 84,
+      "old_canonical_name": "op.delta.stream_vbyte.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_084_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_084_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_084_encoded.bin",
+        "kind": "bytes",
+        "count": 317,
+        "sha256": "29b5b2f92302fb173856e50e15c1dcea177a4fe43f100840b18dd2e77e0d81ce"
+      },
+      "inverse": {
+        "file": "old_084_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_084_wire.bin",
+        "kind": "bytes",
+        "count": 180,
+        "sha256": "55c11a4088e704a5adb8a8907dddaae18ddab612d78051c07032b319405fc511"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.delta.stream_vbyte.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 86,
+      "old_canonical_name": "op.scaling.simple8b.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_086_root.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "input": {
+        "file": "old_086_input.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "encoded": {
+        "file": "old_086_encoded.bin",
+        "kind": "bytes",
+        "count": 199,
+        "sha256": "e80907ff7865aaa46375d0748adc9cca06be496be1a761058c86728b741994fa"
+      },
+      "inverse": {
+        "file": "old_086_inverse.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "codec_wire": {
+        "file": "old_086_wire.bin",
+        "kind": "bytes",
+        "count": 64,
+        "sha256": "8f7e5cf7b86a10df5a8638674c9c94f066dae09b850f413ad8aec911eaa583d4"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.scaling.simple8b.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 6,
+        "source_kind": "float64",
+        "stage_input_payload_count": 6
+      }
+    },
+    {
+      "old_policy_id": 91,
+      "old_canonical_name": "op.zigzag.sprintz.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        90
+      ],
+      "root": {
+        "file": "old_091_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_091_input.bin",
+        "kind": "bytes",
+        "count": 312,
+        "sha256": "b1dbd9d3452dcd60fe82a6f34263a2d3cafe101e4818668420d5dc9de5b1341c"
+      },
+      "encoded": {
+        "file": "old_091_encoded.bin",
+        "kind": "bytes",
+        "count": 465,
+        "sha256": "57d808a7431157362c721f6f0067967c20c71e848cb8b4787b0f1f6f79df9718"
+      },
+      "inverse": {
+        "file": "old_091_inverse.bin",
+        "kind": "bytes",
+        "count": 312,
+        "sha256": "b1dbd9d3452dcd60fe82a6f34263a2d3cafe101e4818668420d5dc9de5b1341c"
+      },
+      "codec_wire": {
+        "file": "old_091_wire.bin",
+        "kind": "bytes",
+        "count": 180,
+        "sha256": "f4a7e3a69569841b49d12aa1e69f0f5bc09b4a5cdd6ce3ee4cc6f3d54d23621b"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.zigzag.sprintz.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 312,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 180,
+        "upstream_result_header": {
+          "actions": [
+            "op.delta.sprintz.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 21,
+          "source_kind": "int64",
+          "stage_input_payload_count": 21
+        }
+      }
+    },
+    {
+      "old_policy_id": 94,
+      "old_canonical_name": "op.delta.delta_binary_packed.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_094_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_094_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_094_encoded.bin",
+        "kind": "bytes",
+        "count": 328,
+        "sha256": "59ac8e0349b1cb5f591e79ba1061ecc5e3f4f56ded6d38bff9d3187cddbcb44a"
+      },
+      "inverse": {
+        "file": "old_094_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_094_wire.bin",
+        "kind": "bytes",
+        "count": 184,
+        "sha256": "fe3f4d609c20c9c0a3249c54a98e4d5e300a103f05b94c96907b1deedf5073cb"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.delta.delta_binary_packed.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 95,
+      "old_canonical_name": "op.zigzag.delta_binary_packed.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        94
+      ],
+      "root": {
+        "file": "old_095_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_095_input.bin",
+        "kind": "bytes",
+        "count": 328,
+        "sha256": "59ac8e0349b1cb5f591e79ba1061ecc5e3f4f56ded6d38bff9d3187cddbcb44a"
+      },
+      "encoded": {
+        "file": "old_095_encoded.bin",
+        "kind": "bytes",
+        "count": 493,
+        "sha256": "cc159b21458902347d0f04c397e42c8121f52ea53ac5df19b4546a2df0e06192"
+      },
+      "inverse": {
+        "file": "old_095_inverse.bin",
+        "kind": "bytes",
+        "count": 328,
+        "sha256": "59ac8e0349b1cb5f591e79ba1061ecc5e3f4f56ded6d38bff9d3187cddbcb44a"
+      },
+      "codec_wire": {
+        "file": "old_095_wire.bin",
+        "kind": "bytes",
+        "count": 184,
+        "sha256": "f465d3a9b1de4a22a61cc3b80e880ca7d6dd70e9f31181e5de15d16d05be2f79"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.zigzag.delta_binary_packed.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 328,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 184,
+        "upstream_result_header": {
+          "actions": [
+            "op.delta.delta_binary_packed.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 21,
+          "source_kind": "int64",
+          "stage_input_payload_count": 21
+        }
+      }
+    },
+    {
+      "old_policy_id": 97,
+      "old_canonical_name": "op.xor.gorilla.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_097_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_097_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_097_encoded.bin",
+        "kind": "bytes",
+        "count": 310,
+        "sha256": "39a6c1024e5b66d7ef989ae9439138962479d0b1e59c243fe61bad6b7dc1fcdd"
+      },
+      "inverse": {
+        "file": "old_097_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_097_wire.bin",
+        "kind": "bytes",
+        "count": 180,
+        "sha256": "6a3caac9277f5d97ea62e8c230f838e91c6a249affe9b3b3f5125f4c413317a7"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.xor.gorilla.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 98,
+      "old_canonical_name": "op.trailing_zero_pack.gorilla.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        97
+      ],
+      "root": {
+        "file": "old_098_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_098_input.bin",
+        "kind": "bytes",
+        "count": 310,
+        "sha256": "39a6c1024e5b66d7ef989ae9439138962479d0b1e59c243fe61bad6b7dc1fcdd"
+      },
+      "encoded": {
+        "file": "old_098_encoded.bin",
+        "kind": "bytes",
+        "count": 407,
+        "sha256": "82c8c0702992e36f5538226dbb0b7fe2cec54f6d9096b8ef4ad4e4fc2e25f579"
+      },
+      "inverse": {
+        "file": "old_098_inverse.bin",
+        "kind": "bytes",
+        "count": 310,
+        "sha256": "39a6c1024e5b66d7ef989ae9439138962479d0b1e59c243fe61bad6b7dc1fcdd"
+      },
+      "codec_wire": {
+        "file": "old_098_wire.bin",
+        "kind": "bytes",
+        "count": 112,
+        "sha256": "0fff34636ce9cf595d157aee9d08896aa104694614b8b13d2e43da02b56f0ad1"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.trailing_zero_pack.gorilla.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 310,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 180,
+        "upstream_result_header": {
+          "actions": [
+            "op.xor.gorilla.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 21,
+          "source_kind": "int64",
+          "stage_input_payload_count": 21
+        }
+      }
+    },
+    {
+      "old_policy_id": 99,
+      "old_canonical_name": "op.xor.chimp128.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_099_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_099_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_099_encoded.bin",
+        "kind": "bytes",
+        "count": 361,
+        "sha256": "db8d7f6cf50bc01c3c529bbb2a3308180653b39af72a626216ddf1dad24230b0"
+      },
+      "inverse": {
+        "file": "old_099_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_099_wire.bin",
+        "kind": "bytes",
+        "count": 230,
+        "sha256": "8c514165813bcbe689ac0400df0ad55285b8b8814a2a72d4cdcd1b5fc7bfad9d"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.xor.chimp128.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 102,
+      "old_canonical_name": "op.xor.pongo.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        101
+      ],
+      "root": {
+        "file": "old_102_root.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "input": {
+        "file": "old_102_input.bin",
+        "kind": "bytes",
+        "count": 196,
+        "sha256": "aace053080c283069858951d2281e7a1cc1a4c27b8d6485eb0cb6fc9719779a0"
+      },
+      "encoded": {
+        "file": "old_102_encoded.bin",
+        "kind": "bytes",
+        "count": 343,
+        "sha256": "b5e94f6c852b9cede6dc54fad8e97db3756550ce0c909d3bfe71490c2a093053"
+      },
+      "inverse": {
+        "file": "old_102_inverse.bin",
+        "kind": "bytes",
+        "count": 196,
+        "sha256": "aace053080c283069858951d2281e7a1cc1a4c27b8d6485eb0cb6fc9719779a0"
+      },
+      "codec_wire": {
+        "file": "old_102_wire.bin",
+        "kind": "bytes",
+        "count": 65,
+        "sha256": "b82c4e61fcc7dc9c25978c4460a5eea2963980a7005127d372114e6784146a77"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.xor.pongo.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 196,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 65,
+        "upstream_result_header": {
+          "actions": [
+            "op.eraser.pongo.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 6,
+          "source_kind": "float64",
+          "stage_input_payload_count": 6
+        }
+      }
+    },
+    {
+      "old_policy_id": 103,
+      "old_canonical_name": "op.trailing_zero_pack.pongo.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        101,
+        102
+      ],
+      "root": {
+        "file": "old_103_root.bin",
+        "kind": "float64",
+        "count": 6,
+        "sha256": "241ed6bb64fcf95d7d509baa76557406cc8df8d3318a243862baa2c05d879300"
+      },
+      "input": {
+        "file": "old_103_input.bin",
+        "kind": "bytes",
+        "count": 343,
+        "sha256": "b5e94f6c852b9cede6dc54fad8e97db3756550ce0c909d3bfe71490c2a093053"
+      },
+      "encoded": {
+        "file": "old_103_encoded.bin",
+        "kind": "bytes",
+        "count": 480,
+        "sha256": "23553fa7b5bc48d09c278e5b70dc2271658e0e3c98d917d7dba0c6a44804f0a0"
+      },
+      "inverse": {
+        "file": "old_103_inverse.bin",
+        "kind": "bytes",
+        "count": 343,
+        "sha256": "b5e94f6c852b9cede6dc54fad8e97db3756550ce0c909d3bfe71490c2a093053"
+      },
+      "codec_wire": {
+        "file": "old_103_wire.bin",
+        "kind": "bytes",
+        "count": 40,
+        "sha256": "e3058a067eeec5d146190f1f65c467938efa3e31200245cebeda567fd953dcb4"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.trailing_zero_pack.pongo.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 343,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 65,
+        "upstream_result_header": {
+          "actions": [
+            "op.xor.pongo.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 196,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 65,
+          "upstream_result_header": {
+            "actions": [
+              "op.eraser.pongo.cpp_v1"
+            ],
+            "max_point": 2,
+            "source_count": 6,
+            "source_kind": "float64",
+            "stage_input_payload_count": 6
+          }
+        }
+      }
+    },
+    {
+      "old_policy_id": 108,
+      "old_canonical_name": "op.trailing_zero_pack.fpc.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        107
+      ],
+      "root": {
+        "file": "old_108_root.bin",
+        "kind": "bytes",
+        "count": 168,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_108_input.bin",
+        "kind": "bytes",
+        "count": 330,
+        "sha256": "5f49eec7b4fd84b727aeeee199c1b679593803a539e51b3a911bd9771f834649"
+      },
+      "encoded": {
+        "file": "old_108_encoded.bin",
+        "kind": "bytes",
+        "count": 343,
+        "sha256": "7273ad98acb7492e75ddba97dcd3c15e7f1a848c2e3cedab830b65a063a3448f"
+      },
+      "inverse": {
+        "file": "old_108_inverse.bin",
+        "kind": "bytes",
+        "count": 330,
+        "sha256": "5f49eec7b4fd84b727aeeee199c1b679593803a539e51b3a911bd9771f834649"
+      },
+      "codec_wire": {
+        "file": "old_108_wire.bin",
+        "kind": "bytes",
+        "count": 54,
+        "sha256": "a07f9a938c7e5f819863773caaf0a5fe83b1478879325486015ac688e88b2518"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.trailing_zero_pack.fpc.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 330,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 202,
+        "upstream_result_header": {
+          "actions": [
+            "op.xor.fpc.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 168,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 168
+        }
+      }
+    },
+    {
+      "old_policy_id": 110,
+      "old_canonical_name": "op.trailing_zero_pack.pfpc.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        109
+      ],
+      "root": {
+        "file": "old_110_root.bin",
+        "kind": "bytes",
+        "count": 168,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_110_input.bin",
+        "kind": "bytes",
+        "count": 335,
+        "sha256": "92e782f77c924335ac8295af45288e913ab05da6b8d9dd300e35ff82ec155a61"
+      },
+      "encoded": {
+        "file": "old_110_encoded.bin",
+        "kind": "bytes",
+        "count": 352,
+        "sha256": "508bd0305fbf29f165e80fabace4a12d8d67494e151c1a43d752dd5f9bb44ab3"
+      },
+      "inverse": {
+        "file": "old_110_inverse.bin",
+        "kind": "bytes",
+        "count": 335,
+        "sha256": "92e782f77c924335ac8295af45288e913ab05da6b8d9dd300e35ff82ec155a61"
+      },
+      "codec_wire": {
+        "file": "old_110_wire.bin",
+        "kind": "bytes",
+        "count": 61,
+        "sha256": "33ceeb4cdaf8546cd61b1df89a670abfa34a62d4c5d9a6e79cb55805c9cb362a"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.trailing_zero_pack.pfpc.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 335,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 206,
+        "upstream_result_header": {
+          "actions": [
+            "op.xor.pfpc.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 168,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 168
+        }
+      }
+    },
+    {
+      "old_policy_id": 111,
+      "old_canonical_name": "op.delta.bos.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_111_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_111_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_111_encoded.bin",
+        "kind": "bytes",
+        "count": 316,
+        "sha256": "e408a4cc9ce967ddb6f2f7e59abbd334ccea9325877b55edfdb42cbadc0951d5"
+      },
+      "inverse": {
+        "file": "old_111_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_111_wire.bin",
+        "kind": "bytes",
+        "count": 188,
+        "sha256": "d0ce97c108276e796ca8433383937b4ca057ce75980b7bf011165be15e73c803"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.delta.bos.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 112,
+      "old_canonical_name": "op.frame_of_reference.bos.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        111
+      ],
+      "root": {
+        "file": "old_112_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_112_input.bin",
+        "kind": "bytes",
+        "count": 316,
+        "sha256": "e408a4cc9ce967ddb6f2f7e59abbd334ccea9325877b55edfdb42cbadc0951d5"
+      },
+      "encoded": {
+        "file": "old_112_encoded.bin",
+        "kind": "bytes",
+        "count": 485,
+        "sha256": "e41b7917de7d92d1585f4770cf6bea3897a380ddd88a1c6abf068cc4257e9ac7"
+      },
+      "inverse": {
+        "file": "old_112_inverse.bin",
+        "kind": "bytes",
+        "count": 316,
+        "sha256": "e408a4cc9ce967ddb6f2f7e59abbd334ccea9325877b55edfdb42cbadc0951d5"
+      },
+      "codec_wire": {
+        "file": "old_112_wire.bin",
+        "kind": "bytes",
+        "count": 196,
+        "sha256": "0e693d72cbb228553203e1f079fc884c54ba1aa3ffba3c029aafc7e69c0b3e2b"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.frame_of_reference.bos.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 316,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 188,
+        "upstream_result_header": {
+          "actions": [
+            "op.delta.bos.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 21,
+          "source_kind": "int64",
+          "stage_input_payload_count": 21
+        }
+      }
+    },
+    {
+      "old_policy_id": 133,
+      "old_canonical_name": "op.container_frame.gzip.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_133_root.bin",
+        "kind": "bytes",
+        "count": 37,
+        "sha256": "5f9515a9a8d6e2e76193b4ee2c39b614f6470ba08c162e16762868cf7e163d52"
+      },
+      "input": {
+        "file": "old_133_input.bin",
+        "kind": "bytes",
+        "count": 37,
+        "sha256": "5f9515a9a8d6e2e76193b4ee2c39b614f6470ba08c162e16762868cf7e163d52"
+      },
+      "encoded": {
+        "file": "old_133_encoded.bin",
+        "kind": "bytes",
+        "count": 159,
+        "sha256": "8c971b71b929a6f94e8b6ba17d53130cb09ce54340a7c309eeeb3342986dd336"
+      },
+      "inverse": {
+        "file": "old_133_inverse.bin",
+        "kind": "bytes",
+        "count": 37,
+        "sha256": "5f9515a9a8d6e2e76193b4ee2c39b614f6470ba08c162e16762868cf7e163d52"
+      },
+      "codec_wire": {
+        "file": "old_133_wire.bin",
+        "kind": "bytes",
+        "count": 20,
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.gzip.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 37,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 37
+      }
+    },
+    {
+      "old_policy_id": 134,
+      "old_canonical_name": "op.container_frame.zlib.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_134_root.bin",
+        "kind": "bytes",
+        "count": 25,
+        "sha256": "849c9184e29fe447a4fcdd8763240961fba7c4e33889910e3332b28b607a14ab"
+      },
+      "input": {
+        "file": "old_134_input.bin",
+        "kind": "bytes",
+        "count": 25,
+        "sha256": "849c9184e29fe447a4fcdd8763240961fba7c4e33889910e3332b28b607a14ab"
+      },
+      "encoded": {
+        "file": "old_134_encoded.bin",
+        "kind": "bytes",
+        "count": 147,
+        "sha256": "9c03eac7497fa94bf00b1114603381fab874b2ae2ef421356caa9b87970c3d6f"
+      },
+      "inverse": {
+        "file": "old_134_inverse.bin",
+        "kind": "bytes",
+        "count": 25,
+        "sha256": "849c9184e29fe447a4fcdd8763240961fba7c4e33889910e3332b28b607a14ab"
+      },
+      "codec_wire": {
+        "file": "old_134_wire.bin",
+        "kind": "bytes",
+        "count": 8,
+        "sha256": "b171e283c6145acf2b923098dbbc40ffc39b4f1db0212928f9869747376c4ac8"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.zlib.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 25,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 25
+      }
+    },
+    {
+      "old_policy_id": 135,
+      "old_canonical_name": "op.container_frame.xz.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_135_root.bin",
+        "kind": "bytes",
+        "count": 40,
+        "sha256": "a8f30e4e08b41ed82a213beb505030b55c3a1eb3666d10dd92bfa782f091ba24"
+      },
+      "input": {
+        "file": "old_135_input.bin",
+        "kind": "bytes",
+        "count": 40,
+        "sha256": "a8f30e4e08b41ed82a213beb505030b55c3a1eb3666d10dd92bfa782f091ba24"
+      },
+      "encoded": {
+        "file": "old_135_encoded.bin",
+        "kind": "bytes",
+        "count": 169,
+        "sha256": "6efa0102fad6cb394a9c4faf3f8a5d61879ea58ed842d537b56bb3358a65517e"
+      },
+      "inverse": {
+        "file": "old_135_inverse.bin",
+        "kind": "bytes",
+        "count": 40,
+        "sha256": "a8f30e4e08b41ed82a213beb505030b55c3a1eb3666d10dd92bfa782f091ba24"
+      },
+      "codec_wire": {
+        "file": "old_135_wire.bin",
+        "kind": "bytes",
+        "count": 32,
+        "sha256": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.xz.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 40,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 40
+      }
+    },
+    {
+      "old_policy_id": 144,
+      "old_canonical_name": "op.value_reorder.reger.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_144_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_144_input.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "encoded": {
+        "file": "old_144_encoded.bin",
+        "kind": "bytes",
+        "count": 398,
+        "sha256": "902ecc5803714f6223ec2a47e154eea611497e158bae46aafea9a48fa3137435"
+      },
+      "inverse": {
+        "file": "old_144_inverse.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "codec_wire": {
+        "file": "old_144_wire.bin",
+        "kind": "bytes",
+        "count": 260,
+        "sha256": "bf0038742c02ada4baae2870ea00ddd51596729244d398dca53b70b58c6662fe"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.value_reorder.reger.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 21,
+        "source_kind": "int64",
+        "stage_input_payload_count": 21
+      }
+    },
+    {
+      "old_policy_id": 146,
+      "old_canonical_name": "op.frame_of_reference.reger.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        144,
+        145
+      ],
+      "root": {
+        "file": "old_146_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_146_input.bin",
+        "kind": "bytes",
+        "count": 563,
+        "sha256": "fd7b744f8cff07a04d2329eca88533320fe376d753d15d68756cddac746552c0"
+      },
+      "encoded": {
+        "file": "old_146_encoded.bin",
+        "kind": "bytes",
+        "count": 734,
+        "sha256": "aa062a4030c81161352c45b1c0d5017532d1546883155e554e431fa00e3a1989"
+      },
+      "inverse": {
+        "file": "old_146_inverse.bin",
+        "kind": "bytes",
+        "count": 563,
+        "sha256": "fd7b744f8cff07a04d2329eca88533320fe376d753d15d68756cddac746552c0"
+      },
+      "codec_wire": {
+        "file": "old_146_wire.bin",
+        "kind": "bytes",
+        "count": 268,
+        "sha256": "f2d1158963cb71c4a5d28427352e2fe6cc018bd374df8d45c333441c28eb2852"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.frame_of_reference.reger.cpp_v1"
+        ],
+        "max_point": 2,
+        "source_count": 563,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 260,
+        "upstream_result_header": {
+          "actions": [
+            "op.regression_predictor.reger.cpp_v1"
+          ],
+          "max_point": 2,
+          "source_count": 398,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 260,
+          "upstream_result_header": {
+            "actions": [
+              "op.value_reorder.reger.cpp_v1"
+            ],
+            "max_point": 2,
+            "source_count": 21,
+            "source_kind": "int64",
+            "stage_input_payload_count": 21
+          }
+        }
+      }
+    },
+    {
+      "old_policy_id": 158,
+      "old_canonical_name": "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_158_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_158_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_158_encoded.bin",
+        "kind": "bytes",
+        "count": 619,
+        "sha256": "0005a1ea5ba504267dfdcffca2da5baf44f5a7235b82502ea180e98f0bd90c2c"
+      },
+      "inverse": {
+        "file": "old_158_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_158_wire.bin",
+        "kind": "bytes",
+        "count": 449,
+        "sha256": "623fe27295bee802b22dc2ba9010d6308a9f7af5942a744d2dca14dd6eb9e2aa"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 159,
+      "old_canonical_name": "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_159_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_159_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_159_encoded.bin",
+        "kind": "bytes",
+        "count": 619,
+        "sha256": "509b9ac7d4c4f331c05cfb1ec319e0b2d424f75e12feeba4fb4430de62b5d0c5"
+      },
+      "inverse": {
+        "file": "old_159_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_159_wire.bin",
+        "kind": "bytes",
+        "count": 449,
+        "sha256": "288ddd5b144995ba2a043a3c1279caeedd9740f8468ec586635926f9ef616ecf"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 160,
+      "old_canonical_name": "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_160_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_160_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_160_encoded.bin",
+        "kind": "bytes",
+        "count": 619,
+        "sha256": "29f7018f3447df8fcc43c4b279c1fea5fb3cc0b352a6ebf23b5c48dcf603956f"
+      },
+      "inverse": {
+        "file": "old_160_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_160_wire.bin",
+        "kind": "bytes",
+        "count": 449,
+        "sha256": "93116c70ba56175de517f01e37a9394cd975828aad59ad15809b681fd628dc64"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 163,
+      "old_canonical_name": "op.block_state_control.blosc1.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_163_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_163_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_163_encoded.bin",
+        "kind": "bytes",
+        "count": 605,
+        "sha256": "3e99fc027385d6ed2c023fe85255d3a2ac758dc064ccc366bc9f6ba3d05bac44"
+      },
+      "inverse": {
+        "file": "old_163_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_163_wire.bin",
+        "kind": "bytes",
+        "count": 448,
+        "sha256": "ca65ef073ffbe58b6ca308f325615b398292cd16e7e143e39b7eb121169fface"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.block_state_control.blosc1.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 164,
+      "old_canonical_name": "op.block_state_control.blosc2.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_164_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_164_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_164_encoded.bin",
+        "kind": "bytes",
+        "count": 605,
+        "sha256": "823ee71b992a1f135f55cf5246f78af23531a52fbb2c5dd2c2640cbbeec527ca"
+      },
+      "inverse": {
+        "file": "old_164_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_164_wire.bin",
+        "kind": "bytes",
+        "count": 448,
+        "sha256": "673d6d1bb6e335a8114da7da43ec4f47ff93bf8239540315c6f69f34492825bd"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.block_state_control.blosc2.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 167,
+      "old_canonical_name": "op.run_length.bzip2_uint8.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_167_root.bin",
+        "kind": "bytes",
+        "count": 9,
+        "sha256": "1ba07a7d5ad92a8bbc0a60ec0a36aaa93e2ba0fd2dd92f31546d6dca141674e6"
+      },
+      "input": {
+        "file": "old_167_input.bin",
+        "kind": "bytes",
+        "count": 9,
+        "sha256": "1ba07a7d5ad92a8bbc0a60ec0a36aaa93e2ba0fd2dd92f31546d6dca141674e6"
+      },
+      "encoded": {
+        "file": "old_167_encoded.bin",
+        "kind": "bytes",
+        "count": 181,
+        "sha256": "1d95f1288e9690c058a0e1f99fd0baf8192c305cad00248ded83a2ed03629727"
+      },
+      "inverse": {
+        "file": "old_167_inverse.bin",
+        "kind": "bytes",
+        "count": 9,
+        "sha256": "1ba07a7d5ad92a8bbc0a60ec0a36aaa93e2ba0fd2dd92f31546d6dca141674e6"
+      },
+      "codec_wire": {
+        "file": "old_167_wire.bin",
+        "kind": "bytes",
+        "count": 32,
+        "sha256": "b2fb54266dfb0e54faa47812cfc9f5c6751fc1c69e5b4a00eac55548b1355084"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.run_length.bzip2_uint8.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 9,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 9
+      }
+    },
+    {
+      "old_policy_id": 170,
+      "old_canonical_name": "op.container_frame.gzip.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_170_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_170_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_170_encoded.bin",
+        "kind": "bytes",
+        "count": 599,
+        "sha256": "c125c199166078392737927e6724782028aa4af8ae1776e1a215d3c654f8de8a"
+      },
+      "inverse": {
+        "file": "old_170_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_170_wire.bin",
+        "kind": "bytes",
+        "count": 448,
+        "sha256": "3c125e11017fef47b45d10c6573eee98fbf2c5e3b420b7385d41530d4864bee5"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.gzip.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 171,
+      "old_canonical_name": "op.container_frame.zlib.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_171_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_171_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_171_encoded.bin",
+        "kind": "bytes",
+        "count": 599,
+        "sha256": "ed38fc3e265482fd6a84bda88327a5d0cab77f9ff21a0390110e66bdf2d71dd2"
+      },
+      "inverse": {
+        "file": "old_171_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_171_wire.bin",
+        "kind": "bytes",
+        "count": 448,
+        "sha256": "4798c42de00031a821ca94d7d76f5d67e2e6f5f42920e172e64ec4e8966e81c0"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.zlib.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 172,
+      "old_canonical_name": "op.container_frame.xz.cpp_reference_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [],
+      "root": {
+        "file": "old_172_root.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "input": {
+        "file": "old_172_input.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "encoded": {
+        "file": "old_172_encoded.bin",
+        "kind": "bytes",
+        "count": 597,
+        "sha256": "fb27844f6f7464fd61f103cfc8a11141a8cfa18b8b7d69db92fafbfe3d03398b"
+      },
+      "inverse": {
+        "file": "old_172_inverse.bin",
+        "kind": "bytes",
+        "count": 436,
+        "sha256": "211c162944cdf04079c6e5efa17aa873ece9e67d243fd30c9e8b1f10516b80ed"
+      },
+      "codec_wire": {
+        "file": "old_172_wire.bin",
+        "kind": "bytes",
+        "count": 448,
+        "sha256": "5a5902a90f35c4d5d8bfac2e7193808b21a6c716ddf1a672a83a42b41fccc179"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.xz.cpp_reference_v1"
+        ],
+        "max_point": 2,
+        "source_count": 436,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 436
+      }
+    },
+    {
+      "old_policy_id": 188,
+      "old_canonical_name": "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        185,
+        186,
+        187
+      ],
+      "root": {
+        "file": "old_188_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_188_input.bin",
+        "kind": "bytes",
+        "count": 1578,
+        "sha256": "d562f26552e6a275659e52735147091088c5f248429fb95603fd289f9f72c584"
+      },
+      "encoded": {
+        "file": "old_188_encoded.bin",
+        "kind": "bytes",
+        "count": 1067,
+        "sha256": "d621f4a3d61ca6dbc41e6b0d091e16000baf6e7970fff42c5a5f1d97ad1b2ae6"
+      },
+      "inverse": {
+        "file": "old_188_inverse.bin",
+        "kind": "bytes",
+        "count": 1578,
+        "sha256": "d562f26552e6a275659e52735147091088c5f248429fb95603fd289f9f72c584"
+      },
+      "codec_wire": {
+        "file": "old_188_wire.bin",
+        "kind": "bytes",
+        "count": 370,
+        "sha256": "86f90f9b3088a7c6fd69fc183cadddf2cc6d8f95a82b340ab9be30db2ba4619e"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.match_token_format.native_lz_limb_batch.ctrl8.python_v1"
+        ],
+        "max_point": 2,
+        "source_count": 1578,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 1070,
+        "upstream_result_header": {
+          "actions": [
+            "op.lz_match.native_lz_limb_batch.aligned8_greedy.python_v1"
+          ],
+          "max_point": 2,
+          "source_count": 761,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 440,
+          "upstream_result_header": {
+            "actions": [
+              "op.block_transform.int64_lo_hi32.python_v1"
+            ],
+            "max_point": 2,
+            "source_count": 293,
+            "source_kind": "bytes",
+            "stage_input_payload_count": 143,
+            "upstream_result_header": {
+              "actions": [
+                "op.scaling.legacy_exact_decimal.python_v1"
+              ],
+              "max_point": 2,
+              "source_count": 21,
+              "source_kind": "int64",
+              "stage_input_payload_count": 21
+            }
+          }
+        }
+      }
+    },
+    {
+      "old_policy_id": 205,
+      "old_canonical_name": "op.container_frame.corad_lossless.cpp_v2",
+      "old_registry_version": "cpp-canonical-206-v1",
+      "max_point": 2,
+      "prefix_old_policy_ids": [
+        202,
+        203,
+        204
+      ],
+      "root": {
+        "file": "old_205_root.bin",
+        "kind": "int64",
+        "count": 21,
+        "sha256": "ff29ce62bc953c6f61c7927c2c48267735a2995aa512a5c4708a623ab063f8bb"
+      },
+      "input": {
+        "file": "old_205_input.bin",
+        "kind": "bytes",
+        "count": 621,
+        "sha256": "269b2ae1c0a97ac0a25d1975c1da2814ec6764eb38bd30166e578cf2c5310de1"
+      },
+      "encoded": {
+        "file": "old_205_encoded.bin",
+        "kind": "bytes",
+        "count": 805,
+        "sha256": "8516619f53cdb30630d50d1ba80546573a150c68f59a919f63f5bbc0ecf4ea10"
+      },
+      "inverse": {
+        "file": "old_205_inverse.bin",
+        "kind": "bytes",
+        "count": 621,
+        "sha256": "269b2ae1c0a97ac0a25d1975c1da2814ec6764eb38bd30166e578cf2c5310de1"
+      },
+      "codec_wire": {
+        "file": "old_205_wire.bin",
+        "kind": "bytes",
+        "count": 134,
+        "sha256": "45e796ffb81beeb89e4e6b8a4aef57a41b357924e8510465a910470fbed8f003"
+      },
+      "uar1_header": {
+        "actions": [
+          "op.container_frame.corad_lossless.python_v2"
+        ],
+        "max_point": 2,
+        "source_count": 621,
+        "source_kind": "bytes",
+        "stage_input_payload_count": 122,
+        "upstream_result_header": {
+          "actions": [
+            "op.block_state_control.corad_deflate9.python_v2"
+          ],
+          "max_point": 2,
+          "source_count": 1011,
+          "source_kind": "bytes",
+          "stage_input_payload_count": 689,
+          "upstream_result_header": {
+            "actions": [
+              "op.dictionary.corad_tricklet_xor.python_v2"
+            ],
+            "max_point": 2,
+            "source_count": 516,
+            "source_kind": "bytes",
+            "stage_input_payload_count": 365,
+            "upstream_result_header": {
+              "actions": [
+                "op.scaling.corad_normalize_exact.python_v2"
+              ],
+              "max_point": 2,
+              "source_count": 21,
+              "source_kind": "int64",
+              "stage_input_payload_count": 21
+            }
+          }
+        }
+      }
+    }
+  ],
+  "validation": {
+    "old_forward_inverse_exact": 39,
+    "source_hashes_unchanged_during_capture": true,
+    "codec_wire_and_uar1_separated": true
+  }
+}

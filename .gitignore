@@ -1,0 +1,67 @@
+# Operating-system and editor state
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.venv*/
+
+# Native and Java builds
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.class
+*.jar
+target/
+
+# Frontend
+node_modules/
+dist/
+.vite/
+
+# Datasets and generated experiment artifacts
+/data/
+/dataset/
+/datasets/
+/raw_data/
+/processed_data/
+/typed_data/
+backend/dataset*/
+results/
+result/
+outputs/
+artifacts/
+logs/
+checkpoints/
+receipts/
+snapshots/
+*.log
+*.jsonl
+*.jsonl.gz
+*.parquet
+*.arrow
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Local databases and secrets
+*.sqlite3
+.env
+.env.*
+!.env.example

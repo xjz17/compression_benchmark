@@ -1,0 +1,51 @@
+{
+  "_example_notes": [
+    "Use the exact frozen cohort dataset_id, domain, and source_group; the prepare CLI validates them against the cohort manifest.",
+    "Set each numeric dtype to its original fixed width: int8/uint8/int16/uint16/int32/uint32/int64/uint64/float16/float32/float64.",
+    "For exact NaN payloads use bits16:/bits32:/bits64: tokens; plain NaN remains a present value, never a null.",
+    "Datetime input supports microsecond precision; use integer epoch input with source_unit=ns for nanosecond timestamps.",
+    "The source must already be a locally audited CSV export. This script does not download or infer Hugging Face schemas."
+  ],
+  "format_version": "weighted-grpo-timeseries-preparation-v1",
+  "dataset_id": "replace_with_cohort_dataset_id",
+  "domain": "replace_with_one_of_the_eight_domain_ids",
+  "source_group": "replace_with_cohort_source_group",
+  "source": {
+    "path": "replace_with_local_audited_export.csv",
+    "format": "csv",
+    "encoding": "utf-8",
+    "delimiter": ",",
+    "upstream_revision": "replace_with_huggingface_commit_or_upstream_version",
+    "upstream_locator": "https://huggingface.co/datasets/BenchmarkHost/replace_me",
+    "expected_sha256": "replace_with_64_lowercase_hex_sha256_of_the_local_csv"
+  },
+  "entity_columns": [
+    "replace_with_entity_tag"
+  ],
+  "timestamp": {
+    "source_name": "replace_with_time_column",
+    "output_name": "timestamp_unix",
+    "source_kind": "datetime",
+    "output_unit": "us",
+    "timezone": "UTC",
+    "formats": [
+      "iso8601"
+    ],
+    "duplicate_policy": "reject"
+  },
+  "numeric_columns": [
+    {
+      "source_name": "replace_with_int_or_float_field",
+      "output_name": "replace_with_stable_output_name",
+      "dtype": "float32"
+    }
+  ],
+  "missing_tokens": [
+    "",
+    "null",
+    "none",
+    "<na>"
+  ],
+  "dataset_byte_cap": 268435456,
+  "block_byte_cap": 1048576
+}

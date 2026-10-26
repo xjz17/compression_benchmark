@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.18)
+project(native_baseline86_general_b LANGUAGES C CXX)
+include(CTest)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include("${CMAKE_CURRENT_LIST_DIR}/../upstream_general_b.cmake")

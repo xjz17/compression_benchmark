@@ -1,0 +1,1744 @@
+{
+  "schema": "canonical182-expected-migrations-v1",
+  "source_registry_sha256": "a1d236de462a5aedfedb086528ce471ebae5ac031aeba1735ba27bf8ee94ccca",
+  "audit_sha256": "27dc7a8db1c1853d3613fda33ddf456a4a759e0c0e0864ee881fed25c1c2e4e6",
+  "expected_policy_count": 182,
+  "expected_stop_id": 182,
+  "expected_family_count": 28,
+  "from206": {
+    "0": {
+      "policy_action_id": 0,
+      "io_variant": "op.eraser.reference_v1"
+    },
+    "1": {
+      "policy_action_id": 5,
+      "io_variant": "op.scaling.reference_v1"
+    },
+    "2": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.reference_v1"
+    },
+    "3": {
+      "policy_action_id": 18,
+      "io_variant": "op.value_reorder.reference_v1"
+    },
+    "4": {
+      "policy_action_id": 19,
+      "io_variant": "op.regression_predictor.reference_v1"
+    },
+    "5": {
+      "policy_action_id": 22,
+      "io_variant": "op.outlier_separation.reference_v1"
+    },
+    "6": {
+      "policy_action_id": 24,
+      "io_variant": "op.bitpack_int.reference_v1"
+    },
+    "7": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.reference_v1"
+    },
+    "8": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.reference_v1"
+    },
+    "9": {
+      "policy_action_id": 52,
+      "io_variant": "op.trailing_zero_pack.reference_v1"
+    },
+    "10": {
+      "policy_action_id": 56,
+      "io_variant": "op.dictionary.reference_v1"
+    },
+    "11": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.reference_v1"
+    },
+    "12": {
+      "policy_action_id": 62,
+      "io_variant": "op.block_transform.reference_v1"
+    },
+    "13": {
+      "policy_action_id": 69,
+      "io_variant": "op.symbol_recode.reference_v1"
+    },
+    "14": {
+      "policy_action_id": 71,
+      "io_variant": "op.run_length.reference_v1"
+    },
+    "15": {
+      "policy_action_id": 74,
+      "io_variant": "op.lz_match.reference_v1"
+    },
+    "16": {
+      "policy_action_id": 109,
+      "io_variant": "op.match_parse_policy.reference_v1"
+    },
+    "17": {
+      "policy_action_id": 112,
+      "io_variant": "op.match_window_model.reference_v1"
+    },
+    "18": {
+      "policy_action_id": 127,
+      "io_variant": "op.match_token_format.reference_v1"
+    },
+    "19": {
+      "policy_action_id": 134,
+      "io_variant": "op.integer_code.reference_v1"
+    },
+    "20": {
+      "policy_action_id": 139,
+      "io_variant": "op.bitstream_pack.reference_v1"
+    },
+    "21": {
+      "policy_action_id": 141,
+      "io_variant": "op.entropy_huffman.reference_v1"
+    },
+    "22": {
+      "policy_action_id": 143,
+      "io_variant": "op.entropy_range.reference_v1"
+    },
+    "23": {
+      "policy_action_id": 146,
+      "io_variant": "op.entropy_fse.reference_v1"
+    },
+    "24": {
+      "policy_action_id": 148,
+      "io_variant": "op.entropy_special.reference_v1"
+    },
+    "25": {
+      "policy_action_id": 150,
+      "io_variant": "op.literal_entropy.reference_v1"
+    },
+    "26": {
+      "policy_action_id": 152,
+      "io_variant": "op.block_state_control.reference_v1"
+    },
+    "27": {
+      "policy_action_id": 173,
+      "io_variant": "op.container_frame.reference_v1"
+    },
+    "28": {
+      "policy_action_id": 44,
+      "io_variant": "op.xor.chimp_history128.reference_v1"
+    },
+    "29": {
+      "policy_action_id": 75,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max110"
+    },
+    "30": {
+      "policy_action_id": 76,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max117"
+    },
+    "31": {
+      "policy_action_id": 77,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max125"
+    },
+    "32": {
+      "policy_action_id": 78,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max153"
+    },
+    "33": {
+      "policy_action_id": 79,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max164"
+    },
+    "34": {
+      "policy_action_id": 80,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max18"
+    },
+    "35": {
+      "policy_action_id": 81,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max203"
+    },
+    "36": {
+      "policy_action_id": 82,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max213"
+    },
+    "37": {
+      "policy_action_id": 83,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max251"
+    },
+    "38": {
+      "policy_action_id": 84,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max257"
+    },
+    "39": {
+      "policy_action_id": 85,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max35"
+    },
+    "40": {
+      "policy_action_id": 86,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max41"
+    },
+    "41": {
+      "policy_action_id": 87,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max64"
+    },
+    "42": {
+      "policy_action_id": 88,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max85"
+    },
+    "43": {
+      "policy_action_id": 89,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max119"
+    },
+    "44": {
+      "policy_action_id": 90,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max128"
+    },
+    "45": {
+      "policy_action_id": 91,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max160"
+    },
+    "46": {
+      "policy_action_id": 92,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max197"
+    },
+    "47": {
+      "policy_action_id": 93,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max208"
+    },
+    "48": {
+      "policy_action_id": 94,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max248"
+    },
+    "49": {
+      "policy_action_id": 95,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max31"
+    },
+    "50": {
+      "policy_action_id": 96,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max32"
+    },
+    "51": {
+      "policy_action_id": 97,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max53"
+    },
+    "52": {
+      "policy_action_id": 98,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max66"
+    },
+    "53": {
+      "policy_action_id": 99,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max186"
+    },
+    "54": {
+      "policy_action_id": 100,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max214"
+    },
+    "55": {
+      "policy_action_id": 101,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max248"
+    },
+    "56": {
+      "policy_action_id": 110,
+      "io_variant": "op.match_parse_policy.native_lz.aligned8_greedy"
+    },
+    "57": {
+      "policy_action_id": 128,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3"
+    },
+    "58": {
+      "policy_action_id": 129,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4"
+    },
+    "59": {
+      "policy_action_id": 130,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5"
+    },
+    "60": {
+      "policy_action_id": 113,
+      "io_variant": "op.match_window_model.native_lz.window12288"
+    },
+    "61": {
+      "policy_action_id": 114,
+      "io_variant": "op.match_window_model.native_lz.window16384"
+    },
+    "62": {
+      "policy_action_id": 115,
+      "io_variant": "op.match_window_model.native_lz.window19456"
+    },
+    "63": {
+      "policy_action_id": 116,
+      "io_variant": "op.match_window_model.native_lz.window24576"
+    },
+    "64": {
+      "policy_action_id": 117,
+      "io_variant": "op.match_window_model.native_lz.window28672"
+    },
+    "65": {
+      "policy_action_id": 118,
+      "io_variant": "op.match_window_model.native_lz.window3072"
+    },
+    "66": {
+      "policy_action_id": 119,
+      "io_variant": "op.match_window_model.native_lz.window32768"
+    },
+    "67": {
+      "policy_action_id": 120,
+      "io_variant": "op.match_window_model.native_lz.window4096"
+    },
+    "68": {
+      "policy_action_id": 121,
+      "io_variant": "op.match_window_model.native_lz.window40960"
+    },
+    "69": {
+      "policy_action_id": 122,
+      "io_variant": "op.match_window_model.native_lz.window5120"
+    },
+    "70": {
+      "policy_action_id": 123,
+      "io_variant": "op.match_window_model.native_lz.window53248"
+    },
+    "71": {
+      "policy_action_id": 124,
+      "io_variant": "op.match_window_model.native_lz.window57344"
+    },
+    "72": {
+      "policy_action_id": 125,
+      "io_variant": "op.match_window_model.native_lz.window65535"
+    },
+    "73": {
+      "policy_action_id": 126,
+      "io_variant": "op.match_window_model.native_lz.window8192"
+    },
+    "74": {
+      "policy_action_id": 142,
+      "io_variant": "op.entropy_huffman.project_bytes.cpp_v1"
+    },
+    "75": {
+      "policy_action_id": 144,
+      "io_variant": "op.entropy_range.project_bytes.cpp_v1"
+    },
+    "76": {
+      "policy_action_id": 147,
+      "io_variant": "op.entropy_fse.zstd_rans.cpp_reference_v1"
+    },
+    "77": {
+      "policy_action_id": 57,
+      "io_variant": "op.dictionary.project_words64.cpp_v1"
+    },
+    "78": {
+      "policy_action_id": 72,
+      "io_variant": "op.run_length.tsfile_int64.v1"
+    },
+    "79": {
+      "policy_action_id": 6,
+      "io_variant": "op.scaling.tsfile_rle.cpp_v1"
+    },
+    "80": {
+      "policy_action_id": 7,
+      "io_variant": "op.scaling.ts_2diff.cpp_v1"
+    },
+    "81": {
+      "policy_action_id": 37,
+      "io_variant": "op.delta.ts_2diff.cpp_v1"
+    },
+    "82": {
+      "policy_action_id": 15,
+      "io_variant": "op.frame_of_reference.ts_2diff.cpp_v1"
+    },
+    "83": {
+      "policy_action_id": 25,
+      "io_variant": "op.bitpack_int.ts_2diff.cpp_v1"
+    },
+    "84": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.stream_vbyte.cpp_v1"
+    },
+    "85": {
+      "policy_action_id": 135,
+      "io_variant": "op.integer_code.stream_vbyte.cpp_v1"
+    },
+    "86": {
+      "policy_action_id": 7,
+      "io_variant": "op.scaling.simple8b.cpp_v1"
+    },
+    "87": {
+      "policy_action_id": 26,
+      "io_variant": "op.bitpack_int.simple8b.cpp_v1"
+    },
+    "88": {
+      "policy_action_id": 38,
+      "io_variant": "op.delta.rlbe.cpp_v1"
+    },
+    "89": {
+      "policy_action_id": 73,
+      "io_variant": "op.run_length.rlbe.cpp_v1"
+    },
+    "90": {
+      "policy_action_id": 39,
+      "io_variant": "op.delta.sprintz.cpp_v1"
+    },
+    "91": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.sprintz.cpp_v1"
+    },
+    "92": {
+      "policy_action_id": 27,
+      "io_variant": "op.bitpack_int.sprintz.cpp_v1"
+    },
+    "93": {
+      "policy_action_id": 8,
+      "io_variant": "op.scaling.delta_binary_packed.cpp_v1"
+    },
+    "94": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.delta_binary_packed.cpp_v1"
+    },
+    "95": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.delta_binary_packed.cpp_v1"
+    },
+    "96": {
+      "policy_action_id": 28,
+      "io_variant": "op.bitpack_int.delta_binary_packed.cpp_v1"
+    },
+    "97": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.gorilla.cpp_v1"
+    },
+    "98": {
+      "policy_action_id": 53,
+      "io_variant": "op.trailing_zero_pack.gorilla.cpp_v1"
+    },
+    "99": {
+      "policy_action_id": 44,
+      "io_variant": "op.xor.chimp128.cpp_v1"
+    },
+    "100": {
+      "policy_action_id": 54,
+      "io_variant": "op.trailing_zero_pack.chimp128.cpp_v1"
+    },
+    "101": {
+      "policy_action_id": 1,
+      "io_variant": "op.eraser.pongo.cpp_v1"
+    },
+    "102": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.pongo.cpp_v1"
+    },
+    "103": {
+      "policy_action_id": 53,
+      "io_variant": "op.trailing_zero_pack.pongo.cpp_v1"
+    },
+    "104": {
+      "policy_action_id": 40,
+      "io_variant": "op.delta.spdp.cpp_v1"
+    },
+    "105": {
+      "policy_action_id": 63,
+      "io_variant": "op.block_transform.spdp.cpp_v1"
+    },
+    "106": {
+      "policy_action_id": 149,
+      "io_variant": "op.entropy_special.spdp.cpp_v1"
+    },
+    "107": {
+      "policy_action_id": 45,
+      "io_variant": "op.xor.fpc.cpp_v1"
+    },
+    "108": {
+      "policy_action_id": 55,
+      "io_variant": "op.trailing_zero_pack.fpc.cpp_v1"
+    },
+    "109": {
+      "policy_action_id": 46,
+      "io_variant": "op.xor.pfpc.cpp_v1"
+    },
+    "110": {
+      "policy_action_id": 55,
+      "io_variant": "op.trailing_zero_pack.pfpc.cpp_v1"
+    },
+    "111": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.bos.cpp_v1"
+    },
+    "112": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.bos.cpp_v1"
+    },
+    "113": {
+      "policy_action_id": 23,
+      "io_variant": "op.outlier_separation.bos.cpp_v1"
+    },
+    "114": {
+      "policy_action_id": 16,
+      "io_variant": "op.frame_of_reference.bos.post_outlier.cpp_v1"
+    },
+    "115": {
+      "policy_action_id": 29,
+      "io_variant": "op.bitpack_int.bos.cpp_v1"
+    },
+    "116": {
+      "policy_action_id": 41,
+      "io_variant": "op.delta.bos64_adapter.cpp_v1"
+    },
+    "117": {
+      "policy_action_id": 30,
+      "io_variant": "op.bitpack_int.bos64_adapter.cpp_v1"
+    },
+    "118": {
+      "policy_action_id": 31,
+      "io_variant": "op.bitpack_int.fastpfor_pfor.cpp_v1"
+    },
+    "119": {
+      "policy_action_id": 136,
+      "io_variant": "op.integer_code.fastpfor_variablebyte.cpp_v1"
+    },
+    "120": {
+      "policy_action_id": 2,
+      "io_variant": "op.eraser.elf.cpp_v1"
+    },
+    "121": {
+      "policy_action_id": 47,
+      "io_variant": "op.xor.elf.cpp_v1"
+    },
+    "122": {
+      "policy_action_id": 48,
+      "io_variant": "op.xor.elf_plus.cpp_v1"
+    },
+    "123": {
+      "policy_action_id": 3,
+      "io_variant": "op.eraser.camel.cpp_v1"
+    },
+    "124": {
+      "policy_action_id": 49,
+      "io_variant": "op.xor.camel.cpp_v1"
+    },
+    "125": {
+      "policy_action_id": 140,
+      "io_variant": "op.bitstream_pack.camel.cpp_v1"
+    },
+    "126": {
+      "policy_action_id": 153,
+      "io_variant": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1"
+    },
+    "127": {
+      "policy_action_id": 131,
+      "io_variant": "op.match_token_format.snappy.cpp_v1"
+    },
+    "128": {
+      "policy_action_id": 137,
+      "io_variant": "op.integer_code.snappy.cpp_v1"
+    },
+    "129": {
+      "policy_action_id": 154,
+      "io_variant": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1"
+    },
+    "130": {
+      "policy_action_id": 132,
+      "io_variant": "op.match_token_format.lz4.cpp_v1"
+    },
+    "131": {
+      "policy_action_id": 138,
+      "io_variant": "op.integer_code.lz4.cpp_v1"
+    },
+    "132": {
+      "policy_action_id": 174,
+      "io_variant": "op.container_frame.lz4.cpp_v1"
+    },
+    "133": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.gzip.cpp_v1"
+    },
+    "134": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.zlib.cpp_v1"
+    },
+    "135": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.xz.cpp_v1"
+    },
+    "136": {
+      "policy_action_id": 42,
+      "io_variant": "op.delta.fpzip.cpp_v1"
+    },
+    "137": {
+      "policy_action_id": 145,
+      "io_variant": "op.entropy_range.fpzip.cpp_v1"
+    },
+    "138": {
+      "policy_action_id": 20,
+      "io_variant": "op.regression_predictor.leco.cpp_v1"
+    },
+    "139": {
+      "policy_action_id": 32,
+      "io_variant": "op.bitpack_int.leco.cpp_v1"
+    },
+    "140": {
+      "policy_action_id": 9,
+      "io_variant": "op.scaling.alp.cpp_v1"
+    },
+    "141": {
+      "policy_action_id": 17,
+      "io_variant": "op.frame_of_reference.alp.cpp_v1"
+    },
+    "142": {
+      "policy_action_id": 33,
+      "io_variant": "op.bitpack_int.alp.cpp_v1"
+    },
+    "143": {
+      "policy_action_id": 58,
+      "io_variant": "op.dictionary.alp_rd.cpp_v1"
+    },
+    "144": {
+      "policy_action_id": 18,
+      "io_variant": "op.value_reorder.reger.cpp_v1"
+    },
+    "145": {
+      "policy_action_id": 21,
+      "io_variant": "op.regression_predictor.reger.cpp_v1"
+    },
+    "146": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.reger.cpp_v1"
+    },
+    "147": {
+      "policy_action_id": 34,
+      "io_variant": "op.bitpack_int.reger.cpp_v1"
+    },
+    "148": {
+      "policy_action_id": 155,
+      "io_variant": "op.block_state_control.alp_residual_core.cpp_v1"
+    },
+    "149": {
+      "policy_action_id": 156,
+      "io_variant": "op.block_state_control.reger_residual_core.cpp_v1"
+    },
+    "150": {
+      "policy_action_id": 10,
+      "io_variant": "op.scaling.buff.cpp_v1"
+    },
+    "151": {
+      "policy_action_id": 64,
+      "io_variant": "op.block_transform.buff_column_split.cpp_v1"
+    },
+    "152": {
+      "policy_action_id": 35,
+      "io_variant": "op.bitpack_int.buff.cpp_v1"
+    },
+    "153": {
+      "policy_action_id": 59,
+      "io_variant": "op.dictionary.brotli_static_small.cpp_reference_v1"
+    },
+    "154": {
+      "policy_action_id": 102,
+      "io_variant": "op.lz_match.brotli_lazy65535.cpp_reference_v1"
+    },
+    "155": {
+      "policy_action_id": 103,
+      "io_variant": "op.lz_match.zstd_lazy65535.cpp_reference_v1"
+    },
+    "156": {
+      "policy_action_id": 111,
+      "io_variant": "op.match_parse_policy.generic_packet.cpp_reference_v1"
+    },
+    "157": {
+      "policy_action_id": 151,
+      "io_variant": "op.literal_entropy.zstd_huffman.cpp_reference_v1"
+    },
+    "158": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1"
+    },
+    "159": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1"
+    },
+    "160": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1"
+    },
+    "161": {
+      "policy_action_id": 104,
+      "io_variant": "op.lz_match.blosclz.greedy.cpp_reference_v1"
+    },
+    "162": {
+      "policy_action_id": 133,
+      "io_variant": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1"
+    },
+    "163": {
+      "policy_action_id": 157,
+      "io_variant": "op.block_state_control.blosc1.cpp_reference_v1"
+    },
+    "164": {
+      "policy_action_id": 157,
+      "io_variant": "op.block_state_control.blosc2.cpp_reference_v1"
+    },
+    "165": {
+      "policy_action_id": 66,
+      "io_variant": "op.block_transform.bzip2_bwt.cpp_reference_v1"
+    },
+    "166": {
+      "policy_action_id": 70,
+      "io_variant": "op.symbol_recode.bzip2_mtf.cpp_reference_v1"
+    },
+    "167": {
+      "policy_action_id": 71,
+      "io_variant": "op.run_length.bzip2_uint8.cpp_reference_v1"
+    },
+    "168": {
+      "policy_action_id": 105,
+      "io_variant": "op.lz_match.deflate_lazy32768.cpp_reference_v1"
+    },
+    "169": {
+      "policy_action_id": 106,
+      "io_variant": "op.lz_match.xz_lazy16777216.cpp_reference_v1"
+    },
+    "170": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.gzip.cpp_reference_v1"
+    },
+    "171": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.zlib.cpp_reference_v1"
+    },
+    "172": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.xz.cpp_reference_v1"
+    },
+    "173": {
+      "policy_action_id": 158,
+      "io_variant": "op.block_state_control.brotli_residual_core.cpp_v1"
+    },
+    "174": {
+      "policy_action_id": 159,
+      "io_variant": "op.block_state_control.zstd_residual_core.cpp_v1"
+    },
+    "175": {
+      "policy_action_id": 160,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t1.cpp_v1"
+    },
+    "176": {
+      "policy_action_id": 161,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t4.cpp_v1"
+    },
+    "177": {
+      "policy_action_id": 162,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t8.cpp_v1"
+    },
+    "178": {
+      "policy_action_id": 163,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t1.cpp_v1"
+    },
+    "179": {
+      "policy_action_id": 164,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t4.cpp_v1"
+    },
+    "180": {
+      "policy_action_id": 165,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t8.cpp_v1"
+    },
+    "181": {
+      "policy_action_id": 166,
+      "io_variant": "op.block_state_control.bzip2_residual_core.cpp_v1"
+    },
+    "182": {
+      "policy_action_id": 167,
+      "io_variant": "op.block_state_control.gzip_deflate_residual_core.cpp_v1"
+    },
+    "183": {
+      "policy_action_id": 168,
+      "io_variant": "op.block_state_control.zlib_deflate_residual_core.cpp_v1"
+    },
+    "184": {
+      "policy_action_id": 169,
+      "io_variant": "op.block_state_control.xz_lzma2_residual_core.cpp_v1"
+    },
+    "185": {
+      "policy_action_id": 11,
+      "io_variant": "op.scaling.legacy_exact_decimal.cpp_v1"
+    },
+    "186": {
+      "policy_action_id": 67,
+      "io_variant": "op.block_transform.int64_lo_hi32.cpp_v1"
+    },
+    "187": {
+      "policy_action_id": 107,
+      "io_variant": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1"
+    },
+    "188": {
+      "policy_action_id": 130,
+      "io_variant": "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1"
+    },
+    "189": {
+      "policy_action_id": 177,
+      "io_variant": "op.container_frame.legacy_numeric_limbs.cpp_v1"
+    },
+    "190": {
+      "policy_action_id": 12,
+      "io_variant": "op.scaling.alp_legacy_fe_exceptions.cpp_v1"
+    },
+    "191": {
+      "policy_action_id": 178,
+      "io_variant": "op.container_frame.alp2_legacy.cpp_v1"
+    },
+    "192": {
+      "policy_action_id": 108,
+      "io_variant": "op.lz_match.snappy_snap_1_1_1.cpp_v1"
+    },
+    "193": {
+      "policy_action_id": 170,
+      "io_variant": "op.block_state_control.reger_legacy_block_core.cpp_v1"
+    },
+    "194": {
+      "policy_action_id": 179,
+      "io_variant": "op.container_frame.reger3_legacy.cpp_v1"
+    },
+    "195": {
+      "policy_action_id": 68,
+      "io_variant": "op.block_transform.buff_native_word_order.cpp_v1"
+    },
+    "196": {
+      "policy_action_id": 180,
+      "io_variant": "op.container_frame.buff_native_raw64.cpp_v1"
+    },
+    "197": {
+      "policy_action_id": 171,
+      "io_variant": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1"
+    },
+    "198": {
+      "policy_action_id": 181,
+      "io_variant": "op.container_frame.blosc2_legacy_chunk.cpp_v1"
+    },
+    "199": {
+      "policy_action_id": 4,
+      "io_variant": "op.eraser.elf64.cpp_v1"
+    },
+    "200": {
+      "policy_action_id": 50,
+      "io_variant": "op.xor.elf64_on_chimp.cpp_v1"
+    },
+    "201": {
+      "policy_action_id": 51,
+      "io_variant": "op.xor.elf64_plus.cpp_v1"
+    },
+    "202": {
+      "policy_action_id": 13,
+      "io_variant": "op.scaling.corad_normalize_exact.cpp_v2"
+    },
+    "203": {
+      "policy_action_id": 60,
+      "io_variant": "op.dictionary.corad_tricklet_xor.cpp_v2"
+    },
+    "204": {
+      "policy_action_id": 172,
+      "io_variant": "op.block_state_control.corad_deflate9.cpp_v2"
+    },
+    "205": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.corad_lossless.cpp_v2"
+    },
+    "206": {
+      "policy_action_id": 182,
+      "io_variant": null
+    }
+  },
+  "from225": {
+    "0": {
+      "policy_action_id": 0,
+      "io_variant": "op.eraser.reference_v1"
+    },
+    "1": {
+      "policy_action_id": 5,
+      "io_variant": "op.scaling.reference_v1"
+    },
+    "2": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.reference_v1"
+    },
+    "3": {
+      "policy_action_id": 18,
+      "io_variant": "op.value_reorder.reference_v1"
+    },
+    "4": {
+      "policy_action_id": 19,
+      "io_variant": "op.regression_predictor.reference_v1"
+    },
+    "5": {
+      "policy_action_id": 22,
+      "io_variant": "op.outlier_separation.reference_v1"
+    },
+    "6": {
+      "policy_action_id": 24,
+      "io_variant": "op.bitpack_int.reference_v1"
+    },
+    "7": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.reference_v1"
+    },
+    "8": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.reference_v1"
+    },
+    "9": {
+      "policy_action_id": 52,
+      "io_variant": "op.trailing_zero_pack.reference_v1"
+    },
+    "10": {
+      "policy_action_id": 56,
+      "io_variant": "op.dictionary.reference_v1"
+    },
+    "11": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.reference_v1"
+    },
+    "12": {
+      "policy_action_id": 62,
+      "io_variant": "op.block_transform.reference_v1"
+    },
+    "13": {
+      "policy_action_id": 69,
+      "io_variant": "op.symbol_recode.reference_v1"
+    },
+    "14": {
+      "policy_action_id": 71,
+      "io_variant": "op.run_length.reference_v1"
+    },
+    "15": {
+      "policy_action_id": 74,
+      "io_variant": "op.lz_match.reference_v1"
+    },
+    "16": {
+      "policy_action_id": 109,
+      "io_variant": "op.match_parse_policy.reference_v1"
+    },
+    "17": {
+      "policy_action_id": 112,
+      "io_variant": "op.match_window_model.reference_v1"
+    },
+    "18": {
+      "policy_action_id": 127,
+      "io_variant": "op.match_token_format.reference_v1"
+    },
+    "19": {
+      "policy_action_id": 134,
+      "io_variant": "op.integer_code.reference_v1"
+    },
+    "20": {
+      "policy_action_id": 139,
+      "io_variant": "op.bitstream_pack.reference_v1"
+    },
+    "21": {
+      "policy_action_id": 141,
+      "io_variant": "op.entropy_huffman.reference_v1"
+    },
+    "22": {
+      "policy_action_id": 143,
+      "io_variant": "op.entropy_range.reference_v1"
+    },
+    "23": {
+      "policy_action_id": 146,
+      "io_variant": "op.entropy_fse.reference_v1"
+    },
+    "24": {
+      "policy_action_id": 148,
+      "io_variant": "op.entropy_special.reference_v1"
+    },
+    "25": {
+      "policy_action_id": 150,
+      "io_variant": "op.literal_entropy.reference_v1"
+    },
+    "26": {
+      "policy_action_id": 152,
+      "io_variant": "op.block_state_control.reference_v1"
+    },
+    "27": {
+      "policy_action_id": 173,
+      "io_variant": "op.container_frame.reference_v1"
+    },
+    "28": {
+      "policy_action_id": 44,
+      "io_variant": "op.xor.chimp_history128.reference_v1"
+    },
+    "29": {
+      "policy_action_id": 75,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max110"
+    },
+    "30": {
+      "policy_action_id": 76,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max117"
+    },
+    "31": {
+      "policy_action_id": 77,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max125"
+    },
+    "32": {
+      "policy_action_id": 78,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max153"
+    },
+    "33": {
+      "policy_action_id": 78,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max153"
+    },
+    "34": {
+      "policy_action_id": 79,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max164"
+    },
+    "35": {
+      "policy_action_id": 79,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max164"
+    },
+    "36": {
+      "policy_action_id": 80,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max18"
+    },
+    "37": {
+      "policy_action_id": 81,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max203"
+    },
+    "38": {
+      "policy_action_id": 82,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max213"
+    },
+    "39": {
+      "policy_action_id": 82,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max213"
+    },
+    "40": {
+      "policy_action_id": 82,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max213"
+    },
+    "41": {
+      "policy_action_id": 83,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max251"
+    },
+    "42": {
+      "policy_action_id": 83,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max251"
+    },
+    "43": {
+      "policy_action_id": 84,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max257"
+    },
+    "44": {
+      "policy_action_id": 84,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max257"
+    },
+    "45": {
+      "policy_action_id": 85,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max35"
+    },
+    "46": {
+      "policy_action_id": 85,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max35"
+    },
+    "47": {
+      "policy_action_id": 86,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max41"
+    },
+    "48": {
+      "policy_action_id": 87,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max64"
+    },
+    "49": {
+      "policy_action_id": 88,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max85"
+    },
+    "50": {
+      "policy_action_id": 88,
+      "io_variant": "op.lz_match.native_lz.aligned8.min3.max85"
+    },
+    "51": {
+      "policy_action_id": 89,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max119"
+    },
+    "52": {
+      "policy_action_id": 90,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max128"
+    },
+    "53": {
+      "policy_action_id": 90,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max128"
+    },
+    "54": {
+      "policy_action_id": 91,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max160"
+    },
+    "55": {
+      "policy_action_id": 92,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max197"
+    },
+    "56": {
+      "policy_action_id": 93,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max208"
+    },
+    "57": {
+      "policy_action_id": 94,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max248"
+    },
+    "58": {
+      "policy_action_id": 94,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max248"
+    },
+    "59": {
+      "policy_action_id": 94,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max248"
+    },
+    "60": {
+      "policy_action_id": 94,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max248"
+    },
+    "61": {
+      "policy_action_id": 95,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max31"
+    },
+    "62": {
+      "policy_action_id": 96,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max32"
+    },
+    "63": {
+      "policy_action_id": 96,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max32"
+    },
+    "64": {
+      "policy_action_id": 97,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max53"
+    },
+    "65": {
+      "policy_action_id": 98,
+      "io_variant": "op.lz_match.native_lz.aligned8.min4.max66"
+    },
+    "66": {
+      "policy_action_id": 99,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max186"
+    },
+    "67": {
+      "policy_action_id": 100,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max214"
+    },
+    "68": {
+      "policy_action_id": 101,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max248"
+    },
+    "69": {
+      "policy_action_id": 101,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max248"
+    },
+    "70": {
+      "policy_action_id": 101,
+      "io_variant": "op.lz_match.native_lz.aligned8.min5.max248"
+    },
+    "71": {
+      "policy_action_id": 110,
+      "io_variant": "op.match_parse_policy.native_lz.aligned8_greedy"
+    },
+    "72": {
+      "policy_action_id": 128,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3"
+    },
+    "73": {
+      "policy_action_id": 129,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4"
+    },
+    "74": {
+      "policy_action_id": 130,
+      "io_variant": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5"
+    },
+    "75": {
+      "policy_action_id": 113,
+      "io_variant": "op.match_window_model.native_lz.window12288"
+    },
+    "76": {
+      "policy_action_id": 114,
+      "io_variant": "op.match_window_model.native_lz.window16384"
+    },
+    "77": {
+      "policy_action_id": 115,
+      "io_variant": "op.match_window_model.native_lz.window19456"
+    },
+    "78": {
+      "policy_action_id": 116,
+      "io_variant": "op.match_window_model.native_lz.window24576"
+    },
+    "79": {
+      "policy_action_id": 117,
+      "io_variant": "op.match_window_model.native_lz.window28672"
+    },
+    "80": {
+      "policy_action_id": 118,
+      "io_variant": "op.match_window_model.native_lz.window3072"
+    },
+    "81": {
+      "policy_action_id": 119,
+      "io_variant": "op.match_window_model.native_lz.window32768"
+    },
+    "82": {
+      "policy_action_id": 120,
+      "io_variant": "op.match_window_model.native_lz.window4096"
+    },
+    "83": {
+      "policy_action_id": 121,
+      "io_variant": "op.match_window_model.native_lz.window40960"
+    },
+    "84": {
+      "policy_action_id": 122,
+      "io_variant": "op.match_window_model.native_lz.window5120"
+    },
+    "85": {
+      "policy_action_id": 123,
+      "io_variant": "op.match_window_model.native_lz.window53248"
+    },
+    "86": {
+      "policy_action_id": 124,
+      "io_variant": "op.match_window_model.native_lz.window57344"
+    },
+    "87": {
+      "policy_action_id": 125,
+      "io_variant": "op.match_window_model.native_lz.window65535"
+    },
+    "88": {
+      "policy_action_id": 126,
+      "io_variant": "op.match_window_model.native_lz.window8192"
+    },
+    "89": {
+      "policy_action_id": 142,
+      "io_variant": "op.entropy_huffman.project_bytes.cpp_v1"
+    },
+    "90": {
+      "policy_action_id": 144,
+      "io_variant": "op.entropy_range.project_bytes.cpp_v1"
+    },
+    "91": {
+      "policy_action_id": 147,
+      "io_variant": "op.entropy_fse.zstd_rans.cpp_reference_v1"
+    },
+    "92": {
+      "policy_action_id": 57,
+      "io_variant": "op.dictionary.project_words64.cpp_v1"
+    },
+    "93": {
+      "policy_action_id": 57,
+      "io_variant": "op.dictionary.project_words64.cpp_v1"
+    },
+    "94": {
+      "policy_action_id": 72,
+      "io_variant": "op.run_length.tsfile_int64.v1"
+    },
+    "95": {
+      "policy_action_id": 6,
+      "io_variant": "op.scaling.tsfile_rle.cpp_v1"
+    },
+    "96": {
+      "policy_action_id": 7,
+      "io_variant": "op.scaling.ts_2diff.cpp_v1"
+    },
+    "97": {
+      "policy_action_id": 37,
+      "io_variant": "op.delta.ts_2diff.cpp_v1"
+    },
+    "98": {
+      "policy_action_id": 15,
+      "io_variant": "op.frame_of_reference.ts_2diff.cpp_v1"
+    },
+    "99": {
+      "policy_action_id": 25,
+      "io_variant": "op.bitpack_int.ts_2diff.cpp_v1"
+    },
+    "100": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.stream_vbyte.cpp_v1"
+    },
+    "101": {
+      "policy_action_id": 135,
+      "io_variant": "op.integer_code.stream_vbyte.cpp_v1"
+    },
+    "102": {
+      "policy_action_id": 7,
+      "io_variant": "op.scaling.simple8b.cpp_v1"
+    },
+    "103": {
+      "policy_action_id": 26,
+      "io_variant": "op.bitpack_int.simple8b.cpp_v1"
+    },
+    "104": {
+      "policy_action_id": 38,
+      "io_variant": "op.delta.rlbe.cpp_v1"
+    },
+    "105": {
+      "policy_action_id": 73,
+      "io_variant": "op.run_length.rlbe.cpp_v1"
+    },
+    "106": {
+      "policy_action_id": 39,
+      "io_variant": "op.delta.sprintz.cpp_v1"
+    },
+    "107": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.sprintz.cpp_v1"
+    },
+    "108": {
+      "policy_action_id": 27,
+      "io_variant": "op.bitpack_int.sprintz.cpp_v1"
+    },
+    "109": {
+      "policy_action_id": 8,
+      "io_variant": "op.scaling.delta_binary_packed.cpp_v1"
+    },
+    "110": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.delta_binary_packed.cpp_v1"
+    },
+    "111": {
+      "policy_action_id": 61,
+      "io_variant": "op.zigzag.delta_binary_packed.cpp_v1"
+    },
+    "112": {
+      "policy_action_id": 28,
+      "io_variant": "op.bitpack_int.delta_binary_packed.cpp_v1"
+    },
+    "113": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.gorilla.cpp_v1"
+    },
+    "114": {
+      "policy_action_id": 53,
+      "io_variant": "op.trailing_zero_pack.gorilla.cpp_v1"
+    },
+    "115": {
+      "policy_action_id": 44,
+      "io_variant": "op.xor.chimp128.cpp_v1"
+    },
+    "116": {
+      "policy_action_id": 54,
+      "io_variant": "op.trailing_zero_pack.chimp128.cpp_v1"
+    },
+    "117": {
+      "policy_action_id": 1,
+      "io_variant": "op.eraser.pongo.cpp_v1"
+    },
+    "118": {
+      "policy_action_id": 43,
+      "io_variant": "op.xor.pongo.cpp_v1"
+    },
+    "119": {
+      "policy_action_id": 53,
+      "io_variant": "op.trailing_zero_pack.pongo.cpp_v1"
+    },
+    "120": {
+      "policy_action_id": 40,
+      "io_variant": "op.delta.spdp.cpp_v1"
+    },
+    "121": {
+      "policy_action_id": 63,
+      "io_variant": "op.block_transform.spdp.cpp_v1"
+    },
+    "122": {
+      "policy_action_id": 149,
+      "io_variant": "op.entropy_special.spdp.cpp_v1"
+    },
+    "123": {
+      "policy_action_id": 45,
+      "io_variant": "op.xor.fpc.cpp_v1"
+    },
+    "124": {
+      "policy_action_id": 55,
+      "io_variant": "op.trailing_zero_pack.fpc.cpp_v1"
+    },
+    "125": {
+      "policy_action_id": 46,
+      "io_variant": "op.xor.pfpc.cpp_v1"
+    },
+    "126": {
+      "policy_action_id": 55,
+      "io_variant": "op.trailing_zero_pack.pfpc.cpp_v1"
+    },
+    "127": {
+      "policy_action_id": 36,
+      "io_variant": "op.delta.bos.cpp_v1"
+    },
+    "128": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.bos.cpp_v1"
+    },
+    "129": {
+      "policy_action_id": 23,
+      "io_variant": "op.outlier_separation.bos.cpp_v1"
+    },
+    "130": {
+      "policy_action_id": 16,
+      "io_variant": "op.frame_of_reference.bos.post_outlier.cpp_v1"
+    },
+    "131": {
+      "policy_action_id": 29,
+      "io_variant": "op.bitpack_int.bos.cpp_v1"
+    },
+    "132": {
+      "policy_action_id": 41,
+      "io_variant": "op.delta.bos64_adapter.cpp_v1"
+    },
+    "133": {
+      "policy_action_id": 30,
+      "io_variant": "op.bitpack_int.bos64_adapter.cpp_v1"
+    },
+    "134": {
+      "policy_action_id": 31,
+      "io_variant": "op.bitpack_int.fastpfor_pfor.cpp_v1"
+    },
+    "135": {
+      "policy_action_id": 136,
+      "io_variant": "op.integer_code.fastpfor_variablebyte.cpp_v1"
+    },
+    "136": {
+      "policy_action_id": 2,
+      "io_variant": "op.eraser.elf.cpp_v1"
+    },
+    "137": {
+      "policy_action_id": 47,
+      "io_variant": "op.xor.elf.cpp_v1"
+    },
+    "138": {
+      "policy_action_id": 48,
+      "io_variant": "op.xor.elf_plus.cpp_v1"
+    },
+    "139": {
+      "policy_action_id": 3,
+      "io_variant": "op.eraser.camel.cpp_v1"
+    },
+    "140": {
+      "policy_action_id": 49,
+      "io_variant": "op.xor.camel.cpp_v1"
+    },
+    "141": {
+      "policy_action_id": 140,
+      "io_variant": "op.bitstream_pack.camel.cpp_v1"
+    },
+    "142": {
+      "policy_action_id": 153,
+      "io_variant": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1"
+    },
+    "143": {
+      "policy_action_id": 131,
+      "io_variant": "op.match_token_format.snappy.cpp_v1"
+    },
+    "144": {
+      "policy_action_id": 137,
+      "io_variant": "op.integer_code.snappy.cpp_v1"
+    },
+    "145": {
+      "policy_action_id": 154,
+      "io_variant": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1"
+    },
+    "146": {
+      "policy_action_id": 132,
+      "io_variant": "op.match_token_format.lz4.cpp_v1"
+    },
+    "147": {
+      "policy_action_id": 138,
+      "io_variant": "op.integer_code.lz4.cpp_v1"
+    },
+    "148": {
+      "policy_action_id": 174,
+      "io_variant": "op.container_frame.lz4.cpp_v1"
+    },
+    "149": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.gzip.cpp_v1"
+    },
+    "150": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.zlib.cpp_v1"
+    },
+    "151": {
+      "policy_action_id": 175,
+      "io_variant": "op.container_frame.xz.cpp_v1"
+    },
+    "152": {
+      "policy_action_id": 42,
+      "io_variant": "op.delta.fpzip.cpp_v1"
+    },
+    "153": {
+      "policy_action_id": 145,
+      "io_variant": "op.entropy_range.fpzip.cpp_v1"
+    },
+    "154": {
+      "policy_action_id": 20,
+      "io_variant": "op.regression_predictor.leco.cpp_v1"
+    },
+    "155": {
+      "policy_action_id": 32,
+      "io_variant": "op.bitpack_int.leco.cpp_v1"
+    },
+    "156": {
+      "policy_action_id": 9,
+      "io_variant": "op.scaling.alp.cpp_v1"
+    },
+    "157": {
+      "policy_action_id": 17,
+      "io_variant": "op.frame_of_reference.alp.cpp_v1"
+    },
+    "158": {
+      "policy_action_id": 33,
+      "io_variant": "op.bitpack_int.alp.cpp_v1"
+    },
+    "159": {
+      "policy_action_id": 58,
+      "io_variant": "op.dictionary.alp_rd.cpp_v1"
+    },
+    "160": {
+      "policy_action_id": 18,
+      "io_variant": "op.value_reorder.reger.cpp_v1"
+    },
+    "161": {
+      "policy_action_id": 21,
+      "io_variant": "op.regression_predictor.reger.cpp_v1"
+    },
+    "162": {
+      "policy_action_id": 14,
+      "io_variant": "op.frame_of_reference.reger.cpp_v1"
+    },
+    "163": {
+      "policy_action_id": 34,
+      "io_variant": "op.bitpack_int.reger.cpp_v1"
+    },
+    "164": {
+      "policy_action_id": 155,
+      "io_variant": "op.block_state_control.alp_residual_core.cpp_v1"
+    },
+    "165": {
+      "policy_action_id": 156,
+      "io_variant": "op.block_state_control.reger_residual_core.cpp_v1"
+    },
+    "166": {
+      "policy_action_id": 10,
+      "io_variant": "op.scaling.buff.cpp_v1"
+    },
+    "167": {
+      "policy_action_id": 64,
+      "io_variant": "op.block_transform.buff_column_split.cpp_v1"
+    },
+    "168": {
+      "policy_action_id": 35,
+      "io_variant": "op.bitpack_int.buff.cpp_v1"
+    },
+    "169": {
+      "policy_action_id": 59,
+      "io_variant": "op.dictionary.brotli_static_small.cpp_reference_v1"
+    },
+    "170": {
+      "policy_action_id": 102,
+      "io_variant": "op.lz_match.brotli_lazy65535.cpp_reference_v1"
+    },
+    "171": {
+      "policy_action_id": 142,
+      "io_variant": "op.entropy_huffman.project_bytes.cpp_v1"
+    },
+    "172": {
+      "policy_action_id": 103,
+      "io_variant": "op.lz_match.zstd_lazy65535.cpp_reference_v1"
+    },
+    "173": {
+      "policy_action_id": 111,
+      "io_variant": "op.match_parse_policy.generic_packet.cpp_reference_v1"
+    },
+    "174": {
+      "policy_action_id": 151,
+      "io_variant": "op.literal_entropy.zstd_huffman.cpp_reference_v1"
+    },
+    "175": {
+      "policy_action_id": 147,
+      "io_variant": "op.entropy_fse.zstd_rans.cpp_reference_v1"
+    },
+    "176": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1"
+    },
+    "177": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1"
+    },
+    "178": {
+      "policy_action_id": 65,
+      "io_variant": "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1"
+    },
+    "179": {
+      "policy_action_id": 104,
+      "io_variant": "op.lz_match.blosclz.greedy.cpp_reference_v1"
+    },
+    "180": {
+      "policy_action_id": 133,
+      "io_variant": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1"
+    },
+    "181": {
+      "policy_action_id": 157,
+      "io_variant": "op.block_state_control.blosc1.cpp_reference_v1"
+    },
+    "182": {
+      "policy_action_id": 157,
+      "io_variant": "op.block_state_control.blosc2.cpp_reference_v1"
+    },
+    "183": {
+      "policy_action_id": 66,
+      "io_variant": "op.block_transform.bzip2_bwt.cpp_reference_v1"
+    },
+    "184": {
+      "policy_action_id": 70,
+      "io_variant": "op.symbol_recode.bzip2_mtf.cpp_reference_v1"
+    },
+    "185": {
+      "policy_action_id": 71,
+      "io_variant": "op.run_length.bzip2_uint8.cpp_reference_v1"
+    },
+    "186": {
+      "policy_action_id": 105,
+      "io_variant": "op.lz_match.deflate_lazy32768.cpp_reference_v1"
+    },
+    "187": {
+      "policy_action_id": 106,
+      "io_variant": "op.lz_match.xz_lazy16777216.cpp_reference_v1"
+    },
+    "188": {
+      "policy_action_id": 144,
+      "io_variant": "op.entropy_range.project_bytes.cpp_v1"
+    },
+    "189": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.gzip.cpp_reference_v1"
+    },
+    "190": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.zlib.cpp_reference_v1"
+    },
+    "191": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.xz.cpp_reference_v1"
+    },
+    "192": {
+      "policy_action_id": 158,
+      "io_variant": "op.block_state_control.brotli_residual_core.cpp_v1"
+    },
+    "193": {
+      "policy_action_id": 159,
+      "io_variant": "op.block_state_control.zstd_residual_core.cpp_v1"
+    },
+    "194": {
+      "policy_action_id": 160,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t1.cpp_v1"
+    },
+    "195": {
+      "policy_action_id": 161,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t4.cpp_v1"
+    },
+    "196": {
+      "policy_action_id": 162,
+      "io_variant": "op.block_state_control.blosc1_residual_core_t8.cpp_v1"
+    },
+    "197": {
+      "policy_action_id": 163,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t1.cpp_v1"
+    },
+    "198": {
+      "policy_action_id": 164,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t4.cpp_v1"
+    },
+    "199": {
+      "policy_action_id": 165,
+      "io_variant": "op.block_state_control.blosc2_residual_core_t8.cpp_v1"
+    },
+    "200": {
+      "policy_action_id": 166,
+      "io_variant": "op.block_state_control.bzip2_residual_core.cpp_v1"
+    },
+    "201": {
+      "policy_action_id": 167,
+      "io_variant": "op.block_state_control.gzip_deflate_residual_core.cpp_v1"
+    },
+    "202": {
+      "policy_action_id": 168,
+      "io_variant": "op.block_state_control.zlib_deflate_residual_core.cpp_v1"
+    },
+    "203": {
+      "policy_action_id": 169,
+      "io_variant": "op.block_state_control.xz_lzma2_residual_core.cpp_v1"
+    },
+    "204": {
+      "policy_action_id": 11,
+      "io_variant": "op.scaling.legacy_exact_decimal.cpp_v1"
+    },
+    "205": {
+      "policy_action_id": 67,
+      "io_variant": "op.block_transform.int64_lo_hi32.cpp_v1"
+    },
+    "206": {
+      "policy_action_id": 107,
+      "io_variant": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1"
+    },
+    "207": {
+      "policy_action_id": 130,
+      "io_variant": "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1"
+    },
+    "208": {
+      "policy_action_id": 177,
+      "io_variant": "op.container_frame.legacy_numeric_limbs.cpp_v1"
+    },
+    "209": {
+      "policy_action_id": 12,
+      "io_variant": "op.scaling.alp_legacy_fe_exceptions.cpp_v1"
+    },
+    "210": {
+      "policy_action_id": 178,
+      "io_variant": "op.container_frame.alp2_legacy.cpp_v1"
+    },
+    "211": {
+      "policy_action_id": 108,
+      "io_variant": "op.lz_match.snappy_snap_1_1_1.cpp_v1"
+    },
+    "212": {
+      "policy_action_id": 170,
+      "io_variant": "op.block_state_control.reger_legacy_block_core.cpp_v1"
+    },
+    "213": {
+      "policy_action_id": 179,
+      "io_variant": "op.container_frame.reger3_legacy.cpp_v1"
+    },
+    "214": {
+      "policy_action_id": 68,
+      "io_variant": "op.block_transform.buff_native_word_order.cpp_v1"
+    },
+    "215": {
+      "policy_action_id": 180,
+      "io_variant": "op.container_frame.buff_native_raw64.cpp_v1"
+    },
+    "216": {
+      "policy_action_id": 171,
+      "io_variant": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1"
+    },
+    "217": {
+      "policy_action_id": 181,
+      "io_variant": "op.container_frame.blosc2_legacy_chunk.cpp_v1"
+    },
+    "218": {
+      "policy_action_id": 4,
+      "io_variant": "op.eraser.elf64.cpp_v1"
+    },
+    "219": {
+      "policy_action_id": 50,
+      "io_variant": "op.xor.elf64_on_chimp.cpp_v1"
+    },
+    "220": {
+      "policy_action_id": 51,
+      "io_variant": "op.xor.elf64_plus.cpp_v1"
+    },
+    "221": {
+      "policy_action_id": 13,
+      "io_variant": "op.scaling.corad_normalize_exact.cpp_v2"
+    },
+    "222": {
+      "policy_action_id": 60,
+      "io_variant": "op.dictionary.corad_tricklet_xor.cpp_v2"
+    },
+    "223": {
+      "policy_action_id": 172,
+      "io_variant": "op.block_state_control.corad_deflate9.cpp_v2"
+    },
+    "224": {
+      "policy_action_id": 176,
+      "io_variant": "op.container_frame.corad_lossless.cpp_v2"
+    },
+    "225": {
+      "policy_action_id": 182,
+      "io_variant": null
+    }
+  }
+}

@@ -1,0 +1,126 @@
+cmake_minimum_required(VERSION 3.16)
+project(native_graph_v1 LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenSSL REQUIRED)
+enable_testing()
+add_library(native_graph_v1_chimp_history_xor_v2 STATIC chimp_history_xor_v2.cpp)
+set_target_properties(native_graph_v1_chimp_history_xor_v2 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(native_graph_v1_chimp_history_xor_v2 PUBLIC .)
+target_compile_options(native_graph_v1_chimp_history_xor_v2 PRIVATE -Wall -Wextra -Wpedantic -ffp-contract=off)
+add_executable(native_graph_v1_chimp_history_xor_v2_test chimp_history_xor_v2_test.cpp)
+target_link_libraries(native_graph_v1_chimp_history_xor_v2_test PRIVATE native_graph_v1_chimp_history_xor_v2)
+add_test(NAME native_graph_v1_chimp_history_xor_v2_test COMMAND native_graph_v1_chimp_history_xor_v2_test)
+add_library(native_graph_v1_core STATIC graph.cpp frame.cpp)
+set_target_properties(native_graph_v1_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(native_graph_v1_core PUBLIC . ../src)
+target_link_libraries(native_graph_v1_core PUBLIC OpenSSL::Crypto)
+target_compile_options(native_graph_v1_core PRIVATE -Wall -Wextra -Wpedantic -ffp-contract=off)
+include(stage_dispatch.cmake)
+target_link_libraries(native_graph_v1_stages PUBLIC native_graph_v1_core)
+add_executable(native_graph_v1_smoke smoke.cpp)
+target_link_libraries(native_graph_v1_smoke PRIVATE native_graph_v1_stages)
+add_test(NAME native_graph_v1_smoke COMMAND native_graph_v1_smoke)
+add_executable(native_graph_v1_stage_dispatch_test stage_dispatch_test.cpp)
+target_link_libraries(native_graph_v1_stage_dispatch_test PRIVATE native_graph_v1_core native_graph_v1_stages OpenSSL::Crypto ZLIB::ZLIB)
+add_test(NAME native_graph_v1_stage_dispatch_test COMMAND native_graph_v1_stage_dispatch_test)
+add_executable(native_graph_v1_capability_dump capability_dump.cpp)
+target_link_libraries(native_graph_v1_capability_dump PRIVATE native_graph_v1_stages)
+add_library(native_graph_v1_c SHARED native_graph_v1.cpp)
+target_link_libraries(native_graph_v1_c PRIVATE native_graph_v1_stages)
+add_executable(native_graph_v1_cli native_graph_v1_cli.cpp)
+target_link_libraries(native_graph_v1_cli PRIVATE native_graph_v1_c)
+add_executable(native_graph_request_cli graph_request_cli.cpp)
+target_include_directories(native_graph_request_cli PRIVATE ${NATIVE_GRAPH_JSON_INCLUDE_DIR})
+target_link_libraries(native_graph_request_cli PRIVATE native_graph_v1_stages)
+set(OPERATOR102_SPECIAL_SOURCES)
+set(OPERATOR102_SPECIAL_LIBRARIES)
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/operator102_dependencies.cmake")
+  include("${CMAKE_CURRENT_LIST_DIR}/operator102_dependencies.cmake")
+  list(APPEND OPERATOR102_SPECIAL_SOURCES operator102_special_bridges.cpp)
+  list(APPEND OPERATOR102_SPECIAL_LIBRARIES operator102_support_deps)
+endif()
+add_executable(operator102_measure_cli operator102_measure_cli.cpp operator102_measure.cpp
+  operator102_dispatcher.cpp operator102_tmpfile.cpp ${OPERATOR102_SPECIAL_SOURCES})
+target_include_directories(operator102_measure_cli PRIVATE ${NATIVE_GRAPH_JSON_INCLUDE_DIR})
+target_link_libraries(operator102_measure_cli PRIVATE native_graph_v1_stages OpenSSL::Crypto
+  libzstd_static ${OPERATOR102_SPECIAL_LIBRARIES})
+if(OPERATOR102_SPECIAL_SOURCES)
+  target_compile_definitions(operator102_measure_cli PRIVATE
+    OPERATOR102_ENABLE_SPECIAL_BRIDGES=1 OPERATOR102_ENABLE_SUPPORT_DEPS=1)
+  add_executable(operator102_special_bridges_test
+    operator102_special_bridges_test.cpp operator102_special_bridges.cpp
+    operator102_measure.cpp)
+  target_link_libraries(operator102_special_bridges_test PRIVATE
+    native_graph_v1_stages operator102_support_deps)
+  add_test(NAME operator102_special_bridges_test
+    COMMAND operator102_special_bridges_test)
+endif()
+add_executable(operator102_timing_cli operator102_timing_cli.cpp operator102_measure.cpp
+  operator102_dispatcher.cpp operator102_tmpfile.cpp ${OPERATOR102_SPECIAL_SOURCES})
+target_include_directories(operator102_timing_cli PRIVATE ${NATIVE_GRAPH_JSON_INCLUDE_DIR})
+target_link_libraries(operator102_timing_cli PRIVATE native_graph_v1_stages OpenSSL::Crypto
+  libzstd_static ${OPERATOR102_SPECIAL_LIBRARIES})
+if(OPERATOR102_SPECIAL_SOURCES)
+  target_compile_definitions(operator102_timing_cli PRIVATE
+    OPERATOR102_ENABLE_SPECIAL_BRIDGES=1 OPERATOR102_ENABLE_SUPPORT_DEPS=1)
+endif()
+add_executable(operator102_measure_test operator102_measure_test.cpp operator102_measure.cpp
+  operator102_dispatcher.cpp)
+target_link_libraries(operator102_measure_test PRIVATE native_graph_v1_stages)
+add_test(NAME operator102_measure_test COMMAND operator102_measure_test)
+add_executable(native_graph_v1_contract_test graph_contract_test.cpp)
+target_link_libraries(native_graph_v1_contract_test PRIVATE native_graph_v1_stages)
+add_test(NAME native_graph_v1_contract_test COMMAND native_graph_v1_contract_test)
+add_test(NAME native_graph_v1_cold_encode COMMAND native_graph_v1_contract_test encode ${CMAKE_CURRENT_BINARY_DIR}/cold_fixture.ngf)
+set_tests_properties(native_graph_v1_cold_encode PROPERTIES FIXTURES_SETUP native_graph_fixture)
+add_test(NAME native_graph_v1_cold_decode COMMAND native_graph_v1_contract_test decode ${CMAKE_CURRENT_BINARY_DIR}/cold_fixture.ngf)
+set_tests_properties(native_graph_v1_cold_decode PROPERTIES FIXTURES_REQUIRED native_graph_fixture)
+add_executable(native_graph_v1_strong_existing_paths_contract_test
+  strong_existing_paths_contract_test.cpp)
+target_link_libraries(native_graph_v1_strong_existing_paths_contract_test
+  PRIVATE native_graph_v1_stages)
+add_test(NAME native_graph_v1_strong_existing_paths_contract_test
+  COMMAND native_graph_v1_strong_existing_paths_contract_test)
+add_test(NAME native_graph_v1_strong_existing_paths_cold_encode
+  COMMAND native_graph_v1_strong_existing_paths_contract_test encode
+    ${CMAKE_CURRENT_BINARY_DIR}/strong_existing_path_fixture.ngf)
+set_tests_properties(native_graph_v1_strong_existing_paths_cold_encode
+  PROPERTIES FIXTURES_SETUP native_graph_strong_path_fixture)
+add_test(NAME native_graph_v1_strong_existing_paths_cold_decode
+  COMMAND native_graph_v1_strong_existing_paths_contract_test decode
+    ${CMAKE_CURRENT_BINARY_DIR}/strong_existing_path_fixture.ngf)
+set_tests_properties(native_graph_v1_strong_existing_paths_cold_decode
+  PROPERTIES FIXTURES_REQUIRED native_graph_strong_path_fixture)
+add_executable(native_graph_v1_strong_reference_paths_contract_test
+  strong_reference_paths_contract_test.cpp)
+target_link_libraries(native_graph_v1_strong_reference_paths_contract_test
+  PRIVATE native_graph_v1_stages)
+add_test(NAME native_graph_v1_strong_reference_paths_contract_test
+  COMMAND native_graph_v1_strong_reference_paths_contract_test)
+add_test(NAME native_graph_v1_strong_reference_paths_cold_encode
+  COMMAND native_graph_v1_strong_reference_paths_contract_test encode
+    ${CMAKE_CURRENT_BINARY_DIR}/strong_reference_paths.frames)
+set_tests_properties(native_graph_v1_strong_reference_paths_cold_encode
+  PROPERTIES FIXTURES_SETUP native_graph_strong_reference_paths_fixture)
+add_test(NAME native_graph_v1_strong_reference_paths_cold_decode
+  COMMAND native_graph_v1_strong_reference_paths_contract_test decode
+    ${CMAKE_CURRENT_BINARY_DIR}/strong_reference_paths.frames)
+set_tests_properties(native_graph_v1_strong_reference_paths_cold_decode
+  PROPERTIES FIXTURES_REQUIRED native_graph_strong_reference_paths_fixture)
+add_executable(native_graph_v1_gorilla_source_equivalent_contract_test
+  gorilla_source_equivalent_contract_test.cpp)
+target_link_libraries(native_graph_v1_gorilla_source_equivalent_contract_test
+  PRIVATE native_graph_v1_stages)
+add_test(NAME native_graph_v1_gorilla_source_equivalent_contract_test
+  COMMAND native_graph_v1_gorilla_source_equivalent_contract_test)
+add_test(NAME native_graph_v1_gorilla_source_equivalent_cold_encode
+  COMMAND native_graph_v1_gorilla_source_equivalent_contract_test encode
+    ${CMAKE_CURRENT_BINARY_DIR}/gorilla_source_equivalent.frames)
+set_tests_properties(native_graph_v1_gorilla_source_equivalent_cold_encode
+  PROPERTIES FIXTURES_SETUP native_graph_gorilla_source_equivalent_fixture)
+add_test(NAME native_graph_v1_gorilla_source_equivalent_cold_decode
+  COMMAND native_graph_v1_gorilla_source_equivalent_contract_test decode
+    ${CMAKE_CURRENT_BINARY_DIR}/gorilla_source_equivalent.frames)
+set_tests_properties(native_graph_v1_gorilla_source_equivalent_cold_decode
+  PROPERTIES FIXTURES_REQUIRED native_graph_gorilla_source_equivalent_fixture)

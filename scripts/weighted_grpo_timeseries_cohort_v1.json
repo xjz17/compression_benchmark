@@ -1,0 +1,290 @@
+{
+  "version": "weighted-grpo-timeseries-cohort-v1",
+  "assignment_sha256": "d08557a6d38e2d575834dba46e76849cfd3fe8c82923cf80e6736610fecd282c",
+  "policy_sha256": "b31fb16b4c9b3828b238a72d29ba875e48c43c5c6e2f981aae823fb06bd54278",
+  "created_date": "2026-09-17",
+  "purpose": "Versioned source-group plan for the weighted-GRPO time-series experiment. Test candidates require local schema, license, timestamp, and lineage audit before use.",
+  "defaults": {
+    "max_numeric_raw_bytes": 268435456,
+    "block_max_bytes": 1048576,
+    "split": "chronological_per_entity_80_20",
+    "require_upstream_revision": true,
+    "require_file_sha256": true,
+    "timestamp_invalid_policy": "fail_no_row_index_fallback"
+  },
+  "domains": [
+    {"id": "business", "label": "Business, retail, tourism, and real estate"},
+    {"id": "computing", "label": "Computing systems, networks, and Web platforms"},
+    {"id": "energy", "label": "Energy and industrial telemetry"},
+    {"id": "environment", "label": "Weather, environment, agriculture, and ecology"},
+    {"id": "finance", "label": "Markets, exchange rates, crypto, and macroeconomics"},
+    {"id": "health", "label": "Health and human activity"},
+    {"id": "science", "label": "Space and geophysical observation"},
+    {"id": "traffic", "label": "Traffic and transportation"}
+  ],
+  "leakage_rules": [
+    "No source_group may occur in both train_validation and test_candidate roles.",
+    "Resampled frequencies, feature-engineered derivatives, missing-value variants, mirrors, and versioned releases of one upstream collection remain in one source_group.",
+    "All files and entities from one upstream collection receive the same role; files are not promoted to independent datasets.",
+    "Exact source hashes must be disjoint across roles. A test candidate with matching records, overlapping entity-time ranges, or uncertain upstream lineage is excluded until resolved.",
+    "Dataset-level 80/20 splitting is performed independently inside each entity after deterministic continuous sampling; no block crosses that boundary.",
+    "A test_candidate entry is not approved test evidence until its local audit_status is replaced in a run-specific manifest with source fingerprints and a passed schema audit."
+  ],
+  "same_source_exclusions": [
+    {
+      "source_group": "github:zhouhaoyi/ETDataset",
+      "members": ["ETDataset-ett", "ETTh1", "ETTh2", "ETTm1", "ETTm2"],
+      "reason": "Files and frequencies belong to the same ETT collection."
+    },
+    {
+      "source_group": "hf:Dingdong-Inc/FreshRetailNet-50K",
+      "members": ["freshretailnet_50k", "freshretailnet_lt"],
+      "reason": "Size/version variants of the same retail source cannot cross roles."
+    },
+    {
+      "source_group": "hf:byluuu/gluco-tsfm-benchmark",
+      "members": ["gluco_tsfm_benchmark", "glucofm_bench"],
+      "reason": "Patient series and benchmark variants must remain together."
+    },
+    {
+      "source_group": "hf:reg-forecasting-upstream",
+      "members": ["reg_forecasting", "reg_forecasting_v2"],
+      "reason": "The v2 data is a revised version, not an independent test source."
+    },
+    {
+      "source_group": "hf:timeseries-finance-etf-upstream",
+      "members": ["timeseries-finance-ETF", "timeseries_finance_etf_missing"],
+      "reason": "The missing-value variant is not an independent source."
+    },
+    {
+      "source_group": "hf:Pcitycrypto/xauusd",
+      "members": ["xauusd", "xauusd_1m"],
+      "reason": "Frequency variants require a shared upstream-source audit."
+    },
+    {
+      "source_group": "monash:traffic-resampling",
+      "members": ["traffic_hourly", "traffic_weekly"],
+      "reason": "Resampled frequencies of the same collection cannot cross roles."
+    },
+    {
+      "source_group": "monash:nn5-resampling",
+      "members": ["nn5_daily", "nn5_weekly"],
+      "reason": "Resampled frequencies of the same collection cannot cross roles."
+    },
+    {
+      "source_group": "monash:kaggle-web-traffic-resampling",
+      "members": ["kaggle_web_traffic", "kaggle_web_traffic_weekly"],
+      "reason": "Resampled frequencies of the same collection cannot cross roles."
+    },
+    {
+      "source_group": "monash:tourism-source-pending-fingerprint",
+      "members": ["tourism_monthly", "tourism_quarterly", "tourism_yearly", "tourism_monthly-zaai-ai"],
+      "reason": "Tourism frequency and mirror variants require underlying-series fingerprints."
+    },
+    {
+      "source_group": "tslib:national-illness-mirrors",
+      "members": ["national_illness", "ts_arena_illness"],
+      "reason": "TSLib and TS-Arena mirrors cannot cross roles."
+    },
+    {
+      "source_group": "sp500-potential-overlap",
+      "members": ["spx", "timeseries_1mn_sp500"],
+      "reason": "Overlapping index values and time ranges require a lineage and record-overlap audit."
+    },
+    {
+      "source_group": "bavaria-station-potential-overlap",
+      "members": ["weather_data_bavaria", "niederschlag_station_4091_bavaria_germany"],
+      "reason": "Station and time-range overlap must be ruled out before assigning roles."
+    }
+  ],
+  "datasets": [
+    {
+      "id": "ETDataset-ett",
+      "domain": "energy",
+      "role": "train_validation",
+      "source_group": "github:zhouhaoyi/ETDataset",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/ETDataset-ett",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "electricity_load_2011_2014",
+      "domain": "energy",
+      "role": "train_validation",
+      "source_group": "uci:321",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/electricity_load_2011_2014",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "weatherAUS",
+      "domain": "environment",
+      "role": "train_validation",
+      "source_group": "hf:lowkeydev-ln/weatherAUS",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/weatherAUS",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "eea_pm25_forecasting",
+      "domain": "environment",
+      "role": "train_validation",
+      "source_group": "hf:cosuleabianca/eea-pm25-forecasting",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/eea_pm25_forecasting",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "METR-LA",
+      "domain": "traffic",
+      "role": "train_validation",
+      "source_group": "hf:witgaw/METR-LA",
+      "required_transform_audit": "dewindow overlapping samples by physical node/time/dimension and verify duplicate values agree",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/METR-LA",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "finland_traffic",
+      "display_name": "TIME/finland_traffic",
+      "domain": "traffic",
+      "role": "train_validation",
+      "source_group": "hf:Real-TSF/TIME-ProcessedCSV#Finland_Traffic",
+      "provider": "BenchmarkHost TIME",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/finland_traffic",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "exchange_rate",
+      "domain": "finance",
+      "role": "train_validation",
+      "source_group": "hf:thuml/Time-Series-Library#exchange_rate",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/exchange_rate",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "bitcoin_price_timeseries",
+      "domain": "finance",
+      "role": "train_validation",
+      "source_group": "hf:Farmaanaa/bitcoin_price_timeseries",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/bitcoin_price_timeseries",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "freshretailnet_50k",
+      "domain": "business",
+      "role": "train_validation",
+      "source_group": "hf:Dingdong-Inc/FreshRetailNet-50K",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/freshretailnet_50k",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "online_retail_2_uci",
+      "display_name": "TIME/online_retail_2_uci",
+      "domain": "business",
+      "role": "train_validation",
+      "source_group": "hf:Real-TSF/TIME-ProcessedCSV#Online_Retail_2_UCI",
+      "provider": "BenchmarkHost TIME",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/online_retail_2_uci",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "national_illness",
+      "domain": "health",
+      "role": "train_validation",
+      "source_group": "hf:thuml/Time-Series-Library#national_illness",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/national_illness",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "gluco_tsfm_benchmark",
+      "domain": "health",
+      "role": "train_validation",
+      "source_group": "hf:byluuu/gluco-tsfm-benchmark",
+      "required_entity_fields": ["dataset", "subject_id"],
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/gluco_tsfm_benchmark",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "app_flow",
+      "domain": "computing",
+      "role": "train_validation",
+      "source_group": "hf:kashif/App_Flow",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/app_flow",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "scaphandre_cpu_usage",
+      "domain": "computing",
+      "role": "train_validation",
+      "source_group": "hf:ICOS-AI/scaphandre_cpu_usage",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/scaphandre_cpu_usage",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "deep-space-probes",
+      "domain": "science",
+      "role": "train_validation",
+      "source_group": "hf:juliensimon/deep-space-probes",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/deep-space-probes",
+      "audit_status": "audit_required"
+    },
+    {
+      "id": "geomagnetic_kp_index",
+      "domain": "science",
+      "role": "train_validation",
+      "source_group": "hf:juliensimon/geomagnetic-kp-index",
+      "provider": "BenchmarkHost",
+      "locator": "https://huggingface.co/datasets/BenchmarkHost/geomagnetic_kp_index",
+      "audit_status": "audit_required"
+    },
+
+    {"id": "enedis-with-holidays", "domain": "energy", "role": "test_candidate", "source_group": "hf:theforecastingcompany/enedis-with-holidays", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/enedis-with-holidays", "audit_status": "audit_required"},
+    {"id": "uk_electricity_generation_mix_2019_2026", "domain": "energy", "role": "test_candidate", "source_group": "neso:historic-gb-generation-mix", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/uk_electricity_generation_mix_2019_2026", "audit_status": "audit_required"},
+    {"id": "hourly_electricity_demand_brazil", "domain": "energy", "role": "test_candidate", "source_group": "hf:SamuelM0422/Hourly-Electricity-Demand-Brazil-Dataset", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/hourly_electricity_demand_brazil", "audit_status": "audit_required"},
+    {"id": "m2oe2_timeseries", "domain": "energy", "role": "test_candidate", "source_group": "hf:MuhaoGuo/M2oE2TimeSeriesData", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/m2oe2_timeseries", "audit_status": "audit_required"},
+
+    {"id": "telangana_weather", "domain": "environment", "role": "test_candidate", "source_group": "hf:ron-the-code/Telangana_time_series_2023-2025", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/telangana_weather", "audit_status": "audit_required"},
+    {"id": "dmi-aarhus-weather-data", "domain": "environment", "role": "test_candidate", "source_group": "hf:Ciroc0/dmi-aarhus-weather-data", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/dmi-aarhus-weather-data", "audit_status": "audit_required"},
+    {"id": "wids2023_competition_weather_forecasting", "domain": "environment", "role": "test_candidate", "source_group": "hf:mirai-ml/wids2023_competition_weather_forecasting", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/wids2023_competition_weather_forecasting", "audit_status": "audit_required"},
+    {"id": "coastal_t_s", "display_name": "TIME/coastal_t_s", "domain": "environment", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#Coastal_T_S", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/coastal_t_s", "audit_status": "audit_required"},
+
+    {"id": "pedestrian_counts", "domain": "traffic", "role": "test_candidate", "source_group": "zenodo:4656626", "provider": "BenchmarkHost Monash", "locator": "https://huggingface.co/datasets/BenchmarkHost/pedestrian_counts", "audit_status": "audit_required"},
+    {"id": "rideshare", "domain": "traffic", "role": "test_candidate", "source_group": "zenodo:5122114", "provider": "BenchmarkHost Monash", "locator": "https://huggingface.co/datasets/BenchmarkHost/rideshare", "audit_status": "audit_required"},
+    {"id": "port_activity", "display_name": "TIME/port_activity", "domain": "traffic", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#Port_Activity", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/port_activity", "audit_status": "audit_required"},
+    {"id": "sg_carpark", "display_name": "TIME/sg_carpark", "domain": "traffic", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#SG_Carpark", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/sg_carpark", "audit_status": "audit_required"},
+
+    {"id": "spx", "domain": "finance", "role": "test_candidate", "source_group": "hf:misikoff/SPX", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/spx", "audit_status": "audit_required"},
+    {"id": "nifty50_market_regime", "domain": "finance", "role": "test_candidate", "source_group": "hf:AAdevloper/nifty50-market-regime", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/nifty50_market_regime", "audit_status": "audit_required"},
+    {"id": "us_term_structure", "display_name": "TIME/us_term_structure", "domain": "finance", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#US_Term_Structure", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/us_term_structure", "audit_status": "audit_required"},
+    {"id": "xauusd", "domain": "finance", "role": "test_candidate", "source_group": "hf:Pcitycrypto/xauusd", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/xauusd", "audit_status": "audit_required"},
+
+    {"id": "salesforecastingwomartstore", "domain": "business", "role": "test_candidate", "source_group": "hf:SURESHBEEKHANI/SalesForecastingWOMartStore", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/salesforecastingwomartstore", "audit_status": "audit_required"},
+    {"id": "car_parts", "domain": "business", "role": "test_candidate", "source_group": "zenodo:4656022", "provider": "BenchmarkHost Monash", "locator": "https://huggingface.co/datasets/BenchmarkHost/car_parts", "audit_status": "audit_required"},
+    {"id": "zillow_viewer", "domain": "business", "role": "test_candidate", "source_group": "hf:misikoff/zillow@83142d303d9ce00dd943d766d021cfd10a88b6d1", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/zillow_viewer", "excluded_config": "home_values_forecasts", "audit_status": "audit_required"},
+    {"id": "supply_chain_customer", "display_name": "TIME/supply_chain_customer", "domain": "business", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#Supply_Chain_Customer", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/supply_chain_customer", "audit_status": "audit_required"},
+
+    {"id": "sleep_score_fitbit", "domain": "health", "role": "test_candidate", "source_group": "hf:aai530-group6/sleep-score-fitbit", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/sleep_score_fitbit", "audit_status": "audit_required"},
+    {"id": "hospital-monash", "domain": "health", "role": "test_candidate", "source_group": "zenodo:4656014", "provider": "BenchmarkHost Monash", "locator": "https://huggingface.co/datasets/BenchmarkHost/hospital-monash", "audit_status": "audit_required"},
+    {"id": "us_births-monash", "domain": "health", "role": "test_candidate", "source_group": "zenodo:4656049", "provider": "BenchmarkHost Monash", "locator": "https://huggingface.co/datasets/BenchmarkHost/us_births-monash", "audit_status": "audit_required"},
+    {"id": "ecdc_covid", "display_name": "TIME/ecdc_covid", "domain": "health", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#ECDC_COVID", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/ecdc_covid", "audit_status": "audit_required"},
+
+    {"id": "quitobench", "domain": "computing", "role": "test_candidate", "source_group": "hf:hq-bench/quitobench", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/quitobench", "audit_status": "audit_required"},
+    {"id": "qiskit_calibration_drift", "domain": "computing", "role": "test_candidate", "source_group": "hf:phanerozoic/qiskit-calibration-drift", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/qiskit_calibration_drift", "audit_status": "audit_required"},
+    {"id": "github_top_projects", "domain": "computing", "role": "test_candidate", "source_group": "hf:ronantakizawa/github-top-projects", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/github_top_projects", "audit_status": "audit_required"},
+    {"id": "azure2019_u", "display_name": "TIME/azure2019_u", "domain": "computing", "role": "test_candidate", "source_group": "hf:Real-TSF/TIME-ProcessedCSV#azure2019_U", "provider": "BenchmarkHost TIME", "locator": "https://huggingface.co/datasets/BenchmarkHost/azure2019_u", "audit_status": "audit_required"},
+
+    {"id": "nasa_maven_kp_insitu", "domain": "science", "role": "test_candidate", "source_group": "hf:juliensimon/nasa-maven-kp-insitu", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/nasa_maven_kp_insitu", "audit_status": "audit_required"},
+    {"id": "goes_omni_electron_flux_forecasting", "domain": "science", "role": "test_candidate", "source_group": "hf:snowsadh/goes-omni-electron-flux-forecasting", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/goes_omni_electron_flux_forecasting", "required_config": "scientific-master", "audit_status": "audit_required"},
+    {"id": "dst-index", "domain": "science", "role": "test_candidate", "source_group": "hf:juliensimon/dst-index", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/dst-index", "audit_status": "audit_required"},
+    {"id": "jovian_lightning", "domain": "science", "role": "test_candidate", "source_group": "hf:phanerozoic/jovian-lightning", "provider": "BenchmarkHost", "locator": "https://huggingface.co/datasets/BenchmarkHost/jovian_lightning", "audit_status": "audit_required"}
+  ]
+}

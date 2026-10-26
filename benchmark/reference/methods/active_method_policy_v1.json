@@ -1,0 +1,29 @@
+{
+  "schema": "tscb-active-method-policy-v1",
+  "policy_id": "paper164-active85-glza-retired-v1",
+  "effective_date": "2026-10-10",
+  "catalog_method_count": 86,
+  "active_method_count": 85,
+  "retired_methods": [
+    {
+      "canonical_name": "GLZA",
+      "method_aliases": [
+        "GLZA"
+      ],
+      "algorithm_keys": [
+        "glza"
+      ],
+      "reason_code": "engineering_stability_and_unbounded_runtime",
+      "reason": "The current integration is retired from active evaluation because repeated process failures and unbounded runtime prevent reliable campaign completion. This is an engineering stability decision, not a compression-ratio or win-rate exclusion.",
+      "preserve_historical_results": true
+    }
+  ],
+  "applies_to": [
+    "future_benchmark_runs",
+    "recovery_queues",
+    "website_active_catalog",
+    "paper_tables",
+    "paper_figures"
+  ],
+  "history_policy": "Preserve the frozen 86-method catalog, source code, binaries, manifests, receipts, and recorded GLZA results as historical evidence. Apply this policy only when deriving new active scopes."
+}

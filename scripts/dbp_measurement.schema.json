@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dbp-audit.schema.json",
+  "title": "BenchmarkHost DBP native-float full-wire audit",
+  "description": "Independent DBF1/DBF2 diagnostic results. These rows do not replace or participate in the historical leaderboard.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "summary",
+    "measurement",
+    "environment",
+    "runtimes",
+    "datasets",
+    "columns",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {"const": "dbp-native-float-audit-v1"},
+    "status": {"enum": ["incomplete", "pending", "running", "partial", "complete", "failed"]},
+    "generated_at": {"type": ["string", "null"]},
+    "summary": {
+      "type": "object",
+      "required": [
+        "dataset_receipt_count",
+        "measured_dataset_count",
+        "n_a_dataset_count",
+        "schema_aggregate_count",
+        "nonempty_aggregate_count",
+        "n_a_aggregate_count"
+      ],
+      "properties": {
+        "dataset_receipt_count": {"type": "integer", "minimum": 0},
+        "measured_dataset_count": {"type": "integer", "minimum": 0},
+        "n_a_dataset_count": {"type": "integer", "minimum": 0},
+        "schema_aggregate_count": {"type": "integer", "minimum": 0},
+        "nonempty_aggregate_count": {"type": "integer", "minimum": 0},
+        "n_a_aggregate_count": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "measurement": {
+      "type": "object",
+      "required": [
+        "context",
+        "repeats",
+        "warmup_blocks",
+        "header_bytes_per_block",
+        "encode_boundary",
+        "decode_boundary",
+        "ranking_integration"
+      ],
+      "properties": {
+        "context": {"type": "string"},
+        "repeats": {"type": "integer", "minimum": 1},
+        "warmup_blocks": {"type": "integer", "minimum": 0},
+        "header_bytes_per_block": {"const": 10},
+        "encode_boundary": {"type": "string"},
+        "decode_boundary": {"type": "string"},
+        "ranking_integration": {"const": "separate"},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "host": {"type": ["string", "null"]},
+        "hardware": {"type": ["string", "object", "null"]},
+        "cpu": {"type": ["string", "object", "null"]},
+        "os": {"type": ["string", "object", "null"]},
+        "load": {"type": ["string", "number", "object", "null"]},
+        "clock": {"type": ["string", "object", "null"]},
+        "cpu_affinity": {"type": ["string", "array", "null"]},
+        "concurrent_load": {"type": ["string", "number", "object", "null"]},
+        "shared_server": {"type": ["boolean", "null"]},
+        "captured_at": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "runtimes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["runtime", "status"],
+        "properties": {
+          "runtime": {"enum": ["cpp", "java", "python"]},
+          "status": {"$ref": "#/$defs/status"},
+          "version": {"type": ["string", "null"]},
+          "source_sha256": {"$ref": "#/$defs/nullableSha256"},
+          "result_sha256": {"$ref": "#/$defs/nullableSha256"},
+          "message": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset", "runtime", "status"],
+        "properties": {
+          "dataset": {"type": "string", "minLength": 1},
+          "runtime": {"enum": ["cpp", "java", "python"]},
+          "label": {"type": ["string", "null"]},
+          "status": {"$ref": "#/$defs/status"},
+          "reason": {"type": ["string", "null"]},
+          "receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+          "schema_aggregate_count": {"type": "integer", "minimum": 0},
+          "nonempty_aggregate_count": {"type": "integer", "minimum": 0},
+          "n_a_aggregate_count": {"type": "integer", "minimum": 0}
+        },
+        "additionalProperties": true
+      }
+    },
+    "columns": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/columnResult"}
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "scope_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_column_inventory_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "runtime_artifact_manifest_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "campaign_binding_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "frame_verification_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "compact_collection_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "input_scope_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "campaign_run_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "campaign_progress_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "environment_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_evidence_chain_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "runtime_result_chain_sha256": {
+          "type": "object",
+          "properties": {
+            "cpp": {"$ref": "#/$defs/nullableSha256"},
+            "java": {"$ref": "#/$defs/nullableSha256"},
+            "python": {"$ref": "#/$defs/nullableSha256"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "complete"}}, "required": ["status"]},
+      "then": {
+        "properties": {
+          "summary": {
+            "properties": {
+              "dataset_receipt_count": {"const": 169},
+              "measured_dataset_count": {"const": 162},
+              "n_a_dataset_count": {"const": 7},
+              "schema_aggregate_count": {"const": 4190},
+              "nonempty_aggregate_count": {"const": 4096},
+              "n_a_aggregate_count": {"const": 94}
+            }
+          },
+          "measurement": {
+            "properties": {
+              "repeats": {"const": 1},
+              "warmup_blocks": {"const": 20},
+              "header_bytes_per_block": {"const": 10}
+            }
+          },
+          "environment": {
+            "required": ["hardware", "cpu", "clock", "cpu_affinity", "concurrent_load", "shared_server", "captured_at"],
+            "properties": {
+              "shared_server": {"const": true},
+              "cpu": {
+                "type": "object",
+                "required": ["passed_receipts_at_capture"],
+                "properties": {"passed_receipts_at_capture": {"const": 169}}
+              }
+            }
+          },
+          "runtimes": {
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/runtimeStatus"},
+                {"properties": {"status": {"const": "complete"}, "result_sha256": {"$ref": "#/$defs/sha256"}}, "required": ["result_sha256"]}
+              ]
+            },
+            "allOf": [
+              {"contains": {"properties": {"runtime": {"const": "cpp"}}, "required": ["runtime"]}, "minContains": 1, "maxContains": 1},
+              {"contains": {"properties": {"runtime": {"const": "java"}}, "required": ["runtime"]}, "minContains": 1, "maxContains": 1},
+              {"contains": {"properties": {"runtime": {"const": "python"}}, "required": ["runtime"]}, "minContains": 1, "maxContains": 1}
+            ]
+          },
+          "datasets": {
+            "minItems": 507,
+            "maxItems": 507,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/datasetReceipt"},
+                {"properties": {"status": {"enum": ["ok", "n_a"]}, "receipt_sha256": {"$ref": "#/$defs/sha256"}}, "required": ["receipt_sha256", "schema_aggregate_count", "nonempty_aggregate_count", "n_a_aggregate_count"]}
+              ]
+            }
+          },
+          "columns": {
+            "minItems": 12570,
+            "maxItems": 12570,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/columnResult"},
+                {
+                  "properties": {
+                    "status": {"enum": ["ok", "n_a"]},
+                    "aggregate_id": {"type": "string", "minLength": 1},
+                    "frame_sequence_sha256": {"$ref": "#/$defs/sha256"},
+                    "expected_sequence_chain_sha256": {"$ref": "#/$defs/sha256"},
+                    "result_sha256": {"$ref": "#/$defs/sha256"},
+                    "receipt_sha256": {"$ref": "#/$defs/sha256"},
+                    "source_manifest_receipt_sha256": {"$ref": "#/$defs/sha256"},
+                    "source_aggregates_sha256": {"$ref": "#/$defs/sha256"},
+                    "source_blocks_sha256": {"$ref": "#/$defs/sha256"},
+                    "source_block_catalog_sha256": {"$ref": "#/$defs/sha256"},
+                    "runtime_artifact_manifest_sha256": {"$ref": "#/$defs/sha256"},
+                    "source_column_inventory_sha256": {"$ref": "#/$defs/sha256"},
+                    "scope_sha256": {"$ref": "#/$defs/sha256"}
+                  },
+                  "required": ["aggregate_id", "width", "max_point", "encode_ns", "decode_ns", "frame_sequence_sha256", "expected_sequence_chain_sha256", "result_sha256", "receipt_sha256", "source_manifest_receipt_sha256", "source_aggregates_sha256", "source_blocks_sha256", "source_block_catalog_sha256", "runtime_artifact_manifest_sha256", "source_column_inventory_sha256", "scope_sha256"]
+                }
+              ]
+            }
+          },
+          "evidence": {
+            "required": ["scope_sha256", "source_column_inventory_sha256", "runtime_artifact_manifest_sha256", "campaign_binding_sha256", "frame_verification_receipt_sha256", "compact_collection_receipt_sha256", "input_scope_receipt_sha256", "campaign_run_receipt_sha256", "campaign_progress_sha256", "environment_receipt_sha256", "source_evidence_chain_sha256", "runtime_result_chain_sha256"],
+            "properties": {
+              "scope_sha256": {"$ref": "#/$defs/sha256"},
+              "source_column_inventory_sha256": {"$ref": "#/$defs/sha256"},
+              "runtime_artifact_manifest_sha256": {"$ref": "#/$defs/sha256"},
+              "campaign_binding_sha256": {"$ref": "#/$defs/sha256"},
+              "frame_verification_receipt_sha256": {"$ref": "#/$defs/sha256"},
+              "compact_collection_receipt_sha256": {"$ref": "#/$defs/sha256"},
+              "input_scope_receipt_sha256": {"$ref": "#/$defs/sha256"},
+              "campaign_run_receipt_sha256": {"$ref": "#/$defs/sha256"},
+              "campaign_progress_sha256": {"$ref": "#/$defs/sha256"},
+              "environment_receipt_sha256": {"$ref": "#/$defs/sha256"},
+              "source_evidence_chain_sha256": {"$ref": "#/$defs/sha256"},
+              "runtime_result_chain_sha256": {
+                "required": ["cpp", "java", "python"],
+                "properties": {"cpp": {"$ref": "#/$defs/sha256"}, "java": {"$ref": "#/$defs/sha256"}, "python": {"$ref": "#/$defs/sha256"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "status": {
+      "enum": ["incomplete", "pending", "running", "partial", "complete", "ok", "passed", "n_a", "failed", "skipped"]
+    },
+    "nullableSha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "runtimeStatus": {
+      "type": "object",
+      "required": ["runtime", "status"],
+      "properties": {
+        "runtime": {"enum": ["cpp", "java", "python"]},
+        "status": {"$ref": "#/$defs/status"},
+        "version": {"type": ["string", "null"]},
+        "result_sha256": {"$ref": "#/$defs/nullableSha256"}
+      },
+      "additionalProperties": true
+    },
+    "datasetReceipt": {
+      "type": "object",
+      "required": ["dataset", "runtime", "status"],
+      "properties": {
+        "dataset": {"type": "string", "minLength": 1},
+        "runtime": {"enum": ["cpp", "java", "python"]},
+        "status": {"$ref": "#/$defs/status"},
+        "receipt_sha256": {"$ref": "#/$defs/nullableSha256"}
+      },
+      "additionalProperties": true
+    },
+    "metric": {"type": ["number", "null"], "minimum": 0},
+    "columnResult": {
+      "type": "object",
+      "required": [
+        "status",
+        "runtime",
+        "dataset",
+        "column",
+        "dtype",
+        "native_bytes",
+        "frame_bytes",
+        "compression_rate",
+        "encode_ns_per_value",
+        "decode_ns_per_value",
+        "blocks",
+        "scaled_blocks",
+        "raw_blocks",
+        "rows",
+        "valid_count",
+        "missing_count",
+        "validity_bytes",
+        "header_bytes",
+        "verified_values"
+      ],
+      "properties": {
+        "status": {"$ref": "#/$defs/status"},
+        "runtime": {"enum": ["cpp", "java", "python"]},
+        "dataset": {"type": "string", "minLength": 1},
+        "column": {"type": "string", "minLength": 1},
+        "aggregate_id": {"type": ["string", "null"]},
+        "width": {"type": "integer", "enum": [4, 8]},
+        "max_point": {"type": "integer", "minimum": 0},
+        "encode_ns": {"type": "integer", "minimum": 0},
+        "decode_ns": {"type": "integer", "minimum": 0},
+        "dtype": {"enum": ["float32", "float64"]},
+        "native_bytes": {"type": "integer", "minimum": 0},
+        "frame_bytes": {"type": "integer", "minimum": 0},
+        "compression_rate": {"$ref": "#/$defs/metric"},
+        "encode_ns_per_value": {"$ref": "#/$defs/metric"},
+        "decode_ns_per_value": {"$ref": "#/$defs/metric"},
+        "blocks": {"type": "integer", "minimum": 0},
+        "scaled_blocks": {"type": "integer", "minimum": 0},
+        "raw_blocks": {"type": "integer", "minimum": 0},
+        "rows": {"type": "integer", "minimum": 0},
+        "valid_count": {"type": "integer", "minimum": 0},
+        "missing_count": {"type": "integer", "minimum": 0},
+        "verified_values": {"type": "integer", "minimum": 0},
+        "validity_bytes": {"type": "integer", "minimum": 0},
+        "header_bytes": {"type": "integer", "minimum": 0},
+        "frame_sequence_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "expected_sequence_chain_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "result_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_manifest_receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_aggregates_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_blocks_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_block_catalog_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "runtime_artifact_manifest_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "source_column_inventory_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "scope_sha256": {"$ref": "#/$defs/nullableSha256"},
+        "message": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

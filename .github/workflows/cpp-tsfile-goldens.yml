@@ -1,0 +1,173 @@
+# P0: native TSFile encoders vs Java-exported bytes (see benchmark/reference/golden/tsfile/).
+name: TSFile C++ golden tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cpp/**'
+      - '.gitmodules'
+      - 'patches/**'
+      - 'scripts/init_compression_submodules.sh'
+      - 'scripts/apply_vendor_patches.sh'
+      - 'benchmark/reference/golden/tsfile/**'
+      - 'benchmark/reference/golden/column_encodings/**'
+      - 'benchmark/reference/golden/fastpfor/**'
+      - 'benchmark/reference/golden/chimp32/**'
+      - 'benchmark/reference/golden/leco_float/**'
+      - 'benchmark/reference/golden/alp_float/**'
+      - 'benchmark/reference/golden/elf_on_chimp_float/**'
+      - 'benchmark/reference/golden/elf_plus_float/**'
+      - 'benchmark/reference/golden/camel_float/**'
+      - 'benchmark/reference/golden/simpiece_float/**'
+      - 'java/**'
+      - 'scripts/cpp_java_companion.py'
+      - 'scripts/export_column_encodings_golden_java.sh'
+      - 'scripts/export_fastpfor_golden_java.sh'
+      - 'scripts/export_chimp32_golden_java.sh'
+      - 'scripts/export_leco_float_golden_java.sh'
+      - 'scripts/export_alp_float_golden_java.sh'
+      - 'scripts/export_elf_float_golden_java.sh'
+      - 'scripts/export_camel_float_golden_java.sh'
+      - 'scripts/export_simpiece_float_golden_java.sh'
+      - 'scripts/export_tsfile_golden_java.sh'
+      - '.github/workflows/cpp-tsfile-goldens.yml'
+  pull_request:
+    paths:
+      - 'cpp/**'
+      - '.gitmodules'
+      - 'patches/**'
+      - 'scripts/init_compression_submodules.sh'
+      - 'scripts/apply_vendor_patches.sh'
+      - 'benchmark/reference/golden/tsfile/**'
+      - 'benchmark/reference/golden/column_encodings/**'
+      - 'benchmark/reference/golden/fastpfor/**'
+      - 'benchmark/reference/golden/chimp32/**'
+      - 'benchmark/reference/golden/leco_float/**'
+      - 'benchmark/reference/golden/alp_float/**'
+      - 'benchmark/reference/golden/elf_on_chimp_float/**'
+      - 'benchmark/reference/golden/elf_plus_float/**'
+      - 'benchmark/reference/golden/camel_float/**'
+      - 'benchmark/reference/golden/simpiece_float/**'
+      - 'java/**'
+      - 'scripts/cpp_java_companion.py'
+      - 'scripts/export_column_encodings_golden_java.sh'
+      - 'scripts/export_fastpfor_golden_java.sh'
+      - 'scripts/export_chimp32_golden_java.sh'
+      - 'scripts/export_leco_float_golden_java.sh'
+      - 'scripts/export_alp_float_golden_java.sh'
+      - 'scripts/export_elf_float_golden_java.sh'
+      - 'scripts/export_camel_float_golden_java.sh'
+      - 'scripts/export_simpiece_float_golden_java.sh'
+      - 'scripts/export_tsfile_golden_java.sh'
+      - '.github/workflows/cpp-tsfile-goldens.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: cpp-goldens-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  goldens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Do NOT use submodules:true — checkout runs `submodule foreach --recursive` to persist
+          # credentials, which fails inside FCBench (broken influxdb gitlink). Submodules are
+          # initialized by scripts/init_compression_submodules.sh instead.
+          submodules: false
+
+      - name: Initialize C++ build submodules (skip FCBench)
+        env:
+          COMPRESSION_BENCHMARK_GOLDEN_CI: "1"
+        run: bash scripts/init_compression_submodules.sh
+
+      - name: Apply pinned legacy-source patch
+        run: >
+          bash scripts/apply_vendor_patches.sh
+          external/operator_ablation_sources/lzbench_legacy
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential nlohmann-json3-dev
+
+      - name: Configure (ENABLE_TSFILE_GOLDEN_TESTS)
+        run: >
+          cmake -S cpp -B cpp/build-ci-goldens
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_TSFILE_GOLDEN_TESTS=ON
+
+      - name: Build golden targets
+        run: >
+          cmake --build cpp/build-ci-goldens
+          --target verify_tsfile_goldens verify_column_encodings_goldens verify_fastpfor_goldens
+          verify_chimp32_goldens verify_leco_float_goldens verify_alp_float_goldens
+          verify_elf_on_chimp_float_goldens verify_elf_plus_float_goldens verify_camel_float_goldens
+          verify_simpiece_float_goldens
+          tsfile_p02_golden_test column_encodings_golden_test fastpfor_golden_test chimp32_golden_test
+          leco_float_golden_test alp_float_golden_test
+          elf_on_chimp_float_golden_test elf_plus_float_golden_test camel_float_golden_test
+          simpiece_float_golden_test
+          -j 4
+
+      - name: Manifest sizes + file presence
+        run: ./cpp/build-ci-goldens/verify_tsfile_goldens
+
+      - name: Column encodings manifest sizes
+        run: ./cpp/build-ci-goldens/verify_column_encodings_goldens
+
+      - name: Encoder output memcmp (all twelve blobs)
+        run: ./cpp/build-ci-goldens/tsfile_p02_golden_test
+
+      - name: Column encodings (memcmp + Java BSS/LZ4 decode + round-trip)
+        run: ./cpp/build-ci-goldens/column_encodings_golden_test
+
+      - name: FastPFOR manifest sizes
+        run: ./cpp/build-ci-goldens/verify_fastpfor_goldens
+
+      - name: FastPFOR CompositeCodec vs Java golden words
+        run: ./cpp/build-ci-goldens/fastpfor_golden_test
+
+      - name: Chimp32 manifest sizes
+        run: ./cpp/build-ci-goldens/verify_chimp32_goldens
+
+      - name: Chimp32 vs Java golden bytes
+        run: ./cpp/build-ci-goldens/chimp32_golden_test
+
+      - name: LeCo float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_leco_float_goldens
+
+      - name: LeCo float vs Java golden bytes
+        run: ./cpp/build-ci-goldens/leco_float_golden_test
+
+      - name: ALP float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_alp_float_goldens
+
+      - name: ALP float vs Java golden bytes
+        run: ./cpp/build-ci-goldens/alp_float_golden_test
+
+      - name: ELF-on-Chimp float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_elf_on_chimp_float_goldens
+
+      - name: ELF-on-Chimp float vs Java golden bytes
+        run: ./cpp/build-ci-goldens/elf_on_chimp_float_golden_test
+
+      - name: Elf+ float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_elf_plus_float_goldens
+
+      - name: Elf+ float vs Java golden bytes
+        run: ./cpp/build-ci-goldens/elf_plus_float_golden_test
+
+      - name: Camel float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_camel_float_goldens
+
+      - name: Camel float vs Java golden bytes
+        run: ./cpp/build-ci-goldens/camel_float_golden_test
+
+      - name: Sim-Piece float manifest sizes
+        run: ./cpp/build-ci-goldens/verify_simpiece_float_goldens
+
+      - name: Sim-Piece float vs Java golden Zstd blobs
+        run: ./cpp/build-ci-goldens/simpiece_float_golden_test

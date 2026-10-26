@@ -1,0 +1,628 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bc-bg-deep: #060708;
+  --bc-bg-mid: #0c1018;
+  --bc-surface: rgba(16, 20, 30, 0.65);
+  --bc-surface-elevated: rgba(22, 28, 42, 0.88);
+  --bc-border: rgba(120, 170, 255, 0.14);
+  --bc-border-strong: rgba(120, 170, 255, 0.22);
+  --bc-accent: #4da3ff;
+  --bc-accent-soft: rgba(77, 163, 255, 0.12);
+  --bc-cyan: #5ae9ff;
+  --bc-text: #e8ecf4;
+  --bc-text-muted: #9aa3b2;
+  --bc-font-sans: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --bc-font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+  --bc-radius-lg: 18px;
+  --bc-radius-md: 12px;
+  --bc-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --bc-transition: 0.2s ease;
+  --bc-page-bg-image:
+    radial-gradient(ellipse 100% 60% at 50% -15%, rgba(61, 158, 255, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 45% at 100% 10%, rgba(139, 92, 246, 0.07), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 0% 80%, rgba(0, 200, 200, 0.05), transparent 45%),
+    linear-gradient(165deg, #0b0e16 0%, #060708 45%, #050508 100%);
+  --bc-nav-bg: rgba(5, 7, 11, 0.78);
+  --bc-nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --bc-page-body-bg: linear-gradient(145deg, rgba(18, 20, 30, 0.65) 0%, rgba(10, 12, 20, 0.85) 100%);
+  --bc-card-bg: linear-gradient(155deg, rgba(20, 26, 40, 0.55) 0%, rgba(12, 16, 26, 0.72) 100%);
+  --bc-control-bg: rgba(12, 16, 28, 0.72);
+  --bc-control-bg-hover: rgba(77, 163, 255, 0.12);
+  --bc-panel-bg: rgba(10, 12, 20, 0.45);
+  --bc-soft-panel-bg: rgba(20, 26, 40, 0.4);
+  --bc-soft-panel-bg-strong: rgba(20, 26, 40, 0.55);
+  --bc-soft-panel-active-bg: rgba(38, 54, 82, 0.35);
+  --bc-tooltip-bg: rgba(10, 14, 24, 0.95);
+  --bc-scroll-thumb: rgba(120, 170, 255, 0.35);
+  --bc-scroll-track: rgba(20, 26, 40, 0.45);
+  --bc-code-bg: rgba(40, 60, 100, 0.35);
+  --bc-code-text: #9ec8ff;
+  --bc-text-subtle: #a8abb2;
+  --bc-title-gradient: linear-gradient(120deg, #f0f6ff 0%, #a8d4ff 55%, #5ae9ff 100%);
+  --bc-title-shadow: drop-shadow(0 0 24px rgba(90, 233, 255, 0.15));
+  --bc-logo-hover-filter: brightness(1.08);
+  --bc-backtop-bg: rgba(18, 24, 42, 0.92);
+  --bc-backtop-hover-bg: rgba(77, 163, 255, 0.2);
+  --bc-backtop-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --bc-automaton-edge: #5ae9ff;
+  --bc-automaton-edge-active: #ffd664;
+  --bc-automaton-label-bg: rgba(12, 18, 30, 0.88);
+  --bc-automaton-label-border: rgba(120, 170, 255, 0.22);
+  --bc-automaton-label-text: rgba(220, 230, 255, 0.88);
+  --bc-automaton-label-active-bg: rgba(52, 38, 12, 0.9);
+  --bc-automaton-label-active-border: rgba(255, 210, 90, 0.62);
+  --bc-automaton-label-active-text: rgba(255, 239, 190, 0.98);
+  --bc-automaton-state-bg: rgba(20, 34, 52, 0.96);
+  --bc-automaton-state-active-bg: rgba(38, 34, 20, 0.98);
+  --bc-automaton-state-text: rgba(235, 242, 255, 0.96);
+  --bc-automaton-badge-bg: rgba(255, 214, 100, 0.96);
+  --bc-automaton-badge-text: rgba(20, 24, 30, 0.96);
+  --bc-automaton-glow: rgba(255, 214, 100, 0.38);
+
+  --bc-table-bg: rgba(15, 18, 25, 0.8);
+  --bc-table-header-bg: rgba(9, 10, 15, 0.6);
+  --bc-table-row-bg: rgba(15, 18, 25, 0.6);
+  --bc-table-row-hover-bg: rgba(0, 255, 255, 0.08);
+  --bc-table-text: #e0e0e0;
+  --bc-table-header-text: #ffffff;
+  --bc-table-border: rgba(173, 216, 230, 0.2);
+
+  --bc-dropdown-bg: rgba(18, 22, 34, 0.98);
+  --bc-dropdown-border: rgba(120, 170, 255, 0.22);
+
+  --bc-chart-axis-text: #c8d0e0;
+  --bc-chart-axis-line: rgba(140, 155, 180, 0.55);
+  --bc-chart-axis-tick: rgba(140, 155, 180, 0.45);
+  --bc-chart-split-line: rgba(140, 155, 180, 0.18);
+  --bc-chart-tooltip-bg: rgba(16, 22, 36, 0.94);
+  --bc-chart-tooltip-border: rgba(120, 170, 255, 0.28);
+  --bc-chart-tooltip-text: #e8ecf4;
+  --bc-chart-accent: #5ae9ff;
+  --bc-chart-box-fill: rgba(200, 214, 229, 0.35);
+  --bc-chart-box-border: rgba(140, 170, 210, 0.95);
+  --bc-chart-scatter-muted: rgba(120, 150, 190, 0.55);
+  --bc-chart-scatter-border: rgba(180, 200, 230, 0.8);
+  --bc-chart-bar-fill: rgba(90, 233, 255, 0.85);
+  --bc-chart-line: rgba(90, 233, 255, 0.75);
+  --bc-chart-pie-slice-border: rgba(12, 16, 26, 0.8);
+  --bc-chart-emphasis-shadow: rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="light"] {
+  --bc-bg-deep: #f5f7fb;
+  --bc-bg-mid: #edf1f9;
+  --bc-surface: rgba(255, 255, 255, 0.78);
+  --bc-surface-elevated: rgba(255, 255, 255, 0.96);
+  --bc-border: rgba(82, 118, 179, 0.2);
+  --bc-border-strong: rgba(82, 118, 179, 0.35);
+  --bc-accent: #2f7de1;
+  --bc-accent-soft: rgba(47, 125, 225, 0.14);
+  --bc-cyan: #1677d8;
+  --bc-text: #1b2431;
+  --bc-text-muted: #5f6f85;
+  --bc-shadow: 0 8px 24px rgba(35, 62, 112, 0.16);
+  --bc-page-bg-image:
+    radial-gradient(ellipse 80% 50% at 50% -15%, rgba(47, 125, 225, 0.2), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 100% 12%, rgba(114, 80, 184, 0.14), transparent 50%),
+    radial-gradient(ellipse 45% 30% at 0% 90%, rgba(72, 168, 210, 0.12), transparent 45%),
+    linear-gradient(165deg, #f7f9fe 0%, #eef3fb 55%, #eaf0fa 100%);
+  --bc-nav-bg: rgba(248, 250, 255, 0.9);
+  --bc-nav-shadow: 0 4px 14px rgba(35, 62, 112, 0.12);
+  --bc-page-body-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(246, 249, 255, 0.95));
+  --bc-card-bg: linear-gradient(155deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 248, 255, 0.95) 100%);
+  --bc-control-bg: rgba(245, 248, 255, 0.95);
+  --bc-control-bg-hover: rgba(47, 125, 225, 0.12);
+  --bc-panel-bg: rgba(255, 255, 255, 0.9);
+  --bc-soft-panel-bg: rgba(245, 248, 255, 0.92);
+  --bc-soft-panel-bg-strong: rgba(239, 245, 255, 0.95);
+  --bc-soft-panel-active-bg: rgba(225, 236, 253, 0.95);
+  --bc-tooltip-bg: rgba(255, 255, 255, 0.98);
+  --bc-scroll-thumb: rgba(82, 118, 179, 0.38);
+  --bc-scroll-track: rgba(228, 236, 249, 0.9);
+  --bc-code-bg: rgba(47, 125, 225, 0.12);
+  --bc-code-text: #1d5fae;
+  --bc-text-subtle: #5f6f85;
+  --bc-title-gradient: linear-gradient(120deg, #2f67b5 0%, #2f7de1 50%, #12a0d1 100%);
+  --bc-title-shadow: none;
+  --bc-logo-hover-filter: brightness(1.02);
+  --bc-backtop-bg: rgba(240, 246, 255, 0.95);
+  --bc-backtop-hover-bg: rgba(47, 125, 225, 0.18);
+  --bc-backtop-shadow: 0 4px 14px rgba(35, 62, 112, 0.15);
+  --bc-automaton-edge: #256fbd;
+  --bc-automaton-edge-active: #a75700;
+  --bc-automaton-label-bg: #f8fbff;
+  --bc-automaton-label-border: rgba(32, 92, 166, 0.5);
+  --bc-automaton-label-text: #17304f;
+  --bc-automaton-label-active-bg: #fff1c7;
+  --bc-automaton-label-active-border: rgba(157, 81, 0, 0.64);
+  --bc-automaton-label-active-text: #4a2b00;
+  --bc-automaton-state-bg: #eaf3ff;
+  --bc-automaton-state-active-bg: #fff1c7;
+  --bc-automaton-state-text: #10243d;
+  --bc-automaton-badge-bg: #b75f00;
+  --bc-automaton-badge-text: #ffffff;
+  --bc-automaton-glow: rgba(183, 95, 0, 0.18);
+
+  --bc-table-bg: rgba(255, 255, 255, 0.95);
+  --bc-table-header-bg: rgba(244, 248, 255, 0.95);
+  --bc-table-row-bg: rgba(255, 255, 255, 0.95);
+  --bc-table-row-hover-bg: rgba(47, 125, 225, 0.08);
+  --bc-table-text: #1b2431;
+  --bc-table-header-text: #1b2431;
+  --bc-table-border: rgba(82, 118, 179, 0.22);
+  --bc-dropdown-bg: rgba(255, 255, 255, 0.98);
+  --bc-dropdown-border: rgba(82, 118, 179, 0.24);
+
+  --bc-chart-axis-text: #3d4a5c;
+  --bc-chart-axis-line: rgba(82, 118, 179, 0.58);
+  --bc-chart-axis-tick: rgba(82, 118, 179, 0.48);
+  --bc-chart-split-line: rgba(82, 118, 179, 0.24);
+  --bc-chart-tooltip-bg: rgba(255, 255, 255, 0.98);
+  --bc-chart-tooltip-border: rgba(82, 118, 179, 0.32);
+  --bc-chart-tooltip-text: #1b2431;
+  --bc-chart-accent: #1677d8;
+  --bc-chart-box-fill: rgba(47, 125, 225, 0.42);
+  --bc-chart-box-border: #1a6fd4;
+  --bc-chart-scatter-muted: rgba(82, 118, 179, 0.48);
+  --bc-chart-scatter-border: rgba(47, 125, 225, 0.72);
+  --bc-chart-bar-fill: rgba(47, 125, 225, 0.82);
+  --bc-chart-line: rgba(47, 125, 225, 0.78);
+  --bc-chart-pie-slice-border: rgba(255, 255, 255, 0.96);
+  --bc-chart-emphasis-shadow: rgba(35, 62, 112, 0.18);
+}
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: var(--bc-bg-deep) !important;
+}
+
+/* --- Animated gradient background --- */
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* --- Option row layout --- */
+.option-row {
+  margin: 1.1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.option-single {
+  display: flex;
+  align-items: center;
+}
+
+.option-label {
+  letter-spacing: 0.06em;
+  color: var(--bc-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.slider {
+  margin-left: 10px;
+}
+
+/* --- Top navigation --- */
+.el-menu {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+.el-menu--horizontal > .el-menu-item {
+  color: var(--bc-text) !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+  margin: 0 4px;
+}
+.el-menu--horizontal > .el-menu-item:not(.is-disabled):hover {
+  background-color: var(--bc-accent-soft) !important;
+  color: var(--bc-cyan) !important;
+}
+.el-menu--horizontal > .el-menu-item.is-active {
+  color: var(--bc-cyan) !important;
+  border-bottom: 2px solid var(--bc-accent) !important;
+  background-color: transparent !important;
+}
+
+/* --- Switches (dark theme; inline Public/Private on Upload, etc.) --- */
+.el-switch {
+  --el-switch-on-color: var(--bc-accent, #4da3ff);
+  --el-switch-off-color: var(--bc-control-bg, rgba(38, 46, 62, 1));
+}
+
+.el-switch .el-switch__core {
+  min-width: 56px;
+  background-color: var(--bc-control-bg, rgba(38, 46, 62, 1)) !important;
+  border: 1px solid var(--bc-border-strong, rgba(120, 170, 255, 0.22)) !important;
+}
+
+.el-switch.is-checked .el-switch__core {
+  background-color: var(--bc-accent, #4da3ff) !important;
+  border-color: var(--bc-accent, #4da3ff) !important;
+}
+
+.el-switch .el-switch__core .el-switch__inner-wrapper {
+  color: var(--bc-text, #e8ecf4) !important;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.el-switch.is-checked .el-switch__core .el-switch__inner-wrapper {
+  color: #ffffff !important;
+}
+
+.el-switch .el-switch__action {
+  background-color: var(--bc-surface-elevated, #e8ecf4) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Radio groups --- */
+.el-radio-group .el-radio {
+  margin-right: 20px;
+}
+
+.el-radio__label {
+  color: var(--bc-text) !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+}
+
+/* --- Tables --- */
+.el-table {
+  background: var(--bc-table-bg) !important;
+  background-color: var(--bc-table-bg) !important;
+  --el-table-border-color: var(--bc-table-border);
+  --el-table-header-bg-color: var(--bc-table-header-bg);
+  --el-table-tr-bg-color: var(--bc-table-row-bg);
+  --el-table-row-hover-bg-color: var(--bc-table-row-hover-bg);
+  --el-table-text-color: var(--bc-table-text);
+  --el-table-header-text-color: var(--bc-table-header-text);
+  --el-table-bg-color: var(--bc-table-bg);
+}
+
+/* Do not use `.el-table * { background: inherit }` — it breaks EP 2.x body/scroll layers and rows can disappear. */
+
+.el-table .el-table__inner-wrapper,
+.el-table .el-table__body-wrapper,
+.el-table .el-table__body {
+  background-color: var(--bc-table-bg) !important;
+}
+
+.el-table .el-table__header-wrapper {
+  background-color: var(--bc-table-header-bg) !important;
+}
+
+.el-table th.el-table__cell,
+.el-table td.el-table__cell {
+  background-color: var(--bc-table-bg) !important;
+  border-bottom: 1px solid var(--bc-table-border) !important;
+  color: var(--bc-text) !important;
+  font-size: 0.9rem !important;
+  height: 48px !important;
+  padding: 10px 8px !important;
+}
+
+/* Table row backgrounds */
+.el-table .el-table__row,
+.el-table .el-table__body-wrapper .el-table__body tbody tr {
+  background-color: var(--bc-table-row-bg) !important;
+}
+
+.el-table .el-table__row:hover,
+.el-table .el-table__row:hover > td {
+  background-color: var(--bc-table-row-hover-bg) !important;
+}
+
+.el-table .el-table__body-wrapper .el-table__body tbody tr td {
+  background-color: var(--bc-table-bg) !important;
+}
+
+/* Table header */
+.el-table .el-table__header-wrapper th {
+  background-color: var(--bc-table-header-bg) !important;
+  font-weight: 600;
+  font-size: 20px !important;
+  color: var(--bc-table-header-text) !important;
+  height: 55px !important;
+  padding: 15px 8px !important;
+}
+
+.el-table .el-table__fixed-header-wrapper,
+.el-table .el-table__fixed-body-wrapper,
+.el-table .el-table__fixed {
+  background: var(--bc-table-bg) !important;
+  background-color: var(--bc-table-bg) !important;
+  z-index: 20 !important;
+}
+
+/* Table borders */
+.el-table td,
+.el-table th {
+  border-bottom: 1px solid var(--bc-table-border) !important;
+}
+
+.el-table::before,
+.el-table--border::after {
+  display: none;
+}
+
+.el-table--border {
+  border: 1px solid var(--bc-table-border) !important;
+}
+
+/* Compression Mode tags (Methods / Home / TsFile tables) */
+.el-table .compression-type-tag.el-tag {
+  max-width: 100%;
+}
+
+.el-table .compression-type-tag .el-tag__content {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Empty table placeholder text */
+.el-table__empty-text {
+  color: var(--bc-text-muted) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
+/* --- Back-to-top --- */
+.el-backtop {
+  background-color: var(--bc-backtop-bg, rgba(27, 39, 53, 0.8)) !important;
+  color: var(--bc-accent, #409eff) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* --- Algorithm list display --- */
+.algorithms-display {
+  color: var(--bc-text);
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+/* --- Charts section --- */
+.charts-section {
+  margin: 40px 0;
+  padding: 20px;
+  background-color: var(--bc-surface-elevated);
+  border-radius: 12px;
+  border: 1px solid var(--bc-border-strong);
+}
+
+.charts-title {
+  color: var(--bc-text);
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.chart-item {
+  background-color: var(--bc-surface);
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid var(--bc-border);
+  transition: all 0.3s ease;
+}
+
+.chart-item:hover {
+  border-color: var(--bc-accent, #409eff);
+  transform: translateY(-2px);
+}
+
+.chart-name {
+  color: var(--bc-text-muted);
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.statistics-section {
+  margin-bottom: 40px;
+}
+
+.statistics-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--bc-text);
+}
+
+/* --- Alerts (e.g. All Datasets hint) --- */
+.data-dimension-hint.el-alert {
+  border-radius: var(--bc-radius-md, 12px) !important;
+  border: 1px solid var(--bc-border) !important;
+  background: var(--bc-accent-soft, rgba(61, 158, 255, 0.08)) !important;
+}
+
+.data-dimension-hint .el-alert__title {
+  font-size: 0.88rem !important;
+  line-height: 1.45 !important;
+  color: var(--bc-text) !important;
+}
+
+/* Dark el-select (Home, TsFile, Upload, Dataset bundle picker) */
+.home-dataset-select,
+.detail-select {
+  width: 100%;
+  min-width: 220px;
+  max-width: min(100%, 440px);
+}
+
+.home-dataset-select .el-select__wrapper,
+.detail-select .el-select__wrapper {
+  min-height: 42px;
+  border-radius: 10px;
+  background: var(--bc-control-bg);
+  box-shadow: none;
+  border: 1px solid rgba(120, 170, 255, 0.22);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-dataset-select .el-select__wrapper:hover,
+.detail-select .el-select__wrapper:hover {
+  border-color: rgba(77, 163, 255, 0.42);
+}
+
+.home-dataset-select .el-select__wrapper.is-focused,
+.detail-select .el-select__wrapper.is-focused {
+  border-color: var(--bc-accent, #4da3ff);
+  box-shadow: 0 0 0 2px rgba(77, 163, 255, 0.2);
+}
+
+.home-dataset-select .el-select__wrapper.is-disabled,
+.detail-select .el-select__wrapper.is-disabled {
+  opacity: 0.55;
+}
+
+.home-dataset-select .el-select__placeholder,
+.detail-select .el-select__placeholder {
+  color: rgba(154, 163, 178, 0.88);
+}
+
+.home-dataset-select .el-select__selected-item,
+.detail-select .el-select__selected-item {
+  color: var(--bc-text, #e8ecf4);
+  font-weight: 500;
+}
+
+.home-dataset-select .el-select__caret,
+.detail-select .el-select__caret {
+  color: rgba(154, 163, 178, 0.9);
+}
+
+/* Teleported el-select dropdown (Home dataset picker, Dataset.vue bundle picker) */
+.dataset-bundle-select-dropdown.el-popper {
+  border: 1px solid var(--bc-dropdown-border) !important;
+  border-radius: 10px !important;
+  background: var(--bc-dropdown-bg) !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dataset-bundle-select-dropdown .el-select-dropdown__item {
+  color: var(--bc-text);
+}
+
+.dataset-bundle-select-dropdown .el-select-dropdown__item.is-hovering,
+.dataset-bundle-select-dropdown .el-select-dropdown__item:hover {
+  background: rgba(77, 163, 255, 0.12) !important;
+}
+
+.dataset-bundle-select-dropdown .el-select-dropdown__item.is-selected {
+  color: var(--bc-accent, #4da3ff);
+  font-weight: 600;
+}
+
+/* Account menu (teleported dropdown — EP2 uses el-dropdown__popper + el-dropdown-menu) */
+.user-menu-dropdown.el-dropdown__popper,
+.user-menu-dropdown.el-popper {
+  --el-bg-color-overlay: var(--bc-dropdown-bg);
+  --el-text-color-regular: var(--bc-text, #e8ecf4);
+  --el-text-color-disabled: var(--bc-text-muted, #9aa3b2);
+  --el-border-color-light: var(--bc-dropdown-border);
+  --el-border-color-lighter: rgba(120, 170, 255, 0.14);
+  --el-dropdown-menuItem-hover-fill: rgba(77, 163, 255, 0.12);
+  --el-dropdown-menuItem-hover-color: var(--bc-text, #e8ecf4);
+  --el-dropdown-menu-box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+
+  border: 1px solid var(--bc-dropdown-border) !important;
+  border-radius: 10px !important;
+  background: var(--bc-dropdown-bg) !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5) !important;
+}
+
+.user-menu-dropdown.el-dropdown__popper .el-popper__arrow::before,
+.user-menu-dropdown.el-popper .el-popper__arrow::before {
+  background: var(--bc-dropdown-bg) !important;
+  border: 1px solid var(--bc-dropdown-border) !important;
+}
+
+.user-menu-dropdown .el-dropdown-menu,
+.user-menu-dropdown .el-dropdown__list {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.user-menu-dropdown .el-dropdown-menu__item {
+  color: var(--bc-text, #e8ecf4) !important;
+}
+
+.user-menu-dropdown .el-dropdown-menu__item:not(.is-disabled):hover,
+.user-menu-dropdown .el-dropdown-menu__item:not(.is-disabled):focus {
+  background: rgba(77, 163, 255, 0.12) !important;
+  color: var(--bc-text, #e8ecf4) !important;
+}
+
+.user-menu-dropdown .el-dropdown-menu__item--divided {
+  border-top-color: rgba(120, 170, 255, 0.14) !important;
+}
+
+.user-menu-dropdown .user-menu-dropdown-email,
+.user-menu-dropdown .el-dropdown-menu__item.is-disabled {
+  color: var(--bc-text-muted, #9aa3b2) !important;
+  font-size: 0.85rem;
+  cursor: default;
+}
+
+.user-menu-dropdown .user-menu-dropdown-email.is-disabled:hover,
+.user-menu-dropdown .el-dropdown-menu__item.is-disabled:hover {
+  background: transparent !important;
+}
+
+/* Auth dialog — above sticky nav (200) and page panels */
+.auth-dialog-overlay {
+  z-index: 10000 !important;
+}
+
+.auth-dialog-overlay .el-overlay-dialog {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 22vh;
+  box-sizing: border-box;
+}
+
+.auth-dialog.el-dialog {
+  position: relative;
+  margin: 0 !important;
+  border-radius: 14px;
+  border: 1px solid var(--bc-border-strong);
+  background: var(--bc-page-body-bg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.auth-dialog .el-dialog__header {
+  border-bottom: 1px solid rgba(120, 170, 255, 0.12);
+  margin-right: 0;
+  padding-bottom: 12px;
+}
+
+.auth-dialog .el-dialog__body {
+  padding-top: 8px;
+}

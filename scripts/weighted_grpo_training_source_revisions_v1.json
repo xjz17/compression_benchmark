@@ -1,0 +1,25 @@
+{
+  "schema": "weighted-grpo-training-source-revisions-v1",
+  "created_date": "2026-09-17",
+  "provider": "BenchmarkHost on Hugging Face, with the frozen juliensimon/deep-space-probes exact-upstream overlay",
+  "repository_type": "dataset",
+  "selection": "all .tsfile objects at the exact frozen revision, except deep-space-probes which uses the exact upstream Parquet plus README overlay and rejects the BenchmarkHost mirror",
+  "sources": [
+    {"dataset_id": "ETDataset-ett", "repo_id": "BenchmarkHost/ETDataset-ett", "revision": "d7af4b8ce4c579feb16cd11f5042cf882ab00eff"},
+    {"dataset_id": "electricity_load_2011_2014", "repo_id": "BenchmarkHost/electricity_load_2011_2014", "revision": "f15d9f598e23ee7d57df58f7d0f17ad6f1a3f104"},
+    {"dataset_id": "weatherAUS", "repo_id": "BenchmarkHost/weatherAUS", "revision": "95a575b50ba1b8cf37bbaafc18c8e446f2a2c97a"},
+    {"dataset_id": "eea_pm25_forecasting", "repo_id": "BenchmarkHost/eea_pm25_forecasting", "revision": "7a57e63557f8ec3ee0d370ba933c0612833b3506"},
+    {"dataset_id": "METR-LA", "repo_id": "BenchmarkHost/METR-LA", "revision": "d5895c93e8f9d9d1ef20540b10e0c8d75bfddf81"},
+    {"dataset_id": "finland_traffic", "repo_id": "BenchmarkHost/finland_traffic", "revision": "93b678deb80b12a480c1d9d6ad7dad58c79b3bd5"},
+    {"dataset_id": "exchange_rate", "repo_id": "BenchmarkHost/exchange_rate", "revision": "e5b0640fa6603893e2dcc84a96dca67369ac2158"},
+    {"dataset_id": "bitcoin_price_timeseries", "repo_id": "BenchmarkHost/bitcoin_price_timeseries", "revision": "4a78cbd46cc7cab5d6743d2fba2975806f8fc406"},
+    {"dataset_id": "freshretailnet_50k", "repo_id": "BenchmarkHost/freshretailnet_50k", "revision": "fd0aa204f48c7d55e55ef3be3e9947a492f16d9c"},
+    {"dataset_id": "online_retail_2_uci", "repo_id": "BenchmarkHost/online_retail_2_uci", "revision": "3d11d4c9c59294f71ef646a43493aa8cd10fe6ec"},
+    {"dataset_id": "national_illness", "repo_id": "BenchmarkHost/national_illness", "revision": "b008380fe75dc698b3622889a60227654c70899c"},
+    {"dataset_id": "gluco_tsfm_benchmark", "repo_id": "BenchmarkHost/gluco_tsfm_benchmark", "revision": "d0840cc1f87ed2fb43d0e22245aea948eb38eef8"},
+    {"dataset_id": "app_flow", "repo_id": "BenchmarkHost/app_flow", "revision": "b49f97e921fa9b218ff51d798d1cc904fcd34660"},
+    {"dataset_id": "scaphandre_cpu_usage", "repo_id": "BenchmarkHost/scaphandre_cpu_usage", "revision": "3965175368f26e086fbc7dadaeb3cb61c077ef5b"},
+    {"dataset_id": "deep-space-probes", "repo_id": "juliensimon/deep-space-probes", "revision": "ed64a3ba6e24baccb33574d3b36562ba5c1b7332", "source_overlay": "exact_upstream_parquet_replaces_invalid_benchmarkhost_tsfile_mirror", "rejected_mirror_repo_id": "BenchmarkHost/deep-space-probes", "rejected_mirror_revision": "2ce6a7c5b0e22c3b6aa19459e4fa16a433f7bc8c"},
+    {"dataset_id": "geomagnetic_kp_index", "repo_id": "BenchmarkHost/geomagnetic_kp_index", "revision": "8ba0a547cff9a641ceb650cfc3153b9fcdc8b46c"}
+  ]
+}

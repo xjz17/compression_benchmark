@@ -1,0 +1,979 @@
+{
+  "description": "Method metadata for the benchmark Methods page.",
+  "methods": [
+    {
+      "name": "gzip",
+      "paper": "RFC 1952 (GZIP file format)",
+      "paper_url": "https://doi.org/10.17487/RFC1952",
+      "description": "General-purpose DEFLATE-based compression baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "brotli",
+      "paper": "RFC 7932 (Brotli format)",
+      "paper_url": "https://doi.org/10.17487/RFC7932",
+      "description": "Dictionary-friendly statistical compression for byte streams.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "zstd",
+      "paper": "Zstandard Compression and the application/zstd Media Type",
+      "paper_url": "https://doi.org/10.17487/RFC8878",
+      "description": "Fast modern statistical codec with adjustable level.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZ4",
+      "paper": "LZ4 Frame Format Specification",
+      "paper_url": "https://github.com/lz4/lz4/",
+      "description": "Very fast LZ-family compression baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "CHIMP",
+      "paper": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+      "paper_url": "https://doi.org/10.14778/3551793.3551852",
+      "description": "XOR-based floating-point time-series compression.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "Chimp128",
+      "paper": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+      "paper_url": "https://doi.org/10.14778/3551793.3551852",
+      "description": "64-bit Chimp variant that keeps a 128-value history table for floating-point time-series compression.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "Pongo",
+      "paper": "Pongo: Efficient Lossless Floating Point Compression",
+      "paper_url": "https://doi.org/10.37256/ccds.6220257102",
+      "description": "Streaming lossless floating-point compressor using eraser-style decimal-native recoding before XOR and trailing-zero packing.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "GORILLA",
+      "paper": "Gorilla: A Fast, Scalable, In-Memory Time Series Database",
+      "paper_url": "https://doi.org/10.14778/2824032.2824078",
+      "description": "Delta/XOR time-series compression baseline from Gorilla TSDB.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "TS_2DIFF",
+      "paper": "Apache TsFile Encoding (TS_2DIFF)",
+      "paper_url": "https://tsfile.apache.org/",
+      "description": "TsFile delta-of-delta style encoding.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "BOS",
+      "paper": "BOS: Bit-Packing with Outlier Separation",
+      "paper_url": "https://doi.org/10.1109/ICDE65448.2025.00107",
+      "description": "Project-optimized TS_2DIFF variant with BOS-style packing.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "REGER",
+      "paper": "REGER: Reordering Time Series Data for Regression Encoding",
+      "paper_url": "https://github.com/apache/iotdb/blob/research/encoding-reorder/iotdb-core/tsfile/src/test/java/org/apache/iotdb/tsfile/encoding/REGERFloatTest.java",
+      "description": "Reordering regression codec using block-local value ordering, linear prediction, residual frame-of-reference, and segmented bit packing.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "Stream VByte",
+      "paper": "Stream VByte: Faster Byte-Oriented Integer Compression",
+      "paper_url": "https://doi.org/10.48550/arXiv.1709.08990",
+      "description": "Delta + byte-oriented integer coding path.",
+      "data_types": [
+        "int"
+      ]
+    },
+    {
+      "name": "fastpfor",
+      "paper": "SIMD Compression and the Intersection of Sorted Integers",
+      "paper_url": "https://arxiv.org/abs/1401.6399",
+      "description": "Frame-of-reference integer compression with SIMD-friendly layout.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "simple8b",
+      "paper": "Simple8b integer packing family",
+      "paper_url": "",
+      "description": "Word-packing integer codec for small deltas.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "RLE",
+      "paper": "Run-Length Encoding",
+      "paper_url": "",
+      "description": "Time-series baseline using run-length encoding.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "RLBE",
+      "paper": "Run-Length Bit Encoding (project implementation)",
+      "paper_url": "",
+      "description": "Run-length based variant with compact bit-level packing.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "SPRINTZ",
+      "paper": "Sprintz: Time Series Compression for the Internet of Things",
+      "paper_url": "https://doi.org/10.1145/3219819.3220108",
+      "description": "Predictive lightweight time-series compression baseline.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "XZ",
+      "paper": "XZ Utils / LZMA2 Format",
+      "paper_url": "",
+      "description": "XZ container using LZMA2 dictionary compression with high compression ratio.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Density",
+      "paper": "Density compression library",
+      "paper_url": "https://github.com/g1mv/density",
+      "description": "Native deterministic LZ-family reference preset for the Density benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Gipfeli",
+      "paper": "Gipfeli compression library",
+      "paper_url": "https://github.com/google/gipfeli",
+      "description": "Native deterministic LZ-family reference preset for the Gipfeli benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "GLZA",
+      "paper": "GLZA compression algorithm",
+      "paper_url": "http://encode.ru/threads/2427-GLZA",
+      "description": "Native deterministic LZ-family reference preset for the GLZA benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZMAT",
+      "paper": "LZMAT compression library",
+      "paper_url": "http://www.matcode.com/lzmat.htm",
+      "description": "Native deterministic LZ-family reference preset for the LZMAT benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZO1",
+      "paper": "LZO real-time compression library",
+      "paper_url": "http://www.oberhumer.com/opensource/lzo/",
+      "description": "LZO1-family byte compression; variants LZO1, LZO1A, LZO1B, LZO1C, LZO1F, LZO1X, LZO1Y, and LZO1Z are selected from the parameter panel.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZO2A",
+      "paper": "LZO real-time compression library",
+      "paper_url": "http://www.oberhumer.com/opensource/lzo/",
+      "description": "Native deterministic LZ-family reference preset for the LZO2A benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZRW",
+      "paper": "An Extremely Fast Data Compression Algorithm",
+      "paper_url": "",
+      "description": "Native deterministic LZ-family reference preset for the LZRW benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZSSE",
+      "paper": "An LZ Codec Designed for SSE Decompression",
+      "paper_url": "http://conorstokes.github.io/compression/2016/02/15/an-LZ-codec-designed-for-SSE-decompression",
+      "description": "LZ-family codec represented by five benchmark levels: 2, 4, 4 Fast, 8, and 8 Fast.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZVN",
+      "paper": "LZFSE compression library",
+      "paper_url": "https://github.com/lzfse/lzfse",
+      "description": "Native deterministic LZ-family reference preset for the LZVN benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Pithy",
+      "paper": "Pithy compression library",
+      "paper_url": "https://github.com/inikep/lzbench",
+      "description": "Native deterministic LZ-family reference preset for the Pithy benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Shrinker",
+      "paper": "Shrinker compression library",
+      "paper_url": "https://github.com/inikep/lzbench",
+      "description": "Native deterministic LZ-family reference preset for the Shrinker benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "UCL NRV",
+      "paper": "UCL data compression library",
+      "paper_url": "http://www.oberhumer.com/opensource/ucl/",
+      "description": "UCL NRV-family block compression; NRV2b, NRV2d, and NRV2e are selected from the parameter panel.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "WFLZ",
+      "paper": "WFLZ compression library",
+      "paper_url": "https://code.google.com/p/wflz/",
+      "description": "Native deterministic LZ-family reference preset for the WFLZ benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "XPACK",
+      "paper": "XPACK compression library",
+      "paper_url": "https://github.com/inikep/lzbench",
+      "description": "Native deterministic LZ-family reference preset for the XPACK benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "YALZ77",
+      "paper": "YALZ77 compression library",
+      "paper_url": "https://github.com/Infinideastudio/yalz77",
+      "description": "Native deterministic LZ-family reference preset for the YALZ77 benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Yappy",
+      "paper": "Yappy compression algorithm",
+      "paper_url": "https://web.archive.org/web/20110617184153/blog.gamedeff.com/?p=371",
+      "description": "Native deterministic LZ-family reference preset for the Yappy benchmark row.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "snappy",
+      "paper": "Snappy compression format",
+      "paper_url": "https://github.com/google/snappy",
+      "description": "Fast general-purpose compression optimized for throughput.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "ANS",
+      "paper": "Asymmetric Numeral Systems",
+      "paper_url": "",
+      "description": "Entropy coding family used as a compact coding baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "FSE",
+      "paper": "FiniteStateEntropy",
+      "paper_url": "https://github.com/Cyan4973/FiniteStateEntropy",
+      "description": "FiniteStateEntropy implementation of ANS-style table coding.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Huffman",
+      "paper": "A Method for the Construction of Minimum-Redundancy Codes",
+      "paper_url": "https://doi.org/10.1109/JRPROC.1952.273898",
+      "description": "Classical Huffman coding baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Huff0",
+      "paper": "FiniteStateEntropy Huff0",
+      "paper_url": "https://github.com/Cyan4973/FiniteStateEntropy",
+      "description": "Modern high-throughput Huffman codec from the FiniteStateEntropy project.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Arithmetic",
+      "paper": "Arithmetic coding",
+      "paper_url": "",
+      "description": "Probability-based coding baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "col_dictionary",
+      "paper": "Dictionary encoding (columnar systems)",
+      "paper_url": "",
+      "description": "Dictionary encoding variant for repeated values.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "DELTA_BINARY_PACKED",
+      "paper": "Apache Parquet Encodings: DELTA_BINARY_PACKED",
+      "paper_url": "https://parquet.apache.org/docs/file-format/data-pages/encodings/#delta-encoding-delta_binary_packed-5",
+      "description": "Parquet-style delta, ZigZag, and bit-packed integer encoding.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "col_bss_lz4",
+      "paper": "Project implementation",
+      "paper_url": "",
+      "description": "Planar floating-point byte layout followed by LZ4 framing.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "ALP",
+      "paper": "ALP: Adaptive Lossless Floating-Point Compression",
+      "paper_url": "https://doi.org/10.1145/3626717",
+      "description": "Adaptive floating-point transform for compact lossless storage.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "LECO",
+      "paper": "LECO: Learned Compression for Column Data",
+      "paper_url": "https://doi.org/10.1145/3448016.3457233",
+      "description": "Learned piecewise model-based column compression.",
+      "data_types": [
+        "int"
+      ]
+    },
+    {
+      "name": "camel",
+      "paper": "Camel: Efficient Compression of Floating-Point Time Series",
+      "paper_url": "https://doi.org/10.1145/3698802",
+      "description": "Research compression method for monitored metrics.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "elf",
+      "paper": "Elf: Erasing-Based Lossless Floating-Point Compression",
+      "paper_url": "https://doi.org/10.14778/3587136.3587149",
+      "description": "Elf transform combined with Chimp-style coding.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "elf_plus",
+      "paper": "Erasing-based lossless compression method for streaming floating-point time series",
+      "paper_url": "https://doi.org/10.48550/arXiv.2306.16053",
+      "description": "Enhanced Elf-family coding for floating-point series.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "fpc",
+      "paper": "High Throughput Compression of Double-Precision Floating-Point Data",
+      "paper_url": "https://doi.org/10.1109/DCC.2007.44",
+      "description": "FCM/dFCM predictors with variable-length XOR residuals on 64-bit wire (Burtscher FPC v1.1).",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "pfpc",
+      "paper": "A Parallel Compressor for Floating-Point Data",
+      "paper_url": "https://doi.org/10.1109/DCC.2009.43",
+      "description": "Parallel FCM/dFCM floating-point compressor with per-thread chunk encoding (Burtscher pFPC v1.0).",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "spdp",
+      "paper": "SPDP: An Automatically Synthesized Lossless Compression Algorithm for Floating-Point Data",
+      "paper_url": "https://doi.org/10.1109/DCC.2018.00042",
+      "description": "Structure-aware predictive coding at fixed level setting.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "corad_tricklet",
+      "paper": "CORAD: Correlation-Aware Compression of Massive Time Series using Sparse Dictionary Coding",
+      "paper_url": "https://doi.org/10.1109/BigData47090.2019.9005580",
+      "description": "Research codec entry included in the benchmark catalog.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "buff",
+      "paper": "Decomposed bounded floats for fast compression and queries",
+      "paper_url": "https://doi.org/10.14778/3476249.3476305",
+      "description": "Native kernel benchmark entry for floating-point compression.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "MOST",
+      "paper": "MOST: Model-Based Compression with Outlier Storage for Time Series Data",
+      "paper_url": "https://doi.org/10.1145/3626737",
+      "description": "Minimal MOST configuration in benchmark catalog.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "Machete",
+      "paper": "Machete: An Efficient Lossy Floating-Point Compressor Designed for Time Series Databases",
+      "paper_url": "https://doi.org/10.1109/DCC58796.2024.00061",
+      "description": "Relative-error bounded lossy compression family.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "SimPiece",
+      "paper": "Sim-Piece: Highly Accurate Piecewise Linear Approximation through Similar Segment Merging",
+      "paper_url": "https://doi.org/10.14778/3594512.3594521",
+      "description": "Piecewise lossy approximation family with relRange presets.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "SZ",
+      "paper": "SZ: A Generalized Error-bounded Lossy Compression Framework for HPC",
+      "paper_url": "https://github.com/szcompressor/SZ",
+      "description": "Classic error-bounded lossy compressor (SZ 2.x CLI); ABS/REL presets via native sz binary.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "SZ3",
+      "paper": "SZ3: Error-bounded Lossy Compression for Scientific Data",
+      "paper_url": "https://github.com/szcompressor/SZ3",
+      "description": "Error-bounded lossy compressor with ABS/REL presets.",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "FPZIP",
+      "paper": "FPZIP: Lossless Compression of Floating-Point Data",
+      "paper_url": "https://computing.llnl.gov/projects/fpzip",
+      "description": "Predictor-based floating-point compression baseline.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "Blosc",
+      "paper": "Blosc: A blocking, shuffling and compression filter",
+      "paper_url": "https://www.blosc.org/pages/blosc-in-depth/",
+      "description": "Blosc1 meta-compressor with BloscLZ inner codec and shuffle filter (blosc_blosclz).",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Blosc2",
+      "paper": "Blosc2: A Fast, Modular and Extensible Data Compressor",
+      "paper_url": "https://www.blosc.org/pages/blosc-in-depth/",
+      "description": "Blosc2 meta-compressor with BloscLZ inner codec and shuffle filter (blosc2_blosclz).",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "ZFP",
+      "paper": "ZFP: Compressed Floating-Point Arrays",
+      "paper_url": "https://computing.llnl.gov/projects/zfp",
+      "description": "Lossless ZFP via zfpy (ext_zfp_zfpy). Error-bounded tolerance variants are not part of the Methods lossless catalog.",
+      "data_types": [
+        "float"
+      ]
+    },
+    {
+      "name": "FPCompress DPratio",
+      "paper": "Efficient Lossless Compression of Scientific Floating-Point Data on CPUs and GPUs",
+      "paper_url": "https://doi.org/10.1145/3669940.3707280",
+      "description": "FPCompress LC-framework lossless CPU codec; DPratio (compression-ratio variant).",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "FPCompress DPspeed",
+      "paper": "Efficient Lossless Compression of Scientific Floating-Point Data on CPUs and GPUs",
+      "paper_url": "https://doi.org/10.1145/3669940.3707280",
+      "description": "FPCompress LC-framework lossless CPU codec; DPspeed (throughput variant).",
+      "data_types": [
+        "int",
+        "float"
+      ]
+    },
+    {
+      "name": "BriefLZ",
+      "paper": "BriefLZ fast compression library",
+      "paper_url": "https://github.com/jibsen/brieflz",
+      "description": "Small-footprint LZ77 compressor for byte streams.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "BSC",
+      "paper": "libbsc: Block Sorting Compressor",
+      "paper_url": "https://github.com/IlyaGrebnov/libbsc",
+      "description": "Block-sorting codec with multiple preset modes.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Bzip2",
+      "paper": "bzip2 and libbzip2",
+      "paper_url": "https://www.sourceware.org/bzip2/",
+      "description": "Burrows-Wheeler transform plus move-to-front and Huffman coding.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Bzip3",
+      "paper": "bzip3: a better and stronger successor to bzip2",
+      "paper_url": "https://github.com/kspalaiologos/bzip3",
+      "description": "Modern BWT-family compressor with improved speed and ratio.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Crush",
+      "paper": "CRUSH compression library",
+      "paper_url": "https://sourceforge.net/projects/crush/",
+      "description": "Compact LZ-style byte compressor baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "CSC",
+      "paper": "CSC lossless compression algorithm",
+      "paper_url": "https://github.com/fusiyuan2010/CSC",
+      "description": "LZMA-inspired byte compressor using LZ77-style matching, parsing, preprocessing, and range coding.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "FastLZ",
+      "paper": "FastLZ compression library",
+      "paper_url": "https://github.com/ariya/FastLZ",
+      "description": "Very fast byte-oriented LZ77 compression.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "FastLZMA2",
+      "paper": "Fast LZMA2 compression library",
+      "paper_url": "https://github.com/conor42/fast-lzma2",
+      "description": "LZMA2-family codec tuned for high compression throughput.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Kanzi",
+      "paper": "Kanzi: high-performance compression framework",
+      "paper_url": "https://github.com/flanglet/kanzi-cpp",
+      "description": "Multi-algorithm compression framework with selectable levels.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "libdeflate",
+      "paper": "libdeflate",
+      "paper_url": "https://github.com/ebiggers/libdeflate",
+      "description": "Optimized DEFLATE/zlib-compatible byte compression library.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Lizard",
+      "paper": "Lizard (LZ5) fast compression",
+      "paper_url": "https://github.com/inikep/lizard",
+      "description": "LZ4-family codec with extended level range for ratio/speed trade-offs.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZ4 Fast",
+      "paper": "LZ4 fast compression mode",
+      "paper_url": "https://lz4.org/",
+      "description": "LZ4 fast mode with acceleration-controlled parsing for throughput-oriented compression.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZ4HC",
+      "paper": "LZ4 high-compression mode",
+      "paper_url": "https://lz4.org/",
+      "description": "High-compression LZ4 derivative that trades compression CPU time for better compression ratio.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZAV",
+      "paper": "LZAV fast LZ77 compressor",
+      "paper_url": "https://github.com/avaneev/lzav",
+      "description": "High-speed LZ77 byte compression baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZF",
+      "paper": "LibLZF very fast compression library",
+      "paper_url": "http://software.schmorp.de/pkg/liblzf.html",
+      "description": "Extremely fast LZ77-style byte compressor.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZFSE",
+      "paper": "LZFSE compression library",
+      "paper_url": "https://github.com/lzfse/lzfse",
+      "description": "Apple LZFSE/LZVN statistical codec for byte streams.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZG",
+      "paper": "LibLZG lightweight compression library",
+      "paper_url": "https://github.com/mbitsnbites/liblzg",
+      "description": "Lightweight LZ77 compressor for embedded and general byte data.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZHAM",
+      "paper": "LZHAM compression codec",
+      "paper_url": "https://github.com/richgel999/lzham_codec",
+      "description": "LZ-based codec targeting high compression ratios on byte data.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "LZJB",
+      "paper": "LZJB compression (ZFS/OpenSolaris)",
+      "paper_url": "",
+      "description": "Legacy LZRW1-style byte compression baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Lzlib",
+      "paper": "Lzlib data compression library",
+      "paper_url": "https://www.nongnu.org/lzip/lzlib.html",
+      "description": "LZMA-based library for gzip-compatible and raw LZMA streams.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "PPMD8",
+      "paper": "PPMd statistical compression (PPMD8)",
+      "paper_url": "https://www.7-zip.org/",
+      "description": "Order-m probability-modeling codec used in 7-Zip and related tools.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "QuickLZ",
+      "paper": "QuickLZ compression library",
+      "paper_url": "https://web.archive.org/web/20160110073818/https://quicklz.com/",
+      "description": "Speed-oriented LZ compressor with multiple level settings.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "SLZ",
+      "paper": "libslz fast gzip/deflate encoder",
+      "paper_url": "http://www.libslz.org/",
+      "description": "StateLess Zip byte compression; raw deflate, gzip wrapper, and zlib wrapper variants are selected from the parameter panel.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Tornado",
+      "paper": "FreeArc Tornado compression algorithm",
+      "paper_url": "https://encode.su/threads/231-FreeArc-compression-suite-%284x4-Tornado-REP-Delta-Dict-%29",
+      "description": "FreeArc suite Tornado LZ variant for general byte data.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "zlib",
+      "paper": "zlib compression library",
+      "paper_url": "https://zlib.net/",
+      "description": "Reference DEFLATE implementation using the zlib wrapper format.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "zlib-ng",
+      "paper": "zlib-ng optimized zlib fork",
+      "paper_url": "https://github.com/zlib-ng/zlib-ng",
+      "description": "Performance-oriented fork of zlib DEFLATE compression.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "Zling",
+      "paper": "libzling compression library",
+      "paper_url": "https://github.com/richox/libzling",
+      "description": "LZ77-family byte compressor with level-controlled ratio.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "ZXC",
+      "paper": "ZXC compression library",
+      "paper_url": "https://github.com/hellobertrand/zxc",
+      "description": "Compact LZ-style byte compression baseline.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    },
+    {
+      "name": "TAMP",
+      "paper": "TAMP tiny automatic meta-protocol compressor",
+      "paper_url": "https://github.com/BrianPugh/tamp",
+      "description": "Tiny LZ-based compressor designed for embedded and streaming use.",
+      "data_types": [
+        "int",
+        "float",
+        "string"
+      ]
+    }
+  ]
+}

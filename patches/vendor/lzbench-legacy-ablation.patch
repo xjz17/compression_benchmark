@@ -1,0 +1,415 @@
+diff --git a/lz/pithy/pithy.cpp b/lz/pithy/pithy.cpp
+index 12bcb57..e044a6e 100644
+--- a/lz/pithy/pithy.cpp
++++ b/lz/pithy/pithy.cpp
+@@ -47,6 +47,12 @@
+ 
+ #include "pithy.h"
+ 
++static int pithy_ablation_mode = PITHY_ABLATION_NONE;
++
++void pithy_SetAblationMode(int mode) {
++  pithy_ablation_mode = mode;
++}
++
+ #define kBlockLog   20ul
+ #define kBlockSize  ((size_t)(1 << kBlockLog))
+ 
+@@ -307,6 +313,13 @@ PITHY_STATIC_INLINE size_t pithy_FindMatchLength(const char *s1, const char *s2,
+ 
+ 
+ PITHY_STATIC_INLINE char *pithy_EmitLiteral(char *op, const char *literal, size_t len, int allow_fast_path) {
++  if(pithy_ablation_mode == PITHY_ABLATION_FIXED_TOKENS) {
++    *op++ = 0;
++    pithy_Store32(op, (uint32_t)len);
++    op += 4;
++    memcpy(op, literal, len);
++    return(op + len);
++  }
+   ssize_t n = len - 1l;
+   if(PITHY_EXPECT_T(n < 60l)) { *op++ = PITHY_LITERAL | (n << 2); if(PITHY_EXPECT_T(allow_fast_path) && PITHY_EXPECT_T(len <= 16ul)) { pithy_Move128(op, literal); return(op + len); } }
+   else { char *base = op; int count = 0; op++; while(n > 0l) { *op++ = n & 0xff; n >>= 8; count++; } DCHECK((count >= 1) && (count <= 4)); *base = PITHY_LITERAL | ((59 + count) << 2); }
+@@ -332,6 +345,13 @@ PITHY_STATIC_INLINE char *pithy_EmitCopyLessThan63(char *op, size_t offset, size
+ }
+ 
+ PITHY_STATIC_INLINE char *pithy_EmitCopy(char *op, size_t offset, size_t len) {
++  if(pithy_ablation_mode == PITHY_ABLATION_FIXED_TOKENS) {
++    *op++ = 1;
++    pithy_Store32(op, (uint32_t)offset);
++    op += 4;
++    pithy_Store32(op, (uint32_t)len);
++    return(op + 4);
++  }
+   while(PITHY_EXPECT_F(len >= 63ul)) { op = pithy_EmitCopyGreaterThan63(op, offset, (len >= 65539ul) ? 65535ul : len); len -= (len >= 65539ul) ? 65535ul : len; }
+   DCHECK((len > 0ul) ? ((len >= 4ul) && (len < 63ul)) : 1);
+   if(   PITHY_EXPECT_T(len >  0ul))  { op = pithy_EmitCopyLessThan63(   op, offset, len);                              len -= len;                              }
+@@ -347,6 +367,8 @@ PITHY_STATIC_INLINE char *pithy_EmitCopy(char *op, size_t offset, size_t len) {
+ 
+ 
+ size_t pithy_MaxCompressedLength(size_t inputLength) {
++  if(pithy_ablation_mode == PITHY_ABLATION_FIXED_TOKENS)
++    return((inputLength >= PITHY_UNCOMPRESSED_MAX_LENGTH) ? 0ul : 64ul + 4ul * inputLength);
+   return((inputLength >= PITHY_UNCOMPRESSED_MAX_LENGTH) ? 0ul : 32ul + inputLength + (inputLength / 6ul));
+ }
+ 
+@@ -365,7 +387,19 @@ size_t pithy_Compress(const char *uncompressed, size_t uncompressedLength, char
+   char * const compressedOutEnd = compressedOut + compressedOutLength;
+ #endif
+   compressedPtr = pithy_Encode32(compressedPtr, uncompressedLength);
++  if(pithy_ablation_mode == PITHY_ABLATION_FIXED_TOKENS) {
++    memcpy(compressedPtr, "PFT1", 4);
++    compressedPtr += 4;
++  }
+   DCHECK(compressedPtr <= compressedOutEnd);
++
++  if(pithy_ablation_mode == PITHY_ABLATION_NO_LZ_MATCH) {
++    compressedPtr = pithy_EmitLiteral(compressedPtr, uncompressed, uncompressedLength, 0);
++    pithy_Store32(compressedPtr, 0);
++    compressedPtr += 4;
++    if(heapHashTable != NULL) { free(heapHashTable); }
++    return(compressedPtr - compressedOut);
++  }
+   
+   {
+     const char *uncompressedPtr = uncompressed, *uncompressedEnd = uncompressed + uncompressedLength, *nextEmitUncompressedPtr = uncompressedPtr;
+@@ -385,7 +419,8 @@ size_t pithy_Compress(const char *uncompressed, size_t uncompressedLength, char
+         DCHECK(nextEmitUncompressedPtr < uncompressedPtr);
+         const char *nextUncompressedPtr = uncompressedPtr, *matchCandidatePtr = NULL;
+         
+-        skip = (((skip - 32ul) * 184ul) >> 8) + 32ul;
++        if(pithy_ablation_mode == PITHY_ABLATION_FIXED_GREEDY_SCAN) { skip = 32ul; }
++        else { skip = (((skip - 32ul) * 184ul) >> 8) + 32ul; }
+         
+         do {
+           uncompressedPtr   = nextUncompressedPtr;
+@@ -393,7 +428,9 @@ size_t pithy_Compress(const char *uncompressed, size_t uncompressedLength, char
+           uint32_t uncompressedBytesHash = nextUncompressedBytesHash;
+           DCHECK(uncompressedBytesHash == pithy_HashBytes(uncompressedBytes, shift));
+           size_t skipBytesBetweenHashLookups = skip >> 5;
+-          skip += ((skip * 7ul) >> 11) + 1ul;
++          if(pithy_ablation_mode != PITHY_ABLATION_FIXED_GREEDY_SCAN) {
++            skip += ((skip * 7ul) >> 11) + 1ul;
++          }
+           nextUncompressedPtr              = uncompressedPtr + skipBytesBetweenHashLookups;
+           if(PITHY_EXPECT_F(nextUncompressedPtr > uncompressedEndLimit)) { goto emit_remainder; }
+           nextUncompressedBytes            = pithy_Load32(nextUncompressedPtr);
+@@ -454,7 +491,9 @@ size_t pithy_Compress(const char *uncompressed, size_t uncompressedLength, char
+     if(nextEmitUncompressedPtr < uncompressedEnd) { compressedPtr = pithy_EmitLiteral(compressedPtr, nextEmitUncompressedPtr, uncompressedEnd - nextEmitUncompressedPtr, 0); }
+   }
+   
+-  pithy_Store32(compressedPtr, 0); compressedPtr += 4;
++  if(pithy_ablation_mode != PITHY_ABLATION_FIXED_TOKENS) {
++    pithy_Store32(compressedPtr, 0); compressedPtr += 4;
++  }
+   
+   DCHECK((size_t)(compressedPtr - compressedOut) <= compressedOutLength);
+   if(heapHashTable != NULL) { free(heapHashTable); heapHashTable = NULL; hashTable = NULL; }
+@@ -520,6 +559,36 @@ int pithy_Decompress(const char *compressed, size_t compressedLength, char *deco
+   if(((nextCompressedPtr = pithy_Parse32WithLimit(compressed, compressedEnd, &parsedDecompressedLength)) == NULL) || (parsedDecompressedLength > decompressedOutLength)) { return(0); }
+   
+   char *decompressedPtr = decompressedOut, *decompressedEnd = decompressedOut + parsedDecompressedLength;
++
++  if((compressedEnd - nextCompressedPtr) >= 4 && memcmp(nextCompressedPtr, "PFT1", 4) == 0) {
++    nextCompressedPtr += 4;
++    while(decompressedPtr < decompressedEnd) {
++      if(nextCompressedPtr >= compressedEnd) return(0);
++      const unsigned char tag = (unsigned char)*nextCompressedPtr++;
++      if(tag == 0) {
++        if((compressedEnd - nextCompressedPtr) < 4) return(0);
++        const size_t len = pithy_LoadHost32(nextCompressedPtr);
++        nextCompressedPtr += 4;
++        if(len > (size_t)(compressedEnd - nextCompressedPtr) ||
++           len > (size_t)(decompressedEnd - decompressedPtr)) return(0);
++        memcpy(decompressedPtr, nextCompressedPtr, len);
++        nextCompressedPtr += len;
++        decompressedPtr += len;
++      } else if(tag == 1) {
++        if((compressedEnd - nextCompressedPtr) < 8) return(0);
++        const size_t offset = pithy_LoadHost32(nextCompressedPtr);
++        const size_t len = pithy_LoadHost32(nextCompressedPtr + 4);
++        nextCompressedPtr += 8;
++        if(offset == 0 || offset > (size_t)(decompressedPtr - decompressedOut) ||
++           len > (size_t)(decompressedEnd - decompressedPtr)) return(0);
++        char *source = decompressedPtr - offset;
++        for(size_t i = 0; i < len; ++i) *decompressedPtr++ = *source++;
++      } else {
++        return(0);
++      }
++    }
++    return(1);
++  }
+   
+   while(1) {
+     const char *compressedPtr = nextCompressedPtr;
+diff --git a/lz/pithy/pithy.h b/lz/pithy/pithy.h
+index 714ecaf..cfdc8cd 100644
+--- a/lz/pithy/pithy.h
++++ b/lz/pithy/pithy.h
+@@ -53,6 +53,15 @@ int    pithy_Decompress(const char *compressed,   size_t compressedLength,   cha
+ size_t pithy_MaxCompressedLength(size_t inputLength);
+ int    pithy_GetDecompressedLength(const char *compressed, size_t compressedLength, size_t *decompressedOutLengthResult);
+ 
++enum {
++  PITHY_ABLATION_NONE = 0,
++  PITHY_ABLATION_NO_LZ_MATCH = 1,
++  PITHY_ABLATION_FIXED_GREEDY_SCAN = 2,
++  PITHY_ABLATION_FIXED_TOKENS = 3
++};
++
++void pithy_SetAblationMode(int mode);
++
+ #endif // _PITHY_H_
+ 
+ #ifdef __cplusplus
+diff --git a/lz/shrinker/shrinker.c b/lz/shrinker/shrinker.c
+index 3e4da36..7c97b5a 100644
+--- a/lz/shrinker/shrinker.c
++++ b/lz/shrinker/shrinker.c
+@@ -1,4 +1,5 @@
+ #include "shrinker.h"
++#include <string.h>
+ 
+ // https://code.google.com/p/data-shrinker/
+ 
+@@ -29,6 +30,27 @@ typedef uint64_t u64;
+ #define HASH(a) ((a*21788233) >> (32 - HASH_BITS))
+ #define MINMATCH 4
+ 
++static int shrinker_ablation_mode = SHRINKER_ABLATION_NONE;
++
++static void shrinker_put_u32(u8 **dst, u32 value)
++{
++    memcpy(*dst, &value, sizeof(value));
++    *dst += sizeof(value);
++}
++
++static u32 shrinker_get_u32(u8 **src)
++{
++    u32 value;
++    memcpy(&value, *src, sizeof(value));
++    *src += sizeof(value);
++    return value;
++}
++
++void shrinker_set_ablation_mode(int mode)
++{
++    shrinker_ablation_mode = mode;
++}
++
+ #include <limits.h>
+ #if ULONG_MAX == UINT_MAX //32bit
+ #define MEMCPY_NOOVERLAP(a, b, c) do{do{*(u32*)a = *(u32*)b;a+=4;b+=4;}while(b<c);a-=(b-c);b=c;}while(0)
+@@ -40,12 +62,13 @@ typedef uint64_t u64;
+ #define MEMCPY(a, b, c) do{if (likely(a>b+8)) MEMCPY_NOOVERLAP(a, b, c); else while(b<c) *a++=*b++;}while(0)
+ #endif
+ 
+-int shrinker_compress(void *in, void *out, int size)
++int shrinker_compress_with_capacity(void *in, void *out, size_t out_capacity, int size)
+ {
+-    u32 ht[(1<<HASH_BITS)];
++    /* Deterministic initial match state; upstream left this stack table unset. */
++    u32 ht[(1<<HASH_BITS)] = {0};
+     u8 *src = (u8*)in, *dst = (u8*)out;
+     u8 *src_end = src + size - MINMATCH - 8;
+-    u8 *dst_end = dst + size - MINMATCH - 8;
++    u8 *dst_end = dst + out_capacity - MINMATCH - 8;
+     u8 *pfind, *pcur;
+ 
+     u32 cur_hash;
+@@ -56,6 +79,34 @@ int shrinker_compress(void *in, void *out, int size)
+ 
+     if (size < 32) return -1;
+     if (size > (1 << 27) - 1) return -1;
++    if (out_capacity < 32) return -1;
++
++    if (shrinker_ablation_mode == SHRINKER_ABLATION_FIXED_TOKENS) {
++        memcpy(dst, "SHT1", 4);
++        dst += 4;
++    }
++
++    if (shrinker_ablation_mode == SHRINKER_ABLATION_NO_LZ_MATCH) {
++        u32 literal_len = (u32)size;
++        pflag = dst++;
++        if (literal_len < 7) flag = literal_len << 5;
++        else {
++            literal_len -= 7;
++            flag = (7 << 5);
++            while (literal_len >= 255) {
++                *dst++ = 255;
++                literal_len -= 255;
++            }
++            *dst++ = literal_len;
++        }
++        flag |= 7 + 16;
++        *pflag = flag;
++        *dst++ = 0xff;
++        *dst++ = 0xff;
++        memcpy(dst, in, size);
++        dst += size;
++        return (int)(dst - (u8*)out);
++    }
+ 
+     cur_u32 = *(u32*)src;
+     while(likely(src < src_end) && likely(dst < dst_end))
+@@ -81,32 +132,44 @@ int shrinker_compress(void *in, void *out, int size)
+             if (*(u16*)pfind == *(u16*)pcur) {pfind += 2; pcur += 2;}
+             if (*pfind == *pcur) {pfind++; pcur++;}
+ 
+-            pflag = dst++;
+             cpy_len = src - p_last_lit;
+-            if (likely(cpy_len < 7)) flag = cpy_len << 5;
+-            else {
+-                cpy_len -= 7;flag = (7<<5);
+-                while (cpy_len >= 255)
+-                { *dst++ = 255;cpy_len -= 255;}
+-                *dst++ = cpy_len;
+-            }
++            if (shrinker_ablation_mode == SHRINKER_ABLATION_FIXED_TOKENS) {
++                u32 match_len = pcur - src;
++                u32 match_offset = pcur - pfind;
++                if ((size_t)(dst_end - dst) < (size_t)cpy_len + 13) return -1;
++                *dst++ = 1;
++                shrinker_put_u32(&dst, cpy_len);
++                shrinker_put_u32(&dst, match_len);
++                shrinker_put_u32(&dst, match_offset);
++                memcpy(dst, p_last_lit, cpy_len);
++                dst += cpy_len;
++            } else {
++                pflag = dst++;
++                if (likely(cpy_len < 7)) flag = cpy_len << 5;
++                else {
++                    cpy_len -= 7;flag = (7<<5);
++                    while (cpy_len >= 255)
++                    { *dst++ = 255;cpy_len -= 255;}
++                    *dst++ = cpy_len;
++                }
+ 
+-            cpy_len = pcur - src  - MINMATCH;
+-            if (likely(cpy_len < 15))  flag |= cpy_len;
+-            else {
+-                cpy_len -= 15; flag |= 15;
+-                while (cpy_len >= 255)
+-                { *dst++ = 255;cpy_len -= 255;}
+-                *dst++ = cpy_len;
+-            }
+-            match_dist = pcur - pfind - 1;
+-            *pflag = flag;
+-            *dst++ = match_dist & 0xff;
+-            if (match_dist > 0xff) {
+-                *pflag |= 16;
+-                *dst++ = match_dist >> 8;
++                cpy_len = pcur - src  - MINMATCH;
++                if (likely(cpy_len < 15))  flag |= cpy_len;
++                else {
++                    cpy_len -= 15; flag |= 15;
++                    while (cpy_len >= 255)
++                    { *dst++ = 255;cpy_len -= 255;}
++                    *dst++ = cpy_len;
++                }
++                match_dist = pcur - pfind - 1;
++                *pflag = flag;
++                *dst++ = match_dist & 0xff;
++                if (match_dist > 0xff) {
++                    *pflag |= 16;
++                    *dst++ = match_dist >> 8;
++                }
++                MEMCPY_NOOVERLAP(dst, p_last_lit, src);
+             }
+-            MEMCPY_NOOVERLAP(dst, p_last_lit, src);
+ 
+             cur_u32 = *(u32*)(src+1);
+             ht[HASH(cur_u32)] = (src - (u8*)in + 1)|(*(src+1)<<27);
+@@ -120,8 +183,18 @@ int shrinker_compress(void *in, void *out, int size)
+     }
+ 
+ 
+-    if (dst - (u8*)out + 3 >= src - (u8*)in) return -1;
++    if (shrinker_ablation_mode != SHRINKER_ABLATION_FIXED_TOKENS &&
++        dst - (u8*)out + 3 >= src - (u8*)in) return -1;
+     src = (u8*)in + size;
++    if (shrinker_ablation_mode == SHRINKER_ABLATION_FIXED_TOKENS) {
++        cpy_len = src - p_last_lit;
++        if ((size_t)(dst_end - dst) < (size_t)cpy_len + 5) return -1;
++        *dst++ = 0;
++        shrinker_put_u32(&dst, cpy_len);
++        memcpy(dst, p_last_lit, cpy_len);
++        dst += cpy_len;
++        return dst - (u8*)out;
++    }
+     pflag = dst++;
+     cpy_len = src - p_last_lit;
+     if (likely(cpy_len < 7)) flag = cpy_len << 5;
+@@ -141,6 +214,11 @@ int shrinker_compress(void *in, void *out, int size)
+     else return dst - (u8*)out;
+ }
+ 
++int shrinker_compress(void *in, void *out, int size)
++{
++    return shrinker_compress_with_capacity(in, out, (size_t)size, size);
++}
++
+ 
+ 
+ int shrinker_decompress(void *in, void *out, int size)
+@@ -152,6 +230,29 @@ int shrinker_decompress(void *in, void *out, int size)
+     u32 literal_len;
+     u32 match_len, match_dist;
+ 
++    if (memcmp(src, "SHT1", 4) == 0) {
++        src += 4;
++        while (dst < end) {
++            u8 tag = *src++;
++            u32 literal_count = shrinker_get_u32(&src);
++            if (tag == 1) {
++                match_len = shrinker_get_u32(&src);
++                match_dist = shrinker_get_u32(&src);
++            }
++            if ((size_t)(end - dst) < literal_count) return -1;
++            memcpy(dst, src, literal_count);
++            src += literal_count;
++            dst += literal_count;
++            if (tag == 0) break;
++            if (tag != 1) return -1;
++            if (match_dist == 0 || match_dist > (u32)(dst - (u8*)out) ||
++                (size_t)(end - dst) < match_len) return -1;
++            pcpy = dst - match_dist;
++            while (match_len--) *dst++ = *pcpy++;
++        }
++        return dst == end ? size : -1;
++    }
++
+     for(;;) {
+         flag = *src++;
+         literal_len = flag >> 5; // 3-bits
+@@ -192,4 +293,3 @@ int shrinker_decompress(void *in, void *out, int size)
+     }
+     return dst - (u8*)out;
+ }
+-
+diff --git a/lz/shrinker/shrinker.h b/lz/shrinker/shrinker.h
+index 4da8cda..9684e79 100644
+--- a/lz/shrinker/shrinker.h
++++ b/lz/shrinker/shrinker.h
+@@ -1,11 +1,22 @@
+ #ifndef _DATA_SHRINKER_H_
+ #define _DATA_SHRINKER_H_
+ 
++#include <stddef.h>
++
+ #if defined (__cplusplus)
+ extern "C" {
+ #endif
+ 
+ int shrinker_compress(void *in, void *out, int size);
++
++enum {
++    SHRINKER_ABLATION_NONE = 0,
++    SHRINKER_ABLATION_NO_LZ_MATCH = 1,
++    SHRINKER_ABLATION_FIXED_TOKENS = 2
++};
++
++void shrinker_set_ablation_mode(int mode);
++int shrinker_compress_with_capacity(void *in, void *out, size_t out_capacity, int size);
+ /*
+ in:     inbuf --- source data
+ out:    outbuf --- compressed data to place in
