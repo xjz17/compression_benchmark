@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.18)
+project(qualify_upstream_legacy LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 20)
+enable_testing()
+include(../upstream_legacy.cmake)
+add_executable(upstream_legacy_test ../upstream_legacy_test.cpp)
+target_link_libraries(upstream_legacy_test PRIVATE native_baseline86_upstream_legacy)
+add_test(NAME legacy_direct_roundtrip COMMAND upstream_legacy_test)

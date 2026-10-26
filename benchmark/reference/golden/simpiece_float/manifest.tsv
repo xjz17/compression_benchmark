@@ -1,0 +1,5 @@
+filename	values_len	rel_range_frac	bytes_len
+simpiece_float_relRange_0p005_n512.bin	512	0.005	25
+simpiece_float_relRange_0p005_n64.bin	64	0.005	24
+simpiece_float_relRange_0p01_n512.bin	512	0.01	25
+simpiece_float_relRange_0p01_n64.bin	64	0.01	24

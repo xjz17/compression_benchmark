@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="THULab time-series compression benchmark: measured compression rates, compression and decompression costs, and dataset coverage.">
+  <meta name="color-scheme" content="light dark">
+  <title>THULab | Time Series Compression Benchmark</title>
+  <link rel="stylesheet" href="style.css?v=20261009-thulab-dataset-badge-v1">
+  <script src="app.js?v=20261011-native-v6-full-matrix" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to results</a>
+  <header class="site-header">
+    <a class="brand" href="#overall"><span class="brand-mark">THU</span><span>THULab <span class="brand-sub">Compression Benchmark</span></span></a>
+    <div class="header-links"><a href="https://github.com/xjz17/web_compression" target="_blank" rel="noopener">Project code ↗</a><button id="theme" class="quiet-button" type="button" aria-label="Switch color theme">Theme</button></div>
+  </header>
+  <main id="content">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">Time-series systems research</p>
+      <h1 id="title">Time Series Compression Leaderboard</h1>
+      <p class="intro-text">Compare published storage, compression, and decompression measurements across time-series datasets.</p>
+      <p class="snapshot" id="snapshot">Loading benchmark snapshot…</p>
+    </section>
+    <div class="summary-strip" id="summary" aria-label="Snapshot coverage">
+      <div><strong id="dataset-count">…</strong><span id="dataset-count-label">measured datasets</span></div>
+      <div><strong id="method-count">…</strong><span>method families</span></div>
+      <div><strong id="runtime-count">…</strong><span>comparison profiles</span></div>
+      <div><strong id="record-count">…</strong><span>profile / codec configurations</span></div>
+    </div>
+    <nav class="tabs" aria-label="Benchmark views">
+      <button id="tab-overall" class="tab active" data-tab="overall" aria-current="page">🏅 Overall</button>
+      <button id="tab-dataset" class="tab" data-tab="dataset">🏅 By dataset</button>
+      <button id="tab-tradeoffs" class="tab" data-tab="tradeoffs">🏅 Trade-offs</button>
+      <button id="tab-methods" class="tab" data-tab="methods">📚 Methods</button>
+      <button id="tab-operators" class="tab" data-tab="operators">⚙️ Operators</button>
+      <button id="tab-about" class="tab" data-tab="about">📝 About</button>
+    </nav>
+    <div id="load-error" class="error-message" role="alert" hidden></div>
+    <section id="results-view" aria-label="Compression results">
+      <section id="dataset-catalog-panel" class="dataset-catalog-panel" aria-labelledby="dataset-catalog-title" hidden>
+        <div class="dataset-catalog-head">
+          <div><h2 id="dataset-catalog-title">Dataset catalog</h2><p class="muted">Browse all cataloged datasets. Entries without published measurements remain visible but are excluded from rankings.</p><p class="dataset-badge-legend"><span class="thulab-dataset-badge" aria-hidden="true"><span>🏆</span> THULab hosted</span> links to datasets hosted by THULab on Hugging Face.</p></div>
+          <div class="dataset-catalog-controls">
+            <label>Dataset group<select id="dataset-group-filter"><option value="all">All groups</option></select></label>
+            <label>Search datasets<input id="dataset-catalog-search" type="search" placeholder="Name, THULab, category, or source" autocomplete="off"></label>
+          </div>
+        </div>
+        <p id="dataset-catalog-status" class="documentation-status" aria-live="polite">Loading dataset catalog…</p>
+        <div id="dataset-catalog" class="dataset-catalog"></div>
+      </section>
+      <div class="filters" id="filters">
+        <label>Comparison profile<select id="runtime"></select></label>
+        <label>Data type<select id="dtype"><option value="overall">Available numeric</option><option value="int">Integer</option><option value="float">Floating point</option></select></label>
+        <label>Float precision<select id="precision"><option value="all">All precision</option><option value="fixed">Fixed precision</option><option value="non_fixed">Non-fixed precision</option></select></label>
+        <label>Dataset<select id="dataset"><option value="all">All datasets</option></select></label>
+        <label>Method rows<select id="row-mode"><option value="family">Best measured per family</option><option value="configuration">Exact configuration</option></select></label>
+        <label>Method family<select id="family"><option value="all">All families</option></select></label>
+        <label class="search-field">Find a method<input id="search" type="search" placeholder="e.g. REGER, Zstd, Gorilla" autocomplete="off"></label>
+      </div>
+      <div class="toolbar">
+        <div><div class="toolbar-title-row"><h2 id="view-title">Overall leaderboard</h2><a id="selected-dataset-badge" class="thulab-dataset-badge" href="#" target="_blank" rel="noopener noreferrer" hidden><span aria-hidden="true">🏆</span> THULab hosted ↗</a></div><p id="selection-summary" class="muted" aria-live="polite">Reading published results…</p></div>
+        <div class="toolbar-actions"><button id="reset" class="quiet-button">Reset filters</button><button id="download" class="primary-button" disabled>Download CSV</button></div>
+      </div>
+      <div class="results-note" id="results-note">Compression rate = compressed bytes / original bytes. Lower rates and lower ns/point are better. Compression and decompression costs use equal-column arithmetic means where column timings are available. Methods with aggregate-only timings use equal-dataset arithmetic means for the selected range.</div>
+      <div id="score-controls" class="score-controls">
+        <label>Score weights · a: rate / b: compress / c: decompress<select id="weights" aria-label="Score weights a b c"></select></label>
+        <p id="score-note" class="muted" aria-live="polite">Non-negative weights in steps of 0.1, summing to 1.0.</p>
+      </div>
+      <div class="table-settings">
+        <label><input id="complete-only" type="checkbox"> Only methods covering the full selection</label>
+        <details><summary>Display columns</summary><div id="column-options" class="column-options"></div></details>
+      </div>
+      <div id="chart-view" hidden>
+        <div class="chart-controls"><label>Vertical axis<select id="chart-metric"><option value="compression_time">Compression cost (ns/point)</option><option value="decompression_time">Decompression cost (ns/point)</option></select></label><span class="muted">Lower and further left is better. Click a point for method details.</span></div>
+        <div id="chart" class="chart" aria-label="Compression rate and execution cost scatter plot"></div>
+      </div>
+      <div id="leaderboard-wrap" class="table-wrap" tabindex="0" aria-label="Scrollable sortable leaderboard">
+        <table id="leaderboard"><thead></thead><tbody><tr><td class="loading-cell">Loading measured results…</td></tr></tbody></table>
+      </div>
+      <div class="table-footer"><span id="row-count" aria-live="polite"></span><span>Select a method to inspect dataset-level results.</span></div>
+      <section id="method-detail" class="method-detail" hidden tabindex="-1" aria-labelledby="detail-title"></section>
+    </section>
+    <section id="methods-view" class="text-view documentation-view" hidden>
+      <div class="documentation-head">
+        <div><h2>Methods</h2><p class="muted">Descriptions and references for the method families measured in this benchmark. Expand a family to inspect its published configurations.</p></div>
+        <label class="documentation-search">Search methods<input id="method-doc-search" type="search" placeholder="Family, description, configuration, or reference" autocomplete="off"></label>
+      </div>
+      <p class="reference-source">References follow the presentation Notes (slides 2–3), with official sources for additional variants. External links open in a new tab.</p>
+      <p id="method-doc-status" class="documentation-status" aria-live="polite">Loading method documentation…</p>
+      <div id="method-catalog" class="documentation-grid"></div>
+    </section>
+    <section id="operators-view" class="text-view documentation-view" hidden>
+      <div class="documentation-head">
+        <div><h2>Operators</h2><p class="muted">Thirty operator families organize a 102-entry implementation directory. Directory entries include mechanisms, configurations, compositions, and adapters; they are not 102 distinct atomic operators.</p></div>
+        <label class="documentation-search">Search operators<input id="operator-doc-search" type="search" placeholder="Family, A-ID, implementation, I/O, or reference" autocomplete="off"></label>
+      </div>
+      <div id="operator-summary" class="operator-summary" aria-label="Operator catalog summary"></div>
+      <p class="reference-source">The family split follows the final operator registry; references include the presentation Notes and official implementation sources. STOP, Concat, and continuous Split are control or graph operations and are excluded from the 30-family count. Split (columnize) remains family 29. External links open in a new tab.</p>
+      <p id="operator-doc-status" class="documentation-status" aria-live="polite">Loading operator documentation…</p>
+      <div id="operator-catalog" class="operator-groups"></div>
+    </section>
+    <section id="about-view" class="text-view" hidden>
+      <h2>About this benchmark</h2>
+      <p>This Space publishes a snapshot of the existing <a href="https://github.com/xjz17/web_compression" target="_blank" rel="noopener">web_compression</a> project results. The layout follows the grouped leaderboard approach of <a href="https://huggingface.co/spaces/Salesforce/GIFT-Eval" target="_blank" rel="noopener">GIFT-Eval</a>.</p>
+      <div id="methodology"></div>
+      <h3>Metric definitions</h3>
+      <dl class="definitions">
+        <div><dt>Average compression rate ↓</dt><dd>Arithmetic mean of the per-dataset compression rates in the selected scope.</dd></div>
+        <div><dt>Overall compression rate ↓</dt><dd>Total compressed bytes divided by total original bytes over the selected measured records.</dd></div>
+        <div><dt>Compression / decompression cost ↓</dt><dd>For each result with admitted column-level timing evidence, calculate ns/point independently for every usable numeric column, then take the arithmetic mean across those columns. Each column contributes equally. Overall timing pools all measured columns across the selected datasets when every selected dataset has column timings. If any selected dataset/configuration has only aggregate timing, use the arithmetic mean of the selected datasets' ns/point values instead, giving each dataset equal weight. For an aggregate-only dataset, ns/point comes from its recorded total elapsed time divided by its recorded point count. Missing and diagnostic-only timings remain unavailable. Method details and CSV identify the timing basis, exact source profile, and binary. Compare timings within the same host/campaign/measurement-contract profile.</dd></div>
+        <div><dt>Coverage</dt><dd>Datasets with usable measurements for a method out of the measured datasets in the selected runtime, data type, and dataset selection. The summary dataset count uses the same selection. Missing results are never filled with zero.</dd></div>
+        <div><dt>Composite score ↓</dt><dd>a × average compression rate + b × normalized average compression time + c × normalized average decompression time. A composite is published only when the displayed methods share one exact dataset and eligible aggregate-id support signature. If all times are equal, their normalized value is zero. All measured inputs must have usable timing metrics.</dd></div>
+        <div><dt>Average Rank ↓</dt><dd>Compute the same weighted score only among methods with the same dataset and eligible aggregate-id support hash, normalizing times inside that matched cohort. Rank lower scores first; ties share their average position. Then take the arithmetic mean of the method's available matched-cohort ranks. Weights are non-negative tenths summing to 1.0. Missing, N/A, failed, and unlike-support measurements do not receive ranks.</dd></div>
+      </dl>
+      <h3>Reading the rankings</h3>
+      <p>Methods with different coverage are measured on different inputs. Coverage counts datasets, not identical columns or point counts. Use the full-coverage filter and inspect a single dataset's input sizes before drawing a direct comparison. Comparison profiles keep languages, hosts, campaigns, and measurement contracts separate.</p>
+      <p>By default, each family selects the lowest-rate exact variant independently for each dataset only when all candidates for that dataset/family have one exact support set. This view can choose different binaries across datasets. Ambiguous support sets are omitted. Switch Method rows to Exact configuration to inspect fixed variants, source profiles, binaries, and support hashes.</p>
+      <p>These are published measurements, not experiments executed inside this Space. A reported ratio alone does not establish lossless reconstruction; round-trip checks and hardware details are shown only when their evidence exists in the source snapshot. Timings without an exact admitted source/build/binary/boundary chain are unavailable to timing and composite rankings.</p>
+      <h3>Download and provenance</h3>
+      <p><a href="data.json" download>Result snapshot (JSON)</a> · <a href="manifest.json" download>Source manifest (JSON)</a> · <a href="native86-coverage.json" download>Native86 coverage summary (JSON)</a> · <a href="native86-terminal-matrix.jsonl.gz" download>13,940-pair terminal matrix (JSONL.GZ)</a> · <a href="native86-v9-current154-thin.jsonl.gz" download>Current 154-pair V9 evidence (JSONL.GZ)</a> · <a href="native86-recovery-reconciliation.json" download>Recovery reconciliation (JSON)</a></p>
+      <div id="provenance"></div>
+      <h3>Contribute a result</h3>
+      <p>Run the project benchmark and provide the codec/configuration, input identity, compression and decompression measurements, execution environment, and round-trip validation evidence. Results can be updated from the source project using the snapshot exporter included in the Space repository.</p>
+    </section>
+    <noscript><p class="error-message">Enable JavaScript to filter and sort this leaderboard. You can also download <a href="data.json">the results JSON</a>.</p></noscript>
+    <footer><span>THULab · Time Series Compression Benchmark</span><span id="footer-snapshot"></span></footer>
+  </main>
+</body>
+</html>

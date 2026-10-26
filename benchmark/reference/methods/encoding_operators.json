@@ -1,0 +1,113 @@
+{
+  "description": "Column encoding operators for catalog statistics and Methods page matrices. Column order matches benchmark/reference paper algorithm_tables.tex.",
+  "operators": [
+    {
+      "id": "eraser",
+      "name": "eraser",
+      "description": "Erasing-based floating-point preprocessing for decimal-native recoding and mantissa-tail cleanup before byte/XOR coding.",
+      "example": "Floating-point methods (step 1): apply eraser before XOR-style byte transitions.",
+      "numeric_example": "Float values are normalized or decimal-native bits are erased before later XOR coding stages.",
+      "good_ratio_example": "Good: eraser removes predictable float tail bits before later XOR coding; Before: [12.5000,12.5001,12.5002,12.5003]; After bits: base=1100100000000000, delta_tail=00 01 10 11.",
+      "poor_ratio_example": "Poor: eraser keeps unrelated mantissas or high-precision values as wide literals; Before: [3.14159265,-91.27182818,0.00003141,78233.19]; After bits: literals=1011010010010111 0101111010001101 1110000110100100 0010111101111001."
+    },
+    {
+      "id": "scaling",
+      "name": "scaling",
+      "description": "Decimal scaling, multiply float columns by 10^p and round to integers using column precision.",
+      "example": "ALP / camel / elf (step 1): scale floats by 10^p using column decimal precision.",
+      "numeric_example": "Floats [1.23, 4.56] with p=2 → integers [123, 456]; then delta/XOR on integers.",
+      "good_ratio_example": "Good: scaling multiplies fixed-decimal floats by 100 and stores small integers; Before: [1.20,1.21,1.22,1.23]; After bits: scale=00000010, ints=01111000 01111001 01111010 01111011.",
+      "poor_ratio_example": "Poor: scaling mixed precision needs a larger scale and wider integers; Before: [1.2,1.23,1.234,1.2345]; After bits: scale=00000100, ints=0010111011100000 0011000000001100 0011000000110100 0011000000111001."
+    },
+    {
+      "id": "frame_of_reference",
+      "name": "for",
+      "description": "Frame of reference, subtract the column minimum from each value.",
+      "example": "TS_2DIFF / fastpfor (step 1–2): subtract block or column minimum before bit packing.",
+      "numeric_example": "Values [105, 108, 110, 103], min=103 → for residuals [2, 5, 7, 0] (fit in 3 bits max).",
+      "good_ratio_example": "Good: frame-of-reference stores one base plus tiny residuals; Before: [1000,1001,1002,1003]; After bits: base=1111101000, residuals=00 01 10 11.",
+      "poor_ratio_example": "Poor: frame-of-reference still needs wide residuals when values are far from the base; Before: [1000,17,999,2]; After bits: base=0000000010, residuals=1111100110 0000001111 1111100101 0000000000."
+    },
+    {
+      "id": "value_reorder",
+      "name": "value reorder",
+      "description": "Block-local reordering of timestamp/value pairs by value to reduce regression residual width.",
+      "example": "REGER (step 1): compare time order with value order and keep the smaller encoded block.",
+      "numeric_example": "Pairs [(t0, 10), (t1, 3), (t2, 9)] can be encoded as [(t1, 3), (t2, 9), (t0, 10)] plus timestamps.",
+      "good_ratio_example": "Good: value reorder groups close values before regression; Before: [100,4,102,5]; After order: [4,5,100,102].",
+      "poor_ratio_example": "Poor: value reorder adds timestamp side data when values are already smooth; Before: [1,2,3,4]; After order stays similar."
+    },
+    {
+      "id": "regression_predictor",
+      "name": "regression",
+      "description": "Linear regression predictor, estimate each timestamp/value pair from the previous pair and encode residuals.",
+      "example": "REGER (step 2): fit y = a + b*x inside each block before residual packing.",
+      "numeric_example": "Smooth values [10, 13, 16, 19] use a linear model on previous values, leaving small residuals.",
+      "good_ratio_example": "Good: regression residuals are tiny for near-linear series; Before: [10,13,16,19]; After residuals: [0,0,0].",
+      "poor_ratio_example": "Poor: regression has wide residuals on jagged series; Before: [10,90,11,88]; After residuals remain large."
+    },
+    {
+      "id": "outlier_separation",
+      "name": "outlier separation",
+      "description": "Separate exceptional values from the regular block before compact value coding.",
+      "example": "BOS / FastPFOR: separate outliers before bit packing the regular values.",
+      "numeric_example": "Most residuals fit in b bits; larger outliers are separated and stored with their positions.",
+      "good_ratio_example": "Good: outlier separation bit-packs regular values and stores the rare spike in side data; Before: [2,3,2,4,9999,3,2]; After bits: bitmap=0000100, regular=010 011 010 100 000 011 010, side=100:10011100001111.",
+      "poor_ratio_example": "Poor: outlier separation becomes mostly side data when many values are exceptional; Before: [20,33,48,65]; After bits: bitmap=1111, side=0010100 0100001 0110000 1000001."
+    },
+    {
+      "id": "bitpack_int",
+      "name": "bit-packing",
+      "description": "Bit packing, encode block values with minimal bit width.",
+      "example": "TS_2DIFF / fastpfor (final step): pack for residuals with b bits per value.",
+      "numeric_example": "Block max 7 needs 3 bits; 8 values [0..7] → 8×3=24 bits (3 B) vs 32 B raw int32.",
+      "good_ratio_example": "Good: bitpacking uses the block maximum to pack each small integer in 3 bits; Before: [0,1,2,3,4,5,6,7]; After bits: 000 001 010 011 100 101 110 111.",
+      "poor_ratio_example": "Poor: bitpacking must use a wide width when one value is large; Before: [1,255,1024,65535]; After bits: 0000000000000001 0000000011111111 0000010000000000 1111111111111111."
+    },
+    {
+      "id": "delta",
+      "name": "delta",
+      "description": "Difference encoding, subtract the previous value from the current value.",
+      "example": "TS_2DIFF / DELTA_BINARY_PACKED: first-order delta before zigzag and bit packing.",
+      "numeric_example": "Column [1000, 1005, 1008, 1010] → deltas [1000, 5, 3, 2] (each value minus previous).",
+      "good_ratio_example": "Good: delta stores the first value and tiny increments for a smooth sequence; Before: [1000,1001,1002,1003]; After bits: first=1111101000, deltas=01 01 01.",
+      "poor_ratio_example": "Poor: delta produces wide signed jumps on jagged data; Before: [10,1,15,2]; After bits: zigzag_deltas=10100 10001 11100 11001."
+    },
+    {
+      "id": "xor",
+      "name": "xor",
+      "description": "XOR encoding, XOR consecutive values after bit-pattern conversion.",
+      "example": "GORILLA / CHIMP (step 1): XOR consecutive IEEE-754 bit patterns of floats.",
+      "numeric_example": "Doubles 10.0 then 10.5 → XOR of 64-bit patterns yields ~12 leading zero bytes shared.",
+      "good_ratio_example": "Good: XOR stores the first bit pattern and small differences between neighbors; Before: [240,241,243,242]; After bits: first=11110000, xor=00000001 00000010 00000001.",
+      "poor_ratio_example": "Poor: XOR stays wide when adjacent bit patterns are unrelated; Before: [240,15,170,85]; After bits: first=11110000, xor=11111111 10100101 11111111."
+    },
+    {
+      "id": "trailing_zero_pack",
+      "name": "trailing-zero packing",
+      "description": "Trailing-zero packing, remove shared trailing zero bits after XOR.",
+      "example": "GORILLA / CHIMP (step 2): store XOR meaningful byte length + significant bits.",
+      "numeric_example": "XOR result has 9 leading zero bytes → store len=7 payload bytes instead of 8 B double.",
+      "good_ratio_example": "Good: trailing-zero packing stores only the significant prefix and a zero count; Before: xor_words=[48,64] as 00110000 01000000; After bits: sig=11,tz=0100 | sig=1,tz=0110.",
+      "poor_ratio_example": "Poor: trailing-zero packing has little to remove when words end in random bits; Before: xor_words=[55,109] as 00110111 01101101; After bits: sig=00110111,tz=0000 | sig=01101101,tz=0000."
+    },
+    {
+      "id": "dictionary",
+      "name": "dictionary",
+      "description": "Dictionary encoding, replace values with compact index codes.",
+      "example": "col_dictionary: map repeated column values to small integer codes.",
+      "numeric_example": "Values [\"US\",\"CN\",\"US\",\"US\"] → dict {US:0,CN:1} → codes [0,1,0,0] (2 bits each).",
+      "good_ratio_example": "Good: dictionary encoding replaces repeated values with tiny ids; Before: [5,9,5,5,9]; After bits: dict={5:0,9:1}, codes=01001.",
+      "poor_ratio_example": "Poor: dictionary encoding still needs wide ids and dictionary payload when values are unique; Before: [5,6,7,8]; After bits: dict_values=0101 0110 0111 1000, codes=00 01 10 11."
+    },
+    {
+      "id": "zigzag",
+      "name": "zigzag",
+      "description": "ZigZag encoding, map signed integers to unsigned for compact storage.",
+      "example": "SPRINTZ / DELTA_BINARY_PACKED: zigzag signed deltas before varint or bit pack.",
+      "numeric_example": "Signed delta −3 → zigzag 5; +3 → 6; 0 → 0 (maps small |x| to small unsigned).",
+      "good_ratio_example": "Good: ZigZag maps small signed deltas to small unsigned integers; Before: [-2,-1,0,1,2]; After bits: unsigned=[3,1,0,2,4], packed=011 001 000 010 100.",
+      "poor_ratio_example": "Poor: ZigZag preserves large magnitudes even after sign folding; Before: [-32,31,-30,29]; After bits: unsigned=[63,62,59,58], packed=111111 111110 111011 111010."
+    }
+  ]
+}

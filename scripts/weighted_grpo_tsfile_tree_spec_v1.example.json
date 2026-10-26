@@ -1,0 +1,40 @@
+{
+  "format_version": "weighted-grpo-tsfile-preparation-v1",
+  "template_status": "tree names/types and timestamp metadata must come from the exact source revision; the Python API does not enumerate them, so placeholders intentionally fail",
+  "dataset_id": "ETDataset-ett",
+  "domain": "energy",
+  "source_group": "github:zhouhaoyi/ETDataset",
+  "source": {
+    "path": "/data/compression_algorithm/weight_conditioned_grpo_20260917_v1/data/preflight_raw/ETDataset-ett.REPLACE_EXACT_REVISION.tsfile",
+    "format": "tsfile",
+    "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "upstream_revision": "REPLACE_WITH_EXACT_HF_COMMIT_SHA",
+    "upstream_locator": "https://huggingface.co/datasets/THULab/ETDataset-ett"
+  },
+  "model": "tree",
+  "tree": {
+    "devices": [
+      "REPLACE_WITH_EXACT_DEVICE_PATH"
+    ],
+    "value_columns": [
+      {
+        "source_name": "REPLACE_WITH_EXACT_MEASUREMENT_NAME",
+        "output_name": "value",
+        "tsfile_type": "REPLACE_WITH_VERIFIED_INT32_INT64_FLOAT_OR_DOUBLE"
+      }
+    ]
+  },
+  "timestamp": {
+    "source_unit": "REPLACE_WITH_VERIFIED_s_ms_us_or_ns",
+    "output_unit": "ns",
+    "timezone": "UTC",
+    "output_name": "timestamp_unix_ns",
+    "duplicate_policy": "reject"
+  },
+  "query_range": {
+    "start_inclusive": -9223372036854775808,
+    "end_inclusive": 9223372036854775807
+  },
+  "dataset_byte_cap": 268435456,
+  "block_byte_cap": 1048576
+}

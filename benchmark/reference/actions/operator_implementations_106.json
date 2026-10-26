@@ -1,0 +1,2795 @@
+{
+  "schema": "operator-implementation-catalog-v1",
+  "registry_version": "operator-implementations-106-v2",
+  "date": "2026-09-15",
+  "count": 106,
+  "family_count": 30,
+  "scope": "Versioned implementation-equivalence directory; this count is not runtime action slots or verified executable kernels. Further composite classifications remain explicit.",
+  "special_operations_excluded": [
+    "stop",
+    "concat",
+    "split_segments"
+  ],
+  "previous_catalog_version": "operator-implementations-106-v1",
+  "previous_catalog_sha256": "30dac5d338fce297ea435d7152d4d10baafaecda960ff0c10f663d665befb55d",
+  "count_change": {
+    "previous": 108,
+    "retired_composite_A071": 1,
+    "merged_duplicate_A074_into_A023": 1,
+    "current": 106
+  },
+  "implementations": [
+    {
+      "implementation_id": "A001",
+      "name": "fixed low-4-bit split proxy",
+      "family_numbers": [
+        1
+      ],
+      "source_entry_ids": [
+        "P001"
+      ],
+      "classification": "reference_proxy",
+      "difference": "The stage separates value&15 and value>>4. It is not the decimal mantissa erasure used by Pongo, Elf, or Camel.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:237-240"
+      ],
+      "source_action_names": [
+        "op.eraser.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A002",
+      "name": "Pongo shortest-decimal mantissa recoding",
+      "family_numbers": [
+        1
+      ],
+      "source_entry_ids": [
+        "P002"
+      ],
+      "classification": "core",
+      "difference": "It finds a shortest decimal fraction, reverses its low bits into the available mantissa field, and validates exact restoration. That decision rule is distinct from Elf beta masking and Camel decimal/integer records.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/pongo_codec.cpp:259-300",
+        "cpp/src/pongo_codec.cpp:610-655"
+      ],
+      "source_action_names": [
+        "op.eraser.pongo.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A003",
+      "name": "Elf decimal significant-digit mantissa erasure",
+      "family_numbers": [
+        1
+      ],
+      "source_entry_ids": [
+        "P003",
+        "P005"
+      ],
+      "classification": "core",
+      "difference": "Both derive alpha/beta from decimal significant digits, mask low mantissa bits only when the original value is exactly recoverable, otherwise emit a literal, and reset beta by chunk. P003's float32-narrowing gate is an input-width adapter rather than another erasure rule.",
+      "parameters_or_profiles": [
+        "word_bits=32 or 64",
+        "beta field width/range",
+        "minimum useful erased-bit threshold",
+        "chunk/reset extent",
+        "accepted nonfinite domain"
+      ],
+      "source_refs": [
+        "cpp/src/elf_float_codec.cpp:1111-1156",
+        "cpp/src/elf_double_codec.cpp:637-688",
+        "cpp/src/elf_double_codec.cpp:1280-1299"
+      ],
+      "source_action_names": [
+        "op.eraser.elf.cpp_v1",
+        "op.eraser.elf64.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A004",
+      "name": "Camel integer-plus-short-decimal decomposition",
+      "family_numbers": [
+        1
+      ],
+      "source_entry_ids": [
+        "P004"
+      ],
+      "classification": "core",
+      "difference": "Camel emits integer, sign, decimal count/value records with a literal alternative. This is a different representation rule from Pongo and Elf.",
+      "parameters_or_profiles": [
+        "float64 raw-bit versus exactly-representable int64 input adapter"
+      ],
+      "source_refs": [
+        "cpp/src/camel_exact_stages.cpp:557-577",
+        "cpp/src/camel_exact_stages.cpp:609-638"
+      ],
+      "source_action_names": [
+        "op.eraser.camel.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A006",
+      "name": "decimal scaling constrained by downstream delta-chain range",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P007"
+      ],
+      "classification": "core",
+      "difference": "The chosen scale is reduced until the downstream delta chain fits, then checked bit-exact. That selection rule differs from the other scaling entries.",
+      "parameters_or_profiles": [
+        "requested_max_point"
+      ],
+      "source_refs": [
+        "cpp/src/rle_exact_stages.cpp:120-147"
+      ],
+      "source_action_names": [
+        "op.scaling.tsfile_rle.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A007",
+      "name": "fixed decimal scale with bit-exact inverse",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P008"
+      ],
+      "classification": "core",
+      "difference": "The two profiles already collected in P008 execute the same fixed max_point multiplication, nearest rounding, int64 range check, and bitwise inverse check; only packet framing differs.",
+      "parameters_or_profiles": [
+        "max_point",
+        "TS_2DIFF versus Simple8b packet carrier"
+      ],
+      "source_refs": [
+        "cpp/src/ts2diff_exact_stages.cpp:363-393",
+        "cpp/src/simple8b_exact_stages.cpp:96-126"
+      ],
+      "source_action_names": [
+        "op.scaling.exact_decimal.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A008",
+      "name": "largest fitting decimal scale searched downward",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P009"
+      ],
+      "classification": "core",
+      "difference": "DBP searches from max_point down for an int64-fitting scale before exactness validation. This scale-selection rule is not identical to P008, P010/P011, or P012.",
+      "parameters_or_profiles": [
+        "max_point"
+      ],
+      "source_refs": [
+        "cpp/src/dbp_exact_stages.cpp:116-146"
+      ],
+      "source_action_names": [
+        "op.scaling.delta_binary_packed.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A009",
+      "name": "automatic maximum lossless decimal scale with raw fallback",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P010",
+        "P011"
+      ],
+      "classification": "core",
+      "difference": "ALP and BUFF call the same exact_decimal_scale helper and use the same raw-bit fallback. Their only algorithm-visible difference here is whether the helper is applied to 1024-value blocks or the whole input.",
+      "parameters_or_profiles": [
+        "block_size=1024 versus whole input",
+        "packet carrier"
+      ],
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:186-203",
+        "cpp/src/learning_codec_exact_stages.cpp:720-745",
+        "cpp/src/learning_codec_exact_stages.cpp:1052-1068"
+      ],
+      "source_action_names": [
+        "op.scaling.alp.cpp_v1",
+        "op.scaling.buff.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A010",
+      "name": "legacy decimal scale search with Python-compatible rounding",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P012"
+      ],
+      "classification": "core",
+      "difference": "It preserves Python tie-to-even behavior, has a fallback exact-scale search, special signed-zero handling, and searches for a bit-exact wire scale. Those rules are materially different from P008-P011.",
+      "parameters_or_profiles": [
+        "max_point",
+        "int64 identity profile"
+      ],
+      "source_refs": [
+        "cpp/src/legacy_numeric_action_stages.cpp:82-146"
+      ],
+      "source_action_names": [
+        "op.scaling.legacy_exact_decimal.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A011",
+      "name": "ALP factor/exponent selection with exceptions",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P013"
+      ],
+      "classification": "core",
+      "difference": "It searches factor/exponent pairs with a packed-width plus exception cost and materializes raw exceptions. It is not the same scaling rule as a single power-of-ten scale.",
+      "parameters_or_profiles": [
+        "block_size=1024",
+        "factor/exponent candidate tables"
+      ],
+      "source_refs": [
+        "cpp/src/legacy_numeric_action_stages.cpp:148-216"
+      ],
+      "source_action_names": [
+        "op.scaling.alp_legacy_fe_exceptions.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A012",
+      "name": "CORAD mean/sigma normalization with repair values",
+      "family_numbers": [
+        2
+      ],
+      "source_entry_ids": [
+        "P014"
+      ],
+      "classification": "core",
+      "difference": "It computes mean/sigma, normalizes, and records repair data. This is a different numeric transform from decimal scaling.",
+      "parameters_or_profiles": [
+        "input kind"
+      ],
+      "source_refs": [
+        "cpp/src/corad_lossless_cpp.cpp:32-53"
+      ],
+      "source_action_names": [
+        "op.scaling.corad_normalize_exact.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A013",
+      "name": "Minimum FOR",
+      "family_numbers": [
+        3,
+        7
+      ],
+      "source_entry_ids": [
+        "P015",
+        "P022"
+      ],
+      "classification": "shared core",
+      "difference": "两个入口都调用 minimum_for::encode，输出最小值与无符号偏移；参考 Bit-packing 入口没有执行位打包。",
+      "parameters_or_profiles": "数值类型、来源包与上游恢复字段属于 I/O profile。",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:242-246",
+        "cpp/src/minimum_for.hpp:41-53",
+        "cpp/src/reference_operator_actions.cpp:242-246",
+        "cpp/src/minimum_for.hpp:13-53",
+        "cpp/src/learning_codec_exact_stages.cpp:1091-1106"
+      ],
+      "source_action_names": [
+        "op.frame_of_reference.minimum.cpp_v1",
+        "op.bitpack_int.reference_v1",
+        "op.frame_of_reference.buff.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A014",
+      "name": "Stable Sort",
+      "family_numbers": [
+        4,
+        13
+      ],
+      "source_entry_ids": [
+        "P016",
+        "P057"
+      ],
+      "classification": "shared core",
+      "difference": "均调用 stable_order 对块内值稳定排序，并输出恢复顺序；全列和64值块的区别归为 block_size 参数。",
+      "parameters_or_profiles": "block_size；索引/块大小序列属于恢复布局。",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:223-226",
+        "cpp/src/learning_codec_exact_stages.cpp:904-927",
+        "cpp/src/reference_operator_actions.cpp:317",
+        "cpp/src/reference_operator_actions.cpp:319",
+        "cpp/src/reference_operator_actions.cpp:321",
+        "cpp/src/reference_operator_actions.cpp:247-251",
+        "cpp/src/reference_operator_actions.cpp:317-326"
+      ],
+      "source_action_names": [
+        "op.value_reorder.stable_sort.cpp_v2",
+        "op.block_transform.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A015",
+      "name": "first-order autoregression fitted by OLS on previous values",
+      "family_numbers": [
+        5
+      ],
+      "source_entry_ids": [
+        "P017"
+      ],
+      "classification": "core",
+      "difference": "It fits next value against the previous value and emits theta0/theta1 plus residuals. This predictor differs from LECO's position-based line and REGER's simple previous difference.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:252-273"
+      ],
+      "source_action_names": [
+        "op.regression_predictor.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A016",
+      "name": "blockwise linear regression against position",
+      "family_numbers": [
+        5
+      ],
+      "source_entry_ids": [
+        "P018"
+      ],
+      "classification": "core",
+      "difference": "Fits intercept+slope*i per block and emits signed int64 residuals. ZigZag is a separate A046 stage; the predictor no longer changes signedness.",
+      "parameters_or_profiles": [
+        "block_size"
+      ],
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:611-646"
+      ],
+      "source_action_names": [
+        "op.regression_predictor.leco_linear.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities",
+      "input_contract": {
+        "streams": [
+          "values:int64[N]"
+        ],
+        "parameters": [
+          "block_size (current exact LECO profile: 512)"
+        ]
+      },
+      "output_contract": {
+        "generated_stream_count": 2,
+        "streams": [
+          "coefficients:float64[blocks,2]",
+          "residuals:int64[N]"
+        ],
+        "metadata": [
+          "block lengths",
+          "original value count"
+        ]
+      }
+    },
+    {
+      "implementation_id": "A018",
+      "name": "IQR threshold clipping with position/value exceptions",
+      "family_numbers": [
+        6
+      ],
+      "source_entry_ids": [
+        "P020"
+      ],
+      "classification": "reference_core",
+      "difference": "It derives Tukey IQR bounds, clips values, and records positions and originals. This is not BOS's width-optimizing normal-range selection.",
+      "parameters_or_profiles": [
+        "quartiles and 1.5*IQR fixed defaults"
+      ],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:275-290"
+      ],
+      "source_action_names": [
+        "op.outlier_separation.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A019",
+      "name": "BOS packed-cost normal-range selection and outlier split",
+      "family_numbers": [
+        6
+      ],
+      "source_entry_ids": [
+        "P021"
+      ],
+      "classification": "core",
+      "difference": "It chooses a normal range for bit-packing and marks outside values. Its objective and output semantics differ from IQR clipping.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/bos_exact_stages.cpp:358-376"
+      ],
+      "source_action_names": [
+        "op.outlier_separation.bos.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A020",
+      "name": "maximum-value-width fixed bit packing",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P023"
+      ],
+      "classification": "core",
+      "difference": "All profiles already inside P023 call the same maximum_width plus fixed-width pack/unpack core. Source algorithm and packet framing do not create more implementations.",
+      "parameters_or_profiles": [
+        "block size",
+        "bit order",
+        "alignment",
+        "typed carrier and side metadata"
+      ],
+      "source_refs": [
+        "cpp/src/max_value_bitpack.hpp:24-77",
+        "cpp/src/max_value_bitpack.hpp:80-114"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.max_value_width.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A021",
+      "name": "Simple8b selector packing",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P024"
+      ],
+      "classification": "core",
+      "difference": "Selector choice changes the number and width of integers per 60-bit payload word, so this is not maximum-width fixed packing.",
+      "parameters_or_profiles": [
+        "integer versus scaled packet carrier"
+      ],
+      "source_refs": [
+        "cpp/src/int64_column_codec.cpp:45-153",
+        "cpp/src/simple8b_exact_stages.cpp:129-162"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.simple8b.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A022",
+      "name": "Sprintz 8-value anchor/block packing with typed tail backend",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P025"
+      ],
+      "classification": "composite",
+      "difference": "Full blocks store an anchor and pack seven residuals by a per-block width, while the tail invokes RLE or Gorilla. That complete stage is not identical to P023.",
+      "parameters_or_profiles": [
+        "legacy versus current RLE tail implementation",
+        "integer versus float-bit tail backend"
+      ],
+      "source_refs": [
+        "cpp/src/p04_exact_stages.cpp:331-379"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.sprintz.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A023",
+      "name": "Unsigned ULEB128",
+      "family_numbers": [
+        7,
+        20
+      ],
+      "source_entry_ids": [
+        "P026",
+        "P091"
+      ],
+      "classification": "core",
+      "difference": "Encodes each unsigned value as 7-bit groups with continuation bit 1 on nonfinal bytes. Raw uint64 values, DBP unsigned residuals and Snappy scalar uint32 length share one core; signed inputs first pass A046.",
+      "parameters_or_profiles": [
+        "word_bits=32 or 64",
+        "selected input extent: whole values, DBP residual positions, or scalar raw length",
+        "carrier and bypass metadata"
+      ],
+      "source_refs": [
+        "cpp/src/unsigned_leb128.hpp:13-55",
+        "cpp/src/unsigned_leb128_cli.cpp:1-80",
+        "cpp/src/dbp_exact_stages.cpp:213-241",
+        "cpp/src/snappy_exact_stages.cpp:336-357"
+      ],
+      "source_action_names": [
+        "op.integer_code.uleb128_unsigned.cpp_v2",
+        "op.integer_code.uleb128.reference_values.cpp_v2",
+        "op.integer_code.uleb128.dbp_residuals.cpp_v2",
+        "op.integer_code.uleb128.snappy_raw_size.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities",
+      "input_contract": {
+        "streams": [
+          "values:uint32[N] or uint64[N]"
+        ],
+        "parameters": [
+          "word_bits",
+          "I/O profile"
+        ]
+      },
+      "output_contract": {
+        "generated_stream_count": 1,
+        "streams": [
+          "encoded:bytes"
+        ],
+        "metadata": [
+          "value count / payload length as required by carrier"
+        ],
+        "bypass": "Existing DBP anchors, scale and Snappy token streams are forwarded unchanged; these are not newly generated ULEB128 streams.",
+        "profile_total_streams": {
+          "raw_uint64": {
+            "count": 1,
+            "streams": [
+              "encoded:bytes"
+            ]
+          },
+          "dbp_residuals": {
+            "count": 2,
+            "streams": [
+              "first:int64[0 or 1] (bypass)",
+              "encoded_residuals:bytes"
+            ],
+            "metadata": [
+              "optional decimal scale"
+            ]
+          },
+          "snappy_raw_size": {
+            "count": 2,
+            "streams": [
+              "encoded_length:bytes",
+              "token_body:bytes (bypass)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "implementation_id": "A024",
+      "name": "BOS fixed-width normal stream plus explicit outlier table",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P027"
+      ],
+      "classification": "composite",
+      "difference": "The width and normal/outlier partition are supplied by the preceding BOS stages; this stage packs normal values and frames the exception table. It is not the same complete operation as choosing maximum width over every input.",
+      "parameters_or_profiles": [
+        "supplied width/range and outlier set"
+      ],
+      "source_refs": [
+        "cpp/src/bos_exact_stages.cpp:406-482"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.bos.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A025",
+      "name": "BOS64 maximum-width packing with 57-64 rounded to 64",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P028"
+      ],
+      "classification": "core",
+      "difference": "It selects max bit width but forces widths above 56 to raw 64-bit words. This width-selection rule differs from P023 and cannot be dismissed as wire framing.",
+      "parameters_or_profiles": [
+        "wide_width_cutoff=56"
+      ],
+      "source_refs": [
+        "cpp/src/bos_exact_stages.cpp:607-633"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.bos64_adapter.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A027",
+      "name": "BUFF precomputed byte-plane framing proxy",
+      "family_numbers": [
+        7
+      ],
+      "source_entry_ids": [
+        "P030"
+      ],
+      "classification": "adapter_proxy",
+      "difference": "P030 only serializes planes, scale, base, and width already produced by buff_column_split_forward. The actual offset/plane transform is upstream, so P030 should not be counted as an independent bit-packing core.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:1193-1204",
+        "cpp/src/learning_codec_exact_stages.cpp:1178-1203"
+      ],
+      "source_action_names": [
+        "op.bitpack_int.buff.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A028",
+      "name": "parameterized modular lagged difference",
+      "family_numbers": [
+        8
+      ],
+      "source_entry_ids": [
+        "P031",
+        "P032",
+        "P033",
+        "P035"
+      ],
+      "classification": "core",
+      "difference": "Every profile applies the same update independently to each semantic input stream: residual[i]=current[i]-history[lag] in that stream, then the inverse adds the same history value. SVB merely applies lag-1 uint32 modular delta separately to low/high streams; it does not use a different predictor. TS_2DIFF's checked arithmetic returns the same result as modular subtraction over its accepted domain and only rejects overflow cases. RLBE/TS_2DIFF block anchors, DBP's in-band first value, the reference side-stream first value, and SVB/SPDP zero initialization are reset/anchor I/O profiles. SPDP selects lag=2 rather than lag=1. REGER and BOS64 now call this pure delta stage explicitly; A046 separately handles the signed residual stream.",
+      "parameters_or_profiles": [
+        "lane width and number of semantic streams",
+        "lag=1 or 2",
+        "block/reset extent",
+        "anchor side stream, in-band anchor, or implicit zero history",
+        "checked accepted-domain versus full modular domain",
+        "packet carrier"
+      ],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:292-297",
+        "cpp/src/dbp_exact_stages.cpp:95-111",
+        "cpp/src/svb_exact_stages.cpp:107-165",
+        "cpp/src/ts2diff_exact_stages.cpp:174-189",
+        "cpp/src/ts2diff_exact_stages.cpp:294-321",
+        "cpp/src/p04_exact_stages.cpp:206-229",
+        "cpp/src/spdp_exact_stages.cpp:139-163",
+        "cpp/src/learning_codec_exact_stages.cpp:930-953",
+        "cpp/src/bos_exact_stages.cpp:495-540"
+      ],
+      "source_action_names": [
+        "op.delta.previous_modular.cpp_v2",
+        "op.delta.ts_2diff.cpp_v1",
+        "op.delta.rlbe.cpp_v1",
+        "op.delta.spdp.cpp_v1",
+        "op.delta.reger_signed_residual.cpp_v2",
+        "op.delta.bos64_signed_residual.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A029",
+      "name": "adaptive FIRE predictor residual",
+      "family_numbers": [
+        8
+      ],
+      "source_entry_ids": [
+        "P034"
+      ],
+      "classification": "core",
+      "difference": "The predictor trains LongFire state after each residual and is not a fixed lag subtraction.",
+      "parameters_or_profiles": [
+        "8-value full-block processing",
+        "int64 versus float-bit carrier"
+      ],
+      "source_refs": [
+        "cpp/src/p04_exact_stages.cpp:253-300"
+      ],
+      "source_action_names": [
+        "op.delta.sprintz.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A030",
+      "name": "FPZIP 1D predictor on monotonic float mapping",
+      "family_numbers": [
+        8
+      ],
+      "source_entry_ids": [
+        "P037"
+      ],
+      "classification": "core",
+      "difference": "It applies FPZIP's float mapping and predict_1d before unsigned residual subtraction, so it is not an ordinary integer delta profile.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/fpzip_exact_stages.cpp:158-187"
+      ],
+      "source_action_names": [
+        "op.delta.fpzip.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A031",
+      "name": "adjacent previous-word XOR",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P038"
+      ],
+      "classification": "core",
+      "difference": "All profiles already in P038 preserve the first word and XOR each later word with its immediate predecessor; input type and side metadata are adapters.",
+      "parameters_or_profiles": [
+        "int64 versus float64 raw-bit carrier",
+        "Pongo eraser metadata passthrough"
+      ],
+      "source_refs": [
+        "cpp/src/gorilla_exact_stages.cpp:59-64",
+        "cpp/src/pongo_codec.cpp:658-678"
+      ],
+      "source_action_names": [
+        "op.xor.previous_word.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A032",
+      "name": "Chimp128 history-reference XOR",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P039"
+      ],
+      "classification": "core",
+      "difference": "It hashes into a 128-value history and may XOR against a non-adjacent reference. That reference-selection rule differs from previous-word XOR.",
+      "parameters_or_profiles": [
+        "history size fixed 128",
+        "typed EOS word"
+      ],
+      "source_refs": [
+        "cpp/src/chimp128_exact_stages.cpp:85-125",
+        "cpp/src/chimp128_exact_stages.cpp:243-261"
+      ],
+      "source_action_names": [
+        "op.xor.chimp_history128.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A033",
+      "name": "dual FCM/DFCM predictor selection plus XOR residual",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P040",
+        "P041"
+      ],
+      "classification": "core",
+      "difference": "FPC and pFPC have the same FCM/DFCM hash updates, choose the smaller of value^FCM and value^(last+DFCM), and carry the same selector/residual. pFPC only resets that state at a large block boundary and uses a different frame.",
+      "parameters_or_profiles": [
+        "predictor_lg2",
+        "state_reset_interval: continuous versus 2^20 values",
+        "wire chunk fields"
+      ],
+      "source_refs": [
+        "cpp/src/fpc_exact_stages.cpp:79-113",
+        "cpp/src/pfpc_exact_stages.cpp:79-109",
+        "cpp/src/pfpc_exact_stages.cpp:140-169"
+      ],
+      "source_action_names": [
+        "op.xor.fpc.cpp_v1",
+        "op.xor.pfpc.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A034",
+      "name": "Elf-on-Chimp previous-XOR window encoder",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P042",
+        "P045"
+      ],
+      "classification": "composite_core",
+      "difference": "The 32- and 64-bit paths implement the same Chimp state machine: adjacent XOR, zero case, store/reuse rounded leading-zero state, optional trailing-zero omission, and an EOS record. Width-specific field sizes are data-format parameters.",
+      "parameters_or_profiles": [
+        "word_bits=32 or 64",
+        "leading bucket table",
+        "trailing-zero threshold",
+        "significant-length field width",
+        "chunk extent and EOS word"
+      ],
+      "source_refs": [
+        "cpp/src/elf_float_codec.cpp:481-540",
+        "cpp/src/elf_float_codec.cpp:1365-1374",
+        "cpp/src/elf_double_codec.cpp:329-388",
+        "cpp/src/elf_double_codec.cpp:1198-1216"
+      ],
+      "source_action_names": [
+        "op.xor.elf.cpp_v1",
+        "op.xor.elf64_on_chimp.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A035",
+      "name": "Elf+ previous-XOR reused-leading/trailing-window encoder",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P043",
+        "P046"
+      ],
+      "classification": "composite_core",
+      "difference": "The 32- and 64-bit paths use the same Elf+ state machine: previous-word XOR, zero case, reuse of stored leading/trailing window when possible, otherwise transmit a new window. Field widths follow the value width.",
+      "parameters_or_profiles": [
+        "word_bits=32 or 64",
+        "leading bucket table",
+        "short-significant threshold",
+        "field widths",
+        "chunk extent and EOS word"
+      ],
+      "source_refs": [
+        "cpp/src/elf_float_codec.cpp:543-612",
+        "cpp/src/elf_float_codec.cpp:1376-1384",
+        "cpp/src/elf_double_codec.cpp:509-568",
+        "cpp/src/elf_double_codec.cpp:1198-1216"
+      ],
+      "source_action_names": [
+        "op.xor.elf_plus.cpp_v1",
+        "op.xor.elf64_plus.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A036",
+      "name": "Camel literal XOR plus decimal integer-delta residual",
+      "family_numbers": [
+        9
+      ],
+      "source_entry_ids": [
+        "P044"
+      ],
+      "classification": "composite",
+      "difference": "Literal records use previous raw-bit XOR, while decimal records use integer delta with sign/decimal side fields. The branch-dependent transform is not identical to pure previous-word XOR.",
+      "parameters_or_profiles": [
+        "chunk reset extent"
+      ],
+      "source_refs": [
+        "cpp/src/camel_exact_stages.cpp:609-638"
+      ],
+      "source_action_names": [
+        "op.xor.camel.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A037",
+      "name": "common trailing-zero factor extraction",
+      "family_numbers": [
+        10
+      ],
+      "source_entry_ids": [
+        "P047"
+      ],
+      "classification": "reference_core",
+      "difference": "It finds a single shared trailing-zero count, caps it at 16, and arithmetic-shifts every int64 value. This differs from per-residual zero-window bitstream coding.",
+      "parameters_or_profiles": [
+        "maximum shift fixed 16"
+      ],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:299-304"
+      ],
+      "source_action_names": [
+        "op.trailing_zero_pack.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A038",
+      "name": "zero/reuse/new leading-trailing XOR window packing",
+      "family_numbers": [
+        10
+      ],
+      "source_entry_ids": [
+        "P048"
+      ],
+      "classification": "core",
+      "difference": "The Gorilla and Pongo profiles already in P048 use the same zero/reuse/new-window rule on adjacent-XOR residuals. Pongo's eraser flags and significant=64 field convention are carrier metadata/wire encoding differences.",
+      "parameters_or_profiles": [
+        "typed EOS versus explicit count",
+        "significant-width wire convention",
+        "eraser side metadata passthrough"
+      ],
+      "source_refs": [
+        "cpp/src/gorilla_exact_stages.cpp:97-115",
+        "cpp/src/pongo_codec.cpp:303-329",
+        "cpp/src/pongo_codec.cpp:681-705"
+      ],
+      "source_action_names": [
+        "op.trailing_zero_pack.xor_window.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A039",
+      "name": "Chimp128 history-reference control and significant-bit packing",
+      "family_numbers": [
+        10
+      ],
+      "source_entry_ids": [
+        "P049"
+      ],
+      "classification": "core",
+      "difference": "It includes a 128-history reference index and a four-way control layout, so it is not the same operation as the previous-word Gorilla window pack.",
+      "parameters_or_profiles": [
+        "history size fixed 128",
+        "leading bucket and threshold tables"
+      ],
+      "source_refs": [
+        "cpp/src/chimp128_exact_stages.cpp:264-293"
+      ],
+      "source_action_names": [
+        "op.trailing_zero_pack.chimp128.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A040",
+      "name": "FPC selector-nibble plus residual-byte packing",
+      "family_numbers": [
+        10
+      ],
+      "source_entry_ids": [
+        "P050"
+      ],
+      "classification": "core",
+      "difference": "FPC and pFPC profiles already grouped in P050 use the same residual byte classes and selector nibble. Their chunk headers and reset boundaries are profile parameters.",
+      "parameters_or_profiles": [
+        "chunk/block extent",
+        "chunk header width",
+        "odd-record nibble padding behavior"
+      ],
+      "source_refs": [
+        "cpp/src/fpc_exact_stages.cpp:116-143",
+        "cpp/src/fpc_exact_stages.cpp:171-205",
+        "cpp/src/pfpc_exact_stages.cpp:111-135",
+        "cpp/src/pfpc_exact_stages.cpp:172-196"
+      ],
+      "source_action_names": [
+        "op.trailing_zero_pack.nibble_residual.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A041",
+      "name": "value-sorted integer dictionary recoding",
+      "family_numbers": [
+        11
+      ],
+      "source_entry_ids": [
+        "P051"
+      ],
+      "classification": "reference core",
+      "difference": "按 int64 数值升序建字典再映射 ID；当前排序规则与 first-seen/frequency-sorted 版本不同。",
+      "parameters_or_profiles": "none",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:306",
+        "cpp/src/reference_operator_actions.cpp:310"
+      ],
+      "source_action_names": [
+        "op.dictionary.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A042",
+      "name": "first-seen uint64-word dictionary recoding",
+      "family_numbers": [
+        11
+      ],
+      "source_entry_ids": [
+        "P052"
+      ],
+      "classification": "core",
+      "difference": "按 64 位原字首次出现顺序建字典并输出索引；位型输入类型不改变核心。",
+      "parameters_or_profiles": "int64/float64 只是同一 uint64 原字输入 profile；现有 wire 使用 u64 索引。",
+      "source_refs": [
+        "cpp/src/dictionary64_action_cli.cpp:21",
+        "cpp/src/dictionary64_action_cli.cpp:29"
+      ],
+      "source_action_names": [
+        "op.dictionary.project_words64.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A043",
+      "name": "first-seen uint64-word dictionary plus fixed-width ID packing",
+      "family_numbers": [
+        11
+      ],
+      "source_entry_ids": [
+        "P053"
+      ],
+      "classification": "composite",
+      "difference": "字典发现与 P052 相同，但本条还按字典基数位宽打包 ID，当前是复合实现。",
+      "parameters_or_profiles": "float64 仅决定输入解释；ID bit packing 是额外算法步骤，不作为 I/O 差异抹去。",
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:850",
+        "cpp/src/learning_codec_exact_stages.cpp:861",
+        "cpp/src/learning_codec_exact_stages.cpp:865"
+      ],
+      "source_action_names": [
+        "op.dictionary.alp_rd.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A044",
+      "name": "fixed 12-word greedy substitution",
+      "family_numbers": [
+        11
+      ],
+      "source_entry_ids": [
+        "P054"
+      ],
+      "classification": "reference core",
+      "difference": "扫描字节并用固定词表替换，不是按输入生成字典的 ID 重编码。",
+      "parameters_or_profiles": "词表当前固定；可参数化词表但仍与动态字典生成不同。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:175",
+        "cpp/src/general_codec_reference_stages.cpp:181"
+      ],
+      "source_action_names": [
+        "op.dictionary.brotli_static_small.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A045",
+      "name": "CORAD tricklet XOR atom selection",
+      "family_numbers": [
+        11
+      ],
+      "source_entry_ids": [
+        "P055"
+      ],
+      "classification": "core",
+      "difference": "每个 40-lane block 在少量 atom 中按 XOR 位宽代价选最佳，再输出 selector 与残差；与普通符号字典不同。",
+      "parameters_or_profiles": "tricklet width=40、atom count cap=4 可成为参数，但选择规则是独立核心。",
+      "source_refs": [
+        "cpp/src/corad_lossless_cpp.cpp:54",
+        "cpp/src/corad_lossless_cpp.cpp:63",
+        "cpp/src/corad_lossless_cpp.cpp:67"
+      ],
+      "source_action_names": [
+        "op.dictionary.corad_tricklet_xor.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A046",
+      "name": "signed64 ZigZag mapping",
+      "family_numbers": [
+        12
+      ],
+      "source_entry_ids": [
+        "P056"
+      ],
+      "classification": "core with adapters",
+      "difference": "All profiles apply the same signed-to-unsigned ZigZag bijection. Position selection, anchors, regression coefficients, reorder indices and scaling metadata are separate input/bypass profiles, not another mapping algorithm.",
+      "parameters_or_profiles": [
+        "whole stream or selected residual positions",
+        "DBP/Sprintz/LECO/REGER/BOS64 packet carrier; bypass unselected anchors and metadata"
+      ],
+      "source_refs": [
+        "cpp/src/zigzag.hpp:1-30",
+        "cpp/src/learning_codec_exact_stages.cpp:648-664",
+        "cpp/src/learning_codec_exact_stages.cpp:955-969",
+        "cpp/src/bos_exact_stages.cpp:542-582",
+        "cpp/src/dbp_exact_stages.cpp:198-210",
+        "cpp/src/p04_exact_stages.cpp:303-328"
+      ],
+      "source_action_names": [
+        "op.zigzag.signed64.cpp_v2",
+        "op.zigzag.leco_residual.cpp_v2",
+        "op.zigzag.reger_residual.cpp_v2",
+        "op.zigzag.bos64_residual.cpp_v2",
+        "op.zigzag.signed64.raw.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities",
+      "input_contract": {
+        "streams": [
+          "selected residuals:int64[N]"
+        ],
+        "parameters": [
+          "selected positions / profile"
+        ]
+      },
+      "output_contract": {
+        "generated_stream_count": 1,
+        "streams": [
+          "codes:uint64[N]"
+        ],
+        "bypass": "Anchors, coefficients, reorder indices, scale and other input streams retain their types and values."
+      }
+    },
+    {
+      "implementation_id": "A047",
+      "name": "SPDP byte-plane transpose plus cross-plane delta",
+      "family_numbers": [
+        13
+      ],
+      "source_entry_ids": [
+        "P058"
+      ],
+      "classification": "composite",
+      "difference": "先按 8 个字节位置重排，再对重排后的连续字节做差；包含两个操作，不能整体等同普通 byte transpose。",
+      "parameters_or_profiles": "word width currently fixed 8 bytes。",
+      "source_refs": [
+        "cpp/src/spdp_exact_stages.cpp:166",
+        "cpp/src/spdp_exact_stages.cpp:171",
+        "cpp/src/spdp_exact_stages.cpp:176"
+      ],
+      "source_action_names": [
+        "op.block_transform.spdp.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A048",
+      "name": "BUFF Byte-plane Split",
+      "family_numbers": [
+        13
+      ],
+      "source_entry_ids": [
+        "P059"
+      ],
+      "classification": "core",
+      "difference": "Only maps precomputed uint64 offsets into high-byte-first planes at a supplied bit_width. No minimum, subtraction, or inverse base addition.",
+      "parameters_or_profiles": {
+        "bit_width": "integer 0..64; explicit kernel argument",
+        "default_selection": "maximum offset width selected by invocation helper before this operator",
+        "plane_order": "high byte first",
+        "tail_padding": "left-align valid bits; zero low padding",
+        "bypass": "minimum:int64[1], scaled flag and scale"
+      },
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:1115-1176"
+      ],
+      "source_action_names": [
+        "op.block_transform.buff_byte_plane_split.cpp_v2"
+      ],
+      "execution_status": "independent_cpp_entry_and_typed_graph_plane_leaves",
+      "input": {
+        "offsets": "uint64[N]",
+        "parameters": {
+          "bit_width": "uint8 in 0..64"
+        },
+        "constraints": "Each offset fits bit_width; b=0 requires all zeros."
+      },
+      "outputs": {
+        "byte_planes": "S=ceil(bit_width/8) distinct uint8[N] streams, high plane first"
+      },
+      "inverse_metadata": [
+        "bit_width",
+        "N"
+      ],
+      "legacy_recipe": {
+        "op.block_transform.buff_column_split.cpp_v1": [
+          "A013",
+          "A048"
+        ]
+      },
+      "difference_cn": "A048只按给定位宽拆字节平面；FOR由A013完成，位宽默认选择在调用前完成。最小值和scale只旁路传递。"
+    },
+    {
+      "implementation_id": "A049",
+      "name": "parameterized fixed-record byte columnization",
+      "family_numbers": [
+        29
+      ],
+      "source_entry_ids": [
+        "P060"
+      ],
+      "classification": "layout_core",
+      "difference": "The current entry already folds typesize 1/4/8 byte shuffle and the relocated columnize modes into one profile-controlled layout action. Typesize and input type do not add algorithms.",
+      "parameters_or_profiles": [
+        "typesize or record width",
+        "transpose versus explicit field-width profile"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:342-373",
+        "cpp/src/openzl_layout_stages.cpp:219-244"
+      ],
+      "source_action_names": [
+        "op.block_transform.byte_shuffle.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A050",
+      "name": "cyclic Burrows-Wheeler transform",
+      "family_numbers": [
+        13
+      ],
+      "source_entry_ids": [
+        "P061"
+      ],
+      "classification": "reference core",
+      "difference": "循环旋转排序并输出 last column 与 primary index，是独立可逆块变换。",
+      "parameters_or_profiles": "single whole-input block in current implementation。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:403",
+        "cpp/src/general_codec_reference_stages.cpp:419",
+        "cpp/src/general_codec_reference_stages.cpp:439"
+      ],
+      "source_action_names": [
+        "op.block_transform.bzip2_bwt.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A051",
+      "name": "split int64 words into low/high uint32 streams",
+      "family_numbers": [
+        13
+      ],
+      "source_entry_ids": [
+        "P062"
+      ],
+      "classification": "core with adapter",
+      "difference": "每个 64 位 code 提取 low32 和 high32 并形成两条 limb stream。",
+      "parameters_or_profiles": "JSON/LNS1 包装与块批处理属于 adapter。",
+      "source_refs": [
+        "cpp/src/legacy_numeric_action_stages.cpp:252",
+        "cpp/src/legacy_numeric_action_stages.cpp:257",
+        "cpp/src/legacy_numeric_action_stages.cpp:262"
+      ],
+      "source_action_names": [
+        "op.block_transform.int64_lo_hi32.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A052",
+      "name": "swap two uint32 halves inside each 64-bit word",
+      "family_numbers": [
+        13
+      ],
+      "source_entry_ids": [
+        "P063"
+      ],
+      "classification": "core",
+      "difference": "每 8 字节交换前后 4 字节，仍输出一条交错 word stream；当前不产生独立 low/high 流。",
+      "parameters_or_profiles": "float64 只规定 8-byte word profile。",
+      "source_refs": [
+        "cpp/src/buff_native_exact_stages.cpp:31",
+        "cpp/src/buff_native_exact_stages.cpp:36",
+        "cpp/src/buff_native_exact_stages.cpp:42"
+      ],
+      "source_action_names": [
+        "op.block_transform.buff_native_word_order.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A053",
+      "name": "Frequency Ordered Dictionary IDs",
+      "family_numbers": [
+        14,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "source_entry_ids": [
+        "P064",
+        "P095",
+        "P097",
+        "P100",
+        "P102",
+        "P104"
+      ],
+      "classification": "shared core",
+      "difference": "六个入口进入同一个 switch 分支，频数排序规则、字典生成、ID 映射及逆字典查找完全相同；它们不执行各名称暗示的熵编码。",
+      "parameters_or_profiles": "保留历史语义标签及输入输出封包；不把历史来源名称作为算法参数。",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:306",
+        "cpp/src/reference_operator_actions.cpp:310",
+        "cpp/src/reference_operator_actions.cpp:313",
+        "cpp/src/reference_operator_actions.cpp:306-314",
+        "cpp/src/reference_operator_actions.cpp:443-445"
+      ],
+      "source_action_names": [
+        "op.symbol_recode.reference_v1",
+        "op.entropy_huffman.reference_v1",
+        "op.entropy_range.reference_v1",
+        "op.entropy_fse.reference_v1",
+        "op.entropy_special.reference_v1",
+        "op.literal_entropy.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A054",
+      "name": "Move-to-Front recoding",
+      "family_numbers": [
+        14
+      ],
+      "source_entry_ids": [
+        "P065"
+      ],
+      "classification": "reference core",
+      "difference": "维护 256 符号表，输出当前位置并将命中符号移到表首，状态更新规则独立。",
+      "parameters_or_profiles": "alphabet fixed to bytes 0..255。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:470",
+        "cpp/src/general_codec_reference_stages.cpp:475",
+        "cpp/src/general_codec_reference_stages.cpp:480"
+      ],
+      "source_action_names": [
+        "op.symbol_recode.bzip2_mtf.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A055",
+      "name": "size-optimal hybrid RLE/bitpack/raw selection",
+      "family_numbers": [
+        15
+      ],
+      "source_entry_ids": [
+        "P066"
+      ],
+      "classification": "core with adapters",
+      "difference": "所有公开 RLE profiles 已统一调用 URL1 动态规划/模式选择核心；symbol width 和输入包装不新增算法。",
+      "parameters_or_profiles": "symbol_width=1..8；普通、scaled、RLBE width-stream 是 adapters。",
+      "source_refs": [
+        "cpp/src/optimal_rle.cpp:200",
+        "cpp/src/optimal_rle.cpp:276",
+        "cpp/src/optimal_rle.cpp:291"
+      ],
+      "source_action_names": [
+        "op.run_length.byte_optimal.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A056",
+      "name": "all-runs int64 RLE proxy mislabeled as LZ match",
+      "family_numbers": [
+        16
+      ],
+      "source_entry_ids": [
+        "P067"
+      ],
+      "classification": "proxy",
+      "difference": "只把相等值游程输出为 count/value，不搜索向后匹配；应标为 proxy，不与真实 LZ matcher 合并。",
+      "parameters_or_profiles": "none",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:327",
+        "cpp/src/reference_operator_actions.cpp:330",
+        "cpp/src/reference_operator_actions.cpp:332"
+      ],
+      "source_action_names": [
+        "op.lz_match.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A057",
+      "name": "attach native-LZ min/max configuration",
+      "family_numbers": [
+        16
+      ],
+      "source_entry_ids": [
+        "P068"
+      ],
+      "classification": "configuration, not matching core",
+      "difference": "本步骤不搜索 match，只把 minimum/maximum 写入 NLS1 context；真实搜索在 P077。",
+      "parameters_or_profiles": "minimum、maximum 是配置参数。",
+      "source_refs": [
+        "cpp/src/native_lz_action_stages.cpp:42",
+        "cpp/src/native_lz_action_stages.cpp:262",
+        "cpp/src/native_lz_action_stages.cpp:264"
+      ],
+      "source_action_names": [
+        "op.lz_match.native_lz.aligned8.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A058",
+      "name": "reference lazy hash-chain LZ search",
+      "family_numbers": [
+        16
+      ],
+      "source_entry_ids": [
+        "P069",
+        "P070",
+        "P072",
+        "P073"
+      ],
+      "classification": "shared core with parameter presets",
+      "difference": "四个名称调用同一 lz_forward(..., lazy=true) 与 best_match；只有 window/min_match/max_match 常量不同。",
+      "parameters_or_profiles": "P069=(65535,4,258), P070=(65535,3,258), P072=(32768,3,258), P073=(16777216,3,273)。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:148",
+        "cpp/src/general_codec_reference_stages.cpp:226",
+        "cpp/src/general_codec_reference_stages.cpp:235",
+        "cpp/src/general_codec_reference_stages_cli.cpp:19",
+        "cpp/src/general_codec_reference_stages_cli.cpp:20",
+        "cpp/src/general_codec_reference_stages_cli.cpp:22",
+        "cpp/src/general_codec_reference_stages_cli.cpp:23"
+      ],
+      "source_action_names": [
+        "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+        "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+        "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+        "op.lz_match.xz_lazy16777216.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A059",
+      "name": "reference greedy hash-chain LZ search",
+      "family_numbers": [
+        16
+      ],
+      "source_entry_ids": [
+        "P071"
+      ],
+      "classification": "core",
+      "difference": "与 G16_03 共享 matcher helper，但 lazy=false 跳过 lookahead 决策；greedy/lazy 是搜索规则差异，保守地保留两个核心。",
+      "parameters_or_profiles": "window=65535,min=4,max=258；search_policy=greedy。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:226",
+        "cpp/src/general_codec_reference_stages.cpp:235",
+        "cpp/src/general_codec_reference_stages_cli.cpp:21"
+      ],
+      "source_action_names": [
+        "op.lz_match.blosclz.greedy.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A060",
+      "name": "native aligned-8 greedy last-occurrence LZ search",
+      "family_numbers": [
+        16,
+        17
+      ],
+      "source_entry_ids": [
+        "P074",
+        "P077"
+      ],
+      "classification": "shared core with adapter",
+      "difference": "P077 对 NLS1 body 调 native_lz_action::parse；P074 对每个 32-bit limb 批量调用完全相同的 parse。limb 数、块数和 JSON 外包是 I/O/批处理 profile。",
+      "parameters_or_profiles": "P074 固定 window=32768,min=5,max=175；P077 从 NLS1 context 读取配置。",
+      "source_refs": [
+        "cpp/src/native_lz_action_stages.cpp:75",
+        "cpp/src/native_lz_action_stages.cpp:95",
+        "cpp/src/native_lz_action_stages.cpp:107",
+        "cpp/src/native_lz_action_stages.cpp:266",
+        "cpp/src/legacy_numeric_action_stages.cpp:265",
+        "cpp/src/legacy_numeric_action_stages.cpp:270"
+      ],
+      "source_action_names": [
+        "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+        "op.match_parse_policy.native_lz.aligned8_greedy"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A061",
+      "name": "Snappy snap-1.1.1 hash-table match generation",
+      "family_numbers": [
+        16
+      ],
+      "source_entry_ids": [
+        "P075"
+      ],
+      "classification": "core",
+      "difference": "使用 Snappy 的 64KiB 分块、乘法 hash、skip probing 和 copy slicing；与 reference/native LZ 搜索规则不同。",
+      "parameters_or_profiles": "implementation-fixed Snappy rules。",
+      "source_refs": [
+        "cpp/src/snappy_exact_stages.cpp:228",
+        "cpp/src/snappy_exact_stages.cpp:245",
+        "cpp/src/snappy_exact_stages.cpp:256",
+        "cpp/src/snappy_exact_stages.cpp:283"
+      ],
+      "source_action_names": [
+        "op.lz_match.snappy_snap_1_1_1.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A062",
+      "name": "position-dependent multiply/add proxy",
+      "family_numbers": [
+        17
+      ],
+      "source_entry_ids": [
+        "P076"
+      ],
+      "classification": "proxy",
+      "difference": "执行 value*3+i%251，并不在候选 match 中选择 parse；不应计为真实 parse-policy 算法。",
+      "parameters_or_profiles": "none",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:339"
+      ],
+      "source_action_names": [
+        "op.match_parse_policy.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A063",
+      "name": "validated identity wrapper for generic LZ semantic packet",
+      "family_numbers": [
+        17
+      ],
+      "source_entry_ids": [
+        "P078"
+      ],
+      "classification": "wrapper, not parse core",
+      "difference": "只验证 LZS1 并加/去 ZPP1 wrapper，不改变 token 或执行 parse 决策。",
+      "parameters_or_profiles": "none",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:307",
+        "cpp/src/general_codec_reference_stages.cpp:309",
+        "cpp/src/general_codec_reference_stages.cpp:312"
+      ],
+      "source_action_names": [
+        "op.match_parse_policy.generic_packet.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A064",
+      "name": "position-dependent XOR proxy",
+      "family_numbers": [
+        18
+      ],
+      "source_entry_ids": [
+        "P079"
+      ],
+      "classification": "proxy",
+      "difference": "执行 value XOR (i*131)，不维护 LZ window；同一 switch 分支也被 block-state reference 使用。",
+      "parameters_or_profiles": "none",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:340"
+      ],
+      "source_action_names": [
+        "op.match_window_model.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A065",
+      "name": "attach native-LZ window configuration",
+      "family_numbers": [
+        18
+      ],
+      "source_entry_ids": [
+        "P080"
+      ],
+      "classification": "configuration, not window-search core",
+      "difference": "只把原 bytes 封入带 window 的 NLS1 role-1 context，不搜索 match。",
+      "parameters_or_profiles": "window_bytes 是配置参数。",
+      "source_refs": [
+        "cpp/src/native_lz_action_stages.cpp:42",
+        "cpp/src/native_lz_action_stages.cpp:258",
+        "cpp/src/native_lz_action_stages.cpp:260"
+      ],
+      "source_action_names": [
+        "op.match_window_model.native_lz.window.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A066",
+      "name": "Nibble Split and Pack",
+      "family_numbers": [
+        19,
+        21
+      ],
+      "source_entry_ids": [
+        "P081",
+        "P093"
+      ],
+      "classification": "shared core",
+      "difference": "两个入口共用同一分支：保存高位，对每两个低4位拼为一个字节，逆过程相同。",
+      "parameters_or_profiles": "当前低位宽固定为4；历史标签和封包保留。",
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:341",
+        "cpp/src/reference_operator_actions.cpp:343",
+        "cpp/src/reference_operator_actions.cpp:345",
+        "cpp/src/reference_operator_actions.cpp:341-346",
+        "cpp/src/reference_operator_actions.cpp:477-483",
+        "cpp/src/reference_operator_actions.cpp:477-485"
+      ],
+      "source_action_names": [
+        "op.match_token_format.reference_v1",
+        "op.bitstream_pack.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A067",
+      "name": "native ctrl8 literal/offset16/length8 token packing",
+      "family_numbers": [
+        19
+      ],
+      "source_entry_ids": [
+        "P082",
+        "P083",
+        "P084"
+      ],
+      "classification": "shared core with parameter presets",
+      "difference": "三项均调用同一 pack/unpack：每 8 token 一个 bitmap，literal 为 byte，match 为 offset16 与 length-bias 的 uint8；bias 只是数值参数。P084 的 limb-batch profile 也循环调用该核心。",
+      "parameters_or_profiles": "length_bias=3/4/5；single NLS1 vs limb-batch adapter。",
+      "source_refs": [
+        "cpp/src/native_lz_action_stages.cpp:220",
+        "cpp/src/native_lz_action_stages.cpp:223",
+        "cpp/src/native_lz_action_stages.cpp:228",
+        "cpp/src/native_lz_action_stages.cpp:236",
+        "cpp/src/legacy_numeric_action_stages.cpp:274",
+        "cpp/src/legacy_numeric_action_stages.cpp:279"
+      ],
+      "source_action_names": [
+        "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+        "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+        "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A068",
+      "name": "Snappy literal/COPY tag formation",
+      "family_numbers": [
+        19
+      ],
+      "source_entry_ids": [
+        "P085"
+      ],
+      "classification": "core",
+      "difference": "按 Snappy literal/COPY_1/COPY_2/COPY_4 tag 的长度与 offset 规则生成标准 tag body。",
+      "parameters_or_profiles": "tag kind depends on literal length, copy length and offset。",
+      "source_refs": [
+        "cpp/src/snappy_exact_stages.cpp:164",
+        "cpp/src/snappy_exact_stages.cpp:311"
+      ],
+      "source_action_names": [
+        "op.match_token_format.snappy.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A069",
+      "name": "LZ4 token nibble and offset formation",
+      "family_numbers": [
+        19
+      ],
+      "source_entry_ids": [
+        "P086"
+      ],
+      "classification": "core",
+      "difference": "生成 LZ4 literal-length/match-length nibbles、offset16 和额外长度字段；规则与 Snappy/native ctrl8 不同。",
+      "parameters_or_profiles": "minimum match bias fixed 4 in LZ4 semantics。",
+      "source_refs": [
+        "cpp/src/lz4_exact_stages.cpp:248",
+        "cpp/src/lz4_exact_stages.cpp:257",
+        "cpp/src/lz4_exact_stages.cpp:266"
+      ],
+      "source_action_names": [
+        "op.match_token_format.lz4.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A070",
+      "name": "generic ctrl8 literal/offset32/length32 token packing",
+      "family_numbers": [
+        19
+      ],
+      "source_entry_ids": [
+        "P087"
+      ],
+      "classification": "reference core",
+      "difference": "每 8 token 一个 bitmap，但 match 字段是原始 offset32/length32；当前与 native ctrl8 是独立代码和 wire。",
+      "parameters_or_profiles": "field widths and length bias could be format parameters after refactor。",
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:258",
+        "cpp/src/general_codec_reference_stages.cpp:263",
+        "cpp/src/general_codec_reference_stages.cpp:271"
+      ],
+      "source_action_names": [
+        "op.match_token_format.blosclz.ctrl8.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A072",
+      "name": "Stream VByte coding of uint32 limbs",
+      "family_numbers": [
+        20
+      ],
+      "source_entry_ids": [
+        "P089"
+      ],
+      "classification": "core with adapter",
+      "difference": "分别对 low/high uint32 流调用 Stream VByte，控制字节与数据区布局是独立整数编码。",
+      "parameters_or_profiles": "two-limb packaging and scale tag are adapters。",
+      "source_refs": [
+        "cpp/src/svb_exact_stages.cpp:75",
+        "cpp/src/svb_exact_stages.cpp:79",
+        "cpp/src/svb_exact_stages.cpp:168"
+      ],
+      "source_action_names": [
+        "op.integer_code.stream_vbyte.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A073",
+      "name": "FastPFor block payload exposure with raw tail",
+      "family_numbers": [
+        20
+      ],
+      "source_entry_ids": [
+        "P090"
+      ],
+      "classification": "composite",
+      "difference": "对 128 对齐前缀使用 FastPFor、尾部保留 raw uint32，再把两 limb 的结果公开序列化；不等同通用 varint。",
+      "parameters_or_profiles": "int/scaled kind and two-limb packaging are profiles。",
+      "source_refs": [
+        "cpp/src/fastpfor_exact_stages.cpp:111",
+        "cpp/src/fastpfor_exact_stages.cpp:120",
+        "cpp/src/fastpfor_exact_stages.cpp:308"
+      ],
+      "source_action_names": [
+        "op.integer_code.fastpfor_variablebyte.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A075",
+      "name": "LZ4 extension-length base-255 coding",
+      "family_numbers": [
+        20
+      ],
+      "source_entry_ids": [
+        "P092"
+      ],
+      "classification": "core",
+      "difference": "把超过 nibble 15 的长度按连续 255 字节和尾余数编码，数学规则不是 base-128 varint。",
+      "parameters_or_profiles": "literal and match length channels are two profiles of the same base-255 extension rule。",
+      "source_refs": [
+        "cpp/src/lz4_exact_stages.cpp:441",
+        "cpp/src/lz4_exact_stages.cpp:248",
+        "cpp/src/lz4_exact_stages.cpp:262"
+      ],
+      "source_action_names": [
+        "op.integer_code.lz4.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A076",
+      "name": "Camel decimal/XOR record bitstream writer",
+      "family_numbers": [
+        21
+      ],
+      "source_entry_ids": [
+        "P094"
+      ],
+      "classification": "real_core",
+      "difference": "Camel uses its own tag grammar, bounded integer-delta code, decimal code, 1000-value chunks, and public frame. No other assigned entry uses that operation.",
+      "parameters_or_profiles": [
+        "fixed 1000-value chunking is a current constant"
+      ],
+      "source_refs": [
+        "cpp/src/camel_exact_stages.cpp:349-397",
+        "cpp/src/camel_exact_stages.cpp:496-518",
+        "cpp/src/camel_exact_stages.cpp:676-714"
+      ],
+      "source_action_names": [
+        "op.bitstream_pack.camel.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A077",
+      "name": "Project Byte Huffman",
+      "family_numbers": [
+        22,
+        26
+      ],
+      "source_entry_ids": [
+        "P096",
+        "P105"
+      ],
+      "classification": "shared core",
+      "difference": "Literal Entropy 的 huffman_forward/inverse 直接转调项目 Huffman encode/decode，没有新增算法。",
+      "parameters_or_profiles": "literal 还是通用 bytes 的角色、前置阶段协议归入 I/O profile。",
+      "source_refs": [
+        "scripts/primitive_operator_action_runtime.py:1387-1392",
+        "scripts/primitive_operator_action_runtime.py:1407-1412",
+        "cpp/src/general_codec_reference_stages.cpp:318-324",
+        "cpp/src/huffman_bytes.cpp:247-260",
+        "cpp/src/general_codec_reference_stages.cpp:318-323",
+        "scripts/primitive_operator_action_runtime.py:1386-1413"
+      ],
+      "source_action_names": [
+        "op.entropy_huffman.project_bytes.cpp_v1",
+        "op.literal_entropy.zstd_huffman.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A078",
+      "name": "static byte range coder",
+      "family_numbers": [
+        23
+      ],
+      "source_entry_ids": [
+        "P098"
+      ],
+      "classification": "real_core",
+      "difference": "This coder normalizes one static 256-symbol histogram and updates low/range per symbol. It is not the adaptive FPZIP range model or rANS recurrence.",
+      "parameters_or_profiles": [
+        "normalization total 2^15 is a current constant"
+      ],
+      "source_refs": [
+        "cpp/src/arithmetic_bytes.cpp:143-194",
+        "cpp/src/arithmetic_bytes.cpp:197-266"
+      ],
+      "source_action_names": [
+        "op.entropy_range.project_bytes.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A079",
+      "name": "FPZIP adaptive 129-symbol range model",
+      "family_numbers": [
+        23
+      ],
+      "source_entry_ids": [
+        "P099"
+      ],
+      "classification": "real_core",
+      "difference": "FPZIP consumes predictor residuals and uses its own adaptive symbol model and range coder; this state update differs from the static project range coder.",
+      "parameters_or_profiles": [
+        "lossless 1D double predictor/profile is fixed by its surrounding FPZIP path"
+      ],
+      "source_refs": [
+        "cpp/src/fpzip_exact_stages.cpp:190-241",
+        "external/compression/fpzip/src/rcencoder.cpp:5-27",
+        "external/compression/fpzip/src/rcencoder.inl:34-39"
+      ],
+      "source_action_names": [
+        "op.entropy_range.fpzip.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A080",
+      "name": "project static byte rANS",
+      "family_numbers": [
+        24
+      ],
+      "source_entry_ids": [
+        "P101"
+      ],
+      "classification": "real_core_mislabeled_family_slot",
+      "difference": "This is a reverse-order rANS state recurrence with a 2^15 frequency table. It is an rANS reference placed in the FSE family slot and is not native Zstd FSE.",
+      "parameters_or_profiles": [
+        "probability bits and initial state are current constants"
+      ],
+      "source_refs": [
+        "cpp/src/ans_rans.cpp:127-169",
+        "cpp/src/ans_rans.cpp:172-229",
+        "scripts/primitive_operator_action_runtime.py:1415-1419"
+      ],
+      "source_action_names": [
+        "op.entropy_fse.zstd_rans.cpp_reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A081",
+      "name": "SPDP history-context repeat encoder",
+      "family_numbers": [
+        25
+      ],
+      "source_entry_ids": [
+        "P103"
+      ],
+      "classification": "real_core",
+      "difference": "SPDP hashes a six-byte context, reuses a prior position, and emits a repeat count plus literal. It is a distinct context-copy transform, not a Huffman/range/ANS coder.",
+      "parameters_or_profiles": [
+        "level 0..9 controls history-table size; current registry default is 5"
+      ],
+      "source_refs": [
+        "cpp/src/spdp_exact_stages.cpp:60-96",
+        "cpp/src/spdp_exact_stages.cpp:99-134",
+        "cpp/src/spdp_exact_stages.cpp:197-207"
+      ],
+      "source_action_names": [
+        "op.entropy_special.spdp.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A082",
+      "name": "Snappy match-record extraction/reconstruction",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P106"
+      ],
+      "classification": "real_core",
+      "difference": "The core invokes Snappy compression, parses Snappy tag bodies into literal/copy records, and reconstructs raw bytes from those records. Its copy lengths, offsets, and hash search differ from LZ4.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/snappy_exact_stages.cpp:196-203",
+        "cpp/src/snappy_exact_stages.cpp:283-308"
+      ],
+      "source_action_names": [
+        "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A083",
+      "name": "LZ4 frame/block match-record extraction/reconstruction",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P107"
+      ],
+      "classification": "real_core",
+      "difference": "LZ4 parses frame blocks and LZ4 sequences with block flags, literal runs, 16-bit offsets, and LZ4 match lengths. It is not the Snappy match operation.",
+      "parameters_or_profiles": [
+        "frame/block settings are fixed by the current LZ4 path"
+      ],
+      "source_refs": [
+        "cpp/src/lz4_exact_stages.cpp:194-245",
+        "cpp/src/lz4_exact_stages.cpp:419-433"
+      ],
+      "source_action_names": [
+        "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A084",
+      "name": "ALP remaining factor/exponent search, exceptions, payload and framing",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P108"
+      ],
+      "classification": "composite_remainder",
+      "difference": "This action removes the already-extracted ALP prefix from a full ALP encode. The remaining factor/exponent candidate search, exception policy, FastPFor payload, and ALP2 framing are still a composite, so it is not equivalent to a single container or bitpack action.",
+      "parameters_or_profiles": [
+        "block size and ALP candidate domain are currently internal"
+      ],
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:837-847",
+        "scripts/primitive_operator_action_runtime.py:1275-1286"
+      ],
+      "source_action_names": [
+        "op.block_state_control.alp_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A085",
+      "name": "current REGER remaining row/block/model search and framing",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P109"
+      ],
+      "classification": "composite_remainder",
+      "difference": "This exact-residual bridge reconstructs raw values from the separately modeled REGER prefix and invokes the current reger_codec implementation. It is not proven identical to the legacy block core P118.",
+      "parameters_or_profiles": [
+        "block_size",
+        "segment_size",
+        "search profile and candidate limits"
+      ],
+      "source_refs": [
+        "cpp/src/learning_codec_exact_stages.cpp:1037-1047",
+        "cpp/src/reger_codec.cpp:1077-1152",
+        "cpp/src/reger_codec.cpp:1155-1189"
+      ],
+      "source_action_names": [
+        "op.block_state_control.reger_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A086",
+      "name": "magic plus uint64 length envelope",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P110"
+      ],
+      "classification": "framing_core",
+      "difference": "The entry already combines the reference Blosc1/2, gzip, zlib, XZ and CORAD outer envelopes as one prepend/validate magic-and-length operation. The magic and payload validator are profiles, not algorithms.",
+      "parameters_or_profiles": [
+        "magic/profile",
+        "CORAD validates that its payload is CZL2"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_reference_stages.cpp:51-63",
+        "cpp/src/general_codec_reference_stages.cpp:376-400",
+        "cpp/src/corad_lossless_cpp.cpp:82-101"
+      ],
+      "source_action_names": [
+        "op.container_frame.magic_length.cpp_v3"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A087",
+      "name": "Brotli quality-6 composite remainder",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P111"
+      ],
+      "classification": "composite_remainder",
+      "difference": "The stage reverses the reference dictionary/LZ/Huffman prefix, runs the vendored Brotli compressor, and therefore retains Brotli parsing, context modelling, entropy and frame logic as one remainder. It is distinct from every other backend remainder.",
+      "parameters_or_profiles": [
+        "quality",
+        "window",
+        "mode"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:36-43",
+        "cpp/src/general_codec_residual_stages.cpp:100-108",
+        "cpp/src/general_codec_residual_stages.cpp:268-273"
+      ],
+      "source_action_names": [
+        "op.block_state_control.brotli_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A088",
+      "name": "Zstd level-9 composite remainder",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P112"
+      ],
+      "classification": "composite_remainder",
+      "difference": "The stage reverses a project LZ/policy/Huffman/rANS prefix and invokes the vendored Zstd compressor. Zstd sequence decisions and entropy table logic are not the same as Brotli, Deflate, or XZ.",
+      "parameters_or_profiles": [
+        "compression level"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:45-53",
+        "cpp/src/general_codec_residual_stages.cpp:135-156",
+        "cpp/src/general_codec_residual_stages.cpp:274-278"
+      ],
+      "source_action_names": [
+        "op.block_state_control.zstd_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A089",
+      "name": "C-Blosc1 BLOSCLZ-5 composite remainder",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P113"
+      ],
+      "classification": "composite_remainder",
+      "difference": "Typesize 1/4/8 are already one parameterized core. The stage reverses the shared shuffle/LZ/token prefix and calls the C-Blosc1 BLOSCLZ buffer API; it is distinct from C-Blosc2 state/framing.",
+      "parameters_or_profiles": [
+        "typesize in {1,4,8}"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:55-63",
+        "cpp/src/general_codec_residual_stages.cpp:159-164",
+        "cpp/src/general_codec_residual_stages.cpp:280-285",
+        "cpp/src/blosc_codec.cpp:107-128"
+      ],
+      "source_action_names": [
+        "op.block_state_control.blosc1_residual_core.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A090",
+      "name": "parameterized C-Blosc2 BLOSCLZ-5 with byte shuffle",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P114",
+        "P119"
+      ],
+      "classification": "shared core",
+      "difference": "After removing the surrounding exact-stage adapters, both entries run the same C-Blosc2 pipeline: BLOSCLZ, compression level 5, byte shuffle, one thread, automatic block size, forward-compatible split mode, and no delta filter. P114 uses the context API; P119 uses the legacy global API, which builds the same filter list and initializes the same compression context. A direct v3.1.5-to-v3.3.3 source comparison shows that the byte-shuffle sources are identical, the blosc2.c differences do not touch this compression pipeline, and the BLOSCLZ compressor changes only rewrite output-bound checks into overflow-safe algebraically equivalent forms; the match parser, entropy probe, hash update, and token emission are unchanged. P114 first decodes the project Blosc prefix, while P119 converts the returned chunk to B2P1; those are input/output adapters, and the B2P1 operation is already represented independently by P127. The linked C-Blosc2 release and typesize are execution profiles and must be pinned for reproducible builds, but they do not define another operator algorithm under the requested equivalence rule.",
+      "parameters_or_profiles": [
+        "typesize: P114 accepts 1, 4, or 8; P119 currently fixes 1",
+        "linked C-Blosc2 release: P114 vendored 3.1.5.dev; P119 requires 3.3.3",
+        "input adapter: P114 reverses the project Blosc prefix before the backend call",
+        "output adapter: P119 converts the native chunk to the B2P1 logical-block packet represented by P127",
+        "environment/global settings must be frozen: compressor=BLOSCLZ, clevel=5, shuffle, delta=0, blocksize=auto, split=forward-compatible, nthreads=1"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:167-172",
+        "cpp/src/general_codec_residual_stages.cpp:286-290",
+        "cpp/src/blosc2_codec.cpp:234-257",
+        "cpp/src/blosc2_binding_cpp.cpp:12-40",
+        "cpp/src/blosc2_binding_cpp.cpp:58-75",
+        "cpp/src/general_codec_residual_stages.cpp:280-290",
+        "cpp/src/blosc2_binding_cpp.cpp:25-67",
+        "external/compression/c-blosc2/include/blosc2.h:1212-1221",
+        "external/compression/c-blosc2/blosc/blosc2.c:74-83",
+        "external/compression/c-blosc2/blosc/blosc2.c:3691-3703",
+        "external/compression/c-blosc2/blosc/blosc2.c:3850-3878",
+        "cpp/CMakeLists.txt:85-129",
+        "cpp/CMakeLists.txt:899-912",
+        "cpp/CMakeLists.txt:1556-1566"
+      ],
+      "source_action_names": [
+        "op.block_state_control.blosc2_residual_core.cpp_v2",
+        "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A091",
+      "name": "Bzip2 level-4 composite remainder",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P115"
+      ],
+      "classification": "composite_remainder",
+      "difference": "This removes the BWT/MTF/unified-RLE/project-Huffman prefix and invokes the vendored Bzip2 block sorter, selector and Huffman-group machinery. It is not the same operation as project Huffman or generic RLE.",
+      "parameters_or_profiles": [
+        "Bzip2 level"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:65-73",
+        "cpp/src/general_codec_residual_stages.cpp:175-200",
+        "cpp/src/general_codec_residual_stages.cpp:299-309"
+      ],
+      "source_action_names": [
+        "op.block_state_control.bzip2_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A092",
+      "name": "parameterized Deflate remaining core",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P116"
+      ],
+      "classification": "composite_remainder",
+      "difference": "Gzip, zlib and CORAD variants already share one Deflate core with explicit level and prefix/profile differences. Wrapper headers and trailers are handled separately; those profiles do not create new Deflate algorithms.",
+      "parameters_or_profiles": [
+        "level 0..9",
+        "gzip versus zlib prefix grammar",
+        "CORAD CTK2 input profile"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:75-86",
+        "cpp/src/general_codec_residual_stages.cpp:203-217",
+        "cpp/src/general_codec_residual_stages.cpp:311-327",
+        "cpp/src/deflate_container_stages.cpp:24-75"
+      ],
+      "source_action_names": [
+        "op.block_state_control.deflate_residual_core.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A093",
+      "name": "XZ/LZMA2 preset-5 composite remainder",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P117"
+      ],
+      "classification": "composite_remainder",
+      "difference": "This reverses the reference LZ/policy/range prefix then runs liblzma's LZMA2 state machine and range models. The recurrence and container checks differ from the project static range coder and Deflate.",
+      "parameters_or_profiles": [
+        "preset",
+        "integrity check"
+      ],
+      "source_refs": [
+        "cpp/src/general_codec_residual_stages.cpp:88-96",
+        "cpp/src/general_codec_residual_stages.cpp:219-265",
+        "cpp/src/general_codec_residual_stages.cpp:329-334"
+      ],
+      "source_action_names": [
+        "op.block_state_control.xz_lzma2_residual_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A094",
+      "name": "legacy REGER block candidate search and payload",
+      "family_numbers": [
+        27
+      ],
+      "source_entry_ids": [
+        "P118"
+      ],
+      "classification": "composite_core",
+      "difference": "This is a legacy standalone REGER block implementation with its own RGP1 boundary. It overlaps the intended REGER algorithm with P109 but current source equivalence is not established, so the conservative count keeps it separate.",
+      "parameters_or_profiles": [
+        "block_size",
+        "segment_size",
+        "fast/balanced and search controls"
+      ],
+      "source_refs": [
+        "cpp/src/reger_legacy_cpp.cpp:3-3",
+        "cpp/src/reger_legacy_cpp.cpp:1071-1092",
+        "cpp/src/reger_legacy_cpp.cpp:1137-1174"
+      ],
+      "source_action_names": [
+        "op.block_state_control.reger_legacy_block_core.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A095",
+      "name": "reference int64 header/checksum container proxy",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P120"
+      ],
+      "classification": "reference_proxy",
+      "difference": "This inserts fixed int64 header/checksum slots into a value vector. It is neither a general byte container nor one of the standard frame assemblers.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/reference_operator_actions.cpp:360-364",
+        "cpp/src/reference_operator_actions.cpp:496"
+      ],
+      "source_action_names": [
+        "op.container_frame.reference_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A096",
+      "name": "LZ4 frame assembly/parsing",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P121"
+      ],
+      "classification": "framing_core",
+      "difference": "This converts the LZ4 integer/block packet to and from an LZ4 frame, preserving LZ4 block flags and sequence bodies. Its grammar differs from simple magic/length and generic stored-parts assembly.",
+      "parameters_or_profiles": [
+        "frame descriptor values are derived from the parsed LZ4 stream"
+      ],
+      "source_refs": [
+        "cpp/src/lz4_exact_stages.cpp:130-192",
+        "cpp/src/lz4_exact_stages.cpp:447-451"
+      ],
+      "source_action_names": [
+        "op.container_frame.lz4.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A097",
+      "name": "stored header/core/trailer assembly",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P122"
+      ],
+      "classification": "framing_core",
+      "difference": "Gzip, zlib and XZ are already one profile-controlled operation that stores and reassembles ordered frame parts. Their header/trailer sizes and validators are profiles, not new algorithms.",
+      "parameters_or_profiles": [
+        "gzip/zlib wrapper kind and header length",
+        "XZ fixed 12-byte header/footer profile"
+      ],
+      "source_refs": [
+        "cpp/src/deflate_container_stages.cpp:24-75",
+        "cpp/src/deflate_container_stages.cpp:87-134",
+        "cpp/src/xz_container_stage.cpp:27-50"
+      ],
+      "source_action_names": [
+        "op.container_frame.stored_parts.cpp_v2"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A098",
+      "name": "legacy two-limb numeric wire assembly",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P123"
+      ],
+      "classification": "framing_core",
+      "difference": "This combines two 32-bit limb payloads and legacy scaled metadata into a frozen numeric wire. No other assigned frame has this two-limb semantic layout.",
+      "parameters_or_profiles": [
+        "int64 versus float64-scaled legacy profile"
+      ],
+      "source_refs": [
+        "cpp/src/legacy_numeric_action_stages.cpp:232-240",
+        "cpp/src/legacy_numeric_action_stages.cpp:283-305"
+      ],
+      "source_action_names": [
+        "op.container_frame.legacy_numeric_limbs.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A099",
+      "name": "legacy ALP2 block frame assembly",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P124"
+      ],
+      "classification": "framing_core",
+      "difference": "ALP2 selects raw versus scaled blocks and records factors, exponents, two limb bodies, and exception locations. This schema is algorithmically different from generic limb and magic/length frames.",
+      "parameters_or_profiles": [
+        "raw versus scaled block profile"
+      ],
+      "source_refs": [
+        "cpp/src/legacy_numeric_action_stages.cpp:291-305"
+      ],
+      "source_action_names": [
+        "op.container_frame.alp2_legacy.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A100",
+      "name": "REGER3 single-column frame assembly",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P125"
+      ],
+      "classification": "framing_core",
+      "difference": "This converts RGP1 block records into the frozen REGER3 public frame. REGER-specific block flags and widths make it distinct from generic stored-parts framing.",
+      "parameters_or_profiles": [
+        "block_size and segment_size are carried from the core packet"
+      ],
+      "source_refs": [
+        "cpp/src/reger_legacy_cpp.cpp:1120-1135",
+        "cpp/src/reger_legacy_cpp.cpp:1176-1182"
+      ],
+      "source_action_names": [
+        "op.container_frame.reger3_legacy.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A101",
+      "name": "BUFF raw64 header assembly",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P126"
+      ],
+      "classification": "framing_core",
+      "difference": "This prepends count, fixed 64 bits-per-value, and zero lower-bits fields to already reordered 64-bit words. It is a distinct fixed-schema frame.",
+      "parameters_or_profiles": [],
+      "source_refs": [
+        "cpp/src/buff_native_exact_stages.cpp:46-67"
+      ],
+      "source_action_names": [
+        "op.container_frame.buff_native_raw64.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A102",
+      "name": "Blosc2 physical-block frame normalization",
+      "family_numbers": [
+        28
+      ],
+      "source_entry_ids": [
+        "P127"
+      ],
+      "classification": "framing_core",
+      "difference": "This maps between a C-Blosc2 chunk and B2P1 logical block records, including direct/memcpy/special-zero modes and physical offsets. That operation is not a generic length envelope.",
+      "parameters_or_profiles": [
+        "physical block order is normalized; current contract fixes Blosc2 3.3.3 and typesize=1"
+      ],
+      "source_refs": [
+        "cpp/src/blosc2_binding_cpp.cpp:25-56"
+      ],
+      "source_action_names": [
+        "op.container_frame.blosc2_legacy_chunk.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A103",
+      "name": "floating-point sign-plus-fraction/exponent deconstruction",
+      "family_numbers": [
+        29
+      ],
+      "source_entry_ids": [
+        "P128"
+      ],
+      "classification": "layout_core",
+      "difference": "FP16, BF16 and FP32 are already format parameters. This action emits two fields by joining sign with fraction; it is not identical to the three-field generic FP bitsplit.",
+      "parameters_or_profiles": [
+        "format selects total width, exponent width and fraction width"
+      ],
+      "source_refs": [
+        "cpp/src/openzl_layout_stages.cpp:245-260"
+      ],
+      "source_action_names": [
+        "op.split_columns.float_deconstruct.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A104",
+      "name": "parameterized least-significant-first bit-field split",
+      "family_numbers": [
+        29
+      ],
+      "source_entry_ids": [
+        "P129"
+      ],
+      "classification": "layout_core",
+      "difference": "Generic, top8, IEEE FP, and BF16 are already one bitsplit core with field-width selection. Top8 adds data-dependent width selection; fixed FP/BF16 modes only provide width vectors.",
+      "parameters_or_profiles": [
+        "field widths",
+        "top8 auto-width profile",
+        "input storage width"
+      ],
+      "source_refs": [
+        "cpp/src/openzl_layout_stages.cpp:262-297"
+      ],
+      "source_action_names": [
+        "op.split_columns.bitsplit.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A105",
+      "name": "fixed-width bitstream unpack",
+      "family_numbers": [
+        29
+      ],
+      "source_entry_ids": [
+        "P130"
+      ],
+      "classification": "layout_core",
+      "difference": "This parses a serial bitstream into fixed-width numeric lanes and stores the final remainder bits. Its direction and bit-boundary semantics differ from splitting fields inside already aligned values.",
+      "parameters_or_profiles": [
+        "element bit width 1..64"
+      ],
+      "source_refs": [
+        "cpp/src/openzl_layout_stages.cpp:298-314",
+        "cpp/src/openzl_layout_stages.cpp:404-418"
+      ],
+      "source_action_names": [
+        "op.split_columns.bitunpack.cpp_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A106",
+      "name": "cmix PPMd byte-context probability provider",
+      "family_numbers": [
+        30
+      ],
+      "source_entry_ids": [
+        "P131"
+      ],
+      "classification": "probability_provider",
+      "difference": "PPMd maintains a context tree, exposes bit probability and a byte distribution, and updates at byte boundaries. Its state/update rule is distinct from DMC, PAQ and full cmix.",
+      "parameters_or_profiles": [
+        "order 2..64",
+        "memory 4..256 MiB"
+      ],
+      "source_refs": [
+        "cpp/src/prediction_probability_cli.cpp:57-62",
+        "cpp/src/prediction_probability_cli.cpp:79-118"
+      ],
+      "source_action_names": [
+        "op.prediction_probability.ppm.provider_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A107",
+      "name": "cmix PAQ dmcModel count-branch provider",
+      "family_numbers": [
+        30
+      ],
+      "source_entry_ids": [
+        "P132"
+      ],
+      "classification": "probability_provider",
+      "difference": "DMC uses state cloning and its own 12-bit fixed-point probability/update rule. It is not a parameter setting of PPMd or PAQ.",
+      "parameters_or_profiles": [
+        "current adapter fixes 65536 extra nodes and cloning threshold 1024"
+      ],
+      "source_refs": [
+        "cpp/src/prediction_probability_cli.cpp:62-65",
+        "cpp/src/prediction_probability_cli.cpp:82-84",
+        "cpp/src/prediction_probability_cli.cpp:102-107"
+      ],
+      "source_action_names": [
+        "op.prediction_probability.dmc.provider_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A108",
+      "name": "cmix PAQ8 hybrid final predictor",
+      "family_numbers": [
+        30
+      ],
+      "source_entry_ids": [
+        "P133"
+      ],
+      "classification": "probability_provider",
+      "difference": "PAQ instantiates the PAQ predictor/mixer and runs its p()/update recurrence. Memory level changes capacity but does not turn it into DMC or full cmix.",
+      "parameters_or_profiles": [
+        "bounded memory level 0..3"
+      ],
+      "source_refs": [
+        "cpp/src/prediction_probability_cli.cpp:66-69",
+        "cpp/src/prediction_probability_cli.cpp:83-84",
+        "cpp/src/prediction_probability_cli.cpp:105-107"
+      ],
+      "source_action_names": [
+        "op.prediction_probability.paq.provider_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A109",
+      "name": "cmix full Predictor",
+      "family_numbers": [
+        30
+      ],
+      "source_entry_ids": [
+        "P134"
+      ],
+      "classification": "probability_provider_resource_gated",
+      "difference": "Full cmix instantiates the upstream combined Predictor with its own ensemble and state update. It remains a separate model and requires explicit large-memory opt-in.",
+      "parameters_or_profiles": [
+        "large-memory runtime opt-in is a resource gate, not an algorithm variant"
+      ],
+      "source_refs": [
+        "cpp/src/prediction_probability_cli.cpp:70-75",
+        "cpp/src/prediction_probability_cli.cpp:84-85",
+        "cpp/src/prediction_probability_cli.cpp:108-110"
+      ],
+      "source_action_names": [
+        "op.prediction_probability.cmix.provider_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A110",
+      "name": "NNCP intended neural probability provider",
+      "family_numbers": [
+        30
+      ],
+      "source_entry_ids": [
+        "P135"
+      ],
+      "classification": "declared_unavailable_no_adapter",
+      "difference": "The upstream NNCP source is present but there is no callable project adapter. It must remain an unavailable description and cannot be merged with an implemented predictor or counted as executable C++.",
+      "parameters_or_profiles": [
+        "model weights, vocabulary, tokenization and initialization are not exposed in a current action contract"
+      ],
+      "source_refs": [
+        "scripts/prediction_probability.py:40-49",
+        "scripts/prediction_probability.py:113-120",
+        "cpp/src/prediction_probability_cli.cpp:31-35",
+        "cpp/src/prediction_probability_cli.cpp:70-76"
+      ],
+      "source_action_names": [
+        "op.prediction_probability.nncp.provider_v1"
+      ],
+      "execution_status": "see_versioned_runtime_capabilities"
+    },
+    {
+      "implementation_id": "A111",
+      "name": "high-bit exception separation",
+      "family_numbers": [
+        6
+      ],
+      "source_entry_ids": [
+        "P029"
+      ],
+      "classification": "new_atomic_definition_pending_runtime",
+      "difference": "A026 is replaced by a new exception-separation definition and existing bit packing; b is an input parameter. No new selector implementation is counted.",
+      "parameters_or_profiles": [
+        "page/block size",
+        "tail policy"
+      ],
+      "source_refs": [
+        "cpp/src/fastpfor_exact_stages.cpp:95-117",
+        "external/compression/FastPFor/headers/fastpfor.h:140-220"
+      ],
+      "source_action_names": [],
+      "execution_status": "semantic_definition_pending_independent_cpp_entry",
+      "input": {
+        "values": "uint32[N]",
+        "parameters": {
+          "b": "uint8 in 0..32"
+        }
+      },
+      "outputs": {
+        "low": "uint32[N]",
+        "pos": "uint32[E]",
+        "high": "uint32[E]"
+      },
+      "inverse_metadata": [
+        "b",
+        "N"
+      ]
+    }
+  ],
+  "retired": [
+    {
+      "implementation_id": "A005",
+      "source_entry_ids": [
+        "P006"
+      ],
+      "action_names": [
+        "op.scaling.reference_v1"
+      ],
+      "reason": "Identity copy performs no scaling; removed from current forward selection. Historical decoder only.",
+      "replacement_implementation_ids": []
+    },
+    {
+      "implementation_id": "A017",
+      "source_entry_ids": [
+        "P019",
+        "P036"
+      ],
+      "reason": "Composite Delta followed by ZigZag; not an independent implementation.",
+      "replacement_implementation_ids": [
+        "A028",
+        "A046"
+      ]
+    },
+    {
+      "implementation_id": "A026",
+      "source_entry_ids": [
+        "P029"
+      ],
+      "reason": "Replaced by new high-bit exception separation and existing bit packing; width is an input parameter.",
+      "replacement_implementation_ids": [
+        "A111",
+        "A020"
+      ]
+    },
+    {
+      "implementation_id": "A071",
+      "source_entry_ids": [
+        "P088"
+      ],
+      "action_names": [
+        "op.integer_code.reference_v1"
+      ],
+      "reason": "Composite signed ZigZag followed by unsigned ULEB128; current execution uses two separate stages.",
+      "replacement_implementation_ids": [
+        "A046",
+        "A023"
+      ]
+    },
+    {
+      "implementation_id": "A074",
+      "source_entry_ids": [
+        "P091"
+      ],
+      "action_names": [
+        "op.integer_code.snappy.cpp_v1"
+      ],
+      "reason": "Same unsigned ULEB128 core as A023; scalar uint32 raw-length I/O is a profile.",
+      "replacement_implementation_ids": [
+        "A023"
+      ]
+    }
+  ],
+  "retired_identity_action_names": [
+    "op.scaling.reference_v1"
+  ],
+  "source_entry_accounting": {
+    "attached_to_active_items": 131,
+    "recipe_only_A017": 2,
+    "recipe_only_A071": 1,
+    "retired_identity_A005": 1,
+    "historical_total": 135,
+    "note": "P091 remains active under A023; retired A074 is a duplicate crosswalk, not another source entry."
+  },
+  "pending_runtime_work": [
+    "A111 is an independent semantic definition; the existing FastPFor composite entry has not been rewired into independent A111 and bit-packing stages."
+  ],
+  "runtime_views": {
+    "policy": "cpp-canonical-127-v4",
+    "graph": "operator-taxonomy-30-v7",
+    "policy_slots": 127,
+    "active_policy_actions": 122,
+    "stop_action_id": 127,
+    "retired_policy_slots": [
+      5,
+      18,
+      35,
+      87,
+      90
+    ]
+  },
+  "revision_note": "A048 narrowed to pure Byte-plane Split; existing A013 FOR precedes it. Count unchanged. A024/A025 and A034-A036 review proposals remain pending."
+}

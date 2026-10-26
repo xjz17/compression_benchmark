@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "native-baseline86-result-v1",
+  "title": "Native baseline86 prepared-block result",
+  "type": "object",
+  "required": [
+    "schema",
+    "profile_version",
+    "block_id",
+    "method",
+    "implementation_class",
+    "primary_comparison",
+    "status",
+    "original_numeric_bytes"
+  ],
+  "properties": {
+    "schema": {"const": "native-baseline86-result-v1"},
+    "profile_version": {"const": "baseline86-fixed-profiles-20260919-v3"},
+    "block_id": {"type": "string"},
+    "dataset_id": {"type": "string"},
+    "method": {"type": "string"},
+    "implementation_class": {
+      "enum": ["direct_current", "direct_generic", "direct_exact_subset", "shared_alias", "project_proxy", "unsupported"]
+    },
+    "primary_comparison": {"type": "boolean"},
+    "configuration": {"type": "string"},
+    "dtype": {"type": "string"},
+    "row_count": {"type": "integer", "minimum": 0},
+    "status": {
+      "enum": ["ok", "N/A", "unsupported", "failed", "invalid_input"]
+    },
+    "reason": {"type": "string"},
+    "original_numeric_bytes": {"type": ["integer", "null"], "minimum": 0},
+    "declared_original_numeric_bytes": {"type": "integer", "minimum": 0},
+    "complete_frame_bytes": {"type": "integer", "minimum": 0},
+    "complete_frame_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "complete_frame_relative_path": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{2}/[0-9a-f]{64}\\.ngf1$"
+    },
+    "complete_frame_storage": {"const": "content_addressed_ngf1"},
+    "compression_ns_samples": {
+      "type": "array",
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "decompression_ns_samples": {
+      "type": "array",
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "compression_ns": {"type": "number", "minimum": 0},
+    "decompression_ns": {"type": "number", "minimum": 0},
+    "compression_ratio": {"type": ["number", "null"], "minimum": 0},
+    "compression_ns_per_original_numeric_byte": {
+      "type": ["number", "null"], "minimum": 0
+    },
+    "decompression_ns_per_original_numeric_byte": {
+      "type": ["number", "null"], "minimum": 0
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "ok"}}},
+      "then": {
+        "required": [
+          "complete_frame_bytes",
+          "compression_ns_samples",
+          "decompression_ns_samples",
+          "compression_ratio",
+          "compression_ns_per_original_numeric_byte",
+          "decompression_ns_per_original_numeric_byte"
+        ]
+      }
+    }
+  ],
+  "additionalProperties": true
+}

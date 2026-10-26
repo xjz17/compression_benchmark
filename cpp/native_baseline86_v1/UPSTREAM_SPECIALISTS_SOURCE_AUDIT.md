@@ -1,0 +1,32 @@
+# Specialist source-fidelity audit
+
+This is a source-to-source audit of `upstream_specialists.cpp`.  It distinguishes
+use of an upstream algorithm kernel from wire compatibility with an upstream
+standalone program.  Every entry is still wrapped in the project `USP1` checked
+payload, and later in the baseline `NGF1` complete frame.
+
+| Label | Authoritative source and call path | Preserved behavior | Adapter difference and claim boundary |
+|---|---|---|---|
+| Chimp | `external/compression/ALP/publication/source_code/include/chimp/chimp.hpp`; `ChimpCompression<uint64_t,false>::Store/Flush` and `ChimpDecompression<uint64_t>::Load` are called directly. | ALP Chimp data bits, two-bit flags and three-bit leading-zero codes. | The adapter serializes the three buffers with explicit counts. It is a direct Chimp kernel for `float64` IEEE words, but the `USP1` payload is not claimed to be byte-compatible with an ALP publication executable or to be Chimp128. |
+| RLE | Project implementation in `upstream_specialists.cpp::rle_encode/rle_decode`. | One canonical `(varint count, byte value)` pair per maximal byte run. | There is no single upstream implementation identified by the generic `RLE` label. This is a direct, fixed project profile, not the old adaptive URL1 codec and not a claim about typed-value RLE variants. |
+| Dict. | Project implementation in `upstream_specialists.cpp::dictionary_encode/dictionary_decode`. | First-seen byte dictionary and minimum-width bit-packed symbol IDs. | This is a direct, fixed project byte-dictionary profile. It is not wire-compatible with a named external dictionary codec and is not the old dictionary64 action profile. |
+| CORAD | Exact fallback in `cpp/src/corad_tricklet_float_codec.cpp`: the legacy source stores `(uint64 count, first value)` and compresses that 16-byte payload with zlib level 6 when the computed sigma is below `1e-15`. | The adapter stores the same count and original `float64` word and applies zlib level 6. A differential fixture produced the same 13-byte zlib body. | The legacy sigma test can admit near-constant values and then reconstruct only the first value. The adapter tightens admission to nonempty, finite, bitwise-constant `float64` input, so admitted rows are lossless. It does not execute the normalized/tricklet path. Therefore it is only the exact constant fallback, not a general direct/lossless CORAD implementation. |
+| BUFF | `external/operator_ablation_sources/buff-rs/src/precision.rs::fetch_fixed_aligned` and `src/codec.rs::BuffCodec::encode/decode`; C++ precision helper in `cpp/src/buff_kernel/buff_precision_bound.cpp`. | Scale 10000 gives decimal precision 4 and 14 fractional bits. The adapter preserves the fixed conversion, signed base, delta width, sign-bit-flipped byte slices and inverse `fixed / 2^14`. For the qualification fixture, base, count, total width and every byte slice equal `buff-rs` 0.2.0 output. | The project header stores one total width instead of separate `ilen,dlen`; with fixed `dlen=14` this is information-equivalent. The vendored decoder implements at most four slices, so the adapter rejects widths above 32. It also rejects empty/nonfinite input and admits a block only after an IEEE-bit-identical decode. It is not lossless for arbitrary floats and must not be described as a general lossless BUFF implementation. |
+| ANS | `cpp/src/ans_rans.cpp` called directly. | The existing static order-0 byte rANS kernel with 15 probability bits. | `ANS` is a generic family name. The admissible claim is the named project profile `static_order0_rans_prob_bits15`, not compatibility with every ANS or a specific unreferenced upstream format. |
+| Huffman | `cpp/src/huffman_bytes.cpp` called directly. | Deterministic static byte-frequency tree and its inverse. | This is the named project static Huffman profile, not a claim of compatibility with an unspecified external Huffman container. |
+| Arithmetic | `cpp/src/arithmetic_bytes.cpp` called directly. | Static order-0 byte range coder with the 15-bit model. | This is the named project arithmetic profile, not a claim covering adaptive/context arithmetic coders. |
+| FPCmp-R | `external/compression/FPCompress/preprocessors/h_FCMp_8.h`, `components/h_DIFFMS_8.h`, `h_RAZE_8.h`, and `h_RARE_8.h`; source program `double_src/ratio-{compressor,decompressor}-double.cpp`. | The serial memory preprocessor uses the upstream context hash (XOR of hashes of the preceding one to three words), sort key, four-back match, and distance representation. Each 16 KiB chunk then calls the same `DIFFMS_8 -> RAZE_8 -> RARE_8` headers, applies the same stage-failure/raw fallback rule, and decodes in reverse before inverse FCMp. A 32,776-byte fixture yielded the same five chunk sizes and every payload byte as a serial build of the upstream source. | File I/O, OpenMP scheduling, environment-driven stage omission and the upstream aggregate header are replaced by bounded in-process buffers, an explicit per-chunk compressed flag and `USP1`. The algorithm payload is direct adapted FPCompress 1.2; timing must be described as this single-thread adapter, not the upstream OpenMP executable. |
+| FPCmp-S | `external/compression/FPCompress/components/h_DIFFMS_8.h` and `h_HCLOG_8.h`; source program `double_src/speed-{compressor,decompressor}-double.cpp`. | The same 16 KiB chunks, `DIFFMS_8 -> HCLOG_8` calls, reverse calls and raw fallback. The same fixture yielded the same three chunk sizes and every payload byte as the serial upstream source. | The same file/header/scheduling differences as FPCmp-R apply. The admissible claim is direct adapted, single-thread FPCmp-S payload execution. |
+
+The FPCompress differential source build changed only
+`std::execution::par_unseq` to `std::sort` so it could compile with the local
+Apple C++ library.  The sort key is unique because its low 32 bits contain the
+original word position, so this scheduling change does not change the sorted
+order or encoded payload.  The original compressor/decompressor round trips
+were bit-exact before payload comparison.
+
+The CMake helper uses `CMAKE_CURRENT_FUNCTION_LIST_DIR`, available under the
+project's CMake 3.18 minimum, so calls from another list directory still resolve
+the specialist sources and vendored includes relative to the helper definition.
+An independent call-site project built the library and passed all three CTest
+entries (in-process, fixture writer, and separate-process cold decoder).

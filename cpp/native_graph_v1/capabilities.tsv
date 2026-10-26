@@ -1,0 +1,130 @@
+op.eraser.pongo.cpp_v1	cpp/src/pongo_codec.cpp	existing exact stage packet
+op.xor.pongo.cpp_v1	cpp/src/pongo_codec.cpp	existing exact stage packet
+op.trailing_zero_pack.pongo.cpp_v1	cpp/src/pongo_codec.cpp	existing exact stage packet
+op.eraser.elf64.cpp_v1	cpp/src/elf_double_codec.cpp	existing exact stage packet
+op.eraser.elf.cpp_v1	cpp/src/elf_float_codec.cpp	existing lossless float64-to-float32 gated Elf32 profile
+op.xor.elf.cpp_v1	cpp/src/elf_float_codec.cpp	existing exact stage packet
+op.xor.elf_plus.cpp_v1	cpp/src/elf_float_codec.cpp	existing exact stage packet
+op.xor.camel.cpp_v1	cpp/src/camel_exact_stages.cpp	existing exact stage packet
+op.bitstream_pack.camel.cpp_v1	cpp/src/camel_exact_stages.cpp	existing exact stage packet
+op.block_transform.buff_native_word_order.cpp_v1	cpp/src/buff_native_exact_stages.cpp	existing exact stage packet
+op.container_frame.buff_native_raw64.cpp_v1	cpp/src/buff_native_exact_stages.cpp	existing exact stage packet
+op.trailing_zero_pack.fpc.cpp_v1	cpp/src/fpc_exact_stages.cpp	existing exact stage packet
+op.trailing_zero_pack.pfpc.cpp_v1	cpp/src/pfpc_exact_stages.cpp	existing exact stage packet
+op.delta.spdp.cpp_v1	cpp/src/spdp_exact_stages.cpp	existing exact stage packet
+op.block_transform.spdp.cpp_v1	cpp/src/spdp_exact_stages.cpp	existing exact stage packet
+op.frame_of_reference.ts_2diff.cpp_v1	cpp/src/ts2diff_exact_stages.cpp	existing exact stage packet
+op.zigzag.dbp_residual.cpp_v2	cpp/src/dbp_exact_stages.cpp	existing exact stage packet
+op.integer_code.uleb128.dbp_residuals.cpp_v2	cpp/src/dbp_exact_stages.cpp	existing exact stage packet
+op.delta.bos.cpp_v1	cpp/src/bos_exact_stages.cpp	BOSA modular delta packet
+op.frame_of_reference.bos.cpp_v1	cpp/src/bos_exact_stages.cpp	existing exact stage packet
+op.outlier_separation.bos.cpp_v1	cpp/src/bos_exact_stages.cpp	existing exact stage packet
+op.delta.stream_vbyte.cpp_v1	cpp/src/svb_exact_stages.cpp	modular delta-1 over int64 limbs
+op.integer_code.stream_vbyte.cpp_v1	cpp/src/svb_exact_stages.cpp	existing exact stage packet
+op.bitpack_int.simple8b.cpp_v1	cpp/src/simple8b_exact_stages.cpp	Simple8b exact typed stage
+op.bitpack_int.fastpfor_pfor.cpp_v1	cpp/src/fastpfor_exact_stages.cpp	FastPFor<8> prefix stage
+op.integer_code.fastpfor_variablebyte.cpp_v1	cpp/src/fastpfor_exact_stages.cpp	Lemire VariableByte tail stage
+op.delta.sprintz.cpp_v1	cpp/src/p04_exact_stages.cpp	Sprintz predictor residual stage
+op.delta.fpzip.cpp_v1	cpp/src/fpzip_exact_stages.cpp	FPZIP 1D Lorenzo predictor
+op.entropy_range.fpzip.cpp_v1	cpp/src/fpzip_exact_stages.cpp	existing exact stage packet
+op.scaling.tsfile_rle.cpp_v1	cpp/src/rle_exact_stages.cpp	bitwise-reversible TsFile-RLE scaling
+op.scaling.alp.cpp_v1	cpp/src/learning_codec_exact_stages.cpp	ALP exact scaling/raw-bit fallback
+op.scaling.buff.cpp_v1	cpp/src/learning_codec_exact_stages.cpp	BUFF exact scaling/raw-bit fallback
+op.frame_of_reference.buff.cpp_v2	cpp/src/learning_codec_exact_stages.cpp	existing exact stage packet
+op.block_transform.buff_byte_plane_split.cpp_v2	cpp/src/learning_codec_exact_stages.cpp	BUFF byte planes at exact required width
+op.regression_predictor.leco_linear.cpp_v2	cpp/src/learning_codec_exact_stages.cpp	LECO signed linear residuals
+op.block_state_control.lz4_matchfinder_residual_core.cpp_v1	cpp/src/lz4_exact_stages.cpp	vendored LZ4 frame matcher and block decisions
+op.match_token_format.lz4.cpp_v1	cpp/src/lz4_exact_stages.cpp	existing exact stage packet
+op.integer_code.lz4.cpp_v1	cpp/src/lz4_exact_stages.cpp	existing exact stage packet
+op.block_state_control.snappy_matchfinder_residual_core.cpp_v1	cpp/src/snappy_exact_stages.cpp	vendored snap-1.1.1 matcher and semantic records
+op.lz_match.snappy_snap_1_1_1.cpp_v1	cpp/src/snappy_exact_stages.cpp	vendored snap-1.1.1 matcher and semantic records
+op.match_token_format.snappy.cpp_v1	cpp/src/snappy_exact_stages.cpp	existing exact stage packet
+op.scaling.corad_normalize_exact.cpp_v2	cpp/src/corad_lossless_cpp.cpp	CORAD normalization with exact repair words
+op.dictionary.corad_tricklet_xor.cpp_v2	cpp/src/corad_lossless_cpp.cpp	CORAD 40-lane tricklet XOR dictionary
+op.prediction_probability.ppm.provider_v1	cpp/src/prediction_probability_model.cpp	actual causal predictor plus in-process binary arithmetic entropy edge
+op.prediction_probability.dmc.provider_v1	cpp/src/prediction_probability_model.cpp	actual causal predictor plus in-process binary arithmetic entropy edge
+op.prediction_probability.cmix.provider_v1	cpp/native_graph_v1/cmix_isolated_plugin.cpp	full upstream cmix predictor with per-call timed DSO load/unload state isolation, Linux DSO-local reclaimable mmap arena, and in-process arithmetic entropy edge
+op.prediction_probability.paq.provider_v1	cpp/native_graph_v1/paq_isolated_plugin.cpp	upstream PAQ predictor with per-call timed DSO load/unload state isolation plus in-process arithmetic entropy edge
+op.dictionary.brotli_static_small.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	Brotli-shaped reference dictionary; not upstream Brotli wire
+op.match_token_format.blosclz.ctrl8.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing reference LZS1 token adapter, not upstream BloscLZ
+op.match_parse_policy.generic_packet.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing exact stage packet
+op.block_transform.bzip2_bwt.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing exact stage packet
+op.symbol_recode.bzip2_mtf.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing exact stage packet
+op.entropy_huffman.project_bytes.cpp_v1	cpp/src/huffman_bytes.cpp	existing exact stage packet
+op.entropy_range.project_bytes.cpp_v1	cpp/src/arithmetic_bytes.cpp	existing exact stage packet
+op.entropy_fse.zstd_rans.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	project rANS reference; not upstream Zstd FSE
+op.eraser.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.frame_of_reference.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.value_reorder.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.regression_predictor.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.outlier_separation.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.bitpack_int.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.delta.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.xor.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.trailing_zero_pack.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.dictionary.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.zigzag.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.block_transform.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.symbol_recode.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.run_length.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.lz_match.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.match_parse_policy.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.match_window_model.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.match_token_format.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.bitstream_pack.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.entropy_huffman.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.entropy_range.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.entropy_fse.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.entropy_special.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.literal_entropy.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.block_state_control.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.container_frame.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.xor.chimp_history128.reference_v1	cpp/src/reference_operator_actions.cpp	frozen reference/proxy transform with independent numeric/metadata ports; no hidden zlib
+op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing reference byte shuffle packet
+op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing reference byte shuffle packet
+op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing reference byte shuffle packet
+op.lz_match.brotli_lazy65535.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing parameterized reference LZ search; no upstream wire claim
+op.lz_match.zstd_lazy65535.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing parameterized reference LZ search; no upstream wire claim
+op.lz_match.deflate_lazy32768.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing parameterized reference LZ search; no upstream wire claim
+op.lz_match.xz_lazy16777216.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing parameterized reference LZ search; no upstream wire claim
+op.lz_match.blosclz.greedy.cpp_reference_v1	cpp/src/general_codec_reference_stages.cpp	existing parameterized reference LZ search; no upstream wire claim
+zlib.level6	cpp zlib	complete zlib level6 stream
+columnize	cpp/native_graph_v1	OpenZL layout transpose/split
+float_deconstruct	cpp/native_graph_v1	OpenZL float bit split
+bitsplit	cpp/native_graph_v1	OpenZL bit split
+bitunpack	cpp/native_graph_v1	OpenZL bit unpack
+op.frame_of_reference.minimum.int64_uint64_le.cpp_v1	cpp/native_graph_v1	minimum plus uint64 offsets
+op.outlier_separation.high_bits.uint32.cpp_v1	cpp/native_graph_v1	low/positions/high uint32 ports
+op.dictionary.project_words64.cpp_v1	cpp/native_graph_v1	dictionary plus ids ports
+op.zigzag.signed64.raw.cpp_v2	cpp/native_graph_v1	signed int64 zigzag
+op.integer_code.uleb128.reference_values.cpp_v2	cpp/native_graph_v1	unsigned ULEB128
+op.bitpack_int.max_value_width.cpp_v1	cpp/native_graph_v1	max width bit packing
+op.eraser.camel.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.xor.fpc.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.xor.pfpc.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.scaling.exact_decimal.cpp_v2	cpp/native_graph_v1	direct exact typed stage
+op.scaling.delta_binary_packed.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.delta.ts_2diff.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.xor.gorilla.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.xor.chimp128.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.trailing_zero_pack.gorilla.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.trailing_zero_pack.chimp128.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.entropy_special.spdp.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.run_length.byte_optimal.cpp_v1	cpp/native_graph_v1	direct exact typed stage
+op.scaling.legacy_exact_decimal.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.scaling.alp_legacy_fe_exceptions.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.block_transform.int64_lo_hi32.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.container_frame.legacy_numeric_limbs.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.container_frame.alp2_legacy.cpp_v1	cpp/src/legacy_numeric_action_stages.cpp	frozen legacy adapter, not canonical ALP/FastPFor
+op.match_window_model.native_lz.window4096	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.match_window_model.native_lz.window65535	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.lz_match.native_lz.aligned8.min3.max18	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.match_parse_policy.native_lz.aligned8_greedy	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.match_token_format.native_lz.ctrl8_offset16_len8.bias3	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.match_token_format.native_lz.ctrl8_offset16_len8.bias4	cpp/src/native_lz_action_stages.cpp	existing aligned-eight parameterized native-LZ
+op.xor.previous_word.cpp_v2	cpp/src/adjacent_residual.hpp	single-stream adjacent-XOR carrier over byte or 64-bit physical lanes
+op.xor.previous_word.semantic_ports.cpp_v1	cpp/src/adjacent_residual.hpp	separate first-word and XOR-residual physical ports
+op.xor.chimp_history128.cpp_v2	cpp/native_graph_v1/chimp_history_xor_v2.cpp	count-driven Chimp history128 low14-key XOR ports without sentinel
+op.trailing_zero_pack.elf_plus_residual.cpp_v1	cpp/src/residual_window_pack.hpp	exact residual-window packet

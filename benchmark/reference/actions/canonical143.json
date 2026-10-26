@@ -1,0 +1,6132 @@
+{
+  "schema": "canonical-algorithm-io-parameters-v1",
+  "registry_version": "cpp-canonical-143-v1",
+  "previous_registry_version": "cpp-canonical-156-v1",
+  "source_document": "28类算子_按算法合并后的182项实现.docx",
+  "source_document_sha256": "3f94ec9d10703d30b6433e3a66acd5a06f55c08f9f3e3d8cfad6fa9e5f04ca38",
+  "action_count": 143,
+  "variant_count": 167,
+  "merge_group_count": 15,
+  "actions": [
+    {
+      "policy_action_id": 0,
+      "document_id": "P001",
+      "name": "op.eraser.reference_v1",
+      "operator_id": "eraser",
+      "algorithm": "整数参考擦除：算术右移4位并保留低4位侧信息；不是Elf浮点擦除。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:216",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.eraser.reference_v1",
+          "legacy_206_policy_id": 0,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "整数参考擦除：算术右移4位并保留低4位侧信息；不是Elf浮点擦除。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        0
+      ],
+      "previous_document_ids": [
+        "A001"
+      ],
+      "previous_156_policy_ids": [
+        0
+      ],
+      "previous_156_document_ids": [
+        "P001"
+      ]
+    },
+    {
+      "policy_action_id": 1,
+      "document_id": "P002",
+      "name": "op.eraser.pongo.cpp_v1",
+      "operator_id": "eraser",
+      "algorithm": "Pongo最短十进制尾数可逆重编码，保留十进制零元数据。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/pongo_codec.cpp:489",
+        "cpp/src/pongo_codec.cpp:541",
+        "cpp/src/pongo_codec.cpp:610"
+      ],
+      "io_variants": [
+        {
+          "name": "op.eraser.pongo.cpp_v1",
+          "legacy_206_policy_id": 101,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "Pongo最短十进制尾数可逆重编码，保留十进制零元数据。",
+          "implementation_source": "cpp/src/pongo_codec.cpp:exact_actions::pongo::eraser_forward/eraser_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        1
+      ],
+      "previous_document_ids": [
+        "A002"
+      ],
+      "previous_156_policy_ids": [
+        1
+      ],
+      "previous_156_document_ids": [
+        "P002"
+      ]
+    },
+    {
+      "policy_action_id": 2,
+      "document_id": "P003",
+      "name": "op.eraser.elf.cpp_v1",
+      "operator_id": "eraser",
+      "algorithm": "Elf/Elf+共用float32擦除，仅限有限且能逐位往返float32的float64。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_float_codec.cpp:1057",
+        "cpp/src/elf_float_codec.cpp:1111",
+        "cpp/src/elf_float_codec.cpp:1159",
+        "cpp/src/elf_float_codec.cpp:1318"
+      ],
+      "io_variants": [
+        {
+          "name": "op.eraser.elf.cpp_v1",
+          "legacy_206_policy_id": 120,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "Elf/Elf+共用float32擦除，仅限有限且能逐位往返float32的float64。",
+          "implementation_source": "cpp/src/elf_float_codec.cpp:eraser_forward_double_bits/eraser_inverse_double_bits"
+        }
+      ],
+      "previous_182_policy_ids": [
+        2
+      ],
+      "previous_document_ids": [
+        "A003"
+      ],
+      "previous_156_policy_ids": [
+        2
+      ],
+      "previous_156_document_ids": [
+        "P003"
+      ]
+    },
+    {
+      "policy_action_id": 3,
+      "document_id": "P004",
+      "name": "op.eraser.camel.cpp_v1",
+      "operator_id": "eraser",
+      "algorithm": "Camel十进制路径选择与精确原值回退，输出可逆擦除记录。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/camel_exact_stages.cpp:24",
+        "cpp/src/camel_exact_stages.cpp:100",
+        "cpp/src/camel_exact_stages.cpp:166",
+        "cpp/src/camel_exact_stages.cpp:557",
+        "cpp/src/camel_exact_stages.cpp:566"
+      ],
+      "io_variants": [
+        {
+          "name": "op.eraser.camel.cpp_v1",
+          "legacy_206_policy_id": 123,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "Camel十进制路径选择与精确原值回退，输出可逆擦除记录。",
+          "implementation_source": "cpp/src/camel_exact_stages.cpp:eraser_forward/eraser_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        3
+      ],
+      "previous_document_ids": [
+        "A004"
+      ],
+      "previous_156_policy_ids": [
+        3
+      ],
+      "previous_156_document_ids": [
+        "P004"
+      ]
+    },
+    {
+      "policy_action_id": 4,
+      "document_id": "P005",
+      "name": "op.eraser.elf64.cpp_v1",
+      "operator_id": "eraser",
+      "algorithm": "binary64擦除并检查精确恢复；实验策略排除NaN。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_double_codec.cpp:637",
+        "cpp/src/elf_double_codec.cpp:659",
+        "cpp/src/elf_double_codec.cpp:678",
+        "cpp/src/elf_double_codec.cpp:1159",
+        "cpp/src/elf_double_codec.cpp:1280"
+      ],
+      "io_variants": [
+        {
+          "name": "op.eraser.elf64.cpp_v1",
+          "legacy_206_policy_id": 199,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "binary64擦除并检查精确恢复；实验策略排除NaN。",
+          "implementation_source": "cpp/src/elf_double_codec.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        4
+      ],
+      "previous_document_ids": [
+        "A005"
+      ],
+      "previous_156_policy_ids": [
+        4
+      ],
+      "previous_156_document_ids": [
+        "P005"
+      ]
+    },
+    {
+      "policy_action_id": 5,
+      "document_id": "P006",
+      "name": "op.scaling.reference_v1",
+      "operator_id": "scaling",
+      "algorithm": "输入规范化已完成十进制缩放，本阶段仅为恒等映射。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:221",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.reference_v1",
+          "legacy_206_policy_id": 1,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入规范化已完成十进制缩放，本阶段仅为恒等映射。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        5
+      ],
+      "previous_document_ids": [
+        "A006"
+      ],
+      "previous_156_policy_ids": [
+        5
+      ],
+      "previous_156_document_ids": [
+        "P006"
+      ]
+    },
+    {
+      "policy_action_id": 6,
+      "document_id": "P007",
+      "name": "op.scaling.tsfile_rle.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "有限float64位级可逆缩放为int64，有效scale可能下调且必须保留。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/rle_exact_stages.cpp:87",
+        "cpp/src/rle_exact_stages.cpp:120"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.tsfile_rle.cpp_v1",
+          "legacy_206_policy_id": 79,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "有限float64位级可逆缩放为int64，有效scale可能下调且必须保留。",
+          "implementation_source": "cpp/src/rle_exact_stages.cpp:scaling_forward/scaling_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        6
+      ],
+      "previous_document_ids": [
+        "A007"
+      ],
+      "previous_156_policy_ids": [
+        6
+      ],
+      "previous_156_document_ids": [
+        "P007"
+      ]
+    },
+    {
+      "policy_action_id": 7,
+      "document_id": "P008",
+      "name": "op.scaling.exact_decimal.cpp_v2",
+      "operator_id": "scaling",
+      "algorithm": "按指定小数位乘以十进制尺度，用 long double 中间值与 llround 生成 int64，再验证逆变换逐位恢复。",
+      "merge_rationale": "尺度选择、舍入、范围和位级恢复检查相同；差异是输入适配与阶段包元数据。",
+      "source_evidence": [
+        "cpp/src/ts2diff_exact_stages.cpp:402",
+        "cpp/src/simple8b_exact_stages.cpp:96"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.ts_2diff.cpp_v1",
+          "legacy_206_policy_id": 80,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "输入有限 float64；max_point 为 0–18。输出 int64 主流和尺度，TS_2DIFF 缩放包保存类型与数量；超界或无法逐位恢复则拒绝。",
+          "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:scaling_forward/scaling_inverse"
+        },
+        {
+          "name": "op.scaling.simple8b.cpp_v1",
+          "legacy_206_policy_id": 86,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "相同输入域和检查。输出同类 int64 主流与尺度，使用 Simple8b 缩放包；这里尚未执行 Simple8b 打包。",
+          "implementation_source": "cpp/src/simple8b_exact_stages.cpp:scaling_forward/scaling_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        7
+      ],
+      "previous_document_ids": [
+        "A008"
+      ],
+      "previous_156_policy_ids": [
+        7
+      ],
+      "previous_156_document_ids": [
+        "P008"
+      ]
+    },
+    {
+      "policy_action_id": 8,
+      "document_id": "P009",
+      "name": "op.scaling.delta_binary_packed.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "向下寻找fit int64且位级可逆的十进制scale，输出缩放整数及有效scale。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/dbp_exact_stages.cpp:129",
+        "cpp/src/dbp_exact_stages.cpp:174"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.delta_binary_packed.cpp_v1",
+          "legacy_206_policy_id": 93,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "向下寻找fit int64且位级可逆的十进制scale，输出缩放整数及有效scale。",
+          "implementation_source": "cpp/src/dbp_exact_stages.cpp:scaling_forward/scaling_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        8
+      ],
+      "previous_document_ids": [
+        "A009"
+      ],
+      "previous_156_policy_ids": [
+        8
+      ],
+      "previous_156_document_ids": [
+        "P009"
+      ]
+    },
+    {
+      "policy_action_id": 9,
+      "document_id": "P010",
+      "name": "op.scaling.alp.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "ALP风格逐块精确缩放；整块缩放失败则回退原始位模式，不做异常搜索。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:295",
+        "cpp/src/learning_codec_exact_stages.cpp:667",
+        "cpp/src/learning_codec_exact_stages.cpp:187"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.alp.cpp_v1",
+          "legacy_206_policy_id": 140,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "ALP风格逐块精确缩放；整块缩放失败则回退原始位模式，不做异常搜索。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_scaling_forward/alp_scaling_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        9
+      ],
+      "previous_document_ids": [
+        "A010"
+      ],
+      "previous_156_policy_ids": [
+        9
+      ],
+      "previous_156_document_ids": [
+        "P010"
+      ]
+    },
+    {
+      "policy_action_id": 10,
+      "document_id": "P011",
+      "name": "op.scaling.buff.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "BUFF以整列选择精确十进制缩放或原始位模式回退。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:505",
+        "cpp/src/learning_codec_exact_stages.cpp:993",
+        "cpp/src/learning_codec_exact_stages.cpp:187"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.buff.cpp_v1",
+          "legacy_206_policy_id": 150,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "BUFF以整列选择精确十进制缩放或原始位模式回退。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_scaling_forward/buff_scaling_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        10
+      ],
+      "previous_document_ids": [
+        "A011"
+      ],
+      "previous_156_policy_ids": [
+        10
+      ],
+      "previous_156_document_ids": [
+        "P011"
+      ]
+    },
+    {
+      "policy_action_id": 11,
+      "document_id": "P012",
+      "name": "op.scaling.legacy_exact_decimal.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "复现旧版精确缩放；int64不改值；后接双路native-LZ，不是FastPFor。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:66",
+        "cpp/src/legacy_numeric_action_stages.cpp:105",
+        "cpp/src/legacy_numeric_action_stages.cpp:140",
+        "cpp/src/legacy_numeric_action_stages.cpp:249"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.legacy_exact_decimal.cpp_v1",
+          "legacy_206_policy_id": 185,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "复现旧版精确缩放；int64不改值；后接双路native-LZ，不是FastPFor。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        11
+      ],
+      "previous_document_ids": [
+        "A012"
+      ],
+      "previous_156_policy_ids": [
+        11
+      ],
+      "previous_156_document_ids": [
+        "P012"
+      ]
+    },
+    {
+      "policy_action_id": 12,
+      "document_id": "P013",
+      "name": "op.scaling.alp_legacy_fe_exceptions.cpp_v1",
+      "operator_id": "scaling",
+      "algorithm": "复现旧版ALP因子/指数及异常缩放；后接双路native-LZ，不是FastPFor。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:195",
+        "cpp/src/legacy_numeric_action_stages.cpp:201",
+        "cpp/src/legacy_numeric_action_stages.cpp:204",
+        "cpp/src/legacy_numeric_action_stages.cpp:213"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.alp_legacy_fe_exceptions.cpp_v1",
+          "legacy_206_policy_id": 190,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "复现旧版ALP因子/指数及异常缩放；后接双路native-LZ，不是FastPFor。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        12
+      ],
+      "previous_document_ids": [
+        "A013"
+      ],
+      "previous_156_policy_ids": [
+        12
+      ],
+      "previous_156_document_ids": [
+        "P013"
+      ]
+    },
+    {
+      "policy_action_id": 13,
+      "document_id": "P014",
+      "name": "op.scaling.corad_normalize_exact.cpp_v2",
+      "operator_id": "scaling",
+      "algorithm": "按均值/标准差归一化，并在码流保存精确字修正信息。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/corad_lossless_cpp.cpp:26",
+        "cpp/src/corad_lossless_cpp.cpp:32",
+        "cpp/src/corad_lossless_cpp.cpp:45",
+        "cpp/src/corad_lossless_cpp.cpp:47"
+      ],
+      "io_variants": [
+        {
+          "name": "op.scaling.corad_normalize_exact.cpp_v2",
+          "legacy_206_policy_id": 202,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "按均值/标准差归一化，并在码流保存精确字修正信息。",
+          "implementation_source": "cpp/src/corad_lossless_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        13
+      ],
+      "previous_document_ids": [
+        "A014"
+      ],
+      "previous_156_policy_ids": [
+        13
+      ],
+      "previous_156_document_ids": [
+        "P014"
+      ]
+    },
+    {
+      "policy_action_id": 14,
+      "document_id": "P015",
+      "name": "op.frame_of_reference.whole_stream_min.cpp_v2",
+      "operator_id": "frame_of_reference",
+      "algorithm": "按输入的有符号或无符号数值域取整条目标流的最小值，逐值减基准；保存基准供逆变换使用。",
+      "merge_rationale": "三者均为 min 加逐值减基准，没有块内重新选基准；数值域、被处理的残差字段及旁路元数据属于输入输出约束。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:222",
+        "cpp/src/bos_exact_stages.cpp:341",
+        "cpp/src/learning_codec_exact_stages.cpp:912"
+      ],
+      "io_variants": [
+        {
+          "name": "op.frame_of_reference.reference_v1",
+          "legacy_206_policy_id": 2,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 主流。输出模 2^64 偏移和一个 int64 基准；参考接口以 int64 位模式存储偏移，不能当作有符号偏移值。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.frame_of_reference.bos.cpp_v1",
+          "legacy_206_policy_id": 112,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 BOSA delta 包的 int64 差分主流。输出 uint64 偏移与 signed source_base；原首值和数量旁路保留。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:first_for_forward/first_for_inverse"
+        },
+        {
+          "name": "op.frame_of_reference.reger.cpp_v1",
+          "legacy_206_policy_id": 146,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 REGER 包中已做 ZigZag 的 uint64 残差。输出 uint64 偏移与 uint64 基准；首值和排列侧信息旁路保留。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_for_forward/reger_for_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        14
+      ],
+      "previous_document_ids": [
+        "A015"
+      ],
+      "previous_156_policy_ids": [
+        14
+      ],
+      "previous_156_document_ids": [
+        "P015"
+      ]
+    },
+    {
+      "policy_action_id": 15,
+      "document_id": "P016",
+      "name": "op.frame_of_reference.ts_2diff.cpp_v1",
+      "operator_id": "frame_of_reference",
+      "algorithm": "逐块以最小delta生成uint64 FOR偏移，保留首值/最小值；尚未打包。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/ts2diff_exact_stages.cpp:31",
+        "cpp/src/ts2diff_exact_stages.cpp:255",
+        "cpp/src/ts2diff_exact_stages.cpp:322",
+        "cpp/src/ts2diff_exact_stages.cpp:457"
+      ],
+      "io_variants": [
+        {
+          "name": "op.frame_of_reference.ts_2diff.cpp_v1",
+          "legacy_206_policy_id": 82,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "逐块以最小delta生成uint64 FOR偏移，保留首值/最小值；尚未打包。",
+          "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:frame_of_reference_forward/inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        15
+      ],
+      "previous_document_ids": [
+        "A016"
+      ],
+      "previous_156_policy_ids": [
+        15
+      ],
+      "previous_156_document_ids": [
+        "P016"
+      ]
+    },
+    {
+      "policy_action_id": 16,
+      "document_id": "P017",
+      "name": "op.frame_of_reference.bos.post_outlier.cpp_v1",
+      "operator_id": "frame_of_reference",
+      "algorithm": "BOSA异常分离后的第二轮FOR，减去选定常规区间基准。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/bos_exact_stages.cpp:231",
+        "cpp/src/bos_exact_stages.cpp:387"
+      ],
+      "io_variants": [
+        {
+          "name": "op.frame_of_reference.bos.post_outlier.cpp_v1",
+          "legacy_206_policy_id": 114,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "BOSA异常分离后的第二轮FOR，减去选定常规区间基准。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:second_for_forward/second_for_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        16
+      ],
+      "previous_document_ids": [
+        "A017"
+      ],
+      "previous_156_policy_ids": [
+        16
+      ],
+      "previous_156_document_ids": [
+        "P017"
+      ]
+    },
+    {
+      "policy_action_id": 17,
+      "document_id": "P018",
+      "name": "op.frame_of_reference.alp.cpp_v1",
+      "operator_id": "frame_of_reference",
+      "algorithm": "ALP参考FOR对缩放整数或raw-bit回退分支都执行基准归一化。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:346",
+        "cpp/src/learning_codec_exact_stages.cpp:703"
+      ],
+      "io_variants": [
+        {
+          "name": "op.frame_of_reference.alp.cpp_v1",
+          "legacy_206_policy_id": 141,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "ALP参考FOR对缩放整数或raw-bit回退分支都执行基准归一化。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_for_forward/alp_for_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        17
+      ],
+      "previous_document_ids": [
+        "A018"
+      ],
+      "previous_156_policy_ids": [
+        17
+      ],
+      "previous_156_document_ids": [
+        "P018"
+      ]
+    },
+    {
+      "policy_action_id": 18,
+      "document_id": "P019",
+      "name": "op.value_reorder.stable_sort.cpp_v2",
+      "operator_id": "value_reorder",
+      "algorithm": "对整数值做稳定升序排序，同时保存各输出值的原位置，逆向按位置散回。",
+      "merge_rationale": "稳定排序规则和恢复方法相同；输入传输形式、索引位宽与包结构不同。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:204",
+        "cpp/src/reference_operator_actions.cpp:227",
+        "cpp/src/learning_codec_exact_stages.cpp:861"
+      ],
+      "io_variants": [
+        {
+          "name": "op.value_reorder.reference_v1",
+          "legacy_206_policy_id": 3,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 数组；输出排序后的 int64 主流与 int64 位置索引流，存于参考 State。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.value_reorder.reger.cpp_v1",
+          "legacy_206_policy_id": 144,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入小端 int64 字节串；行数须不超过 UINT32_MAX。输出 int64 主流与 uint32 原位置流，封装为 REGER reorder 包。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_reorder_forward/reger_reorder_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        18
+      ],
+      "previous_document_ids": [
+        "A019"
+      ],
+      "previous_156_policy_ids": [
+        18
+      ],
+      "previous_156_document_ids": [
+        "P019"
+      ]
+    },
+    {
+      "policy_action_id": 19,
+      "document_id": "P020",
+      "name": "op.regression_predictor.reference_v1",
+      "operator_id": "regression_predictor",
+      "algorithm": "前值回归取整的模残差参考变换，存首值/系数；全int64域可逆性未证明。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:232",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.regression_predictor.reference_v1",
+          "legacy_206_policy_id": 4,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "前值回归取整的模残差参考变换，存首值/系数；全int64域可逆性未证明。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        19
+      ],
+      "previous_document_ids": [
+        "A020"
+      ],
+      "previous_156_policy_ids": [
+        19
+      ],
+      "previous_156_document_ids": [
+        "P020"
+      ]
+    },
+    {
+      "policy_action_id": 20,
+      "document_id": "P021",
+      "name": "op.regression_predictor.leco.cpp_v1",
+      "operator_id": "regression_predictor",
+      "algorithm": "LECO拟合线性模型与ZigZag残差数据包，仅为预测阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:237",
+        "cpp/src/learning_codec_exact_stages.cpp:268",
+        "cpp/src/learning_codec_exact_stages.cpp:580"
+      ],
+      "io_variants": [
+        {
+          "name": "op.regression_predictor.leco.cpp_v1",
+          "legacy_206_policy_id": 138,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "LECO拟合线性模型与ZigZag残差数据包，仅为预测阶段。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:leco_autoregression_forward/leco_autoregression_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        20
+      ],
+      "previous_document_ids": [
+        "A021"
+      ],
+      "previous_156_policy_ids": [
+        20
+      ],
+      "previous_156_document_ids": [
+        "P021"
+      ]
+    },
+    {
+      "policy_action_id": 21,
+      "document_id": "P022",
+      "name": "op.regression_predictor.reger.cpp_v1",
+      "operator_id": "regression_predictor",
+      "algorithm": "REGER参考前值预测：模差分后做ZigZag，不拟合回归参数。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:455",
+        "cpp/src/learning_codec_exact_stages.cpp:463",
+        "cpp/src/learning_codec_exact_stages.cpp:887"
+      ],
+      "io_variants": [
+        {
+          "name": "op.regression_predictor.reger.cpp_v1",
+          "legacy_206_policy_id": 145,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "REGER参考前值预测：模差分后做ZigZag，不拟合回归参数。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_autoregression_forward/reger_autoregression_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        21
+      ],
+      "previous_document_ids": [
+        "A022"
+      ],
+      "previous_156_policy_ids": [
+        21
+      ],
+      "previous_156_document_ids": [
+        "P022"
+      ]
+    },
+    {
+      "policy_action_id": 22,
+      "document_id": "P023",
+      "name": "op.outlier_separation.reference_v1",
+      "operator_id": "outlier_separation",
+      "algorithm": "IQR裁剪整数主体的参考变换；异常位置/原值须保留，阈值越界拒绝。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:255",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.outlier_separation.reference_v1",
+          "legacy_206_policy_id": 5,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "IQR裁剪整数主体的参考变换；异常位置/原值须保留，阈值越界拒绝。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        22
+      ],
+      "previous_document_ids": [
+        "A023"
+      ],
+      "previous_156_policy_ids": [
+        22
+      ],
+      "previous_156_document_ids": [
+        "P023"
+      ]
+    },
+    {
+      "policy_action_id": 23,
+      "document_id": "P024",
+      "name": "op.outlier_separation.bos.cpp_v1",
+      "operator_id": "outlier_separation",
+      "algorithm": "BOSA按常规位宽区分正常项/异常项，以带标签记录保存，尚未物理拆流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/bos_exact_stages.cpp:123",
+        "cpp/src/bos_exact_stages.cpp:231",
+        "cpp/src/bos_exact_stages.cpp:366"
+      ],
+      "io_variants": [
+        {
+          "name": "op.outlier_separation.bos.cpp_v1",
+          "legacy_206_policy_id": 113,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "BOSA按常规位宽区分正常项/异常项，以带标签记录保存，尚未物理拆流。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:outlier_forward/outlier_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        23
+      ],
+      "previous_document_ids": [
+        "A024"
+      ],
+      "previous_156_policy_ids": [
+        23
+      ],
+      "previous_156_document_ids": [
+        "P024"
+      ]
+    },
+    {
+      "policy_action_id": 24,
+      "document_id": "P025",
+      "name": "op.bitpack_int.reference_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "名称虽为bitpack，参考本体仅做模FOR；compact/zlib序列化另行执行。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:222",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.reference_v1",
+          "legacy_206_policy_id": 6,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "名称虽为bitpack，参考本体仅做模FOR；compact/zlib序列化另行执行。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        24
+      ],
+      "previous_document_ids": [
+        "A025"
+      ],
+      "previous_156_policy_ids": [
+        24
+      ],
+      "previous_156_document_ids": [
+        "P025"
+      ]
+    },
+    {
+      "policy_action_id": 25,
+      "document_id": "P026",
+      "name": "op.bitpack_int.ts_2diff.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "TS_2DIFF按MSB打包FOR码，输出含首值/最小值/位宽的最终项目格式。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/ts2diff_exact_stages.cpp:368",
+        "cpp/src/ts2diff_exact_stages.cpp:467"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.ts_2diff.cpp_v1",
+          "legacy_206_policy_id": 83,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "TS_2DIFF按MSB打包FOR码，输出含首值/最小值/位宽的最终项目格式。",
+          "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:bitpack_forward/bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        25
+      ],
+      "previous_document_ids": [
+        "A026"
+      ],
+      "previous_156_policy_ids": [
+        25
+      ],
+      "previous_156_document_ids": [
+        "P026"
+      ]
+    },
+    {
+      "policy_action_id": 26,
+      "document_id": "P027",
+      "name": "op.bitpack_int.simple8b.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "Simple8b分肢selector/word打包，输出typed适配器码流；机器字非数值样本。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/simple8b_exact_stages.cpp:79",
+        "cpp/src/simple8b_exact_stages.cpp:128",
+        "cpp/src/int64_column_codec.cpp:79",
+        "cpp/src/int64_column_codec.cpp:419"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.simple8b.cpp_v1",
+          "legacy_206_policy_id": 87,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "Simple8b分肢selector/word打包，输出typed适配器码流；机器字非数值样本。",
+          "implementation_source": "cpp/src/simple8b_exact_stages.cpp:bitpack_forward_*/bitpack_inverse_*"
+        }
+      ],
+      "previous_182_policy_ids": [
+        26
+      ],
+      "previous_document_ids": [
+        "A027"
+      ],
+      "previous_156_policy_ids": [
+        26
+      ],
+      "previous_156_document_ids": [
+        "P027"
+      ]
+    },
+    {
+      "policy_action_id": 27,
+      "document_id": "P028",
+      "name": "op.bitpack_int.sprintz.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "9点块中8残差带位宽打包；尾部再用整数RLE/浮点Gorilla编码，非raw-tail。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/p04_exact_stages.cpp:332",
+        "cpp/src/p04_exact_stages.cpp:354"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.sprintz.cpp_v1",
+          "legacy_206_policy_id": 92,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "9点块中8残差带位宽打包；尾部再用整数RLE/浮点Gorilla编码，非raw-tail。",
+          "implementation_source": "cpp/src/p04_exact_stages.cpp:sprintz_bitpack_forward/sprintz_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        27
+      ],
+      "previous_document_ids": [
+        "A028"
+      ],
+      "previous_156_policy_ids": [
+        27
+      ],
+      "previous_156_document_ids": [
+        "P028"
+      ]
+    },
+    {
+      "policy_action_id": 28,
+      "document_id": "P029",
+      "name": "op.bitpack_int.delta_binary_packed.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "保留首字，将后续ZigZag码写成LEB128；bitpack_int只是历史分类名。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/dbp_exact_stages.cpp:45",
+        "cpp/src/dbp_exact_stages.cpp:225"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.delta_binary_packed.cpp_v1",
+          "legacy_206_policy_id": 96,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "保留首字，将后续ZigZag码写成LEB128；bitpack_int只是历史分类名。",
+          "implementation_source": "cpp/src/dbp_exact_stages.cpp:varint_forward/varint_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        28
+      ],
+      "previous_document_ids": [
+        "A029"
+      ],
+      "previous_156_policy_ids": [
+        28
+      ],
+      "previous_156_document_ids": [
+        "P029"
+      ]
+    },
+    {
+      "policy_action_id": 29,
+      "document_id": "P030",
+      "name": "op.bitpack_int.bos.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "BOSA位图、定宽常规流与异常打包，形成精确公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/bos_exact_stages.cpp:407"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.bos.cpp_v1",
+          "legacy_206_policy_id": 115,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "BOSA位图、定宽常规流与异常打包，形成精确公开码流。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:bitpack_forward/bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        29
+      ],
+      "previous_document_ids": [
+        "A030"
+      ],
+      "previous_156_policy_ids": [
+        29
+      ],
+      "previous_156_document_ids": [
+        "P030"
+      ]
+    },
+    {
+      "policy_action_id": 30,
+      "document_id": "P031",
+      "name": "op.bitpack_int.bos64_adapter.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "基准BOS64大端块头及高位优先定宽打包，生成公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/bos_exact_stages.cpp:544",
+        "cpp/src/bos_exact_stages.cpp:632"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.bos64_adapter.cpp_v1",
+          "legacy_206_policy_id": 117,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "基准BOS64大端块头及高位优先定宽打包，生成公开码流。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:adapter_bitpack_forward/adapter_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        30
+      ],
+      "previous_document_ids": [
+        "A031"
+      ],
+      "previous_156_policy_ids": [
+        30
+      ],
+      "previous_156_document_ids": [
+        "P031"
+      ]
+    },
+    {
+      "policy_action_id": 31,
+      "document_id": "P032",
+      "name": "op.bitpack_int.fastpfor_pfor.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "FastPFor<8>分别编码int64低/高32位流的完整256值前缀。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/fastpfor_exact_stages.cpp:56",
+        "cpp/src/fastpfor_exact_stages.cpp:80",
+        "cpp/src/fastpfor_exact_stages.cpp:111",
+        "cpp/src/fastpfor_exact_stages.cpp:145",
+        "cpp/src/fastpfor_exact_stages.cpp:280"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.fastpfor_pfor.cpp_v1",
+          "legacy_206_policy_id": 118,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "FastPFor<8>分别编码int64低/高32位流的完整256值前缀。",
+          "implementation_source": "cpp/src/fastpfor_exact_stages.cpp:pfor_stage_forward_*/pfor_stage_inverse_*"
+        }
+      ],
+      "previous_182_policy_ids": [
+        31
+      ],
+      "previous_document_ids": [
+        "A032"
+      ],
+      "previous_156_policy_ids": [
+        31
+      ],
+      "previous_156_document_ids": [
+        "P032"
+      ]
+    },
+    {
+      "policy_action_id": 32,
+      "document_id": "P033",
+      "name": "op.bitpack_int.leco.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "LECO残差按位宽打包，生成当前项目的公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:616",
+        "cpp/src/learning_codec_exact_stages.cpp:637"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.leco.cpp_v1",
+          "legacy_206_policy_id": 139,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "LECO残差按位宽打包，生成当前项目的公开码流。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:leco_bitpack_forward/leco_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        32
+      ],
+      "previous_document_ids": [
+        "A033"
+      ],
+      "previous_156_policy_ids": [
+        32
+      ],
+      "previous_156_document_ids": [
+        "P033"
+      ]
+    },
+    {
+      "policy_action_id": 33,
+      "document_id": "P034",
+      "name": "op.bitpack_int.alp.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "ALP主路径FOR残差的参考位打包，输出源码参考格式。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:730",
+        "cpp/src/learning_codec_exact_stages.cpp:758"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.alp.cpp_v1",
+          "legacy_206_policy_id": 142,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "ALP主路径FOR残差的参考位打包，输出源码参考格式。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_bitpack_forward/alp_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        33
+      ],
+      "previous_document_ids": [
+        "A034"
+      ],
+      "previous_156_policy_ids": [
+        33
+      ],
+      "previous_156_document_ids": [
+        "P034"
+      ]
+    },
+    {
+      "policy_action_id": 34,
+      "document_id": "P035",
+      "name": "op.bitpack_int.reger.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "REGER参考残差位打包阶段，非完整生产编码器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:934",
+        "cpp/src/learning_codec_exact_stages.cpp:953"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.reger.cpp_v1",
+          "legacy_206_policy_id": 147,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "REGER参考残差位打包阶段，非完整生产编码器。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_bitpack_forward/reger_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        34
+      ],
+      "previous_document_ids": [
+        "A035"
+      ],
+      "previous_156_policy_ids": [
+        34
+      ],
+      "previous_156_document_ids": [
+        "P035"
+      ]
+    },
+    {
+      "policy_action_id": 35,
+      "document_id": "P036",
+      "name": "op.bitpack_int.buff.cpp_v1",
+      "operator_id": "bitpack_int",
+      "algorithm": "BUFF读取已有字节平面并重写16字节头；复制平面，不再逐值打包。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:1065",
+        "cpp/src/learning_codec_exact_stages.cpp:1079"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitpack_int.buff.cpp_v1",
+          "legacy_206_policy_id": 152,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "BUFF读取已有字节平面并重写16字节头；复制平面，不再逐值打包。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_bitpack_forward/buff_bitpack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        35
+      ],
+      "previous_document_ids": [
+        "A036"
+      ],
+      "previous_156_policy_ids": [
+        35
+      ],
+      "previous_156_document_ids": [
+        "P036"
+      ]
+    },
+    {
+      "policy_action_id": 36,
+      "document_id": "P037",
+      "name": "op.delta.previous_modular.cpp_v2",
+      "operator_id": "delta",
+      "algorithm": "对每条输入整数流按其位宽计算当前值减前值；逆向按相同模数累加。",
+      "merge_rationale": "保留相同逐流差分公式；32 或 64 位元素、单流或双流、首值表示和包元数据记入接口变体。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:268",
+        "cpp/src/svb_exact_stages.cpp:107",
+        "cpp/src/dbp_exact_stages.cpp:186",
+        "cpp/src/bos_exact_stages.cpp:317"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.reference_v1",
+          "legacy_206_policy_id": 7,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 单流；输出模 2^64 差分主流，首值单独保留。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.delta.stream_vbyte.cpp_v1",
+          "legacy_206_policy_id": 84,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入先表示为低、高两个 uint32 分肢流；分别做模 2^32 差分，输出 2 个 uint32 stream，首项按该通道初始值规则保留。两路结果不等于单路 int64 减法。",
+          "implementation_source": "cpp/src/svb_exact_stages.cpp:delta_forward/delta_inverse"
+        },
+        {
+          "name": "op.delta.delta_binary_packed.cpp_v1",
+          "legacy_206_policy_id": 94,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入原 int64 或 DBP 缩放包内的 int64；输出模 2^64 差分，首值、原类型和有效尺度保留。",
+          "implementation_source": "cpp/src/dbp_exact_stages.cpp:delta_forward_*/delta_inverse_*"
+        },
+        {
+          "name": "op.delta.bos.cpp_v1",
+          "legacy_206_policy_id": 111,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 单流；输出模 2^64 差分，BOSA 阶段包另存首值和数量。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:delta_forward/delta_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        36
+      ],
+      "previous_document_ids": [
+        "A037"
+      ],
+      "previous_156_policy_ids": [
+        36
+      ],
+      "previous_156_document_ids": [
+        "P037"
+      ]
+    },
+    {
+      "policy_action_id": 37,
+      "document_id": "P038",
+      "name": "op.delta.ts_2diff.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "TS_2DIFF每块最多128个delta加首值（129原值）；检查减法溢出，非模差。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/ts2diff_exact_stages.cpp:26",
+        "cpp/src/ts2diff_exact_stages.cpp:218",
+        "cpp/src/ts2diff_exact_stages.cpp:292",
+        "cpp/src/ts2diff_exact_stages.cpp:434"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.ts_2diff.cpp_v1",
+          "legacy_206_policy_id": 81,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "TS_2DIFF每块最多128个delta加首值（129原值）；检查减法溢出，非模差。",
+          "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:delta_forward_*/delta_inverse_*"
+        }
+      ],
+      "previous_182_policy_ids": [
+        37
+      ],
+      "previous_document_ids": [
+        "A038"
+      ],
+      "previous_156_policy_ids": [
+        37
+      ],
+      "previous_156_document_ids": [
+        "P038"
+      ]
+    },
+    {
+      "policy_action_id": 38,
+      "document_id": "P039",
+      "name": "op.delta.rlbe.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "RLBE每10000字分块做模2^64差分，留首字；浮点按位运算且原类型须外存。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/p04_exact_stages.cpp:58",
+        "cpp/src/p04_exact_stages.cpp:207"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.rlbe.cpp_v1",
+          "legacy_206_policy_id": 88,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "RLBE每10000字分块做模2^64差分，留首字；浮点按位运算且原类型须外存。",
+          "implementation_source": "cpp/src/p04_exact_stages.cpp:rlbe_delta_forward/rlbe_delta_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        38
+      ],
+      "previous_document_ids": [
+        "A039"
+      ],
+      "previous_156_policy_ids": [
+        38
+      ],
+      "previous_156_document_ids": [
+        "P039"
+      ]
+    },
+    {
+      "policy_action_id": 39,
+      "document_id": "P040",
+      "name": "op.delta.sprintz.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "Sprintz LongFIRE每9字仅预测后8字；首字/不足9字尾部原样保留，浮点按位。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/p04_exact_stages.cpp:254",
+        "cpp/src/p04_exact_stages.cpp:275"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.sprintz.cpp_v1",
+          "legacy_206_policy_id": 90,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "Sprintz LongFIRE每9字仅预测后8字；首字/不足9字尾部原样保留，浮点按位。",
+          "implementation_source": "cpp/src/p04_exact_stages.cpp:sprintz_predictor_forward/sprintz_predictor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        39
+      ],
+      "previous_document_ids": [
+        "A040"
+      ],
+      "previous_156_policy_ids": [
+        39
+      ],
+      "previous_156_document_ids": [
+        "P040"
+      ]
+    },
+    {
+      "policy_action_id": 40,
+      "document_id": "P041",
+      "name": "op.delta.spdp.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "SPDP对小端64位字做lag-2模差分，即x[i]−x[i−2]，并非二阶有限差分。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/spdp_exact_stages.cpp:41",
+        "cpp/src/spdp_exact_stages.cpp:139"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.spdp.cpp_v1",
+          "legacy_206_policy_id": 104,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "SPDP对小端64位字做lag-2模差分，即x[i]−x[i−2]，并非二阶有限差分。",
+          "implementation_source": "cpp/src/spdp_exact_stages.cpp:delta_forward/delta_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        40
+      ],
+      "previous_document_ids": [
+        "A041"
+      ],
+      "previous_156_policy_ids": [
+        40
+      ],
+      "previous_156_document_ids": [
+        "P041"
+      ]
+    },
+    {
+      "policy_action_id": 41,
+      "document_id": "P042",
+      "name": "op.delta.bos64_adapter.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "BOS64对传入序列做全局模差分及ZigZag；此函数不按128值重置。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/bos_exact_stages.cpp:496",
+        "cpp/src/bos_exact_stages.cpp:509"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.bos64_adapter.cpp_v1",
+          "legacy_206_policy_id": 116,
+          "input_kinds": [
+            "int64",
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "BOS64对传入序列做全局模差分及ZigZag；此函数不按128值重置。",
+          "implementation_source": "cpp/src/bos_exact_stages.cpp:adapter_delta_forward*/adapter_delta_inverse*"
+        }
+      ],
+      "previous_182_policy_ids": [
+        41
+      ],
+      "previous_document_ids": [
+        "A042"
+      ],
+      "previous_156_policy_ids": [
+        41
+      ],
+      "previous_156_document_ids": [
+        "P042"
+      ]
+    },
+    {
+      "policy_action_id": 42,
+      "document_id": "P043",
+      "name": "op.delta.fpzip.cpp_v1",
+      "operator_id": "delta",
+      "algorithm": "FPZIP无损一维double的Lorenzo预测及PCmap残差流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/fpzip_exact_stages.cpp:76",
+        "cpp/src/fpzip_exact_stages.cpp:95",
+        "cpp/src/fpzip_exact_stages.cpp:158"
+      ],
+      "io_variants": [
+        {
+          "name": "op.delta.fpzip.cpp_v1",
+          "legacy_206_policy_id": 136,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "FPZIP无损一维double的Lorenzo预测及PCmap残差流。",
+          "implementation_source": "cpp/src/fpzip_exact_stages.cpp:predictor_forward/predictor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        42
+      ],
+      "previous_document_ids": [
+        "A043"
+      ],
+      "previous_156_policy_ids": [
+        42
+      ],
+      "previous_156_document_ids": [
+        "P043"
+      ]
+    },
+    {
+      "policy_action_id": 43,
+      "document_id": "P044",
+      "name": "op.xor.previous_word.cpp_v2",
+      "operator_id": "xor",
+      "algorithm": "按位模式计算当前字与前一个目标字的 XOR；首字用于恢复后续值。",
+      "merge_rationale": "异或递推相同；整数与浮点位模式、类型标记以及擦除侧信息属于输入输出差异。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:275",
+        "cpp/src/gorilla_exact_stages.cpp:180",
+        "cpp/src/pongo_codec.cpp:659"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.reference_v1",
+          "legacy_206_policy_id": 8,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 位模式；输出 uint64 XOR 残差，以 int64 位模式存储，首值另留。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.xor.gorilla.cpp_v1",
+          "legacy_206_policy_id": 97,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "输入 int64 或 float64 的 64 位字；输出 uint64 XOR 残差记录，保留首字和类型；类型决定后续打包阶段的 sentinel。浮点输入不做算术减法。",
+          "implementation_source": "cpp/src/gorilla_exact_stages.cpp:xor_forward_*/xor_inverse"
+        },
+        {
+          "name": "op.xor.pongo.cpp_v1",
+          "legacy_206_policy_id": 102,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 Pongo eraser 包的目标 uint64 字；输出 XOR 残差记录，首字及 reencoded、十进制零数侧字段原样随包保留。",
+          "implementation_source": "cpp/src/pongo_codec.cpp:exact_actions::pongo::xor_forward/xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        43
+      ],
+      "previous_document_ids": [
+        "A044"
+      ],
+      "previous_156_policy_ids": [
+        43
+      ],
+      "previous_156_document_ids": [
+        "P044"
+      ]
+    },
+    {
+      "policy_action_id": 44,
+      "document_id": "P045",
+      "name": "op.xor.chimp_history128.cpp_v2",
+      "operator_id": "xor",
+      "algorithm": "以低 14 位键索引 128 值历史；按相同尾零阈值和历史槽规则选择引用并计算 XOR。",
+      "merge_rationale": "历史长度、键、trailing>13 条件与更新顺序相同；记录宽度、预存尾零和终止记录是表示差异。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:342",
+        "cpp/src/chimp128_exact_stages.cpp:84"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.chimp_history128.reference_v1",
+          "legacy_206_policy_id": 28,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 int64 位模式；输出 XOR 残差主流，保存首值和引用槽侧流。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.xor.chimp128.cpp_v1",
+          "legacy_206_policy_id": 99,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "输入 int64 或 float64 的 64 位字；输出每条 10 B 的引用槽、尾零数和 uint64 残差记录，另留首字、类型及终止记录。",
+          "implementation_source": "cpp/src/chimp128_exact_stages.cpp:xor_forward_*/xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        44
+      ],
+      "previous_document_ids": [
+        "A045"
+      ],
+      "previous_156_policy_ids": [
+        44
+      ],
+      "previous_156_document_ids": [
+        "P045"
+      ]
+    },
+    {
+      "policy_action_id": 45,
+      "document_id": "P046",
+      "name": "op.xor.fpc.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "FPC有状态FCM/dFCM预测器选择及XOR残差记录阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/fpc_exact_stages.cpp:14",
+        "cpp/src/fpc_exact_stages.cpp:49",
+        "cpp/src/fpc_exact_stages.cpp:148"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.fpc.cpp_v1",
+          "legacy_206_policy_id": 107,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "FPC有状态FCM/dFCM预测器选择及XOR残差记录阶段。",
+          "implementation_source": "cpp/src/fpc_exact_stages.cpp:predictor_xor_forward/predictor_xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        45
+      ],
+      "previous_document_ids": [
+        "A046"
+      ],
+      "previous_156_policy_ids": [
+        45
+      ],
+      "previous_156_document_ids": [
+        "P046"
+      ]
+    },
+    {
+      "policy_action_id": 46,
+      "document_id": "P047",
+      "name": "op.xor.pfpc.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "单线程基准pFPC的块内FCM/dFCM预测及XOR残差阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/pfpc_exact_stages.cpp:13",
+        "cpp/src/pfpc_exact_stages.cpp:48",
+        "cpp/src/pfpc_exact_stages.cpp:140"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.pfpc.cpp_v1",
+          "legacy_206_policy_id": 109,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "单线程基准pFPC的块内FCM/dFCM预测及XOR残差阶段。",
+          "implementation_source": "cpp/src/pfpc_exact_stages.cpp:predictor_xor_forward/predictor_xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        46
+      ],
+      "previous_document_ids": [
+        "A047"
+      ],
+      "previous_156_policy_ids": [
+        46
+      ],
+      "previous_156_document_ids": [
+        "P047"
+      ]
+    },
+    {
+      "policy_action_id": 47,
+      "document_id": "P048",
+      "name": "op.xor.elf.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "Elf在Chimp32之上的XOR状态机，并生成精确ELF1分块码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_float_codec.cpp:1215",
+        "cpp/src/elf_float_codec.cpp:1270",
+        "cpp/src/elf_float_codec.cpp:1365"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.elf.cpp_v1",
+          "legacy_206_policy_id": 121,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Elf在Chimp32之上的XOR状态机，并生成精确ELF1分块码流。",
+          "implementation_source": "cpp/src/elf_float_codec.cpp:elf_xor_forward/elf_xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        47
+      ],
+      "previous_document_ids": [
+        "A048"
+      ],
+      "previous_156_policy_ids": [
+        47
+      ],
+      "previous_156_document_ids": [
+        "P048"
+      ]
+    },
+    {
+      "policy_action_id": 48,
+      "document_id": "P049",
+      "name": "op.xor.elf_plus.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "Elf+的XOR状态机，并生成精确ELF1分块码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_float_codec.cpp:1215",
+        "cpp/src/elf_float_codec.cpp:1270",
+        "cpp/src/elf_float_codec.cpp:1376"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.elf_plus.cpp_v1",
+          "legacy_206_policy_id": 122,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Elf+的XOR状态机，并生成精确ELF1分块码流。",
+          "implementation_source": "cpp/src/elf_float_codec.cpp:elf_plus_xor_forward/elf_plus_xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        48
+      ],
+      "previous_document_ids": [
+        "A049"
+      ],
+      "previous_156_policy_ids": [
+        48
+      ],
+      "previous_156_document_ids": [
+        "P049"
+      ]
+    },
+    {
+      "policy_action_id": 49,
+      "document_id": "P050",
+      "name": "op.xor.camel.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "Camel原值XOR与十进制整数差分记录，尚未物化为位流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/camel_exact_stages.cpp:33",
+        "cpp/src/camel_exact_stages.cpp:220",
+        "cpp/src/camel_exact_stages.cpp:609"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.camel.cpp_v1",
+          "legacy_206_policy_id": 124,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Camel原值XOR与十进制整数差分记录，尚未物化为位流。",
+          "implementation_source": "cpp/src/camel_exact_stages.cpp:xor_forward/xor_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        49
+      ],
+      "previous_document_ids": [
+        "A050"
+      ],
+      "previous_156_policy_ids": [
+        49
+      ],
+      "previous_156_document_ids": [
+        "P050"
+      ]
+    },
+    {
+      "policy_action_id": 50,
+      "document_id": "P051",
+      "name": "op.xor.elf64_on_chimp.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "Elf的binary64 Chimp64异或后端，包含EL64分块封装。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_double_codec.cpp:1192",
+        "cpp/src/elf_double_codec.cpp:1198",
+        "cpp/src/elf_double_codec.cpp:1206",
+        "cpp/src/elf_double_codec.cpp:1302"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.elf64_on_chimp.cpp_v1",
+          "legacy_206_policy_id": 200,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Elf的binary64 Chimp64异或后端，包含EL64分块封装。",
+          "implementation_source": "cpp/src/elf_double_codec.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        50
+      ],
+      "previous_document_ids": [
+        "A051"
+      ],
+      "previous_156_policy_ids": [
+        50
+      ],
+      "previous_156_document_ids": [
+        "P051"
+      ]
+    },
+    {
+      "policy_action_id": 51,
+      "document_id": "P052",
+      "name": "op.xor.elf64_plus.cpp_v1",
+      "operator_id": "xor",
+      "algorithm": "Elf+的binary64 ElfXor64异或后端，包含EL64分块封装。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/elf_double_codec.cpp:1192",
+        "cpp/src/elf_double_codec.cpp:1198",
+        "cpp/src/elf_double_codec.cpp:1206",
+        "cpp/src/elf_double_codec.cpp:1302"
+      ],
+      "io_variants": [
+        {
+          "name": "op.xor.elf64_plus.cpp_v1",
+          "legacy_206_policy_id": 201,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Elf+的binary64 ElfXor64异或后端，包含EL64分块封装。",
+          "implementation_source": "cpp/src/elf_double_codec.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        51
+      ],
+      "previous_document_ids": [
+        "A052"
+      ],
+      "previous_156_policy_ids": [
+        51
+      ],
+      "previous_156_document_ids": [
+        "P052"
+      ]
+    },
+    {
+      "policy_action_id": 52,
+      "document_id": "P053",
+      "name": "op.trailing_zero_pack.reference_v1",
+      "operator_id": "trailing_zero_pack",
+      "algorithm": "按共同尾零数算术右移的参考阶段，shift≤16；非Gorilla控制位编码。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:279",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.trailing_zero_pack.reference_v1",
+          "legacy_206_policy_id": 9,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "按共同尾零数算术右移的参考阶段，shift≤16；非Gorilla控制位编码。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        52
+      ],
+      "previous_document_ids": [
+        "A053"
+      ],
+      "previous_156_policy_ids": [
+        52
+      ],
+      "previous_156_document_ids": [
+        "P053"
+      ]
+    },
+    {
+      "policy_action_id": 53,
+      "document_id": "P054",
+      "name": "op.trailing_zero_pack.xor_window.cpp_v2",
+      "operator_id": "trailing_zero_pack",
+      "algorithm": "按零残差、复用旧窗口、新窗口三个分支打包；非零残差的窗口包含条件和前尾零更新规则相同。",
+      "merge_rationale": "两者新窗口都用 6 位 leading 和 6 位有效长度，位数与分支相同；长度字段采用两种等宽双射表示，额外侧字段和终止形式归入输出格式。",
+      "source_evidence": [
+        "cpp/src/gorilla_exact_stages.cpp:96",
+        "cpp/src/gorilla_exact_stages.cpp:204",
+        "cpp/src/pongo_codec.cpp:303",
+        "cpp/src/pongo_codec.cpp:681"
+      ],
+      "io_variants": [
+        {
+          "name": "op.trailing_zero_pack.gorilla.cpp_v1",
+          "legacy_206_policy_id": 98,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 Gorilla XOR 包。输出字节位流：首字、控制位、有效 XOR 位和 typed sentinel；6 位长度字段存 significant−1。",
+          "implementation_source": "cpp/src/gorilla_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse_*"
+        },
+        {
+          "name": "op.trailing_zero_pack.pongo.cpp_v1",
+          "legacy_206_policy_id": 103,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 Pongo XOR 包。输出字节位流：count、首字、擦除侧字段与相同窗口 payload；6 位长度字段存 significant，64 编为 0。两种码流需各自解析器。",
+          "implementation_source": "cpp/src/pongo_codec.cpp:exact_actions::pongo::trailing_pack_forward/trailing_pack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        53
+      ],
+      "previous_document_ids": [
+        "A054"
+      ],
+      "previous_156_policy_ids": [
+        53
+      ],
+      "previous_156_document_ids": [
+        "P054"
+      ]
+    },
+    {
+      "policy_action_id": 54,
+      "document_id": "P055",
+      "name": "op.trailing_zero_pack.chimp128.cpp_v1",
+      "operator_id": "trailing_zero_pack",
+      "algorithm": "Chimp128四分支控制元数据及前导/尾随零位流打包阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/chimp128_exact_stages.cpp:264"
+      ],
+      "io_variants": [
+        {
+          "name": "op.trailing_zero_pack.chimp128.cpp_v1",
+          "legacy_206_policy_id": 100,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Chimp128四分支控制元数据及前导/尾随零位流打包阶段。",
+          "implementation_source": "cpp/src/chimp128_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse_*"
+        }
+      ],
+      "previous_182_policy_ids": [
+        54
+      ],
+      "previous_document_ids": [
+        "A055"
+      ],
+      "previous_156_policy_ids": [
+        54
+      ],
+      "previous_156_document_ids": [
+        "P055"
+      ]
+    },
+    {
+      "policy_action_id": 55,
+      "document_id": "P056",
+      "name": "op.trailing_zero_pack.nibble_residual.cpp_v2",
+      "operator_id": "trailing_zero_pack",
+      "algorithm": "每个残差用 1 位预测器选择和 3 位字节数码构成 nibble，再按同一字节数映射写入小端残差。",
+      "merge_rationale": "有效残差的码表与写法相同；分块头、计数、奇数项填充属于输出布局。此合并不包括前序 FPC 与 pFPC 预测器。",
+      "source_evidence": [
+        "cpp/src/fpc_exact_stages.cpp:171",
+        "cpp/src/pfpc_exact_stages.cpp:172"
+      ],
+      "io_variants": [
+        {
+          "name": "op.trailing_zero_pack.fpc.cpp_v1",
+          "legacy_206_policy_id": 108,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 FPC 预测记录。输出 predictor 参数、24 位 count/size 块头、两个 nibble 一组的码表及残差字节；奇数尾的无效 nibble 由 dummy 预测得到。",
+          "implementation_source": "cpp/src/fpc_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse"
+        },
+        {
+          "name": "op.trailing_zero_pack.pfpc.cpp_v1",
+          "legacy_206_policy_id": 110,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 pFPC 预测记录。输出单线程参数、32 位 count/size 块头、相同 nibble 与残差字节；奇数尾的无效 nibble 为 0。",
+          "implementation_source": "cpp/src/pfpc_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        55
+      ],
+      "previous_document_ids": [
+        "A056"
+      ],
+      "previous_156_policy_ids": [
+        55
+      ],
+      "previous_156_document_ids": [
+        "P056"
+      ]
+    },
+    {
+      "policy_action_id": 56,
+      "document_id": "P057",
+      "name": "op.dictionary.reference_v1",
+      "operator_id": "dictionary",
+      "algorithm": "按数值排序词典生成整数ID的参考变换，完整int64词典必须保留。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.dictionary.reference_v1",
+          "legacy_206_policy_id": 10,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "按数值排序词典生成整数ID的参考变换，完整int64词典必须保留。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        56
+      ],
+      "previous_document_ids": [
+        "A057"
+      ],
+      "previous_156_policy_ids": [
+        56
+      ],
+      "previous_156_document_ids": [
+        "P057"
+      ]
+    },
+    {
+      "policy_action_id": 57,
+      "document_id": "P058",
+      "name": "op.dictionary.project_words64.cpp_v1",
+      "operator_id": "dictionary",
+      "algorithm": "int64/float64位保真字典，输出uint64索引；行数≤UINT32_MAX，须保留词典。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/dictionary64_action_cli.cpp:1",
+        "cpp/src/dictionary64_action_cli.cpp:21",
+        "cpp/src/dictionary64_action_cli.cpp:24",
+        "cpp/src/dictionary64_action_cli.cpp:31"
+      ],
+      "io_variants": [
+        {
+          "name": "op.dictionary.project_words64.cpp_v1",
+          "legacy_206_policy_id": 77,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "int64/float64位保真字典，输出uint64索引；行数≤UINT32_MAX，须保留词典。",
+          "implementation_source": "cpp/src/dictionary64_action_cli.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        57
+      ],
+      "previous_document_ids": [
+        "A058"
+      ],
+      "previous_156_policy_ids": [
+        57
+      ],
+      "previous_156_document_ids": [
+        "P058"
+      ]
+    },
+    {
+      "policy_action_id": 58,
+      "document_id": "P059",
+      "name": "op.dictionary.alp_rd.cpp_v1",
+      "operator_id": "dictionary",
+      "algorithm": "ALP-RD参考分支：完整64位值建字典并打包ID，非生产版左右位切分。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:807",
+        "cpp/src/learning_codec_exact_stages.cpp:835"
+      ],
+      "io_variants": [
+        {
+          "name": "op.dictionary.alp_rd.cpp_v1",
+          "legacy_206_policy_id": 143,
+          "input_kinds": [
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "float64"
+          ],
+          "description": "ALP-RD参考分支：完整64位值建字典并打包ID，非生产版左右位切分。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_dictionary_forward/alp_dictionary_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        58
+      ],
+      "previous_document_ids": [
+        "A059"
+      ],
+      "previous_156_policy_ids": [
+        58
+      ],
+      "previous_156_document_ids": [
+        "P059"
+      ]
+    },
+    {
+      "policy_action_id": 59,
+      "document_id": "P060",
+      "name": "op.dictionary.brotli_static_small.cpp_reference_v1",
+      "operator_id": "dictionary",
+      "algorithm": "独立定长词字典参考实现，不是上游Brotli字典码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:175"
+      ],
+      "io_variants": [
+        {
+          "name": "op.dictionary.brotli_static_small.cpp_reference_v1",
+          "legacy_206_policy_id": 153,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立定长词字典参考实现，不是上游Brotli字典码流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:dictionary_forward/dictionary_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        59
+      ],
+      "previous_document_ids": [
+        "A060"
+      ],
+      "previous_156_policy_ids": [
+        59
+      ],
+      "previous_156_document_ids": [
+        "P060"
+      ]
+    },
+    {
+      "policy_action_id": 60,
+      "document_id": "P061",
+      "name": "op.dictionary.corad_tricklet_xor.cpp_v2",
+      "operator_id": "dictionary",
+      "algorithm": "40通道tricklet字典预测与归一化字XOR残差，尾通道全部保留。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/corad_lossless_cpp.cpp:53",
+        "cpp/src/corad_lossless_cpp.cpp:62",
+        "cpp/src/corad_lossless_cpp.cpp:66",
+        "cpp/src/corad_lossless_cpp.cpp:69"
+      ],
+      "io_variants": [
+        {
+          "name": "op.dictionary.corad_tricklet_xor.cpp_v2",
+          "legacy_206_policy_id": 203,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "40通道tricklet字典预测与归一化字XOR残差，尾通道全部保留。",
+          "implementation_source": "cpp/src/corad_lossless_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        60
+      ],
+      "previous_document_ids": [
+        "A061"
+      ],
+      "previous_156_policy_ids": [
+        60
+      ],
+      "previous_156_document_ids": [
+        "P061"
+      ]
+    },
+    {
+      "policy_action_id": 61,
+      "document_id": "P062",
+      "name": "op.zigzag.signed64.cpp_v2",
+      "operator_id": "zigzag",
+      "algorithm": "逐个有符号 64 位输入按同一 ZigZag 公式映射为 uint64；逆向恢复原有符号值。",
+      "merge_rationale": "公式相同；对哪些包字段应用映射，以及首值、尾部和尺度如何旁路保留，是输入输出适配。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:42",
+        "cpp/src/reference_operator_actions.cpp:296",
+        "cpp/src/p04_exact_stages.cpp:304",
+        "cpp/src/dbp_exact_stages.cpp:211"
+      ],
+      "io_variants": [
+        {
+          "name": "op.zigzag.reference_v1",
+          "legacy_206_policy_id": 11,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入整条 int64 主流；输出 uint64 码，在参考 State 中以 int64 位模式保存。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.zigzag.sprintz.cpp_v1",
+          "legacy_206_policy_id": 91,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 Sprintz 9 字块包；仅对每完整块的 8 个预测残差做映射，输出 uint64 码。锚点和不足 9 字的尾部原样保留。",
+          "implementation_source": "cpp/src/p04_exact_stages.cpp:sprintz_zigzag_forward/sprintz_zigzag_inverse"
+        },
+        {
+          "name": "op.zigzag.delta_binary_packed.cpp_v1",
+          "legacy_206_policy_id": 95,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 DBP delta 包；仅后续差分映射成 uint64 码，首值仍为 int64，数量、原类型和尺度旁路保留。",
+          "implementation_source": "cpp/src/dbp_exact_stages.cpp:zigzag_forward/zigzag_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        61
+      ],
+      "previous_document_ids": [
+        "A062"
+      ],
+      "previous_156_policy_ids": [
+        61
+      ],
+      "previous_156_document_ids": [
+        "P062"
+      ]
+    },
+    {
+      "policy_action_id": 62,
+      "document_id": "P063",
+      "name": "op.block_transform.reference_v1",
+      "operator_id": "block_transform",
+      "algorithm": "每64值局部稳定排序的代理，保存块长/逆排列；非生产BWT。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:297",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.reference_v1",
+          "legacy_206_policy_id": 12,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "每64值局部稳定排序的代理，保存块长/逆排列；非生产BWT。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        62
+      ],
+      "previous_document_ids": [
+        "A063"
+      ],
+      "previous_156_policy_ids": [
+        62
+      ],
+      "previous_156_document_ids": [
+        "P063"
+      ]
+    },
+    {
+      "policy_action_id": 63,
+      "document_id": "P064",
+      "name": "op.block_transform.spdp.cpp_v1",
+      "operator_id": "block_transform",
+      "algorithm": "SPDP八路字节转置，再执行跨字节通道的字节差分。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/spdp_exact_stages.cpp:166"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.spdp.cpp_v1",
+          "legacy_206_policy_id": 105,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "SPDP八路字节转置，再执行跨字节通道的字节差分。",
+          "implementation_source": "cpp/src/spdp_exact_stages.cpp:block_transform_forward/block_transform_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        63
+      ],
+      "previous_document_ids": [
+        "A064"
+      ],
+      "previous_156_policy_ids": [
+        63
+      ],
+      "previous_156_document_ids": [
+        "P064"
+      ]
+    },
+    {
+      "policy_action_id": 64,
+      "document_id": "P065",
+      "name": "op.block_transform.buff_column_split.cpp_v1",
+      "operator_id": "block_transform",
+      "algorithm": "BUFF计算FOR、位宽及左对齐后拆为字节平面，已包含部分打包。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:526",
+        "cpp/src/learning_codec_exact_stages.cpp:1032",
+        "cpp/src/learning_codec_exact_stages.cpp:537"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.buff_column_split.cpp_v1",
+          "legacy_206_policy_id": 151,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "BUFF计算FOR、位宽及左对齐后拆为字节平面，已包含部分打包。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_column_split_forward/buff_column_split_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        64
+      ],
+      "previous_document_ids": [
+        "A065"
+      ],
+      "previous_156_policy_ids": [
+        64
+      ],
+      "previous_156_document_ids": [
+        "P065"
+      ]
+    },
+    {
+      "policy_action_id": 65,
+      "document_id": "P066",
+      "name": "op.block_transform.byte_shuffle.cpp_v2",
+      "operator_id": "block_transform",
+      "algorithm": "把 N×W 的元素字节矩阵按字节位置转置为 W 个字节平面；不足完整元素的尾字节原样前传。W=1 为该规则的退化恒等情况。",
+      "merge_rationale": "三项只向同一 shuffle_forward 传 1/4/8；循环规则、尾部处理及 SHF1 字段完全一致。W 是输入逻辑元素宽度及输出平面数，不是窗口、匹配策略或重置参数；宽度差异进入 I/O 说明。对同一 raw bytes 不保证输出相同，合并依据是按输入元素宽度实例化同一算法。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages_cli.cpp:35",
+        "cpp/src/general_codec_reference_stages.cpp:342",
+        "cpp/src/general_codec_reference_stages_cli.cpp:36",
+        "cpp/src/general_codec_reference_stages_cli.cpp:37"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1",
+          "legacy_206_policy_id": 158,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 bytes，逻辑元素宽度 1 B；输出 SHF1(type_size=1,raw_size) + 原载荷。单字节元素的 byte shuffle 退化为载荷恒等；仍保存封装。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:shuffle_forward/shuffle_inverse"
+        },
+        {
+          "name": "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1",
+          "legacy_206_policy_id": 159,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 bytes，逻辑元素宽度 4 B；输出 SHF1(type_size=4,raw_size) + 四个字节位置平面 + 尾部。按 4 B 元素解释输入；不足一个元素的尾字节原样保留。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:shuffle_forward/shuffle_inverse"
+        },
+        {
+          "name": "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1",
+          "legacy_206_policy_id": 160,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 bytes，逻辑元素宽度 8 B；输出 SHF1(type_size=8,raw_size) + 八个字节位置平面 + 尾部。按 8 B 元素解释输入；不足一个元素的尾字节原样保留。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:shuffle_forward/shuffle_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        65
+      ],
+      "previous_document_ids": [
+        "A066"
+      ],
+      "previous_156_policy_ids": [
+        65
+      ],
+      "previous_156_document_ids": [
+        "P066"
+      ]
+    },
+    {
+      "policy_action_id": 66,
+      "document_id": "P067",
+      "name": "op.block_transform.bzip2_bwt.cpp_reference_v1",
+      "operator_id": "block_transform",
+      "algorithm": "独立循环BWT参考阶段，不是上游Bzip2块码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:403",
+        "cpp/src/general_codec_reference_stages.cpp:439"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.bzip2_bwt.cpp_reference_v1",
+          "legacy_206_policy_id": 165,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立循环BWT参考阶段，不是上游Bzip2块码流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:bwt_forward/bwt_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        66
+      ],
+      "previous_document_ids": [
+        "A067"
+      ],
+      "previous_156_policy_ids": [
+        66
+      ],
+      "previous_156_document_ids": [
+        "P067"
+      ]
+    },
+    {
+      "policy_action_id": 67,
+      "document_id": "P068",
+      "name": "op.block_transform.int64_lo_hi32.cpp_v1",
+      "operator_id": "block_transform",
+      "algorithm": "复现旧版int64低/高32位拆分；后接双路native-LZ，不是FastPFor。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:252",
+        "cpp/src/legacy_numeric_action_stages.cpp:255",
+        "cpp/src/legacy_numeric_action_stages.cpp:257",
+        "cpp/src/legacy_numeric_action_stages.cpp:262"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.int64_lo_hi32.cpp_v1",
+          "legacy_206_policy_id": 186,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复现旧版int64低/高32位拆分；后接双路native-LZ，不是FastPFor。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        67
+      ],
+      "previous_document_ids": [
+        "A068"
+      ],
+      "previous_156_policy_ids": [
+        67
+      ],
+      "previous_156_document_ids": [
+        "P068"
+      ]
+    },
+    {
+      "policy_action_id": 68,
+      "document_id": "P069",
+      "name": "op.block_transform.buff_native_word_order.cpp_v1",
+      "operator_id": "block_transform",
+      "algorithm": "当前native BUFF仅交换float64高低32位字序，阶段不缩短数据。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/buff_native_exact_stages.cpp:10",
+        "cpp/src/buff_native_exact_stages.cpp:31",
+        "cpp/src/buff_native_exact_stages.cpp:34"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_transform.buff_native_word_order.cpp_v1",
+          "legacy_206_policy_id": 195,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "当前native BUFF仅交换float64高低32位字序，阶段不缩短数据。",
+          "implementation_source": "cpp/src/buff_native_exact_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        68
+      ],
+      "previous_document_ids": [
+        "A069"
+      ],
+      "previous_156_policy_ids": [
+        68
+      ],
+      "previous_156_document_ids": [
+        "P069"
+      ]
+    },
+    {
+      "policy_action_id": 69,
+      "document_id": "P070",
+      "name": "op.symbol_recode.reference_v1",
+      "operator_id": "symbol_recode",
+      "algorithm": "频率排序词典的符号重编码代理，输出整数ID并保留完整词典。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.symbol_recode.reference_v1",
+          "legacy_206_policy_id": 13,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "频率排序词典的符号重编码代理，输出整数ID并保留完整词典。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        69
+      ],
+      "previous_document_ids": [
+        "A070"
+      ],
+      "previous_156_policy_ids": [
+        69
+      ],
+      "previous_156_document_ids": [
+        "P070"
+      ]
+    },
+    {
+      "policy_action_id": 70,
+      "document_id": "P071",
+      "name": "op.symbol_recode.bzip2_mtf.cpp_reference_v1",
+      "operator_id": "symbol_recode",
+      "algorithm": "独立参考MTF，对整个输入包字节编码为rank，不只处理BWT末列。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:470",
+        "cpp/src/general_codec_reference_stages.cpp:51"
+      ],
+      "io_variants": [
+        {
+          "name": "op.symbol_recode.bzip2_mtf.cpp_reference_v1",
+          "legacy_206_policy_id": 166,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立参考MTF，对整个输入包字节编码为rank，不只处理BWT末列。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:mtf_forward/mtf_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        70
+      ],
+      "previous_document_ids": [
+        "A071"
+      ],
+      "previous_156_policy_ids": [
+        70
+      ],
+      "previous_156_document_ids": [
+        "P071"
+      ]
+    },
+    {
+      "policy_action_id": 71,
+      "document_id": "P072",
+      "name": "op.run_length.value_count.cpp_v2",
+      "operator_id": "run_length",
+      "algorithm": "顺序扫描连续相等符号，输出每段的值与出现次数；在共同可逆计数域内，游程划分完全一致。",
+      "merge_rationale": "ID14 是 int64 的 count,value 交错记录；ID167 是 uint8 value 与 uint32LE count 的 RLB1 记录。符号等值判断与游程规则相同，变化是值域、字段宽度、字段顺序及传输包。计数边界必须保留：14 逆变换仅接受 count≤UINT32_MAX；167 在 UINT32_MAX 分段，因此超出该边界不宣称相同记录划分。此处按允许的 I/O 位宽/容量特化合并。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:307",
+        "cpp/src/reference_operator_actions.cpp:434",
+        "cpp/src/general_codec_reference_stages.cpp:501"
+      ],
+      "io_variants": [
+        {
+          "name": "op.run_length.reference_v1",
+          "legacy_206_policy_id": 14,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "输入 规范化 int64 值序列；输出 int64 的 count,value 交错记录；参考封装另保留布局。值域为 int64；字段顺序 count,value；逆变换要求每个 count≤UINT32_MAX。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        },
+        {
+          "name": "op.run_length.bzip2_uint8.cpp_reference_v1",
+          "legacy_206_policy_id": 167,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 uint8 整数符号序列，以 bytes 传输；当前链为完整 MTF1 包；输出 RLB1(raw_size) + uint8 value,uint32LE count 记录。值域为 uint8；字段顺序 value,count；在 UINT32_MAX 计数处分段。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:rle_forward/rle_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        71
+      ],
+      "previous_document_ids": [
+        "A072"
+      ],
+      "previous_156_policy_ids": [
+        71
+      ],
+      "previous_156_document_ids": [
+        "P072"
+      ]
+    },
+    {
+      "policy_action_id": 72,
+      "document_id": "P073",
+      "name": "op.run_length.tsfile_int64.v1",
+      "operator_id": "run_length",
+      "algorithm": "TsFile int64重复段与bit-packed段混合编码，输出码流，非值/次数数组。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/rle_int64_action_cli.cpp:27",
+        "cpp/src/tsfile_encoding/tsfile_encode_p02_int64.cpp:183",
+        "cpp/src/tsfile_encoding/tsfile_encode_p02_int64.cpp:325"
+      ],
+      "io_variants": [
+        {
+          "name": "op.run_length.tsfile_int64.v1",
+          "legacy_206_policy_id": 78,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "TsFile int64重复段与bit-packed段混合编码，输出码流，非值/次数数组。",
+          "implementation_source": "cpp/src/rle_int64_action_cli.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        72
+      ],
+      "previous_document_ids": [
+        "A073"
+      ],
+      "previous_156_policy_ids": [
+        72
+      ],
+      "previous_156_document_ids": [
+        "P073"
+      ]
+    },
+    {
+      "policy_action_id": 73,
+      "document_id": "P074",
+      "name": "op.run_length.rlbe.cpp_v1",
+      "operator_id": "run_length",
+      "algorithm": "对相同length_code做RLE、Fibonacci游程计数及delta有效位输出，不限零值。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/p04_exact_stages.cpp:233",
+        "cpp/src/tsfile_encoding/tsfile_encode_p04_int64.cpp:374",
+        "cpp/src/tsfile_encoding/tsfile_encode_p04_int64.cpp:392"
+      ],
+      "io_variants": [
+        {
+          "name": "op.run_length.rlbe.cpp_v1",
+          "legacy_206_policy_id": 89,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "对相同length_code做RLE、Fibonacci游程计数及delta有效位输出，不限零值。",
+          "implementation_source": "cpp/src/p04_exact_stages.cpp:rlbe_run_length_forward/rlbe_run_length_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        73
+      ],
+      "previous_document_ids": [
+        "A074"
+      ],
+      "previous_156_policy_ids": [
+        73
+      ],
+      "previous_156_document_ids": [
+        "P074"
+      ]
+    },
+    {
+      "policy_action_id": 74,
+      "document_id": "P075",
+      "name": "op.lz_match.reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "重复值代理输出tag/count/literal记录，须保留边界；不是通用字节LZ。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:307",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.reference_v1",
+          "legacy_206_policy_id": 15,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "重复值代理输出tag/count/literal记录，须保留边界；不是通用字节LZ。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        74
+      ],
+      "previous_document_ids": [
+        "A075"
+      ],
+      "previous_156_policy_ids": [
+        74
+      ],
+      "previous_156_document_ids": [
+        "P075"
+      ]
+    },
+    {
+      "name": "op.lz_match.native_lz.aligned8.cpp_v2",
+      "operator_id": "lz_match",
+      "algorithm": "8-byte-key previous-match LZ search；min_match/max_match是可学习输入参数，使用同一C++匹配内核。",
+      "merge_rationale": "27种同内核参数配置合并为一个算法身份；参数和值独立持久化，I/O类型不变。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:75",
+        "scripts/native_lz_parameters.py"
+      ],
+      "previous_182_policy_ids": [
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "previous_document_ids": [
+        "A076",
+        "A077",
+        "A078",
+        "A079",
+        "A080",
+        "A081",
+        "A082",
+        "A083",
+        "A084",
+        "A085",
+        "A086",
+        "A087",
+        "A088",
+        "A089",
+        "A090",
+        "A091",
+        "A092",
+        "A093",
+        "A094",
+        "A095",
+        "A096",
+        "A097",
+        "A098",
+        "A099",
+        "A100",
+        "A101",
+        "A102"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.native_lz.aligned8.cpp_v2",
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入已有NLS1 window包；min_match/max_match为独立调用参数，保留原始字节与window供后续parse执行。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+          "legacy_names": [
+            "op.lz_match.native_lz.aligned8.min3.max110",
+            "op.lz_match.native_lz.aligned8.min3.max117",
+            "op.lz_match.native_lz.aligned8.min3.max125",
+            "op.lz_match.native_lz.aligned8.min3.max153",
+            "op.lz_match.native_lz.aligned8.min3.max164",
+            "op.lz_match.native_lz.aligned8.min3.max18",
+            "op.lz_match.native_lz.aligned8.min3.max203",
+            "op.lz_match.native_lz.aligned8.min3.max213",
+            "op.lz_match.native_lz.aligned8.min3.max251",
+            "op.lz_match.native_lz.aligned8.min3.max257",
+            "op.lz_match.native_lz.aligned8.min3.max35",
+            "op.lz_match.native_lz.aligned8.min3.max41",
+            "op.lz_match.native_lz.aligned8.min3.max64",
+            "op.lz_match.native_lz.aligned8.min3.max85",
+            "op.lz_match.native_lz.aligned8.min4.max119",
+            "op.lz_match.native_lz.aligned8.min4.max128",
+            "op.lz_match.native_lz.aligned8.min4.max160",
+            "op.lz_match.native_lz.aligned8.min4.max197",
+            "op.lz_match.native_lz.aligned8.min4.max208",
+            "op.lz_match.native_lz.aligned8.min4.max248",
+            "op.lz_match.native_lz.aligned8.min4.max31",
+            "op.lz_match.native_lz.aligned8.min4.max32",
+            "op.lz_match.native_lz.aligned8.min4.max53",
+            "op.lz_match.native_lz.aligned8.min4.max66",
+            "op.lz_match.native_lz.aligned8.min5.max186",
+            "op.lz_match.native_lz.aligned8.min5.max214",
+            "op.lz_match.native_lz.aligned8.min5.max248"
+          ],
+          "legacy_206_policy_ids": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55
+          ]
+        }
+      ],
+      "parameter_schema": "native-lz-search-parameters-v1",
+      "default_parameters_source": "benchmark/reference/actions/native_lz_defaults.json",
+      "policy_action_id": 75,
+      "document_id": "P076",
+      "previous_156_policy_ids": [
+        75
+      ],
+      "previous_156_document_ids": [
+        "P076"
+      ]
+    },
+    {
+      "policy_action_id": 76,
+      "document_id": "P077",
+      "name": "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "独立lazy LZ参考，采用Brotli形状参数、窗口65535；非上游等价实现。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:66",
+        "cpp/src/general_codec_reference_stages.cpp:78",
+        "cpp/src/general_codec_reference_stages.cpp:226"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+          "legacy_206_policy_id": 154,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立lazy LZ参考，采用Brotli形状参数、窗口65535；非上游等价实现。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        102
+      ],
+      "previous_document_ids": [
+        "A103"
+      ],
+      "previous_156_policy_ids": [
+        76
+      ],
+      "previous_156_document_ids": [
+        "P077"
+      ]
+    },
+    {
+      "policy_action_id": 77,
+      "document_id": "P078",
+      "name": "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "独立lazy LZ参考，窗口65535；不等同上游Zstd序列生成。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:66",
+        "cpp/src/general_codec_reference_stages.cpp:78",
+        "cpp/src/general_codec_reference_stages.cpp:226"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+          "legacy_206_policy_id": 155,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立lazy LZ参考，窗口65535；不等同上游Zstd序列生成。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        103
+      ],
+      "previous_document_ids": [
+        "A104"
+      ],
+      "previous_156_policy_ids": [
+        77
+      ],
+      "previous_156_document_ids": [
+        "P078"
+      ]
+    },
+    {
+      "policy_action_id": 78,
+      "document_id": "P079",
+      "name": "op.lz_match.blosclz.greedy.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "Blosc/Blosc2共享的贪心语义LZ参考，不是上游blosclz码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:66",
+        "cpp/src/general_codec_reference_stages.cpp:78",
+        "cpp/src/general_codec_reference_stages.cpp:226"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.blosclz.greedy.cpp_reference_v1",
+          "legacy_206_policy_id": 161,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Blosc/Blosc2共享的贪心语义LZ参考，不是上游blosclz码流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        104
+      ],
+      "previous_document_ids": [
+        "A105"
+      ],
+      "previous_156_policy_ids": [
+        78
+      ],
+      "previous_156_document_ids": [
+        "P079"
+      ]
+    },
+    {
+      "policy_action_id": 79,
+      "document_id": "P080",
+      "name": "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "独立DEFLATE风格lazy LZ参考，窗口32768；非上游zlib/gzip码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:66",
+        "cpp/src/general_codec_reference_stages.cpp:78",
+        "cpp/src/general_codec_reference_stages.cpp:226"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+          "legacy_206_policy_id": 168,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立DEFLATE风格lazy LZ参考，窗口32768；非上游zlib/gzip码流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        105
+      ],
+      "previous_document_ids": [
+        "A106"
+      ],
+      "previous_156_policy_ids": [
+        79
+      ],
+      "previous_156_document_ids": [
+        "P080"
+      ]
+    },
+    {
+      "policy_action_id": 80,
+      "document_id": "P081",
+      "name": "op.lz_match.xz_lazy16777216.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "algorithm": "独立LZMA风格lazy LZ参考，窗口16777216；非上游liblzma码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:66",
+        "cpp/src/general_codec_reference_stages.cpp:78",
+        "cpp/src/general_codec_reference_stages.cpp:226"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.xz_lazy16777216.cpp_reference_v1",
+          "legacy_206_policy_id": 169,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立LZMA风格lazy LZ参考，窗口16777216；非上游liblzma码流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        106
+      ],
+      "previous_document_ids": [
+        "A107"
+      ],
+      "previous_156_policy_ids": [
+        80
+      ],
+      "previous_156_document_ids": [
+        "P081"
+      ]
+    },
+    {
+      "policy_action_id": 81,
+      "document_id": "P082",
+      "name": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+      "operator_id": "lz_match",
+      "algorithm": "双路native-LZ：窗32768，配置5–175、按8量化为8–168；非FastPFor。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:24",
+        "cpp/src/legacy_numeric_action_stages.cpp:219",
+        "cpp/src/legacy_numeric_action_stages.cpp:265",
+        "cpp/src/native_lz_action_stages.cpp:108"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+          "legacy_206_policy_id": 187,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "双路native-LZ：窗32768，配置5–175、按8量化为8–168；非FastPFor。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        107
+      ],
+      "previous_document_ids": [
+        "A108"
+      ],
+      "previous_156_policy_ids": [
+        81
+      ],
+      "previous_156_document_ids": [
+        "P082"
+      ]
+    },
+    {
+      "policy_action_id": 82,
+      "document_id": "P083",
+      "name": "op.lz_match.snappy_snap_1_1_1.cpp_v1",
+      "operator_id": "lz_match",
+      "algorithm": "snap 1.1.1的hash/skip/greedy匹配器，不调用完整编码器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/snappy_exact_stages.cpp:121",
+        "cpp/src/snappy_exact_stages.cpp:237",
+        "cpp/src/snappy_exact_stages.cpp:250",
+        "cpp/src/snappy_exact_stages.cpp:289"
+      ],
+      "io_variants": [
+        {
+          "name": "op.lz_match.snappy_snap_1_1_1.cpp_v1",
+          "legacy_206_policy_id": 192,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "snap 1.1.1的hash/skip/greedy匹配器，不调用完整编码器。",
+          "implementation_source": "cpp/src/snappy_exact_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        108
+      ],
+      "previous_document_ids": [
+        "A109"
+      ],
+      "previous_156_policy_ids": [
+        82
+      ],
+      "previous_156_document_ids": [
+        "P083"
+      ]
+    },
+    {
+      "policy_action_id": 83,
+      "document_id": "P084",
+      "name": "op.match_parse_policy.reference_v1",
+      "operator_id": "match_parse_policy",
+      "algorithm": "以(3v+i%251) mod 2^64模拟可逆策略效果，并非真实候选选择器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:319",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_parse_policy.reference_v1",
+          "legacy_206_policy_id": 16,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "以(3v+i%251) mod 2^64模拟可逆策略效果，并非真实候选选择器。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        109
+      ],
+      "previous_document_ids": [
+        "A110"
+      ],
+      "previous_156_policy_ids": [
+        83
+      ],
+      "previous_156_document_ids": [
+        "P084"
+      ]
+    },
+    {
+      "policy_action_id": 84,
+      "document_id": "P085",
+      "name": "op.match_parse_policy.native_lz.aligned8_greedy",
+      "operator_id": "match_parse_policy",
+      "algorithm": "实际执行8字节对齐匹配与贪心解析，输出带tag的literal/offset/length记录。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:75",
+        "cpp/src/native_lz_action_stages.cpp:108",
+        "cpp/src/native_lz_action_stages.cpp:186",
+        "cpp/src/native_lz_action_stages.cpp:266"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_parse_policy.native_lz.aligned8_greedy",
+          "legacy_206_policy_id": 56,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "实际执行8字节对齐匹配与贪心解析，输出带tag的literal/offset/length记录。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        110
+      ],
+      "previous_document_ids": [
+        "A111"
+      ],
+      "previous_156_policy_ids": [
+        84
+      ],
+      "previous_156_document_ids": [
+        "P085"
+      ]
+    },
+    {
+      "policy_action_id": 85,
+      "document_id": "P086",
+      "name": "op.match_parse_policy.generic_packet.cpp_reference_v1",
+      "operator_id": "match_parse_policy",
+      "algorithm": "参考策略边界仅校验/封装既有记录，不重新匹配；上游匹配仍融合。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:307",
+        "cpp/src/general_codec_reference_stages.cpp:51"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_parse_policy.generic_packet.cpp_reference_v1",
+          "legacy_206_policy_id": 156,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "参考策略边界仅校验/封装既有记录，不重新匹配；上游匹配仍融合。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:parse_policy_forward/parse_policy_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        111
+      ],
+      "previous_document_ids": [
+        "A112"
+      ],
+      "previous_156_policy_ids": [
+        85
+      ],
+      "previous_156_document_ids": [
+        "P086"
+      ]
+    },
+    {
+      "policy_action_id": 86,
+      "document_id": "P087",
+      "name": "op.match_window_model.reference_v1",
+      "operator_id": "match_window_model",
+      "algorithm": "以值位模式XOR(i×131)模拟窗口/状态效果，不维护真实LZ窗口。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:320",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_window_model.reference_v1",
+          "legacy_206_policy_id": 17,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "以值位模式XOR(i×131)模拟窗口/状态效果，不维护真实LZ窗口。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        112
+      ],
+      "previous_document_ids": [
+        "A113"
+      ],
+      "previous_156_policy_ids": [
+        86
+      ],
+      "previous_156_document_ids": [
+        "P087"
+      ]
+    },
+    {
+      "policy_action_id": 87,
+      "document_id": "P088",
+      "name": "op.match_window_model.native_lz.window.cpp_v2",
+      "operator_id": "match_window_model",
+      "algorithm": "同一native窗口模型：输入window_bytes限制向后匹配距离，写入NLS1上下文；具体搜索在Match Parse Policy执行。",
+      "merge_rationale": "14项仅窗口字节数不同，合并为一个带输入参数的实现；reference位置XOR变换不是真实窗口，保留独立。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:42",
+        "cpp/src/native_lz_action_stages.cpp:79",
+        "cpp/src/native_lz_action_stages.cpp:258",
+        "cpp/src/native_lz_action_stages.cpp:275"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_window_model.native_lz.window.cpp_v2",
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "同一native窗口模型：输入window_bytes限制向后匹配距离，写入NLS1上下文；具体搜索在Match Parse Policy执行。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+          "legacy_names": [
+            "op.match_window_model.native_lz.window12288",
+            "op.match_window_model.native_lz.window16384",
+            "op.match_window_model.native_lz.window19456",
+            "op.match_window_model.native_lz.window24576",
+            "op.match_window_model.native_lz.window28672",
+            "op.match_window_model.native_lz.window3072",
+            "op.match_window_model.native_lz.window32768",
+            "op.match_window_model.native_lz.window4096",
+            "op.match_window_model.native_lz.window40960",
+            "op.match_window_model.native_lz.window5120",
+            "op.match_window_model.native_lz.window53248",
+            "op.match_window_model.native_lz.window57344",
+            "op.match_window_model.native_lz.window65535",
+            "op.match_window_model.native_lz.window8192"
+          ],
+          "legacy_206_policy_ids": [
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73
+          ]
+        }
+      ],
+      "previous_182_policy_ids": [
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126
+      ],
+      "previous_document_ids": [
+        "A114",
+        "A115",
+        "A116",
+        "A117",
+        "A118",
+        "A119",
+        "A120",
+        "A121",
+        "A122",
+        "A123",
+        "A124",
+        "A125",
+        "A126",
+        "A127"
+      ],
+      "previous_156_policy_ids": [
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "previous_156_document_ids": [
+        "P088",
+        "P089",
+        "P090",
+        "P091",
+        "P092",
+        "P093",
+        "P094",
+        "P095",
+        "P096",
+        "P097",
+        "P098",
+        "P099",
+        "P100",
+        "P101"
+      ],
+      "parameter_schema_module": "native_window_parameters"
+    },
+    {
+      "policy_action_id": 88,
+      "document_id": "P089",
+      "name": "op.match_token_format.reference_v1",
+      "operator_id": "match_token_format",
+      "algorithm": "参考token布局代理：两个低4位拼字节，另保留高位及原长。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:321",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.reference_v1",
+          "legacy_206_policy_id": 18,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "参考token布局代理：两个低4位拼字节，另保留高位及原长。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        127
+      ],
+      "previous_document_ids": [
+        "A128"
+      ],
+      "previous_156_policy_ids": [
+        101
+      ],
+      "previous_156_document_ids": [
+        "P102"
+      ]
+    },
+    {
+      "policy_action_id": 89,
+      "document_id": "P090",
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+      "operator_id": "match_token_format",
+      "algorithm": "每8 token一控制字节；小端uint16偏移，uint8保存length−3；输出混合码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:220",
+        "cpp/src/native_lz_action_stages.cpp:228",
+        "cpp/src/native_lz_action_stages.cpp:270"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+          "legacy_206_policy_id": 57,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "每8 token一控制字节；小端uint16偏移，uint8保存length−3；输出混合码流。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        128
+      ],
+      "previous_document_ids": [
+        "A129"
+      ],
+      "previous_156_policy_ids": [
+        102
+      ],
+      "previous_156_document_ids": [
+        "P103"
+      ]
+    },
+    {
+      "policy_action_id": 90,
+      "document_id": "P091",
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+      "operator_id": "match_token_format",
+      "algorithm": "每8 token一控制字节；小端uint16偏移，uint8保存length−4；输出混合码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:220",
+        "cpp/src/native_lz_action_stages.cpp:228",
+        "cpp/src/native_lz_action_stages.cpp:270"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+          "legacy_206_policy_id": 58,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "每8 token一控制字节；小端uint16偏移，uint8保存length−4；输出混合码流。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        129
+      ],
+      "previous_document_ids": [
+        "A130"
+      ],
+      "previous_156_policy_ids": [
+        103
+      ],
+      "previous_156_document_ids": [
+        "P104"
+      ]
+    },
+    {
+      "policy_action_id": 91,
+      "document_id": "P092",
+      "name": "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2",
+      "operator_id": "match_token_format",
+      "algorithm": "每路 token 每八项生成一个控制字节；literal 写 uint8，match 写 uint16LE offset 与 uint8(length−5)。逆向使用相同偏置与流原长。",
+      "merge_rationale": "ID59 解析 NLS1 单路 token 后调用 pack(tokens,5)；ID188 解析 LNS1 中已有各路 token 后逐路调用同一 pack(tokens,5)。双路/多块仅是已有端口批处理和外包布局，不做搜索、重分块或改变 token；raw 旁路块和元数据属 I/O 旁路。不得将另一类中的双路 LZ 搜索 ID187据此一并合并。",
+      "source_evidence": [
+        "cpp/src/native_lz_action_stages.cpp:220",
+        "cpp/src/native_lz_action_stages.cpp:270",
+        "cpp/src/legacy_numeric_action_stages.cpp:24",
+        "cpp/src/legacy_numeric_action_stages.cpp:274"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5",
+          "legacy_206_policy_id": 59,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 NLS1 role=3：单路 token 及原长/window/min/max 上下文；输出 raw ctrl8 码流；literal=uint8，offset=uint16LE，length−5=uint8。bias=5；单路 pack；逆向需原长及上下文；bias 改变码值及可表示长度区间。",
+          "implementation_source": "cpp/src/native_lz_action_stages.cpp"
+        },
+        {
+          "name": "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1",
+          "legacy_206_policy_id": 188,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 LNS1 tokens 包：每块既有双路 token lists；可含 raw 旁路块；输出 LNS1 wires 包：每路 bias=5 的 ctrl8 字节流；raw 旁路与元数据保留。逐路调用相同 pack(tokens,5)；只消费既有流边界，不生成新的匹配或改变 token。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        130
+      ],
+      "previous_document_ids": [
+        "A131"
+      ],
+      "previous_156_policy_ids": [
+        104
+      ],
+      "previous_156_document_ids": [
+        "P105"
+      ]
+    },
+    {
+      "policy_action_id": 92,
+      "document_id": "P093",
+      "name": "op.match_token_format.snappy.cpp_v1",
+      "operator_id": "match_token_format",
+      "algorithm": "Snappy的literal、COPY_1/COPY_2标签物化，不含原长前缀。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/snappy_exact_stages.cpp:320",
+        "cpp/src/snappy_exact_stages.cpp:58"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.snappy.cpp_v1",
+          "legacy_206_policy_id": 127,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Snappy的literal、COPY_1/COPY_2标签物化，不含原长前缀。",
+          "implementation_source": "cpp/src/snappy_exact_stages.cpp:token_format_forward/token_format_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        131
+      ],
+      "previous_document_ids": [
+        "A132"
+      ],
+      "previous_156_policy_ids": [
+        105
+      ],
+      "previous_156_document_ids": [
+        "P106"
+      ]
+    },
+    {
+      "policy_action_id": 93,
+      "document_id": "P094",
+      "name": "op.match_token_format.lz4.cpp_v1",
+      "operator_id": "match_token_format",
+      "algorithm": "LZ4令牌半字节、距离及尚未编码的扩展长度整数阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/lz4_exact_stages.cpp:248",
+        "cpp/src/lz4_exact_stages.cpp:435"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.lz4.cpp_v1",
+          "legacy_206_policy_id": 130,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "LZ4令牌半字节、距离及尚未编码的扩展长度整数阶段。",
+          "implementation_source": "cpp/src/lz4_exact_stages.cpp:token_format_forward/token_format_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        132
+      ],
+      "previous_document_ids": [
+        "A133"
+      ],
+      "previous_156_policy_ids": [
+        106
+      ],
+      "previous_156_document_ids": [
+        "P107"
+      ]
+    },
+    {
+      "policy_action_id": 94,
+      "document_id": "P095",
+      "name": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1",
+      "operator_id": "match_token_format",
+      "algorithm": "Blosc/Blosc2共享可逆ctrl8参考令牌格式，仅为格式阶段。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:258",
+        "cpp/src/general_codec_reference_stages.cpp:280"
+      ],
+      "io_variants": [
+        {
+          "name": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1",
+          "legacy_206_policy_id": 162,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Blosc/Blosc2共享可逆ctrl8参考令牌格式，仅为格式阶段。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:token_forward/token_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        133
+      ],
+      "previous_document_ids": [
+        "A134"
+      ],
+      "previous_156_policy_ids": [
+        107
+      ],
+      "previous_156_document_ids": [
+        "P108"
+      ]
+    },
+    {
+      "policy_action_id": 95,
+      "document_id": "P096",
+      "name": "op.integer_code.reference_v1",
+      "operator_id": "integer_code",
+      "algorithm": "ZigZag后写ULEB128字节并记录各码长；已是变长编码，非数值残差。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:327",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.integer_code.reference_v1",
+          "legacy_206_policy_id": 19,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "ZigZag后写ULEB128字节并记录各码长；已是变长编码，非数值残差。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        134
+      ],
+      "previous_document_ids": [
+        "A135"
+      ],
+      "previous_156_policy_ids": [
+        108
+      ],
+      "previous_156_document_ids": [
+        "P109"
+      ]
+    },
+    {
+      "policy_action_id": 96,
+      "document_id": "P097",
+      "name": "op.integer_code.stream_vbyte.cpp_v1",
+      "operator_id": "integer_code",
+      "algorithm": "分别编码已差分低/高分肢的key/data，生成最终Stream-VByte适配器格式。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/svb_exact_stages.cpp:75",
+        "cpp/src/svb_exact_stages.cpp:168"
+      ],
+      "io_variants": [
+        {
+          "name": "op.integer_code.stream_vbyte.cpp_v1",
+          "legacy_206_policy_id": 85,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "分别编码已差分低/高分肢的key/data，生成最终Stream-VByte适配器格式。",
+          "implementation_source": "cpp/src/svb_exact_stages.cpp:integer_code_forward/integer_code_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        135
+      ],
+      "previous_document_ids": [
+        "A136"
+      ],
+      "previous_156_policy_ids": [
+        109
+      ],
+      "previous_156_document_ids": [
+        "P110"
+      ]
+    },
+    {
+      "policy_action_id": 97,
+      "document_id": "P098",
+      "name": "op.integer_code.fastpfor_variablebyte.cpp_v1",
+      "operator_id": "integer_code",
+      "algorithm": "VariableByte编码低/高32位流余尾，并生成精确适配器码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/fastpfor_exact_stages.cpp:222",
+        "cpp/src/fastpfor_exact_stages.cpp:308"
+      ],
+      "io_variants": [
+        {
+          "name": "op.integer_code.fastpfor_variablebyte.cpp_v1",
+          "legacy_206_policy_id": 119,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "VariableByte编码低/高32位流余尾，并生成精确适配器码流。",
+          "implementation_source": "cpp/src/fastpfor_exact_stages.cpp:variable_byte_forward/variable_byte_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        136
+      ],
+      "previous_document_ids": [
+        "A137"
+      ],
+      "previous_156_policy_ids": [
+        110
+      ],
+      "previous_156_document_ids": [
+        "P111"
+      ]
+    },
+    {
+      "policy_action_id": 98,
+      "document_id": "P099",
+      "name": "op.integer_code.snappy.cpp_v1",
+      "operator_id": "integer_code",
+      "algorithm": "Snappy的uint32原长varint，生成精确raw公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/snappy_exact_stages.cpp:343"
+      ],
+      "io_variants": [
+        {
+          "name": "op.integer_code.snappy.cpp_v1",
+          "legacy_206_policy_id": 128,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Snappy的uint32原长varint，生成精确raw公开码流。",
+          "implementation_source": "cpp/src/snappy_exact_stages.cpp:integer_code_forward/integer_code_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        137
+      ],
+      "previous_document_ids": [
+        "A138"
+      ],
+      "previous_156_policy_ids": [
+        111
+      ],
+      "previous_156_document_ids": [
+        "P112"
+      ]
+    },
+    {
+      "policy_action_id": 99,
+      "document_id": "P100",
+      "name": "op.integer_code.lz4.cpp_v1",
+      "operator_id": "integer_code",
+      "algorithm": "LZ4用连续255字节编码扩展长度，raw块字节保存在LZI1逐块包中。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/lz4_exact_stages.cpp:325",
+        "cpp/src/lz4_exact_stages.cpp:347",
+        "cpp/src/lz4_exact_stages.cpp:441"
+      ],
+      "io_variants": [
+        {
+          "name": "op.integer_code.lz4.cpp_v1",
+          "legacy_206_policy_id": 131,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "LZ4用连续255字节编码扩展长度，raw块字节保存在LZI1逐块包中。",
+          "implementation_source": "cpp/src/lz4_exact_stages.cpp:integer_code_forward/integer_code_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        138
+      ],
+      "previous_document_ids": [
+        "A139"
+      ],
+      "previous_156_policy_ids": [
+        112
+      ],
+      "previous_156_document_ids": [
+        "P113"
+      ]
+    },
+    {
+      "policy_action_id": 100,
+      "document_id": "P101",
+      "name": "op.bitstream_pack.reference_v1",
+      "operator_id": "bitstream_pack",
+      "algorithm": "参考比特流代理将两项低4位拼字节，仍须保留高位侧流及原长。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:321",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitstream_pack.reference_v1",
+          "legacy_206_policy_id": 20,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "参考比特流代理将两项低4位拼字节，仍须保留高位侧流及原长。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        139
+      ],
+      "previous_document_ids": [
+        "A140"
+      ],
+      "previous_156_policy_ids": [
+        113
+      ],
+      "previous_156_document_ids": [
+        "P114"
+      ]
+    },
+    {
+      "policy_action_id": 101,
+      "document_id": "P102",
+      "name": "op.bitstream_pack.camel.cpp_v1",
+      "operator_id": "bitstream_pack",
+      "algorithm": "Camel十进制控制编码、分块封装及精确CAM1公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/camel_exact_stages.cpp:676"
+      ],
+      "io_variants": [
+        {
+          "name": "op.bitstream_pack.camel.cpp_v1",
+          "legacy_206_policy_id": 125,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "Camel十进制控制编码、分块封装及精确CAM1公开码流。",
+          "implementation_source": "cpp/src/camel_exact_stages.cpp:bitstream_pack_forward/bitstream_pack_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        140
+      ],
+      "previous_document_ids": [
+        "A141"
+      ],
+      "previous_156_policy_ids": [
+        114
+      ],
+      "previous_156_document_ids": [
+        "P115"
+      ]
+    },
+    {
+      "policy_action_id": 102,
+      "document_id": "P103",
+      "name": "op.entropy_huffman.reference_v1",
+      "operator_id": "entropy_huffman",
+      "algorithm": "频率词典ID重编码代理，完整词典须保留；不是实际Huffman位流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_huffman.reference_v1",
+          "legacy_206_policy_id": 21,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "频率词典ID重编码代理，完整词典须保留；不是实际Huffman位流。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        141
+      ],
+      "previous_document_ids": [
+        "A142"
+      ],
+      "previous_156_policy_ids": [
+        115
+      ],
+      "previous_156_document_ids": [
+        "P116"
+      ]
+    },
+    {
+      "policy_action_id": 103,
+      "document_id": "P104",
+      "name": "op.entropy_huffman.project_bytes.cpp_v1",
+      "operator_id": "entropy_huffman",
+      "algorithm": "项目Huffman字节码流含频率表/原长/有效bit数，供Brotli和Bzip2参考链。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/huffman_bytes.cpp:152",
+        "cpp/src/huffman_bytes.cpp:182",
+        "cpp/src/huffman_bytes.cpp:191"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_huffman.project_bytes.cpp_v1",
+          "legacy_206_policy_id": 74,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "项目Huffman字节码流含频率表/原长/有效bit数，供Brotli和Bzip2参考链。",
+          "implementation_source": "cpp/src/huffman_bytes.cpp:huffman_bytes::encode/decode"
+        }
+      ],
+      "previous_182_policy_ids": [
+        142
+      ],
+      "previous_document_ids": [
+        "A143"
+      ],
+      "previous_156_policy_ids": [
+        116
+      ],
+      "previous_156_document_ids": [
+        "P117"
+      ]
+    },
+    {
+      "policy_action_id": 104,
+      "document_id": "P105",
+      "name": "op.entropy_range.reference_v1",
+      "operator_id": "entropy_range",
+      "algorithm": "频率词典ID重编码代理，完整词典须保留；不是实际range编码。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_range.reference_v1",
+          "legacy_206_policy_id": 22,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "频率词典ID重编码代理，完整词典须保留；不是实际range编码。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        143
+      ],
+      "previous_document_ids": [
+        "A144"
+      ],
+      "previous_156_policy_ids": [
+        117
+      ],
+      "previous_156_document_ids": [
+        "P118"
+      ]
+    },
+    {
+      "policy_action_id": 105,
+      "document_id": "P106",
+      "name": "op.entropy_range.project_bytes.cpp_v1",
+      "operator_id": "entropy_range",
+      "algorithm": "项目静态range码流含频率表/长度/终态，供XZ参考链；非数值残差。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/arithmetic_bytes.cpp:144",
+        "cpp/src/arithmetic_bytes.cpp:172",
+        "cpp/src/arithmetic_bytes.cpp:185"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_range.project_bytes.cpp_v1",
+          "legacy_206_policy_id": 75,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "项目静态range码流含频率表/长度/终态，供XZ参考链；非数值残差。",
+          "implementation_source": "cpp/src/arithmetic_bytes.cpp:arithmetic_bytes::encode/decode"
+        }
+      ],
+      "previous_182_policy_ids": [
+        144
+      ],
+      "previous_document_ids": [
+        "A145"
+      ],
+      "previous_156_policy_ids": [
+        118
+      ],
+      "previous_156_document_ids": [
+        "P119"
+      ]
+    },
+    {
+      "policy_action_id": 106,
+      "document_id": "P107",
+      "name": "op.entropy_range.fpzip.cpp_v1",
+      "operator_id": "entropy_range",
+      "algorithm": "FPZIP自适应RCqsmodel区间编码，加精确无损一维double头。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/fpzip_exact_stages.cpp:123",
+        "cpp/src/fpzip_exact_stages.cpp:190"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_range.fpzip.cpp_v1",
+          "legacy_206_policy_id": 137,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "FPZIP自适应RCqsmodel区间编码，加精确无损一维double头。",
+          "implementation_source": "cpp/src/fpzip_exact_stages.cpp:range_forward/range_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        145
+      ],
+      "previous_document_ids": [
+        "A146"
+      ],
+      "previous_156_policy_ids": [
+        119
+      ],
+      "previous_156_document_ids": [
+        "P120"
+      ]
+    },
+    {
+      "policy_action_id": 107,
+      "document_id": "P108",
+      "name": "op.entropy_fse.reference_v1",
+      "operator_id": "entropy_fse",
+      "algorithm": "频率词典ID重编码代理，完整词典须保留；不是实际FSE/ANS编码。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_fse.reference_v1",
+          "legacy_206_policy_id": 23,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "频率词典ID重编码代理，完整词典须保留；不是实际FSE/ANS编码。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        146
+      ],
+      "previous_document_ids": [
+        "A147"
+      ],
+      "previous_156_policy_ids": [
+        120
+      ],
+      "previous_156_document_ids": [
+        "P121"
+      ]
+    },
+    {
+      "policy_action_id": 108,
+      "document_id": "P109",
+      "name": "op.entropy_fse.zstd_rans.cpp_reference_v1",
+      "operator_id": "entropy_fse",
+      "algorithm": "项目rANS参考码流含模型、末态及归一化字节；非上游Zstd FSE格式。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:326",
+        "cpp/src/ans_rans.cpp:127",
+        "cpp/src/ans_rans.cpp:145",
+        "cpp/src/ans_rans.cpp:153"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_fse.zstd_rans.cpp_reference_v1",
+          "legacy_206_policy_id": 76,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "项目rANS参考码流含模型、末态及归一化字节；非上游Zstd FSE格式。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:rans_forward/rans_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        147
+      ],
+      "previous_document_ids": [
+        "A148"
+      ],
+      "previous_156_policy_ids": [
+        121
+      ],
+      "previous_156_document_ids": [
+        "P122"
+      ]
+    },
+    {
+      "policy_action_id": 109,
+      "document_id": "P110",
+      "name": "op.entropy_special.reference_v1",
+      "operator_id": "entropy_special",
+      "algorithm": "专用熵阶段的频率词典ID代理，须保存完整词典；非真实专用后端。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_special.reference_v1",
+          "legacy_206_policy_id": 24,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "专用熵阶段的频率词典ID代理，须保存完整词典；非真实专用后端。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        148
+      ],
+      "previous_document_ids": [
+        "A149"
+      ],
+      "previous_156_policy_ids": [
+        122
+      ],
+      "previous_156_document_ids": [
+        "P123"
+      ]
+    },
+    {
+      "policy_action_id": 110,
+      "document_id": "P111",
+      "name": "op.entropy_special.spdp.cpp_v1",
+      "operator_id": "entropy_special",
+      "algorithm": "SPDP第5级历史表重复/原样字节编码，生成公开码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/spdp_exact_stages.cpp:65",
+        "cpp/src/spdp_exact_stages.cpp:197"
+      ],
+      "io_variants": [
+        {
+          "name": "op.entropy_special.spdp.cpp_v1",
+          "legacy_206_policy_id": 106,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "SPDP第5级历史表重复/原样字节编码，生成公开码流。",
+          "implementation_source": "cpp/src/spdp_exact_stages.cpp:entropy_forward/entropy_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        149
+      ],
+      "previous_document_ids": [
+        "A150"
+      ],
+      "previous_156_policy_ids": [
+        123
+      ],
+      "previous_156_document_ids": [
+        "P124"
+      ]
+    },
+    {
+      "policy_action_id": 111,
+      "document_id": "P112",
+      "name": "op.literal_entropy.reference_v1",
+      "operator_id": "literal_entropy",
+      "algorithm": "literal熵阶段的频率词典ID代理，须保存完整词典；非真实熵编码器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:286",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.literal_entropy.reference_v1",
+          "legacy_206_policy_id": 25,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "literal熵阶段的频率词典ID代理，须保存完整词典；非真实熵编码器。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        150
+      ],
+      "previous_document_ids": [
+        "A151"
+      ],
+      "previous_156_policy_ids": [
+        124
+      ],
+      "previous_156_document_ids": [
+        "P125"
+      ]
+    },
+    {
+      "policy_action_id": 112,
+      "document_id": "P113",
+      "name": "op.literal_entropy.zstd_huffman.cpp_reference_v1",
+      "operator_id": "literal_entropy",
+      "algorithm": "对策略包做参考Huffman编码，不等同上游Zstd字面量区。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:318"
+      ],
+      "io_variants": [
+        {
+          "name": "op.literal_entropy.zstd_huffman.cpp_reference_v1",
+          "legacy_206_policy_id": 157,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "对策略包做参考Huffman编码，不等同上游Zstd字面量区。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:huffman_forward/huffman_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        151
+      ],
+      "previous_document_ids": [
+        "A152"
+      ],
+      "previous_156_policy_ids": [
+        125
+      ],
+      "previous_156_document_ids": [
+        "P126"
+      ]
+    },
+    {
+      "policy_action_id": 113,
+      "document_id": "P114",
+      "name": "op.block_state_control.reference_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "以值位模式XOR(i×131)模拟状态边界效果，非生产block reset编码。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:320",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.reference_v1",
+          "legacy_206_policy_id": 26,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "以值位模式XOR(i×131)模拟状态边界效果，非生产block reset编码。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        152
+      ],
+      "previous_document_ids": [
+        "A153"
+      ],
+      "previous_156_policy_ids": [
+        126
+      ],
+      "previous_156_document_ids": [
+        "P127"
+      ]
+    },
+    {
+      "policy_action_id": 114,
+      "document_id": "P115",
+      "name": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：调用完整Snappy编码器，再解析为可逆literal/copy记录。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/snappy_exact_stages.cpp:121",
+        "cpp/src/snappy_exact_stages.cpp:292"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+          "legacy_206_policy_id": 126,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：调用完整Snappy编码器，再解析为可逆literal/copy记录。",
+          "implementation_source": "cpp/src/snappy_exact_stages.cpp:lz_match_forward/lz_match_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        153
+      ],
+      "previous_document_ids": [
+        "A154"
+      ],
+      "previous_156_policy_ids": [
+        127
+      ],
+      "previous_156_document_ids": [
+        "P128"
+      ]
+    },
+    {
+      "policy_action_id": 115,
+      "document_id": "P116",
+      "name": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：调用完整LZ4F编码器，再解析为逐块literal/copy记录。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/lz4_exact_stages.cpp:194",
+        "cpp/src/lz4_exact_stages.cpp:424"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+          "legacy_206_policy_id": 129,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：调用完整LZ4F编码器，再解析为逐块literal/copy记录。",
+          "implementation_source": "cpp/src/lz4_exact_stages.cpp:lz_match_forward/lz_match_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        154
+      ],
+      "previous_document_ids": [
+        "A155"
+      ],
+      "previous_156_policy_ids": [
+        128
+      ],
+      "previous_156_document_ids": [
+        "P129"
+      ]
+    },
+    {
+      "policy_action_id": 116,
+      "document_id": "P117",
+      "name": "op.block_state_control.alp_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：完整撤销ALP参考前缀恢复double，再调用实际ALP编码器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:794"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.alp_residual_core.cpp_v1",
+          "legacy_206_policy_id": 148,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：完整撤销ALP参考前缀恢复double，再调用实际ALP编码器。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_residual_core_forward/alp_residual_core_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        155
+      ],
+      "previous_document_ids": [
+        "A156"
+      ],
+      "previous_156_policy_ids": [
+        129
+      ],
+      "previous_156_document_ids": [
+        "P130"
+      ]
+    },
+    {
+      "policy_action_id": 117,
+      "document_id": "P118",
+      "name": "op.block_state_control.reger_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销REGER重排/差分/FOR/打包前缀，再调用完整REGER。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/learning_codec_exact_stages.cpp:978"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.reger_residual_core.cpp_v1",
+          "legacy_206_policy_id": 149,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销REGER重排/差分/FOR/打包前缀，再调用完整REGER。",
+          "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_residual_core_forward/reger_residual_core_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        156
+      ],
+      "previous_document_ids": [
+        "A157"
+      ],
+      "previous_156_policy_ids": [
+        130
+      ],
+      "previous_156_document_ids": [
+        "P131"
+      ]
+    },
+    {
+      "policy_action_id": 118,
+      "document_id": "P119",
+      "name": "op.block_state_control.magic_length.cpp_v2",
+      "operator_id": "block_state_control",
+      "algorithm": "在既有字节载荷前写入 4 B magic 和 8 B 小端载荷长度；逆向检查并拆除。",
+      "merge_rationale": "调用同一 wrap/unwrap；仅 magic 不同，没有新增压缩或状态机。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:51",
+        "cpp/src/general_codec_reference_stages.cpp:376"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc1.cpp_reference_v1",
+          "legacy_206_policy_id": 163,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 bytes；输出 B1F1 + uint64LE 长度 + 原载荷。为 Blosc1 参考外包。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:frame_forward/frame_inverse"
+        },
+        {
+          "name": "op.block_state_control.blosc2.cpp_reference_v1",
+          "legacy_206_policy_id": 164,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 bytes；输出 B2F1 + uint64LE 长度 + 原载荷。为 Blosc2 参考外包；两者均非上游真实 Blosc 帧。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:frame_forward/frame_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        157
+      ],
+      "previous_document_ids": [
+        "A158"
+      ],
+      "previous_156_policy_ids": [
+        131
+      ],
+      "previous_156_document_ids": [
+        "P132"
+      ]
+    },
+    {
+      "policy_action_id": 119,
+      "document_id": "P120",
+      "name": "op.block_state_control.brotli_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销参考前缀，再调用完整Brotli编码器，quality=6。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:318",
+        "cpp/src/general_codec_residual_stages.cpp:150"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.brotli_residual_core.cpp_v1",
+          "legacy_206_policy_id": 173,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销参考前缀，再调用完整Brotli编码器，quality=6。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:brotli_forward/brotli_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        158
+      ],
+      "previous_document_ids": [
+        "A159"
+      ],
+      "previous_156_policy_ids": [
+        132
+      ],
+      "previous_156_document_ids": [
+        "P133"
+      ]
+    },
+    {
+      "policy_action_id": 120,
+      "document_id": "P121",
+      "name": "op.block_state_control.zstd_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销参考前缀，再调用完整Zstd编码器，level=9。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:324",
+        "cpp/src/general_codec_residual_stages.cpp:185"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.zstd_residual_core.cpp_v1",
+          "legacy_206_policy_id": 174,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销参考前缀，再调用完整Zstd编码器，level=9。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:zstd_forward/zstd_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        159
+      ],
+      "previous_document_ids": [
+        "A160"
+      ],
+      "previous_156_policy_ids": [
+        133
+      ],
+      "previous_156_document_ids": [
+        "P134"
+      ]
+    },
+    {
+      "policy_action_id": 121,
+      "document_id": "P122",
+      "name": "op.block_state_control.blosc1_residual_core_t1.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=1。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:330",
+        "cpp/src/general_codec_residual_stages.cpp:209"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc1_residual_core_t1.cpp_v1",
+          "legacy_206_policy_id": 175,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=1。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc1_forward/blosc1_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        160
+      ],
+      "previous_document_ids": [
+        "A161"
+      ],
+      "previous_156_policy_ids": [
+        134
+      ],
+      "previous_156_document_ids": [
+        "P135"
+      ]
+    },
+    {
+      "policy_action_id": 122,
+      "document_id": "P123",
+      "name": "op.block_state_control.blosc1_residual_core_t4.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=4。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:330",
+        "cpp/src/general_codec_residual_stages.cpp:209"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc1_residual_core_t4.cpp_v1",
+          "legacy_206_policy_id": 176,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=4。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc1_forward/blosc1_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        161
+      ],
+      "previous_document_ids": [
+        "A162"
+      ],
+      "previous_156_policy_ids": [
+        135
+      ],
+      "previous_156_document_ids": [
+        "P136"
+      ]
+    },
+    {
+      "policy_action_id": 123,
+      "document_id": "P124",
+      "name": "op.block_state_control.blosc1_residual_core_t8.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=8。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:330",
+        "cpp/src/general_codec_residual_stages.cpp:209"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc1_residual_core_t8.cpp_v1",
+          "legacy_206_policy_id": 177,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc1/BLOSCLZ；clevel=5，typesize=8。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc1_forward/blosc1_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        162
+      ],
+      "previous_document_ids": [
+        "A163"
+      ],
+      "previous_156_policy_ids": [
+        136
+      ],
+      "previous_156_document_ids": [
+        "P137"
+      ]
+    },
+    {
+      "policy_action_id": 124,
+      "document_id": "P125",
+      "name": "op.block_state_control.blosc2_residual_core_t1.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=1。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:336",
+        "cpp/src/general_codec_residual_stages.cpp:217"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc2_residual_core_t1.cpp_v1",
+          "legacy_206_policy_id": 178,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=1。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc2_forward/blosc2_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        163
+      ],
+      "previous_document_ids": [
+        "A164"
+      ],
+      "previous_156_policy_ids": [
+        137
+      ],
+      "previous_156_document_ids": [
+        "P138"
+      ]
+    },
+    {
+      "policy_action_id": 125,
+      "document_id": "P126",
+      "name": "op.block_state_control.blosc2_residual_core_t4.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=4。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:336",
+        "cpp/src/general_codec_residual_stages.cpp:217"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc2_residual_core_t4.cpp_v1",
+          "legacy_206_policy_id": 179,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=4。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc2_forward/blosc2_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        164
+      ],
+      "previous_document_ids": [
+        "A165"
+      ],
+      "previous_156_policy_ids": [
+        138
+      ],
+      "previous_156_document_ids": [
+        "P139"
+      ]
+    },
+    {
+      "policy_action_id": 126,
+      "document_id": "P127",
+      "name": "op.block_state_control.blosc2_residual_core_t8.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=8。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:336",
+        "cpp/src/general_codec_residual_stages.cpp:217"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc2_residual_core_t8.cpp_v1",
+          "legacy_206_policy_id": 180,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀，再调用Blosc2/BLOSCLZ；clevel=5，typesize=8。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc2_forward/blosc2_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        165
+      ],
+      "previous_document_ids": [
+        "A166"
+      ],
+      "previous_156_policy_ids": [
+        139
+      ],
+      "previous_156_document_ids": [
+        "P140"
+      ]
+    },
+    {
+      "policy_action_id": 127,
+      "document_id": "P128",
+      "name": "op.block_state_control.bzip2_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销BWT/MTF/RLE参考前缀，再调用完整Bzip2，level=4。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:342",
+        "cpp/src/general_codec_residual_stages.cpp:225"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.bzip2_residual_core.cpp_v1",
+          "legacy_206_policy_id": 181,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销BWT/MTF/RLE参考前缀，再调用完整Bzip2，level=4。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:bzip2_forward/bzip2_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        166
+      ],
+      "previous_document_ids": [
+        "A167"
+      ],
+      "previous_156_policy_ids": [
+        140
+      ],
+      "previous_156_document_ids": [
+        "P141"
+      ]
+    },
+    {
+      "policy_action_id": 128,
+      "document_id": "P129",
+      "name": "op.block_state_control.gzip_deflate_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀并做完整gzip/zlib6编码，再拆RFC1952封装为DFC1。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:348",
+        "cpp/src/deflate_container_stages.cpp:24"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.gzip_deflate_residual_core.cpp_v1",
+          "legacy_206_policy_id": 182,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀并做完整gzip/zlib6编码，再拆RFC1952封装为DFC1。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:gzip_forward/gzip_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        167
+      ],
+      "previous_document_ids": [
+        "A168"
+      ],
+      "previous_156_policy_ids": [
+        141
+      ],
+      "previous_156_document_ids": [
+        "P142"
+      ]
+    },
+    {
+      "policy_action_id": 129,
+      "document_id": "P130",
+      "name": "op.block_state_control.zlib_deflate_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀并做完整zlib9编码，再拆RFC1950封装为DFC1。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:356",
+        "cpp/src/deflate_container_stages.cpp:24"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.zlib_deflate_residual_core.cpp_v1",
+          "legacy_206_policy_id": 183,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀并做完整zlib9编码，再拆RFC1950封装为DFC1。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:zlib_forward/zlib_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        168
+      ],
+      "previous_document_ids": [
+        "A169"
+      ],
+      "previous_156_policy_ids": [
+        142
+      ],
+      "previous_156_document_ids": [
+        "P143"
+      ]
+    },
+    {
+      "policy_action_id": 130,
+      "document_id": "P131",
+      "name": "op.block_state_control.xz_lzma2_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "复合阶段：撤销前缀并做完整XZ preset=5编码，再拆流头尾为XZC1。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/general_codec_residual_stages.cpp:364",
+        "cpp/src/general_codec_residual_stages.cpp:269",
+        "cpp/src/xz_container_stage.cpp:27"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.xz_lzma2_residual_core.cpp_v1",
+          "legacy_206_policy_id": 184,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复合阶段：撤销前缀并做完整XZ preset=5编码，再拆流头尾为XZC1。",
+          "implementation_source": "cpp/src/general_codec_residual_stages.cpp:xz_forward/xz_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        169
+      ],
+      "previous_document_ids": [
+        "A170"
+      ],
+      "previous_156_policy_ids": [
+        143
+      ],
+      "previous_156_document_ids": [
+        "P144"
+      ]
+    },
+    {
+      "policy_action_id": 131,
+      "document_id": "P132",
+      "name": "op.block_state_control.reger_legacy_block_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "原选定REGER块核心；模型搜索、重排、预测与位打包仍耦合。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reger_legacy_cpp.cpp:857",
+        "cpp/src/reger_legacy_cpp.cpp:891",
+        "cpp/src/reger_legacy_cpp.cpp:1148",
+        "cpp/src/reger_legacy_cpp.cpp:1160"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.reger_legacy_block_core.cpp_v1",
+          "legacy_206_policy_id": 193,
+          "input_kinds": [
+            "int64",
+            "float64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64",
+            "float64"
+          ],
+          "description": "原选定REGER块核心；模型搜索、重排、预测与位打包仍耦合。",
+          "implementation_source": "cpp/src/reger_legacy_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        170
+      ],
+      "previous_document_ids": [
+        "A171"
+      ],
+      "previous_156_policy_ids": [
+        144
+      ],
+      "previous_156_document_ids": [
+        "P145"
+      ]
+    },
+    {
+      "policy_action_id": 132,
+      "document_id": "P133",
+      "name": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+      "operator_id": "block_state_control",
+      "algorithm": "固定Blosc2 3.3.3非原子绑定宏：完整chunk编码后取块，未拆BLOSCLZ匹配器。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/blosc2_binding_cpp.cpp:25",
+        "cpp/src/blosc2_binding_cpp.cpp:39",
+        "cpp/src/blosc2_binding_cpp.cpp:65",
+        "cpp/src/blosc2_binding_cpp.cpp:67"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+          "legacy_206_policy_id": 197,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "固定Blosc2 3.3.3非原子绑定宏：完整chunk编码后取块，未拆BLOSCLZ匹配器。",
+          "implementation_source": "cpp/src/blosc2_binding_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        171
+      ],
+      "previous_document_ids": [
+        "A172"
+      ],
+      "previous_156_policy_ids": [
+        145
+      ],
+      "previous_156_document_ids": [
+        "P146"
+      ]
+    },
+    {
+      "policy_action_id": 133,
+      "document_id": "P134",
+      "name": "op.block_state_control.corad_deflate9.cpp_v2",
+      "operator_id": "block_state_control",
+      "algorithm": "非原子zlib级别9 DEFLATE后端；剩余LZ与Huffman核心仍耦合。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/corad_lossless_cpp.cpp:84",
+        "cpp/src/corad_lossless_cpp.cpp:86",
+        "cpp/src/corad_lossless_cpp.cpp:87"
+      ],
+      "io_variants": [
+        {
+          "name": "op.block_state_control.corad_deflate9.cpp_v2",
+          "legacy_206_policy_id": 204,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "非原子zlib级别9 DEFLATE后端；剩余LZ与Huffman核心仍耦合。",
+          "implementation_source": "cpp/src/corad_lossless_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        172
+      ],
+      "previous_document_ids": [
+        "A173"
+      ],
+      "previous_156_policy_ids": [
+        146
+      ],
+      "previous_156_document_ids": [
+        "P147"
+      ]
+    },
+    {
+      "policy_action_id": 134,
+      "document_id": "P135",
+      "name": "op.container_frame.reference_v1",
+      "operator_id": "container_frame",
+      "algorithm": "参考封装：3项头字段、原int64值及1项低16位校验尾；不是gzip。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reference_operator_actions.cpp:336",
+        "cpp/src/reference_operator_actions.cpp:552",
+        "cpp/src/reference_operator_actions.cpp:561"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.reference_v1",
+          "legacy_206_policy_id": 27,
+          "input_kinds": [
+            "int64"
+          ],
+          "output_kinds": [
+            "bytes",
+            "int64"
+          ],
+          "description": "参考封装：3项头字段、原int64值及1项低16位校验尾；不是gzip。",
+          "implementation_source": "cpp/src/reference_operator_actions.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        173
+      ],
+      "previous_document_ids": [
+        "A174"
+      ],
+      "previous_156_policy_ids": [
+        147
+      ],
+      "previous_156_document_ids": [
+        "P148"
+      ]
+    },
+    {
+      "policy_action_id": 135,
+      "document_id": "P136",
+      "name": "op.container_frame.lz4.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "LZ4帧描述符、XXH32头校验、块头与结束标记封装。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/lz4_exact_stages.cpp:447",
+        "cpp/src/lz4_exact_stages.cpp:130"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.lz4.cpp_v1",
+          "legacy_206_policy_id": 132,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "LZ4帧描述符、XXH32头校验、块头与结束标记封装。",
+          "implementation_source": "cpp/src/lz4_exact_stages.cpp:container_forward/container_inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        174
+      ],
+      "previous_document_ids": [
+        "A175"
+      ],
+      "previous_156_policy_ids": [
+        148
+      ],
+      "previous_156_document_ids": [
+        "P149"
+      ]
+    },
+    {
+      "policy_action_id": 136,
+      "document_id": "P137",
+      "name": "op.container_frame.stored_parts.cpp_v2",
+      "operator_id": "container_frame",
+      "algorithm": "把已存在的 header、core 和 trailer 按顺序拼回字节流；逆向按对应格式提取三部分。",
+      "merge_rationale": "这些阶段不执行压缩，也不重算载荷校验和。差异是容器字段、头尾长度和输入合法性检查，归为输入输出格式。",
+      "source_evidence": [
+        "cpp/src/deflate_container_stages.cpp:67",
+        "cpp/src/deflate_container_stages.cpp:87",
+        "cpp/src/deflate_container_stages.cpp:117",
+        "cpp/src/xz_container_stage.cpp:27",
+        "cpp/src/xz_container_stage.cpp:43"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.gzip.cpp_v1",
+          "legacy_206_policy_id": 133,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 DFC1 的 G 型三段 bytes；输出 RFC1952 gzip 字节流。逆向支持可选头字段，尾部为 8 B；CRC32/ISIZE 原样保存，本阶段不验证其内容。",
+          "implementation_source": "cpp/src/deflate_container_stages.cpp:gzip_forward/gzip_inverse"
+        },
+        {
+          "name": "op.container_frame.zlib.cpp_v1",
+          "legacy_206_policy_id": 134,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 DFC1 的 Z 型三段 bytes；输出 RFC1950 zlib 字节流。头长为 2 或 6 B、尾长 4 B；检查 CMF/FCHECK，Adler32 原样保存。",
+          "implementation_source": "cpp/src/deflate_container_stages.cpp:zlib_forward/zlib_inverse"
+        },
+        {
+          "name": "op.container_frame.xz.cpp_v1",
+          "legacy_206_policy_id": 135,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入 XZC1 三段 bytes；输出 XZ 字节流。头尾各 12 B，core 包含 LZMA2、块与索引；检查 magic 和长度，本阶段不重算 CRC。",
+          "implementation_source": "cpp/src/xz_container_stage.cpp:forward/inverse"
+        }
+      ],
+      "previous_182_policy_ids": [
+        175
+      ],
+      "previous_document_ids": [
+        "A176"
+      ],
+      "previous_156_policy_ids": [
+        149
+      ],
+      "previous_156_document_ids": [
+        "P150"
+      ]
+    },
+    {
+      "policy_action_id": 137,
+      "document_id": "P138",
+      "name": "op.container_frame.magic_length.cpp_v2",
+      "operator_id": "container_frame",
+      "algorithm": "输出 4 B 格式标识、8 B 小端载荷长度和不变载荷；逆向验证并拆除外包。",
+      "merge_rationale": "参考三项共用 wrap/unwrap；CRD2 使用相同包结构和复制规则，额外 CZL2 输入检查属于接口约束。",
+      "source_evidence": [
+        "cpp/src/general_codec_reference_stages.cpp:51",
+        "cpp/src/general_codec_reference_stages.cpp:384",
+        "cpp/src/corad_lossless_cpp.cpp:96"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.gzip.cpp_reference_v1",
+          "legacy_206_policy_id": 170,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入参考字节载荷；输出 GZF1 + uint64LE 长度 + 原载荷，不是实际 gzip 流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:gzip_frame_forward/gzip_frame_inverse"
+        },
+        {
+          "name": "op.container_frame.zlib.cpp_reference_v1",
+          "legacy_206_policy_id": 171,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入参考字节载荷；输出 ZLF1 + uint64LE 长度 + 原载荷，不是实际 zlib 流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:zlib_frame_forward/zlib_frame_inverse"
+        },
+        {
+          "name": "op.container_frame.xz.cpp_reference_v1",
+          "legacy_206_policy_id": 172,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入参考字节载荷；输出 XZF1 + uint64LE 长度 + 原载荷，不是实际 XZ 流。",
+          "implementation_source": "cpp/src/general_codec_reference_stages.cpp:xz_frame_forward/xz_frame_inverse"
+        },
+        {
+          "name": "op.container_frame.corad_lossless.cpp_v2",
+          "legacy_206_policy_id": 205,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "输入带 CZL2 magic 且至少 12 B 的包；输出 CRD2 + uint64LE 载荷长度 + 原 CZL2 包。CRD2 标识中含格式版本，未另加版本字段。",
+          "implementation_source": "cpp/src/corad_lossless_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        176
+      ],
+      "previous_document_ids": [
+        "A177"
+      ],
+      "previous_156_policy_ids": [
+        150
+      ],
+      "previous_156_document_ids": [
+        "P151"
+      ]
+    },
+    {
+      "policy_action_id": 138,
+      "document_id": "P139",
+      "name": "op.container_frame.legacy_numeric_limbs.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "复现旧版双路native-LZ的类型/尺度封装，不是FastPFor码流。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:232",
+        "cpp/src/legacy_numeric_action_stages.cpp:283",
+        "cpp/src/legacy_numeric_action_stages.cpp:287"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.legacy_numeric_limbs.cpp_v1",
+          "legacy_206_policy_id": 189,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复现旧版双路native-LZ的类型/尺度封装，不是FastPFor码流。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        177
+      ],
+      "previous_document_ids": [
+        "A178"
+      ],
+      "previous_156_policy_ids": [
+        151
+      ],
+      "previous_156_document_ids": [
+        "P152"
+      ]
+    },
+    {
+      "policy_action_id": 139,
+      "document_id": "P140",
+      "name": "op.container_frame.alp2_legacy.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "复现ALP2旧封装，含原值/缩放块及异常；载荷后端为双路native-LZ。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/legacy_numeric_action_stages.cpp:291",
+        "cpp/src/legacy_numeric_action_stages.cpp:295",
+        "cpp/src/legacy_numeric_action_stages.cpp:299"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.alp2_legacy.cpp_v1",
+          "legacy_206_policy_id": 191,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "复现ALP2旧封装，含原值/缩放块及异常；载荷后端为双路native-LZ。",
+          "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        178
+      ],
+      "previous_document_ids": [
+        "A179"
+      ],
+      "previous_156_policy_ids": [
+        152
+      ],
+      "previous_156_document_ids": [
+        "P153"
+      ]
+    },
+    {
+      "policy_action_id": 140,
+      "document_id": "P141",
+      "name": "op.container_frame.reger3_legacy.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "仅REGER3流/块封装，不含模型或压缩核心。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/reger_legacy_cpp.cpp:1187",
+        "cpp/src/reger_legacy_cpp.cpp:1190"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.reger3_legacy.cpp_v1",
+          "legacy_206_policy_id": 194,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "仅REGER3流/块封装，不含模型或压缩核心。",
+          "implementation_source": "cpp/src/reger_legacy_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        179
+      ],
+      "previous_document_ids": [
+        "A180"
+      ],
+      "previous_156_policy_ids": [
+        153
+      ],
+      "previous_156_document_ids": [
+        "P154"
+      ]
+    },
+    {
+      "policy_action_id": 141,
+      "document_id": "P142",
+      "name": "op.container_frame.buff_native_raw64.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "当前native BUFF的raw64码流头，不是旧版有界BUFF。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/buff_native_exact_stages.cpp:46",
+        "cpp/src/buff_native_exact_stages.cpp:51",
+        "cpp/src/buff_native_exact_stages.cpp:54"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.buff_native_raw64.cpp_v1",
+          "legacy_206_policy_id": 196,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "当前native BUFF的raw64码流头，不是旧版有界BUFF。",
+          "implementation_source": "cpp/src/buff_native_exact_stages.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        180
+      ],
+      "previous_document_ids": [
+        "A181"
+      ],
+      "previous_156_policy_ids": [
+        154
+      ],
+      "previous_156_document_ids": [
+        "P155"
+      ]
+    },
+    {
+      "policy_action_id": 142,
+      "document_id": "P143",
+      "name": "op.container_frame.blosc2_legacy_chunk.cpp_v1",
+      "operator_id": "container_frame",
+      "algorithm": "独立Blosc2旧chunk封装，仅处理头部与块偏移表。",
+      "merge_rationale": "保留独立项，依据本类规则及具体实现步骤。",
+      "source_evidence": [
+        "cpp/src/blosc2_binding_cpp.cpp:42",
+        "cpp/src/blosc2_binding_cpp.cpp:50",
+        "cpp/src/blosc2_binding_cpp.cpp:53",
+        "cpp/src/blosc2_binding_cpp.cpp:56"
+      ],
+      "io_variants": [
+        {
+          "name": "op.container_frame.blosc2_legacy_chunk.cpp_v1",
+          "legacy_206_policy_id": 198,
+          "input_kinds": [
+            "bytes"
+          ],
+          "output_kinds": [
+            "bytes"
+          ],
+          "description": "独立Blosc2旧chunk封装，仅处理头部与块偏移表。",
+          "implementation_source": "cpp/src/blosc2_binding_cpp.cpp"
+        }
+      ],
+      "previous_182_policy_ids": [
+        181
+      ],
+      "previous_document_ids": [
+        "A182"
+      ],
+      "previous_156_policy_ids": [
+        155
+      ],
+      "previous_156_document_ids": [
+        "P156"
+      ]
+    }
+  ],
+  "source_document_note": "Historical 182 and 156 manifests remain immutable; P001-P143 are current implementation IDs.",
+  "parameter_merge_group_count": 2,
+  "parameter_configuration_records": 41
+}

@@ -1,0 +1,198 @@
+diff --git a/src/decompressor/net_serf_xor_decompressor.cc b/src/decompressor/net_serf_xor_decompressor.cc
+index a7b2b47..cb41526 100644
+--- a/src/decompressor/net_serf_xor_decompressor.cc
++++ b/src/decompressor/net_serf_xor_decompressor.cc
+@@ -20,13 +20,21 @@ uint64_t NetSerfXORDecompressor::ReadValue() {
+ }
+ 
+ void NetSerfXORDecompressor::NextValue() {
++  if (input_bit_stream_->ConsumedPastSource()) {
++    stored_val_ = Double::DoubleToLongBits(Double::kNan);
++    return;
++  }
+   uint64_t value;
+-  int center_bits;
++  int center_bits = 0;
+   if (input_bit_stream_->ReadInt(1) == 1) {
+     // case 1
+     center_bits = 64 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (center_bits <= 0 || center_bits > 64) {
++      stored_val_ = Double::DoubleToLongBits(Double::kNan);
++      return;
++    }
+ 
+-    value = input_bit_stream_->ReadLong(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_->ReadLong(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
+     stored_val_ = value;
+   } else if (input_bit_stream_->ReadInt(1) == 0) {
+@@ -38,10 +46,18 @@ void NetSerfXORDecompressor::NextValue() {
+     stored_leading_zeros_ = leading_representation_[lead];
+     stored_trailing_zeros_ = trailing_representation_[trail];
+     center_bits = 64 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (center_bits <= 0 || center_bits > 64) {
++      stored_val_ = Double::DoubleToLongBits(Double::kNan);
++      return;
++    }
+ 
+-    value = input_bit_stream_->ReadLong(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_->ReadLong(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
+     stored_val_ = value;
++  } else {
++    // case 01
++    value = stored_val_;
++    stored_val_ = value;
+   }
+ }
+ 
+diff --git a/src/decompressor/serf_xor_decompressor.cc b/src/decompressor/serf_xor_decompressor.cc
+index 1d253c0..752eea2 100644
+--- a/src/decompressor/serf_xor_decompressor.cc
++++ b/src/decompressor/serf_xor_decompressor.cc
+@@ -13,13 +13,19 @@ std::vector<double> SerfXORDecompressor::Decompress(const Array<uint8_t> &bs) {
+ }
+ 
+ uint64_t SerfXORDecompressor::ReadValue() {
++  if (SERF_UNLIKELY(input_bit_stream_.ConsumedPastSource())) {
++    return Double::DoubleToLongBits(Double::kNan);
++  }
+   uint64_t value = stored_val_;
+-  int center_bits;
++  int center_bits = 0;
+   if (SERF_UNLIKELY(input_bit_stream_.ReadInt(1) == 1)) {
+     // case 1
+     center_bits = 64 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (SERF_UNLIKELY(center_bits <= 0 || center_bits > 64)) {
++      return Double::DoubleToLongBits(Double::kNan);
++    }
+ 
+-    value = input_bit_stream_.ReadLong(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_.ReadLong(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
+   } else if (SERF_LIKELY(input_bit_stream_.ReadInt(1) == 0)) {
+     // case 00
+@@ -30,9 +36,15 @@ uint64_t SerfXORDecompressor::ReadValue() {
+     stored_leading_zeros_ = leading_representation_[lead];
+     stored_trailing_zeros_ = trailing_representation_[trail];
+     center_bits = 64 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (SERF_UNLIKELY(center_bits <= 0 || center_bits > 64)) {
++      return Double::DoubleToLongBits(Double::kNan);
++    }
+ 
+-    value = input_bit_stream_.ReadLong(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_.ReadLong(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
++  } else {
++    // case 01 (compressor: xor_result == 0, WriteInt(1, 2) => two bits 01 MSB-first)
++    value = stored_val_;
+   }
+   return value;
+ }
+diff --git a/src/decompressor_32/serf_xor_decompressor_32.cc b/src/decompressor_32/serf_xor_decompressor_32.cc
+index 5568ead..f9269a5 100644
+--- a/src/decompressor_32/serf_xor_decompressor_32.cc
++++ b/src/decompressor_32/serf_xor_decompressor_32.cc
+@@ -14,13 +14,19 @@ std::vector<float> SerfXORDecompressor32::Decompress(const Array<uint8_t> &bs) {
+ }
+ 
+ uint32_t SerfXORDecompressor32::ReadValue() {
++  if (SERF_UNLIKELY(input_bit_stream_->ConsumedPastSource())) {
++    return Float::FloatToIntBits(Float::kNan);
++  }
+   uint32_t value = stored_val_;
+-  int center_bits;
++  int center_bits = 0;
+   if (SERF_UNLIKELY(input_bit_stream_->ReadInt(1) == 1)) {
+     // case 1
+     center_bits = 32 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (SERF_UNLIKELY(center_bits <= 0 || center_bits > 32)) {
++      return Float::FloatToIntBits(Float::kNan);
++    }
+ 
+-    value = input_bit_stream_->ReadInt(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_->ReadInt(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
+   } else if (SERF_LIKELY(input_bit_stream_->ReadInt(1) == 0)) {
+     // case 00
+@@ -31,9 +37,15 @@ uint32_t SerfXORDecompressor32::ReadValue() {
+     stored_leading_zeros_ = leading_representation_[lead];
+     stored_trailing_zeros_ = trailing_representation_[trail];
+     center_bits = 32 - stored_leading_zeros_ - stored_trailing_zeros_;
++    if (SERF_UNLIKELY(center_bits <= 0 || center_bits > 32)) {
++      return Float::FloatToIntBits(Float::kNan);
++    }
+ 
+-    value = input_bit_stream_->ReadInt(center_bits) << stored_trailing_zeros_;
++    value = input_bit_stream_->ReadInt(static_cast<size_t>(center_bits)) << stored_trailing_zeros_;
+     value = stored_val_ ^ value;
++  } else {
++    // case 01
++    value = stored_val_;
+   }
+   return value;
+ }
+diff --git a/src/utils/input_bit_stream.cc b/src/utils/input_bit_stream.cc
+index 64872e7..58e4546 100644
+--- a/src/utils/input_bit_stream.cc
++++ b/src/utils/input_bit_stream.cc
+@@ -1,6 +1,8 @@
+ #include "utils/input_bit_stream.h"
+ 
+ InputBitStream::InputBitStream(uint8_t *raw_data, size_t size) {
++  source_byte_len_ = size;
++  total_bits_read_ = 0;
+   data_ = Array<uint32_t>(std::ceil(static_cast<double>(size) / sizeof(uint32_t)));
+   __builtin_memcpy(data_.begin(), raw_data, size);
+   for (auto &blk : data_) blk = be32toh(blk);
+@@ -14,6 +16,7 @@ uint64_t InputBitStream::Peek(size_t len) {
+ }
+ 
+ void InputBitStream::Forward(size_t len) {
++  total_bits_read_ += static_cast<uint64_t>(len);
+   bit_in_buffer_ -= len;
+   buffer_ <<= len;
+   uint64_t load_more_bits = (bit_in_buffer_ < 32) * ((cursor_ < data_.length()) ? 1 : 0);
+@@ -45,6 +48,8 @@ uint32_t InputBitStream::ReadBit() {
+ }
+ 
+ void InputBitStream::SetBuffer(const Array<uint8_t> &new_buffer) {
++  source_byte_len_ = new_buffer.length();
++  total_bits_read_ = 0;
+   data_ = Array<uint32_t>(std::ceil(static_cast<double>(new_buffer.length()) / sizeof(uint32_t)));
+   __builtin_memcpy(data_.begin(), new_buffer.begin(), new_buffer.length());
+   for (auto &blk : data_) blk = be32toh(blk);
+@@ -54,6 +59,8 @@ void InputBitStream::SetBuffer(const Array<uint8_t> &new_buffer) {
+ }
+ 
+ void InputBitStream::SetBuffer(const std::vector<uint8_t> &new_buffer) {
++  source_byte_len_ = new_buffer.size();
++  total_bits_read_ = 0;
+   data_ = Array<uint32_t>(std::ceil(static_cast<double>(new_buffer.size()) / sizeof(uint32_t)));
+   __builtin_memcpy(data_.begin(), new_buffer.data(), new_buffer.size());
+   for (auto &blk : data_) blk = be32toh(blk);
+diff --git a/src/utils/input_bit_stream.h b/src/utils/input_bit_stream.h
+index 986e34e..7cd227c 100644
+--- a/src/utils/input_bit_stream.h
++++ b/src/utils/input_bit_stream.h
+@@ -34,6 +34,11 @@ class InputBitStream {
+ 
+   void SetBuffer(const std::vector<uint8_t> &new_buffer);
+ 
++  /** True once more bits have been consumed than are present in the source bytes (+slack for flush). */
++  bool ConsumedPastSource() const {
++    return total_bits_read_ > static_cast<uint64_t>(source_byte_len_) * 8ULL + 128ULL;
++  }
++
+  private:
+   void Forward(size_t len);
+   uint64_t Peek(size_t len);
+@@ -42,6 +47,8 @@ class InputBitStream {
+   uint64_t buffer_ = 0;
+   uint64_t cursor_ = 0;
+   uint64_t bit_in_buffer_ = 0;
++  size_t source_byte_len_ = 0;
++  uint64_t total_bits_read_ = 0;
+ };
+ 
+ #endif  // SERF_INPUT_BIT_STREAM_H

@@ -1,0 +1,123 @@
+[submodule "external/compression/chimp"]
+	path = external/compression/chimp
+	url = https://github.com/panagiotisl/chimp.git
+[submodule "external/compression/ALP"]
+	path = external/compression/ALP
+	url = https://github.com/cwida/ALP.git
+[submodule "external/compression/FastLanes"]
+	path = external/compression/FastLanes
+	url = https://github.com/cwida/FastLanes.git
+[submodule "external/compression/fsst"]
+	path = external/compression/fsst
+	url = https://github.com/cwida/fsst.git
+[submodule "external/compression/btrblocks"]
+	path = external/compression/btrblocks
+	url = https://github.com/maxi-k/btrblocks.git
+[submodule "external/compression/SZ"]
+	path = external/compression/SZ
+	url = https://github.com/disheng222/SZ.git
+[submodule "external/compression/zfp"]
+	path = external/compression/zfp
+	url = https://github.com/LLNL/zfp.git
+[submodule "external/compression/ndzip"]
+	path = external/compression/ndzip
+	url = https://github.com/fknorr/ndzip.git
+[submodule "external/compression/FastPFor"]
+	path = external/compression/FastPFor
+	url = https://github.com/lemire/FastPFor.git
+[submodule "external/compression/bitshuffle"]
+	path = external/compression/bitshuffle
+	url = https://github.com/kiyo-masui/bitshuffle.git
+[submodule "external/compression/FPCompress"]
+	path = external/compression/FPCompress
+	url = https://github.com/burtscher/FPCompress.git
+[submodule "external/compression/elf"]
+	path = external/compression/elf
+	url = https://github.com/Spatio-Temporal-Lab/elf.git
+[submodule "external/compression/nvcomp"]
+	path = external/compression/nvcomp
+	url = https://github.com/NVIDIA/nvcomp.git
+[submodule "external/compression/lzjb"]
+	path = external/compression/lzjb
+	url = https://github.com/cscott/lzjb.git
+[submodule "external/compression/brotli"]
+	path = external/compression/brotli
+	url = https://github.com/google/brotli.git
+[submodule "external/compression/zstd"]
+	path = external/compression/zstd
+	url = https://github.com/facebook/zstd.git
+[submodule "external/compression/snappy"]
+	path = external/compression/snappy
+	url = https://github.com/google/snappy.git
+[submodule "external/compression/lz4"]
+	path = external/compression/lz4
+	url = https://github.com/lz4/lz4.git
+[submodule "external/compression/fpzip"]
+	path = external/compression/fpzip
+	url = https://github.com/LLNL/fpzip.git
+[submodule "external/compression/xz"]
+	path = external/compression/xz
+	url = https://github.com/tukaani-project/xz.git
+[submodule "external/submodules/CLI11"]
+	path = external/submodules/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "external/submodules/csv2"]
+	path = external/submodules/csv2
+	url = https://github.com/p-ranav/csv2.git
+[submodule "external/compression/lzfse"]
+	path = external/compression/lzfse
+	url = https://github.com/lzfse/lzfse.git
+[submodule "external/compression/DCVC"]
+	path = external/compression/DCVC
+	url = https://github.com/microsoft/DCVC.git
+[submodule "external/compression/tsfile"]
+	path = external/compression/tsfile
+	url = https://github.com/apache/tsfile.git
+[submodule "external/compression/camel"]
+	path = external/compression/camel
+	url = https://github.com/yoyo185644/camel.git
+[submodule "external/compression/SZ3"]
+	path = external/compression/SZ3
+	url = https://github.com/szcompressor/SZ3.git
+[submodule "external/compression/cmix"]
+	path = external/compression/cmix
+	url = https://github.com/byronknoll/cmix.git
+[submodule "external/compression/MSDLC"]
+	path = external/compression/MSDLC
+	url = https://github.com/huidong-ma/MSDLC.git
+[submodule "external/submodules/simde"]
+	path = external/submodules/simde
+	url = https://github.com/simd-everywhere/simde.git
+[submodule "external/compression/lzbench"]
+	path = external/compression/lzbench
+	url = https://github.com/inikep/lzbench.git
+[submodule "external/compression/CORAD"]
+	path = external/compression/CORAD
+	url = https://github.com/eXascaleInfolab/CORAD.git
+[submodule "external/compression/mostdb"]
+	path = external/compression/mostdb
+	url = https://github.com/schencoding/mostdb.git
+[submodule "external/compression/streamvbyte"]
+	path = external/compression/streamvbyte
+	url = https://github.com/lemire/streamvbyte.git
+[submodule "external/compression/zlib"]
+	path = external/compression/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "external/compression/Learn-to-Compress"]
+	path = external/compression/Learn-to-Compress
+	url = https://github.com/yhliu918/Learn-to-Compress.git
+[submodule "external/compression/Mix-Piece_Sim-Piece"]
+	path = external/compression/Mix-Piece_Sim-Piece
+	url = https://github.com/xkitsios/Mix-Piece_Sim-Piece.git
+[submodule "external/compression/Faster-and-Stronger-Lossless-Compression-with-Optimized-Autoregressive-Framework"]
+	path = external/compression/Faster-and-Stronger-Lossless-Compression-with-Optimized-Autoregressive-Framework
+	url = https://github.com/mynotwo/Faster-and-Stronger-Lossless-Compression-with-Optimized-Autoregressive-Framework.git
+[submodule "external/compression/FCBench"]
+	path = external/compression/FCBench
+	url = https://github.com/hpdps-group/FCBench.git
+[submodule "external/compression/c-blosc"]
+	path = external/compression/c-blosc
+	url = https://github.com/Blosc/c-blosc.git
+[submodule "external/compression/c-blosc2"]
+	path = external/compression/c-blosc2
+	url = https://github.com/Blosc/c-blosc2.git

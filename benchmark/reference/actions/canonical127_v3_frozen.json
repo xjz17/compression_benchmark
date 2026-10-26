@@ -1,0 +1,1401 @@
+{
+  "version": "cpp-canonical-127-v3",
+  "actions": [
+    {
+      "action_id": 0,
+      "name": "op.eraser.reference_v1",
+      "operator_id": "eraser",
+      "implementation_id": "eraser.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6574\u6570\u53c2\u8003\u64e6\u9664\uff1a\u7b97\u672f\u53f3\u79fb4\u4f4d\u5e76\u4fdd\u7559\u4f4e4\u4f4d\u4fa7\u4fe1\u606f\uff1b\u4e0d\u662fElf\u6d6e\u70b9\u64e6\u9664\u3002"
+    },
+    {
+      "name": "op.eraser.pongo.cpp_v1",
+      "operator_id": "eraser",
+      "implementation_id": "eraser.pongo.cpp_v1",
+      "implementation_source": "cpp/src/pongo_codec.cpp:exact_actions::pongo::eraser_forward/eraser_inverse",
+      "implementation_scope": "Pongo\u6700\u77ed\u5341\u8fdb\u5236\u5c3e\u6570\u53ef\u9006\u91cd\u7f16\u7801\uff0c\u4fdd\u7559\u5341\u8fdb\u5236\u96f6\u5143\u6570\u636e\u3002",
+      "action_id": 1
+    },
+    {
+      "name": "op.eraser.elf.cpp_v1",
+      "operator_id": "eraser",
+      "implementation_id": "eraser.elf.cpp_v1",
+      "implementation_source": "cpp/src/elf_float_codec.cpp:eraser_forward_double_bits/eraser_inverse_double_bits",
+      "implementation_scope": "Elf/Elf+\u5171\u7528float32\u64e6\u9664\uff0c\u4ec5\u9650\u6709\u9650\u4e14\u80fd\u9010\u4f4d\u5f80\u8fd4float32\u7684float64\u3002",
+      "action_id": 2
+    },
+    {
+      "name": "op.eraser.camel.cpp_v1",
+      "operator_id": "eraser",
+      "implementation_id": "eraser.camel.cpp_v1",
+      "implementation_source": "cpp/src/camel_exact_stages.cpp:eraser_forward/eraser_inverse",
+      "implementation_scope": "Camel\u5341\u8fdb\u5236\u8def\u5f84\u9009\u62e9\u4e0e\u7cbe\u786e\u539f\u503c\u56de\u9000\uff0c\u8f93\u51fa\u53ef\u9006\u64e6\u9664\u8bb0\u5f55\u3002",
+      "action_id": 3
+    },
+    {
+      "name": "op.eraser.elf64.cpp_v1",
+      "operator_id": "eraser",
+      "implementation_id": "eraser.elf64.cpp_v1",
+      "implementation_source": "cpp/src/elf_double_codec.cpp",
+      "implementation_scope": "binary64\u64e6\u9664\u5e76\u68c0\u67e5\u7cbe\u786e\u6062\u590d\uff1b\u5b9e\u9a8c\u7b56\u7565\u6392\u9664NaN\u3002",
+      "action_id": 4
+    },
+    {
+      "name": "op.scaling.tsfile_rle.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.tsfile_rle.cpp_v1",
+      "implementation_source": "cpp/src/rle_exact_stages.cpp:scaling_forward/scaling_inverse",
+      "implementation_scope": "\u6709\u9650float64\u4f4d\u7ea7\u53ef\u9006\u7f29\u653e\u4e3aint64\uff0c\u6709\u6548scale\u53ef\u80fd\u4e0b\u8c03\u4e14\u5fc5\u987b\u4fdd\u7559\u3002",
+      "action_id": 6
+    },
+    {
+      "name": "op.scaling.exact_decimal.cpp_v2",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.exact_decimal.cpp_v2",
+      "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:scaling_forward/scaling_inverse",
+      "implementation_scope": "\u6309\u6307\u5b9a\u5c0f\u6570\u4f4d\u4e58\u4ee5\u5341\u8fdb\u5236\u5c3a\u5ea6\uff0c\u7528 long double \u4e2d\u95f4\u503c\u4e0e llround \u751f\u6210 int64\uff0c\u518d\u9a8c\u8bc1\u9006\u53d8\u6362\u9010\u4f4d\u6062\u590d\u3002",
+      "action_id": 7
+    },
+    {
+      "name": "op.scaling.delta_binary_packed.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.delta_binary_packed.cpp_v1",
+      "implementation_source": "cpp/src/dbp_exact_stages.cpp:scaling_forward/scaling_inverse",
+      "implementation_scope": "\u5411\u4e0b\u5bfb\u627efit int64\u4e14\u4f4d\u7ea7\u53ef\u9006\u7684\u5341\u8fdb\u5236scale\uff0c\u8f93\u51fa\u7f29\u653e\u6574\u6570\u53ca\u6709\u6548scale\u3002",
+      "action_id": 8
+    },
+    {
+      "name": "op.scaling.alp.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.alp.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_scaling_forward/alp_scaling_inverse",
+      "implementation_scope": "ALP\u98ce\u683c\u9010\u5757\u7cbe\u786e\u7f29\u653e\uff1b\u6574\u5757\u7f29\u653e\u5931\u8d25\u5219\u56de\u9000\u539f\u59cb\u4f4d\u6a21\u5f0f\uff0c\u4e0d\u505a\u5f02\u5e38\u641c\u7d22\u3002",
+      "action_id": 9
+    },
+    {
+      "name": "op.scaling.buff.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.buff.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_scaling_forward/buff_scaling_inverse",
+      "implementation_scope": "BUFF\u4ee5\u6574\u5217\u9009\u62e9\u7cbe\u786e\u5341\u8fdb\u5236\u7f29\u653e\u6216\u539f\u59cb\u4f4d\u6a21\u5f0f\u56de\u9000\u3002",
+      "action_id": 10
+    },
+    {
+      "name": "op.scaling.legacy_exact_decimal.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.legacy_exact_decimal.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u590d\u73b0\u65e7\u7248\u7cbe\u786e\u7f29\u653e\uff1bint64\u4e0d\u6539\u503c\uff1b\u540e\u63a5\u53cc\u8defnative-LZ\uff0c\u4e0d\u662fFastPFor\u3002",
+      "action_id": 11
+    },
+    {
+      "name": "op.scaling.alp_legacy_fe_exceptions.cpp_v1",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.alp_legacy_fe_exceptions.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u590d\u73b0\u65e7\u7248ALP\u56e0\u5b50/\u6307\u6570\u53ca\u5f02\u5e38\u7f29\u653e\uff1b\u540e\u63a5\u53cc\u8defnative-LZ\uff0c\u4e0d\u662fFastPFor\u3002",
+      "action_id": 12
+    },
+    {
+      "name": "op.scaling.corad_normalize_exact.cpp_v2",
+      "operator_id": "scaling",
+      "implementation_id": "scaling.corad_normalize_exact.cpp_v2",
+      "implementation_source": "cpp/src/corad_lossless_cpp.cpp",
+      "implementation_scope": "\u6309\u5747\u503c/\u6807\u51c6\u5dee\u5f52\u4e00\u5316\uff0c\u5e76\u5728\u7801\u6d41\u4fdd\u5b58\u7cbe\u786e\u5b57\u4fee\u6b63\u4fe1\u606f\u3002",
+      "action_id": 13
+    },
+    {
+      "action_id": 14,
+      "name": "op.frame_of_reference.minimum.cpp_v1",
+      "operator_id": "frame_of_reference",
+      "implementation_id": "frame_of_reference.minimum.cpp_v1",
+      "implementation_source": "cpp/src/minimum_for.hpp",
+      "implementation_scope": "\u6309\u8f93\u5165\u6570\u503c\u7684\u6700\u5c0f\u503c\u8fdb\u884c\u57fa\u51c6\u5316\uff1aminimum = min(values)\uff0coffsets[i] = values[i] \u2212 minimum\uff1b\u8f93\u51fa\u72ec\u7acb minimum \u4e0e offsets \u4e24\u4e2a\u6d41\u3002\u8f93\u5165\u4e0d\u8981\u6c42\u662f\u6b8b\u5dee\u3002"
+    },
+    {
+      "action_id": 15,
+      "name": "op.value_reorder.stable_sort.cpp_v2",
+      "operator_id": "value_reorder",
+      "implementation_id": "value_reorder.stable_sort.cpp_v2",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u5bf9\u6574\u6570\u503c\u505a\u7a33\u5b9a\u5347\u5e8f\u6392\u5e8f\uff0c\u540c\u65f6\u4fdd\u5b58\u5404\u8f93\u51fa\u503c\u7684\u539f\u4f4d\u7f6e\uff0c\u9006\u5411\u6309\u4f4d\u7f6e\u6563\u56de\u3002"
+    },
+    {
+      "action_id": 16,
+      "name": "op.regression_predictor.reference_v1",
+      "operator_id": "regression_predictor",
+      "implementation_id": "regression_predictor.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u524d\u503c\u56de\u5f52\u53d6\u6574\u7684\u6a21\u6b8b\u5dee\u53c2\u8003\u53d8\u6362\uff0c\u5b58\u9996\u503c/\u7cfb\u6570\uff1b\u5168int64\u57df\u53ef\u9006\u6027\u672a\u8bc1\u660e\u3002"
+    },
+    {
+      "name": "op.regression_predictor.leco_linear.cpp_v2",
+      "operator_id": "regression_predictor",
+      "implementation_id": "regression_predictor.leco_linear.cpp_v2",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:leco_regression_forward/leco_regression_inverse",
+      "implementation_scope": "A016 LECO blockwise position regression producing signed residuals without ZigZag",
+      "action_id": 17
+    },
+    {
+      "action_id": 19,
+      "name": "op.outlier_separation.reference_v1",
+      "operator_id": "outlier_separation",
+      "implementation_id": "outlier_separation.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "IQR\u88c1\u526a\u6574\u6570\u4e3b\u4f53\u7684\u53c2\u8003\u53d8\u6362\uff1b\u5f02\u5e38\u4f4d\u7f6e/\u539f\u503c\u987b\u4fdd\u7559\uff0c\u9608\u503c\u8d8a\u754c\u62d2\u7edd\u3002"
+    },
+    {
+      "name": "op.outlier_separation.bos.cpp_v1",
+      "operator_id": "outlier_separation",
+      "implementation_id": "outlier_separation.bos.cpp_v1",
+      "implementation_source": "cpp/src/bos_exact_stages.cpp:outlier_forward/outlier_inverse",
+      "implementation_scope": "BOSA\u6309\u5e38\u89c4\u4f4d\u5bbd\u533a\u5206\u6b63\u5e38\u9879/\u5f02\u5e38\u9879\uff0c\u4ee5\u5e26\u6807\u7b7e\u8bb0\u5f55\u4fdd\u5b58\uff0c\u5c1a\u672a\u7269\u7406\u62c6\u6d41\u3002",
+      "action_id": 20
+    },
+    {
+      "action_id": 21,
+      "name": "op.bitpack_int.reference_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u540d\u79f0\u867d\u4e3abitpack\uff0c\u53c2\u8003\u672c\u4f53\u4ec5\u505a\u6a21FOR\uff1bcompact/zlib\u5e8f\u5217\u5316\u53e6\u884c\u6267\u884c\u3002"
+    },
+    {
+      "name": "op.bitpack_int.max_value_width.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.max_value_width.cpp_v1",
+      "implementation_source": "cpp/src/max_value_bitpack.hpp",
+      "implementation_scope": "\u6309\u6700\u5927\u8f93\u5165\u6570\u503c\u4f4d\u5bbd\u5b9a\u5bbd\u6253\u5305\uff1a\u5bf9\u6bcf\u7ec4\u975e\u8d1f\u6574\u6570u\u8ba1\u7b97b=bit_width(max(u))\uff0c\u6240\u6709\u503c\u4ee5b\u4f4d\u5b58\u50a8\uff1b\u5168\u96f6/\u7a7a\u7ec4b=0\uff1b\u4e0d\u9650\u5b9a\u4e3a\u6b8b\u5dee\u3002",
+      "action_id": 22
+    },
+    {
+      "name": "op.bitpack_int.simple8b.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.simple8b.cpp_v1",
+      "implementation_source": "cpp/src/simple8b_exact_stages.cpp:bitpack_forward_*/bitpack_inverse_*",
+      "implementation_scope": "Simple8b\u5206\u80a2selector/word\u6253\u5305\uff0c\u8f93\u51fatyped\u9002\u914d\u5668\u7801\u6d41\uff1b\u673a\u5668\u5b57\u975e\u6570\u503c\u6837\u672c\u3002",
+      "action_id": 23
+    },
+    {
+      "name": "op.bitpack_int.sprintz.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.sprintz.cpp_v1",
+      "implementation_source": "cpp/src/p04_exact_stages.cpp:sprintz_bitpack_forward/sprintz_bitpack_inverse",
+      "implementation_scope": "9\u70b9\u5757\u4e2d8\u6b8b\u5dee\u5e26\u4f4d\u5bbd\u6253\u5305\uff1b\u5c3e\u90e8\u518d\u7528\u6574\u6570RLE/\u6d6e\u70b9Gorilla\u7f16\u7801\uff0c\u975eraw-tail\u3002",
+      "action_id": 24
+    },
+    {
+      "name": "op.integer_code.uleb128_unsigned.cpp_v2",
+      "operator_id": "integer_code",
+      "implementation_id": "integer_code.uleb128_unsigned.cpp_v2",
+      "implementation_source": "cpp/src/unsigned_leb128_cli.cpp:raw-forward/raw-inverse",
+      "implementation_scope": "pure unsigned LEB128 over a uint64 little-endian value stream; no implicit ZigZag",
+      "action_id": 25
+    },
+    {
+      "name": "op.bitpack_int.bos.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.bos.cpp_v1",
+      "implementation_source": "cpp/src/bos_exact_stages.cpp:bitpack_forward/bitpack_inverse",
+      "implementation_scope": "BOSA\u4f4d\u56fe\u3001\u5b9a\u5bbd\u5e38\u89c4\u6d41\u4e0e\u5f02\u5e38\u6253\u5305\uff0c\u5f62\u6210\u7cbe\u786e\u516c\u5f00\u7801\u6d41\u3002",
+      "action_id": 26
+    },
+    {
+      "name": "op.bitpack_int.bos64_adapter.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.bos64_adapter.cpp_v1",
+      "implementation_source": "cpp/src/bos_exact_stages.cpp:adapter_bitpack_forward/adapter_bitpack_inverse",
+      "implementation_scope": "\u57fa\u51c6BOS64\u5927\u7aef\u5757\u5934\u53ca\u9ad8\u4f4d\u4f18\u5148\u5b9a\u5bbd\u6253\u5305\uff0c\u751f\u6210\u516c\u5f00\u7801\u6d41\u3002",
+      "action_id": 27
+    },
+    {
+      "name": "op.bitpack_int.fastpfor_pfor.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.fastpfor_pfor.cpp_v1",
+      "implementation_source": "cpp/src/fastpfor_exact_stages.cpp:pfor_stage_forward_*/pfor_stage_inverse_*",
+      "implementation_scope": "FastPFor<8>\u5206\u522b\u7f16\u7801int64\u4f4e/\u9ad832\u4f4d\u6d41\u7684\u5b8c\u6574256\u503c\u524d\u7f00\u3002",
+      "action_id": 28
+    },
+    {
+      "name": "op.bitpack_int.buff.cpp_v1",
+      "operator_id": "bitpack_int",
+      "implementation_id": "bitpack_int.buff.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_bitpack_forward/buff_bitpack_inverse",
+      "implementation_scope": "BUFF\u8bfb\u53d6\u5df2\u6709\u5b57\u8282\u5e73\u9762\u5e76\u91cd\u519916\u5b57\u8282\u5934\uff1b\u590d\u5236\u5e73\u9762\uff0c\u4e0d\u518d\u9010\u503c\u6253\u5305\u3002",
+      "action_id": 29
+    },
+    {
+      "action_id": 30,
+      "name": "op.delta.previous_modular.cpp_v2",
+      "operator_id": "delta",
+      "implementation_id": "delta.previous_modular.cpp_v2",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u5bf9\u6bcf\u6761\u8f93\u5165\u6574\u6570\u6d41\u6309\u5176\u4f4d\u5bbd\u8ba1\u7b97\u5f53\u524d\u503c\u51cf\u524d\u503c\uff1b\u9006\u5411\u6309\u76f8\u540c\u6a21\u6570\u7d2f\u52a0\u3002"
+    },
+    {
+      "name": "op.delta.ts_2diff.cpp_v1",
+      "operator_id": "delta",
+      "implementation_id": "delta.ts_2diff.cpp_v1",
+      "implementation_source": "cpp/src/ts2diff_exact_stages.cpp:delta_forward_*/delta_inverse_*",
+      "implementation_scope": "TS_2DIFF\u6bcf\u5757\u6700\u591a128\u4e2adelta\u52a0\u9996\u503c\uff08129\u539f\u503c\uff09\uff1b\u68c0\u67e5\u51cf\u6cd5\u6ea2\u51fa\uff0c\u975e\u6a21\u5dee\u3002",
+      "action_id": 31
+    },
+    {
+      "name": "op.delta.rlbe.cpp_v1",
+      "operator_id": "delta",
+      "implementation_id": "delta.rlbe.cpp_v1",
+      "implementation_source": "cpp/src/p04_exact_stages.cpp:rlbe_delta_forward/rlbe_delta_inverse",
+      "implementation_scope": "RLBE\u6bcf10000\u5b57\u5206\u5757\u505a\u6a212^64\u5dee\u5206\uff0c\u7559\u9996\u5b57\uff1b\u6d6e\u70b9\u6309\u4f4d\u8fd0\u7b97\u4e14\u539f\u7c7b\u578b\u987b\u5916\u5b58\u3002",
+      "action_id": 32
+    },
+    {
+      "name": "op.delta.sprintz.cpp_v1",
+      "operator_id": "delta",
+      "implementation_id": "delta.sprintz.cpp_v1",
+      "implementation_source": "cpp/src/p04_exact_stages.cpp:sprintz_predictor_forward/sprintz_predictor_inverse",
+      "implementation_scope": "Sprintz LongFIRE\u6bcf9\u5b57\u4ec5\u9884\u6d4b\u540e8\u5b57\uff1b\u9996\u5b57/\u4e0d\u8db39\u5b57\u5c3e\u90e8\u539f\u6837\u4fdd\u7559\uff0c\u6d6e\u70b9\u6309\u4f4d\u3002",
+      "action_id": 33
+    },
+    {
+      "name": "op.delta.spdp.cpp_v1",
+      "operator_id": "delta",
+      "implementation_id": "delta.spdp.cpp_v1",
+      "implementation_source": "cpp/src/spdp_exact_stages.cpp:delta_forward/delta_inverse",
+      "implementation_scope": "SPDP\u5bf9\u5c0f\u7aef64\u4f4d\u5b57\u505alag-2\u6a21\u5dee\u5206\uff0c\u5373x[i]\u2212x[i\u22122]\uff0c\u5e76\u975e\u4e8c\u9636\u6709\u9650\u5dee\u5206\u3002",
+      "action_id": 34
+    },
+    {
+      "name": "op.delta.fpzip.cpp_v1",
+      "operator_id": "delta",
+      "implementation_id": "delta.fpzip.cpp_v1",
+      "implementation_source": "cpp/src/fpzip_exact_stages.cpp:predictor_forward/predictor_inverse",
+      "implementation_scope": "FPZIP\u65e0\u635f\u4e00\u7ef4double\u7684Lorenzo\u9884\u6d4b\u53caPCmap\u6b8b\u5dee\u6d41\u3002",
+      "action_id": 36
+    },
+    {
+      "action_id": 37,
+      "name": "op.xor.previous_word.cpp_v2",
+      "operator_id": "xor",
+      "implementation_id": "xor.previous_word.cpp_v2",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6309\u4f4d\u6a21\u5f0f\u8ba1\u7b97\u5f53\u524d\u5b57\u4e0e\u524d\u4e00\u4e2a\u76ee\u6807\u5b57\u7684 XOR\uff1b\u9996\u5b57\u7528\u4e8e\u6062\u590d\u540e\u7eed\u503c\u3002"
+    },
+    {
+      "action_id": 38,
+      "name": "op.xor.chimp_history128.cpp_v2",
+      "operator_id": "xor",
+      "implementation_id": "xor.chimp_history128.cpp_v2",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u4ee5\u4f4e 14 \u4f4d\u952e\u7d22\u5f15 128 \u503c\u5386\u53f2\uff1b\u6309\u76f8\u540c\u5c3e\u96f6\u9608\u503c\u548c\u5386\u53f2\u69fd\u89c4\u5219\u9009\u62e9\u5f15\u7528\u5e76\u8ba1\u7b97 XOR\u3002"
+    },
+    {
+      "name": "op.xor.fpc.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.fpc.cpp_v1",
+      "implementation_source": "cpp/src/fpc_exact_stages.cpp:predictor_xor_forward/predictor_xor_inverse",
+      "implementation_scope": "FPC\u6709\u72b6\u6001FCM/dFCM\u9884\u6d4b\u5668\u9009\u62e9\u53caXOR\u6b8b\u5dee\u8bb0\u5f55\u9636\u6bb5\u3002",
+      "action_id": 39
+    },
+    {
+      "name": "op.xor.pfpc.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.pfpc.cpp_v1",
+      "implementation_source": "cpp/src/pfpc_exact_stages.cpp:predictor_xor_forward/predictor_xor_inverse",
+      "implementation_scope": "\u5355\u7ebf\u7a0b\u57fa\u51c6pFPC\u7684\u5757\u5185FCM/dFCM\u9884\u6d4b\u53caXOR\u6b8b\u5dee\u9636\u6bb5\u3002",
+      "action_id": 40
+    },
+    {
+      "name": "op.xor.elf.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.elf.cpp_v1",
+      "implementation_source": "cpp/src/elf_float_codec.cpp:elf_xor_forward/elf_xor_inverse",
+      "implementation_scope": "Elf\u5728Chimp32\u4e4b\u4e0a\u7684XOR\u72b6\u6001\u673a\uff0c\u5e76\u751f\u6210\u7cbe\u786eELF1\u5206\u5757\u7801\u6d41\u3002",
+      "action_id": 41
+    },
+    {
+      "name": "op.xor.elf_plus.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.elf_plus.cpp_v1",
+      "implementation_source": "cpp/src/elf_float_codec.cpp:elf_plus_xor_forward/elf_plus_xor_inverse",
+      "implementation_scope": "Elf+\u7684XOR\u72b6\u6001\u673a\uff0c\u5e76\u751f\u6210\u7cbe\u786eELF1\u5206\u5757\u7801\u6d41\u3002",
+      "action_id": 42
+    },
+    {
+      "name": "op.xor.camel.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.camel.cpp_v1",
+      "implementation_source": "cpp/src/camel_exact_stages.cpp:xor_forward/xor_inverse",
+      "implementation_scope": "Camel\u539f\u503cXOR\u4e0e\u5341\u8fdb\u5236\u6574\u6570\u5dee\u5206\u8bb0\u5f55\uff0c\u5c1a\u672a\u7269\u5316\u4e3a\u4f4d\u6d41\u3002",
+      "action_id": 43
+    },
+    {
+      "name": "op.xor.elf64_on_chimp.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.elf64_on_chimp.cpp_v1",
+      "implementation_source": "cpp/src/elf_double_codec.cpp",
+      "implementation_scope": "Elf\u7684binary64 Chimp64\u5f02\u6216\u540e\u7aef\uff0c\u5305\u542bEL64\u5206\u5757\u5c01\u88c5\u3002",
+      "action_id": 44
+    },
+    {
+      "name": "op.xor.elf64_plus.cpp_v1",
+      "operator_id": "xor",
+      "implementation_id": "xor.elf64_plus.cpp_v1",
+      "implementation_source": "cpp/src/elf_double_codec.cpp",
+      "implementation_scope": "Elf+\u7684binary64 ElfXor64\u5f02\u6216\u540e\u7aef\uff0c\u5305\u542bEL64\u5206\u5757\u5c01\u88c5\u3002",
+      "action_id": 45
+    },
+    {
+      "action_id": 46,
+      "name": "op.trailing_zero_pack.reference_v1",
+      "operator_id": "trailing_zero_pack",
+      "implementation_id": "trailing_zero_pack.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6309\u5171\u540c\u5c3e\u96f6\u6570\u7b97\u672f\u53f3\u79fb\u7684\u53c2\u8003\u9636\u6bb5\uff0cshift\u226416\uff1b\u975eGorilla\u63a7\u5236\u4f4d\u7f16\u7801\u3002"
+    },
+    {
+      "name": "op.trailing_zero_pack.xor_window.cpp_v2",
+      "operator_id": "trailing_zero_pack",
+      "implementation_id": "trailing_zero_pack.xor_window.cpp_v2",
+      "implementation_source": "cpp/src/gorilla_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse_*",
+      "implementation_scope": "\u6309\u96f6\u6b8b\u5dee\u3001\u590d\u7528\u65e7\u7a97\u53e3\u3001\u65b0\u7a97\u53e3\u4e09\u4e2a\u5206\u652f\u6253\u5305\uff1b\u975e\u96f6\u6b8b\u5dee\u7684\u7a97\u53e3\u5305\u542b\u6761\u4ef6\u548c\u524d\u5c3e\u96f6\u66f4\u65b0\u89c4\u5219\u76f8\u540c\u3002",
+      "action_id": 47
+    },
+    {
+      "name": "op.trailing_zero_pack.chimp128.cpp_v1",
+      "operator_id": "trailing_zero_pack",
+      "implementation_id": "trailing_zero_pack.chimp128.cpp_v1",
+      "implementation_source": "cpp/src/chimp128_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse_*",
+      "implementation_scope": "Chimp128\u56db\u5206\u652f\u63a7\u5236\u5143\u6570\u636e\u53ca\u524d\u5bfc/\u5c3e\u968f\u96f6\u4f4d\u6d41\u6253\u5305\u9636\u6bb5\u3002",
+      "action_id": 48
+    },
+    {
+      "name": "op.trailing_zero_pack.nibble_residual.cpp_v2",
+      "operator_id": "trailing_zero_pack",
+      "implementation_id": "trailing_zero_pack.nibble_residual.cpp_v2",
+      "implementation_source": "cpp/src/fpc_exact_stages.cpp:trailing_pack_forward/trailing_pack_inverse",
+      "implementation_scope": "\u6bcf\u4e2a\u6b8b\u5dee\u7528 1 \u4f4d\u9884\u6d4b\u5668\u9009\u62e9\u548c 3 \u4f4d\u5b57\u8282\u6570\u7801\u6784\u6210 nibble\uff0c\u518d\u6309\u540c\u4e00\u5b57\u8282\u6570\u6620\u5c04\u5199\u5165\u5c0f\u7aef\u6b8b\u5dee\u3002",
+      "action_id": 49
+    },
+    {
+      "action_id": 50,
+      "name": "op.dictionary.reference_v1",
+      "operator_id": "dictionary",
+      "implementation_id": "dictionary.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6309\u6570\u503c\u6392\u5e8f\u8bcd\u5178\u751f\u6210\u6574\u6570ID\u7684\u53c2\u8003\u53d8\u6362\uff0c\u5b8c\u6574int64\u8bcd\u5178\u5fc5\u987b\u4fdd\u7559\u3002"
+    },
+    {
+      "name": "op.dictionary.project_words64.cpp_v1",
+      "operator_id": "dictionary",
+      "implementation_id": "dictionary.project_words64.cpp_v1",
+      "implementation_source": "cpp/src/dictionary64_action_cli.cpp",
+      "implementation_scope": "int64/float64\u4f4d\u4fdd\u771f\u5b57\u5178\uff0c\u8f93\u51fauint64\u7d22\u5f15\uff1b\u884c\u6570\u2264UINT32_MAX\uff0c\u987b\u4fdd\u7559\u8bcd\u5178\u3002",
+      "action_id": 51
+    },
+    {
+      "name": "op.dictionary.alp_rd.cpp_v1",
+      "operator_id": "dictionary",
+      "implementation_id": "dictionary.alp_rd.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_dictionary_forward/alp_dictionary_inverse",
+      "implementation_scope": "ALP-RD\u53c2\u8003\u5206\u652f\uff1a\u5b8c\u657464\u4f4d\u503c\u5efa\u5b57\u5178\u5e76\u6253\u5305ID\uff0c\u975e\u751f\u4ea7\u7248\u5de6\u53f3\u4f4d\u5207\u5206\u3002",
+      "action_id": 52
+    },
+    {
+      "name": "op.dictionary.brotli_static_small.cpp_reference_v1",
+      "operator_id": "dictionary",
+      "implementation_id": "dictionary.brotli_static_small.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:dictionary_forward/dictionary_inverse",
+      "implementation_scope": "\u72ec\u7acb\u5b9a\u957f\u8bcd\u5b57\u5178\u53c2\u8003\u5b9e\u73b0\uff0c\u4e0d\u662f\u4e0a\u6e38Brotli\u5b57\u5178\u7801\u6d41\u3002",
+      "action_id": 53
+    },
+    {
+      "name": "op.dictionary.corad_tricklet_xor.cpp_v2",
+      "operator_id": "dictionary",
+      "implementation_id": "dictionary.corad_tricklet_xor.cpp_v2",
+      "implementation_source": "cpp/src/corad_lossless_cpp.cpp",
+      "implementation_scope": "40\u901a\u9053tricklet\u5b57\u5178\u9884\u6d4b\u4e0e\u5f52\u4e00\u5316\u5b57XOR\u6b8b\u5dee\uff0c\u5c3e\u901a\u9053\u5168\u90e8\u4fdd\u7559\u3002",
+      "action_id": 54
+    },
+    {
+      "action_id": 55,
+      "name": "op.zigzag.signed64.cpp_v2",
+      "operator_id": "zigzag",
+      "implementation_id": "zigzag.signed64.cpp_v2",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u9010\u4e2a\u6709\u7b26\u53f7 64 \u4f4d\u8f93\u5165\u6309\u540c\u4e00 ZigZag \u516c\u5f0f\u6620\u5c04\u4e3a uint64\uff1b\u9006\u5411\u6062\u590d\u539f\u6709\u7b26\u53f7\u503c\u3002"
+    },
+    {
+      "action_id": 56,
+      "name": "op.block_transform.reference_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6bcf64\u503c\u5c40\u90e8\u7a33\u5b9a\u6392\u5e8f\u7684\u4ee3\u7406\uff0c\u4fdd\u5b58\u5757\u957f/\u9006\u6392\u5217\uff1b\u975e\u751f\u4ea7BWT\u3002"
+    },
+    {
+      "name": "op.block_transform.spdp.cpp_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.spdp.cpp_v1",
+      "implementation_source": "cpp/src/spdp_exact_stages.cpp:block_transform_forward/block_transform_inverse",
+      "implementation_scope": "SPDP\u516b\u8def\u5b57\u8282\u8f6c\u7f6e\uff0c\u518d\u6267\u884c\u8de8\u5b57\u8282\u901a\u9053\u7684\u5b57\u8282\u5dee\u5206\u3002",
+      "action_id": 57
+    },
+    {
+      "name": "op.block_transform.buff_column_split.cpp_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.buff_column_split.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:buff_column_split_forward/buff_column_split_inverse",
+      "implementation_scope": "BUFF\u8ba1\u7b97FOR\u3001\u4f4d\u5bbd\u53ca\u5de6\u5bf9\u9f50\u540e\u62c6\u4e3a\u5b57\u8282\u5e73\u9762\uff0c\u5df2\u5305\u542b\u90e8\u5206\u6253\u5305\u3002",
+      "action_id": 58
+    },
+    {
+      "name": "op.block_transform.byte_shuffle.cpp_v2",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.byte_shuffle.cpp_v2",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:shuffle_forward/shuffle_inverse",
+      "implementation_scope": "\u628a N\u00d7W \u7684\u5143\u7d20\u5b57\u8282\u77e9\u9635\u6309\u5b57\u8282\u4f4d\u7f6e\u8f6c\u7f6e\u4e3a W \u4e2a\u5b57\u8282\u5e73\u9762\uff1b\u4e0d\u8db3\u5b8c\u6574\u5143\u7d20\u7684\u5c3e\u5b57\u8282\u539f\u6837\u524d\u4f20\u3002W=1 \u4e3a\u8be5\u89c4\u5219\u7684\u9000\u5316\u6052\u7b49\u60c5\u51b5\u3002",
+      "action_id": 59
+    },
+    {
+      "name": "op.block_transform.bzip2_bwt.cpp_reference_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.bzip2_bwt.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:bwt_forward/bwt_inverse",
+      "implementation_scope": "\u72ec\u7acb\u5faa\u73afBWT\u53c2\u8003\u9636\u6bb5\uff0c\u4e0d\u662f\u4e0a\u6e38Bzip2\u5757\u7801\u6d41\u3002",
+      "action_id": 60
+    },
+    {
+      "name": "op.block_transform.int64_lo_hi32.cpp_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.int64_lo_hi32.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u590d\u73b0\u65e7\u7248int64\u4f4e/\u9ad832\u4f4d\u62c6\u5206\uff1b\u540e\u63a5\u53cc\u8defnative-LZ\uff0c\u4e0d\u662fFastPFor\u3002",
+      "action_id": 61
+    },
+    {
+      "name": "op.block_transform.buff_native_word_order.cpp_v1",
+      "operator_id": "block_transform",
+      "implementation_id": "block_transform.buff_native_word_order.cpp_v1",
+      "implementation_source": "cpp/src/buff_native_exact_stages.cpp",
+      "implementation_scope": "\u5f53\u524dnative BUFF\u4ec5\u4ea4\u6362float64\u9ad8\u4f4e32\u4f4d\u5b57\u5e8f\uff0c\u9636\u6bb5\u4e0d\u7f29\u77ed\u6570\u636e\u3002",
+      "action_id": 62
+    },
+    {
+      "action_id": 63,
+      "name": "op.symbol_recode.reference_v1",
+      "operator_id": "symbol_recode",
+      "implementation_id": "symbol_recode.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u9891\u7387\u6392\u5e8f\u8bcd\u5178\u7684\u7b26\u53f7\u91cd\u7f16\u7801\u4ee3\u7406\uff0c\u8f93\u51fa\u6574\u6570ID\u5e76\u4fdd\u7559\u5b8c\u6574\u8bcd\u5178\u3002"
+    },
+    {
+      "name": "op.symbol_recode.bzip2_mtf.cpp_reference_v1",
+      "operator_id": "symbol_recode",
+      "implementation_id": "symbol_recode.bzip2_mtf.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:mtf_forward/mtf_inverse",
+      "implementation_scope": "\u72ec\u7acb\u53c2\u8003MTF\uff0c\u5bf9\u6574\u4e2a\u8f93\u5165\u5305\u5b57\u8282\u7f16\u7801\u4e3arank\uff0c\u4e0d\u53ea\u5904\u7406BWT\u672b\u5217\u3002",
+      "action_id": 64
+    },
+    {
+      "action_id": 65,
+      "name": "op.run_length.byte_optimal.cpp_v1",
+      "operator_id": "run_length",
+      "implementation_id": "run_length.byte_optimal.cpp_v1",
+      "implementation_source": "cpp/src/optimal_rle.cpp",
+      "implementation_scope": "Native URL1 byte-optimal encoder: choose minimum complete frame bytes among raw, constant, whole-stream fixed-width bitpack and dynamic-programmed literal/run segmentation. Optimality is limited to this declared grammar."
+    },
+    {
+      "action_id": 66,
+      "name": "op.lz_match.reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u91cd\u590d\u503c\u4ee3\u7406\u8f93\u51fatag/count/literal\u8bb0\u5f55\uff0c\u987b\u4fdd\u7559\u8fb9\u754c\uff1b\u4e0d\u662f\u901a\u7528\u5b57\u8282LZ\u3002"
+    },
+    {
+      "name": "op.lz_match.native_lz.aligned8.cpp_v2",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.native_lz.aligned8.cpp_v2",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "8-byte-key previous-match LZ search\uff1bmin_match/max_match\u662f\u53ef\u5b66\u4e60\u8f93\u5165\u53c2\u6570\uff0c\u4f7f\u7528\u540c\u4e00C++\u5339\u914d\u5185\u6838\u3002",
+      "action_id": 67
+    },
+    {
+      "name": "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.brotli_lazy65535.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse",
+      "implementation_scope": "\u72ec\u7acblazy LZ\u53c2\u8003\uff0c\u91c7\u7528Brotli\u5f62\u72b6\u53c2\u6570\u3001\u7a97\u53e365535\uff1b\u975e\u4e0a\u6e38\u7b49\u4ef7\u5b9e\u73b0\u3002",
+      "action_id": 68
+    },
+    {
+      "name": "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.zstd_lazy65535.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse",
+      "implementation_scope": "\u72ec\u7acblazy LZ\u53c2\u8003\uff0c\u7a97\u53e365535\uff1b\u4e0d\u7b49\u540c\u4e0a\u6e38Zstd\u5e8f\u5217\u751f\u6210\u3002",
+      "action_id": 69
+    },
+    {
+      "name": "op.lz_match.blosclz.greedy.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.blosclz.greedy.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse",
+      "implementation_scope": "Blosc/Blosc2\u5171\u4eab\u7684\u8d2a\u5fc3\u8bed\u4e49LZ\u53c2\u8003\uff0c\u4e0d\u662f\u4e0a\u6e38blosclz\u7801\u6d41\u3002",
+      "action_id": 70
+    },
+    {
+      "name": "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.deflate_lazy32768.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse",
+      "implementation_scope": "\u72ec\u7acbDEFLATE\u98ce\u683clazy LZ\u53c2\u8003\uff0c\u7a97\u53e332768\uff1b\u975e\u4e0a\u6e38zlib/gzip\u7801\u6d41\u3002",
+      "action_id": 71
+    },
+    {
+      "name": "op.lz_match.xz_lazy16777216.cpp_reference_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.xz_lazy16777216.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:lz_forward/lz_inverse",
+      "implementation_scope": "\u72ec\u7acbLZMA\u98ce\u683clazy LZ\u53c2\u8003\uff0c\u7a97\u53e316777216\uff1b\u975e\u4e0a\u6e38liblzma\u7801\u6d41\u3002",
+      "action_id": 72
+    },
+    {
+      "name": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u53cc\u8defnative-LZ\uff1a\u7a9732768\uff0c\u914d\u7f6e5\u2013175\u3001\u63098\u91cf\u5316\u4e3a8\u2013168\uff1b\u975eFastPFor\u3002",
+      "action_id": 73
+    },
+    {
+      "name": "op.lz_match.snappy_snap_1_1_1.cpp_v1",
+      "operator_id": "lz_match",
+      "implementation_id": "lz_match.snappy_snap_1_1_1.cpp_v1",
+      "implementation_source": "cpp/src/snappy_exact_stages.cpp",
+      "implementation_scope": "snap 1.1.1\u7684hash/skip/greedy\u5339\u914d\u5668\uff0c\u4e0d\u8c03\u7528\u5b8c\u6574\u7f16\u7801\u5668\u3002",
+      "action_id": 74
+    },
+    {
+      "action_id": 75,
+      "name": "op.match_parse_policy.reference_v1",
+      "operator_id": "match_parse_policy",
+      "implementation_id": "match_parse_policy.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u4ee5(3v+i%251) mod 2^64\u6a21\u62df\u53ef\u9006\u7b56\u7565\u6548\u679c\uff0c\u5e76\u975e\u771f\u5b9e\u5019\u9009\u9009\u62e9\u5668\u3002"
+    },
+    {
+      "name": "op.match_parse_policy.native_lz.aligned8_greedy",
+      "operator_id": "match_parse_policy",
+      "implementation_id": "match_parse_policy.native_lz.aligned8_greedy",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "\u5b9e\u9645\u6267\u884c8\u5b57\u8282\u5bf9\u9f50\u5339\u914d\u4e0e\u8d2a\u5fc3\u89e3\u6790\uff0c\u8f93\u51fa\u5e26tag\u7684literal/offset/length\u8bb0\u5f55\u3002",
+      "action_id": 76
+    },
+    {
+      "name": "op.match_parse_policy.generic_packet.cpp_reference_v1",
+      "operator_id": "match_parse_policy",
+      "implementation_id": "match_parse_policy.generic_packet.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:parse_policy_forward/parse_policy_inverse",
+      "implementation_scope": "\u53c2\u8003\u7b56\u7565\u8fb9\u754c\u4ec5\u6821\u9a8c/\u5c01\u88c5\u65e2\u6709\u8bb0\u5f55\uff0c\u4e0d\u91cd\u65b0\u5339\u914d\uff1b\u4e0a\u6e38\u5339\u914d\u4ecd\u878d\u5408\u3002",
+      "action_id": 77
+    },
+    {
+      "action_id": 78,
+      "name": "op.match_window_model.reference_v1",
+      "operator_id": "match_window_model",
+      "implementation_id": "match_window_model.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u6574\u6570\u4f4d\u578bXOR(i\u00d7131)\u53c2\u8003\u53d8\u6362\uff1bwindow/block\u6807\u7b7e\u4fdd\u7559\u539f\u53c2\u8003wire\uff0c\u975e\u751f\u4ea7\u7a97\u53e3\u7ba1\u7406\u6216\u5757\u91cd\u7f6e\u3002"
+    },
+    {
+      "name": "op.match_window_model.native_lz.window.cpp_v2",
+      "operator_id": "match_window_model",
+      "implementation_id": "match_window_model.native_lz.window.cpp_v2",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "\u540c\u4e00native\u7a97\u53e3\u6a21\u578b\uff1a\u8f93\u5165window_bytes\u9650\u5236\u5411\u540e\u5339\u914d\u8ddd\u79bb\uff0c\u5199\u5165NLS1\u4e0a\u4e0b\u6587\uff1b\u5177\u4f53\u641c\u7d22\u5728Match Parse Policy\u6267\u884c\u3002",
+      "action_id": 79
+    },
+    {
+      "action_id": 80,
+      "name": "op.match_token_format.reference_v1",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u53c2\u8003token\u5e03\u5c40\u4ee3\u7406\uff1a\u4e24\u4e2a\u4f4e4\u4f4d\u62fc\u5b57\u8282\uff0c\u53e6\u4fdd\u7559\u9ad8\u4f4d\u53ca\u539f\u957f\u3002"
+    },
+    {
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "\u6bcf8 token\u4e00\u63a7\u5236\u5b57\u8282\uff1b\u5c0f\u7aefuint16\u504f\u79fb\uff0cuint8\u4fdd\u5b58length\u22123\uff1b\u8f93\u51fa\u6df7\u5408\u7801\u6d41\u3002",
+      "action_id": 81
+    },
+    {
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "\u6bcf8 token\u4e00\u63a7\u5236\u5b57\u8282\uff1b\u5c0f\u7aefuint16\u504f\u79fb\uff0cuint8\u4fdd\u5b58length\u22124\uff1b\u8f93\u51fa\u6df7\u5408\u7801\u6d41\u3002",
+      "action_id": 82
+    },
+    {
+      "name": "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.native_lz.ctrl8_bias5.cpp_v2",
+      "implementation_source": "cpp/src/native_lz_action_stages.cpp",
+      "implementation_scope": "\u6bcf\u8def token \u6bcf\u516b\u9879\u751f\u6210\u4e00\u4e2a\u63a7\u5236\u5b57\u8282\uff1bliteral \u5199 uint8\uff0cmatch \u5199 uint16LE offset \u4e0e uint8(length\u22125)\u3002\u9006\u5411\u4f7f\u7528\u76f8\u540c\u504f\u7f6e\u4e0e\u6d41\u539f\u957f\u3002",
+      "action_id": 83
+    },
+    {
+      "name": "op.match_token_format.snappy.cpp_v1",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.snappy.cpp_v1",
+      "implementation_source": "cpp/src/snappy_exact_stages.cpp:token_format_forward/token_format_inverse",
+      "implementation_scope": "Snappy\u7684literal\u3001COPY_1/COPY_2\u6807\u7b7e\u7269\u5316\uff0c\u4e0d\u542b\u539f\u957f\u524d\u7f00\u3002",
+      "action_id": 84
+    },
+    {
+      "name": "op.match_token_format.lz4.cpp_v1",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.lz4.cpp_v1",
+      "implementation_source": "cpp/src/lz4_exact_stages.cpp:token_format_forward/token_format_inverse",
+      "implementation_scope": "LZ4\u4ee4\u724c\u534a\u5b57\u8282\u3001\u8ddd\u79bb\u53ca\u5c1a\u672a\u7f16\u7801\u7684\u6269\u5c55\u957f\u5ea6\u6574\u6570\u9636\u6bb5\u3002",
+      "action_id": 85
+    },
+    {
+      "name": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1",
+      "operator_id": "match_token_format",
+      "implementation_id": "match_token_format.blosclz.ctrl8.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:token_forward/token_inverse",
+      "implementation_scope": "Blosc/Blosc2\u5171\u4eab\u53ef\u9006ctrl8\u53c2\u8003\u4ee4\u724c\u683c\u5f0f\uff0c\u4ec5\u4e3a\u683c\u5f0f\u9636\u6bb5\u3002",
+      "action_id": 86
+    },
+    {
+      "name": "op.integer_code.stream_vbyte.cpp_v1",
+      "operator_id": "integer_code",
+      "implementation_id": "integer_code.stream_vbyte.cpp_v1",
+      "implementation_source": "cpp/src/svb_exact_stages.cpp:integer_code_forward/integer_code_inverse",
+      "implementation_scope": "\u5206\u522b\u7f16\u7801\u5df2\u5dee\u5206\u4f4e/\u9ad8\u5206\u80a2\u7684key/data\uff0c\u751f\u6210\u6700\u7ec8Stream-VByte\u9002\u914d\u5668\u683c\u5f0f\u3002",
+      "action_id": 88
+    },
+    {
+      "name": "op.integer_code.fastpfor_variablebyte.cpp_v1",
+      "operator_id": "integer_code",
+      "implementation_id": "integer_code.fastpfor_variablebyte.cpp_v1",
+      "implementation_source": "cpp/src/fastpfor_exact_stages.cpp:variable_byte_forward/variable_byte_inverse",
+      "implementation_scope": "VariableByte\u7f16\u7801\u4f4e/\u9ad832\u4f4d\u6d41\u4f59\u5c3e\uff0c\u5e76\u751f\u6210\u7cbe\u786e\u9002\u914d\u5668\u7801\u6d41\u3002",
+      "action_id": 89
+    },
+    {
+      "name": "op.integer_code.lz4.cpp_v1",
+      "operator_id": "integer_code",
+      "implementation_id": "integer_code.lz4.cpp_v1",
+      "implementation_source": "cpp/src/lz4_exact_stages.cpp:integer_code_forward/integer_code_inverse",
+      "implementation_scope": "LZ4\u7528\u8fde\u7eed255\u5b57\u8282\u7f16\u7801\u6269\u5c55\u957f\u5ea6\uff0craw\u5757\u5b57\u8282\u4fdd\u5b58\u5728LZI1\u9010\u5757\u5305\u4e2d\u3002",
+      "action_id": 91
+    },
+    {
+      "action_id": 92,
+      "name": "op.bitstream_pack.reference_v1",
+      "operator_id": "bitstream_pack",
+      "implementation_id": "bitstream_pack.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u53c2\u8003\u6bd4\u7279\u6d41\u4ee3\u7406\u5c06\u4e24\u9879\u4f4e4\u4f4d\u62fc\u5b57\u8282\uff0c\u4ecd\u987b\u4fdd\u7559\u9ad8\u4f4d\u4fa7\u6d41\u53ca\u539f\u957f\u3002"
+    },
+    {
+      "name": "op.bitstream_pack.camel.cpp_v1",
+      "operator_id": "bitstream_pack",
+      "implementation_id": "bitstream_pack.camel.cpp_v1",
+      "implementation_source": "cpp/src/camel_exact_stages.cpp:bitstream_pack_forward/bitstream_pack_inverse",
+      "implementation_scope": "Camel\u5341\u8fdb\u5236\u63a7\u5236\u7f16\u7801\u3001\u5206\u5757\u5c01\u88c5\u53ca\u7cbe\u786eCAM1\u516c\u5f00\u7801\u6d41\u3002",
+      "action_id": 93
+    },
+    {
+      "action_id": 94,
+      "name": "op.entropy_huffman.reference_v1",
+      "operator_id": "entropy_huffman",
+      "implementation_id": "entropy_huffman.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u9891\u7387\u8bcd\u5178ID\u91cd\u7f16\u7801\u4ee3\u7406\uff0c\u5b8c\u6574\u8bcd\u5178\u987b\u4fdd\u7559\uff1b\u4e0d\u662f\u5b9e\u9645Huffman\u4f4d\u6d41\u3002"
+    },
+    {
+      "name": "op.entropy_huffman.project_bytes.cpp_v1",
+      "operator_id": "entropy_huffman",
+      "implementation_id": "entropy_huffman.project_bytes.cpp_v1",
+      "implementation_source": "cpp/src/huffman_bytes.cpp:huffman_bytes::encode/decode",
+      "implementation_scope": "\u9879\u76eeHuffman\u5b57\u8282\u7801\u6d41\u542b\u9891\u7387\u8868/\u539f\u957f/\u6709\u6548bit\u6570\uff0c\u4f9bBrotli\u548cBzip2\u53c2\u8003\u94fe\u3002",
+      "action_id": 95
+    },
+    {
+      "action_id": 96,
+      "name": "op.entropy_range.reference_v1",
+      "operator_id": "entropy_range",
+      "implementation_id": "entropy_range.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u9891\u7387\u8bcd\u5178ID\u91cd\u7f16\u7801\u4ee3\u7406\uff0c\u5b8c\u6574\u8bcd\u5178\u987b\u4fdd\u7559\uff1b\u4e0d\u662f\u5b9e\u9645range\u7f16\u7801\u3002"
+    },
+    {
+      "name": "op.entropy_range.project_bytes.cpp_v1",
+      "operator_id": "entropy_range",
+      "implementation_id": "entropy_range.project_bytes.cpp_v1",
+      "implementation_source": "cpp/src/arithmetic_bytes.cpp:arithmetic_bytes::encode/decode",
+      "implementation_scope": "\u9879\u76ee\u9759\u6001range\u7801\u6d41\u542b\u9891\u7387\u8868/\u957f\u5ea6/\u7ec8\u6001\uff0c\u4f9bXZ\u53c2\u8003\u94fe\uff1b\u975e\u6570\u503c\u6b8b\u5dee\u3002",
+      "action_id": 97
+    },
+    {
+      "name": "op.entropy_range.fpzip.cpp_v1",
+      "operator_id": "entropy_range",
+      "implementation_id": "entropy_range.fpzip.cpp_v1",
+      "implementation_source": "cpp/src/fpzip_exact_stages.cpp:range_forward/range_inverse",
+      "implementation_scope": "FPZIP\u81ea\u9002\u5e94RCqsmodel\u533a\u95f4\u7f16\u7801\uff0c\u52a0\u7cbe\u786e\u65e0\u635f\u4e00\u7ef4double\u5934\u3002",
+      "action_id": 98
+    },
+    {
+      "action_id": 99,
+      "name": "op.entropy_fse.reference_v1",
+      "operator_id": "entropy_fse",
+      "implementation_id": "entropy_fse.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u9891\u7387\u8bcd\u5178ID\u91cd\u7f16\u7801\u4ee3\u7406\uff0c\u5b8c\u6574\u8bcd\u5178\u987b\u4fdd\u7559\uff1b\u4e0d\u662f\u5b9e\u9645FSE/ANS\u7f16\u7801\u3002"
+    },
+    {
+      "name": "op.entropy_fse.zstd_rans.cpp_reference_v1",
+      "operator_id": "entropy_fse",
+      "implementation_id": "entropy_fse.zstd_rans.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:rans_forward/rans_inverse",
+      "implementation_scope": "\u9879\u76eerANS\u53c2\u8003\u7801\u6d41\u542b\u6a21\u578b\u3001\u672b\u6001\u53ca\u5f52\u4e00\u5316\u5b57\u8282\uff1b\u975e\u4e0a\u6e38Zstd FSE\u683c\u5f0f\u3002",
+      "action_id": 100
+    },
+    {
+      "action_id": 101,
+      "name": "op.entropy_special.reference_v1",
+      "operator_id": "entropy_special",
+      "implementation_id": "entropy_special.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u4e13\u7528\u71b5\u9636\u6bb5\u7684\u9891\u7387\u8bcd\u5178ID\u4ee3\u7406\uff0c\u987b\u4fdd\u5b58\u5b8c\u6574\u8bcd\u5178\uff1b\u975e\u771f\u5b9e\u4e13\u7528\u540e\u7aef\u3002"
+    },
+    {
+      "name": "op.entropy_special.spdp.cpp_v1",
+      "operator_id": "entropy_special",
+      "implementation_id": "entropy_special.spdp.cpp_v1",
+      "implementation_source": "cpp/src/spdp_exact_stages.cpp:entropy_forward/entropy_inverse",
+      "implementation_scope": "SPDP\u7b2c5\u7ea7\u5386\u53f2\u8868\u91cd\u590d/\u539f\u6837\u5b57\u8282\u7f16\u7801\uff0c\u751f\u6210\u516c\u5f00\u7801\u6d41\u3002",
+      "action_id": 102
+    },
+    {
+      "action_id": 103,
+      "name": "op.literal_entropy.reference_v1",
+      "operator_id": "literal_entropy",
+      "implementation_id": "literal_entropy.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "literal\u71b5\u9636\u6bb5\u7684\u9891\u7387\u8bcd\u5178ID\u4ee3\u7406\uff0c\u987b\u4fdd\u5b58\u5b8c\u6574\u8bcd\u5178\uff1b\u975e\u771f\u5b9e\u71b5\u7f16\u7801\u5668\u3002"
+    },
+    {
+      "name": "op.literal_entropy.zstd_huffman.cpp_reference_v1",
+      "operator_id": "literal_entropy",
+      "implementation_id": "literal_entropy.zstd_huffman.cpp_reference_v1",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:huffman_forward/huffman_inverse",
+      "implementation_scope": "\u5bf9\u7b56\u7565\u5305\u505a\u53c2\u8003Huffman\u7f16\u7801\uff0c\u4e0d\u7b49\u540c\u4e0a\u6e38Zstd\u5b57\u9762\u91cf\u533a\u3002",
+      "action_id": 104
+    },
+    {
+      "name": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/snappy_exact_stages.cpp:lz_match_forward/lz_match_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u8c03\u7528\u5b8c\u6574Snappy\u7f16\u7801\u5668\uff0c\u518d\u89e3\u6790\u4e3a\u53ef\u9006literal/copy\u8bb0\u5f55\u3002",
+      "action_id": 105
+    },
+    {
+      "name": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/lz4_exact_stages.cpp:lz_match_forward/lz_match_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u8c03\u7528\u5b8c\u6574LZ4F\u7f16\u7801\u5668\uff0c\u518d\u89e3\u6790\u4e3a\u9010\u5757literal/copy\u8bb0\u5f55\u3002",
+      "action_id": 106
+    },
+    {
+      "name": "op.block_state_control.alp_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.alp_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:alp_residual_core_forward/alp_residual_core_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u5b8c\u6574\u64a4\u9500ALP\u53c2\u8003\u524d\u7f00\u6062\u590ddouble\uff0c\u518d\u8c03\u7528\u5b9e\u9645ALP\u7f16\u7801\u5668\u3002",
+      "action_id": 107
+    },
+    {
+      "name": "op.block_state_control.reger_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.reger_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/learning_codec_exact_stages.cpp:reger_residual_core_forward/reger_residual_core_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u64a4\u9500REGER\u91cd\u6392/\u5dee\u5206/FOR/\u6253\u5305\u524d\u7f00\uff0c\u518d\u8c03\u7528\u5b8c\u6574REGER\u3002",
+      "action_id": 108
+    },
+    {
+      "name": "op.container_frame.magic_length.cpp_v3",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.magic_length.cpp_v3",
+      "implementation_source": "cpp/src/general_codec_reference_stages.cpp:frame_forward/frame_inverse",
+      "implementation_scope": "\u5728\u65e2\u6709\u5b57\u8282\u8f7d\u8377\u524d\u5199\u5165 4 B magic \u548c 8 B \u5c0f\u7aef\u8f7d\u8377\u957f\u5ea6\uff1b\u9006\u5411\u68c0\u67e5\u5e76\u62c6\u9664\u3002",
+      "action_id": 109
+    },
+    {
+      "name": "op.block_state_control.brotli_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.brotli_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:brotli_forward/brotli_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u64a4\u9500\u53c2\u8003\u524d\u7f00\uff0c\u518d\u8c03\u7528\u5b8c\u6574Brotli\u7f16\u7801\u5668\uff0cquality=6\u3002",
+      "action_id": 110
+    },
+    {
+      "name": "op.block_state_control.zstd_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.zstd_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:zstd_forward/zstd_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u64a4\u9500\u53c2\u8003\u524d\u7f00\uff0c\u518d\u8c03\u7528\u5b8c\u6574Zstd\u7f16\u7801\u5668\uff0clevel=9\u3002",
+      "action_id": 111
+    },
+    {
+      "name": "op.block_state_control.blosc1_residual_core.cpp_v2",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.blosc1_residual_core.cpp_v2",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc1_forward/blosc1_inverse",
+      "implementation_scope": "\u5171\u4eabBlosc\u6b8b\u4f59\u6838\u5fc3\uff1b\u64a4\u9500\u53c2\u8003\u524d\u7f00\u540e\u8c03\u7528\u5b8c\u6574BLOSCLZ\u540e\u7aef\uff0ctypesize\u4e3a1/4/8\u8f93\u5165\u53c2\u6570\uff1blevel=5\u3001shuffle\u3001\u7ebf\u7a0b1\u4fdd\u6301\u4e0d\u53d8\u3002",
+      "action_id": 112
+    },
+    {
+      "name": "op.block_state_control.blosc2_residual_core.cpp_v2",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.blosc2_residual_core.cpp_v2",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:blosc2_forward/blosc2_inverse",
+      "implementation_scope": "\u5171\u4eabBlosc\u6b8b\u4f59\u6838\u5fc3\uff1b\u64a4\u9500\u53c2\u8003\u524d\u7f00\u540e\u8c03\u7528\u5b8c\u6574BLOSCLZ\u540e\u7aef\uff0ctypesize\u4e3a1/4/8\u8f93\u5165\u53c2\u6570\uff1blevel=5\u3001shuffle\u3001\u7ebf\u7a0b1\u4fdd\u6301\u4e0d\u53d8\u3002",
+      "action_id": 113
+    },
+    {
+      "name": "op.block_state_control.bzip2_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.bzip2_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:bzip2_forward/bzip2_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u64a4\u9500BWT/MTF/RLE\u53c2\u8003\u524d\u7f00\uff0c\u518d\u8c03\u7528\u5b8c\u6574Bzip2\uff0clevel=4\u3002",
+      "action_id": 114
+    },
+    {
+      "name": "op.block_state_control.deflate_residual_core.cpp_v2",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.deflate_residual_core.cpp_v2",
+      "implementation_source": "cpp/src/parameterized_deflate.hpp",
+      "implementation_scope": "\u5171\u4eabzlib DEFLATE\u5185\u6838\uff1blevel=0..9\u4e3a\u8f93\u5165\u53c2\u6570\uff1bgzip_prefix\u3001zlib_prefix\u3001corad_ctk2\u5206\u522b\u4fdd\u7559\u539f\u524d\u7f00\u53ca\u8f93\u51fa\u5c01\u88c5\u3002",
+      "action_id": 115
+    },
+    {
+      "name": "op.block_state_control.xz_lzma2_residual_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.xz_lzma2_residual_core.cpp_v1",
+      "implementation_source": "cpp/src/general_codec_residual_stages.cpp:xz_forward/xz_inverse",
+      "implementation_scope": "\u590d\u5408\u9636\u6bb5\uff1a\u64a4\u9500\u524d\u7f00\u5e76\u505a\u5b8c\u6574XZ preset=5\u7f16\u7801\uff0c\u518d\u62c6\u6d41\u5934\u5c3e\u4e3aXZC1\u3002",
+      "action_id": 116
+    },
+    {
+      "name": "op.block_state_control.reger_legacy_block_core.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.reger_legacy_block_core.cpp_v1",
+      "implementation_source": "cpp/src/reger_legacy_cpp.cpp",
+      "implementation_scope": "\u539f\u9009\u5b9aREGER\u5757\u6838\u5fc3\uff1b\u6a21\u578b\u641c\u7d22\u3001\u91cd\u6392\u3001\u9884\u6d4b\u4e0e\u4f4d\u6253\u5305\u4ecd\u8026\u5408\u3002",
+      "action_id": 117
+    },
+    {
+      "name": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+      "operator_id": "block_state_control",
+      "implementation_id": "block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+      "implementation_source": "cpp/src/blosc2_binding_cpp.cpp",
+      "implementation_scope": "\u56fa\u5b9aBlosc2 3.3.3\u975e\u539f\u5b50\u7ed1\u5b9a\u5b8f\uff1a\u5b8c\u6574chunk\u7f16\u7801\u540e\u53d6\u5757\uff0c\u672a\u62c6BLOSCLZ\u5339\u914d\u5668\u3002",
+      "action_id": 118
+    },
+    {
+      "action_id": 119,
+      "name": "op.container_frame.reference_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.reference_v1",
+      "implementation_source": "cpp/src/reference_operator_actions.cpp",
+      "implementation_scope": "\u53c2\u8003\u5c01\u88c5\uff1a3\u9879\u5934\u5b57\u6bb5\u3001\u539fint64\u503c\u53ca1\u9879\u4f4e16\u4f4d\u6821\u9a8c\u5c3e\uff1b\u4e0d\u662fgzip\u3002"
+    },
+    {
+      "name": "op.container_frame.lz4.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.lz4.cpp_v1",
+      "implementation_source": "cpp/src/lz4_exact_stages.cpp:container_forward/container_inverse",
+      "implementation_scope": "LZ4\u5e27\u63cf\u8ff0\u7b26\u3001XXH32\u5934\u6821\u9a8c\u3001\u5757\u5934\u4e0e\u7ed3\u675f\u6807\u8bb0\u5c01\u88c5\u3002",
+      "action_id": 120
+    },
+    {
+      "name": "op.container_frame.stored_parts.cpp_v2",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.stored_parts.cpp_v2",
+      "implementation_source": "cpp/src/deflate_container_stages.cpp:gzip_forward/gzip_inverse",
+      "implementation_scope": "\u628a\u5df2\u5b58\u5728\u7684 header\u3001core \u548c trailer \u6309\u987a\u5e8f\u62fc\u56de\u5b57\u8282\u6d41\uff1b\u9006\u5411\u6309\u5bf9\u5e94\u683c\u5f0f\u63d0\u53d6\u4e09\u90e8\u5206\u3002",
+      "action_id": 121
+    },
+    {
+      "name": "op.container_frame.legacy_numeric_limbs.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.legacy_numeric_limbs.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u590d\u73b0\u65e7\u7248\u53cc\u8defnative-LZ\u7684\u7c7b\u578b/\u5c3a\u5ea6\u5c01\u88c5\uff0c\u4e0d\u662fFastPFor\u7801\u6d41\u3002",
+      "action_id": 122
+    },
+    {
+      "name": "op.container_frame.alp2_legacy.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.alp2_legacy.cpp_v1",
+      "implementation_source": "cpp/src/legacy_numeric_action_stages.cpp",
+      "implementation_scope": "\u590d\u73b0ALP2\u65e7\u5c01\u88c5\uff0c\u542b\u539f\u503c/\u7f29\u653e\u5757\u53ca\u5f02\u5e38\uff1b\u8f7d\u8377\u540e\u7aef\u4e3a\u53cc\u8defnative-LZ\u3002",
+      "action_id": 123
+    },
+    {
+      "name": "op.container_frame.reger3_legacy.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.reger3_legacy.cpp_v1",
+      "implementation_source": "cpp/src/reger_legacy_cpp.cpp",
+      "implementation_scope": "\u4ec5REGER3\u6d41/\u5757\u5c01\u88c5\uff0c\u4e0d\u542b\u6a21\u578b\u6216\u538b\u7f29\u6838\u5fc3\u3002",
+      "action_id": 124
+    },
+    {
+      "name": "op.container_frame.buff_native_raw64.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.buff_native_raw64.cpp_v1",
+      "implementation_source": "cpp/src/buff_native_exact_stages.cpp",
+      "implementation_scope": "\u5f53\u524dnative BUFF\u7684raw64\u7801\u6d41\u5934\uff0c\u4e0d\u662f\u65e7\u7248\u6709\u754cBUFF\u3002",
+      "action_id": 125
+    },
+    {
+      "name": "op.container_frame.blosc2_legacy_chunk.cpp_v1",
+      "operator_id": "container_frame",
+      "implementation_id": "container_frame.blosc2_legacy_chunk.cpp_v1",
+      "implementation_source": "cpp/src/blosc2_binding_cpp.cpp",
+      "implementation_scope": "\u72ec\u7acbBlosc2\u65e7chunk\u5c01\u88c5\uff0c\u4ec5\u5904\u7406\u5934\u90e8\u4e0e\u5757\u504f\u79fb\u8868\u3002",
+      "action_id": 126
+    }
+  ],
+  "io_variants": {
+    "op.eraser.reference_v1": [
+      "op.eraser.reference_v1"
+    ],
+    "op.eraser.pongo.cpp_v1": [
+      "op.eraser.pongo.cpp_v1"
+    ],
+    "op.eraser.elf.cpp_v1": [
+      "op.eraser.elf.cpp_v1"
+    ],
+    "op.eraser.camel.cpp_v1": [
+      "op.eraser.camel.cpp_v1"
+    ],
+    "op.eraser.elf64.cpp_v1": [
+      "op.eraser.elf64.cpp_v1"
+    ],
+    "op.scaling.reference_v1": [
+      "op.scaling.reference_v1"
+    ],
+    "op.scaling.tsfile_rle.cpp_v1": [
+      "op.scaling.tsfile_rle.cpp_v1"
+    ],
+    "op.scaling.exact_decimal.cpp_v2": [
+      "op.scaling.ts_2diff.cpp_v1",
+      "op.scaling.simple8b.cpp_v1"
+    ],
+    "op.scaling.delta_binary_packed.cpp_v1": [
+      "op.scaling.delta_binary_packed.cpp_v1"
+    ],
+    "op.scaling.alp.cpp_v1": [
+      "op.scaling.alp.cpp_v1"
+    ],
+    "op.scaling.buff.cpp_v1": [
+      "op.scaling.buff.cpp_v1"
+    ],
+    "op.scaling.legacy_exact_decimal.cpp_v1": [
+      "op.scaling.legacy_exact_decimal.cpp_v1"
+    ],
+    "op.scaling.alp_legacy_fe_exceptions.cpp_v1": [
+      "op.scaling.alp_legacy_fe_exceptions.cpp_v1"
+    ],
+    "op.scaling.corad_normalize_exact.cpp_v2": [
+      "op.scaling.corad_normalize_exact.cpp_v2"
+    ],
+    "op.frame_of_reference.minimum.cpp_v1": [
+      "op.frame_of_reference.reference_v1",
+      "op.frame_of_reference.bos.cpp_v1",
+      "op.frame_of_reference.reger.cpp_v1",
+      "op.frame_of_reference.ts_2diff.cpp_v1",
+      "op.frame_of_reference.bos.post_outlier.cpp_v1",
+      "op.frame_of_reference.alp.cpp_v1",
+      "op.frame_of_reference.minimum.int64_uint64_le.cpp_v1"
+    ],
+    "op.value_reorder.stable_sort.cpp_v2": [
+      "op.value_reorder.reference_v1",
+      "op.value_reorder.reger.cpp_v1"
+    ],
+    "op.regression_predictor.reference_v1": [
+      "op.regression_predictor.reference_v1"
+    ],
+    "op.outlier_separation.reference_v1": [
+      "op.outlier_separation.reference_v1"
+    ],
+    "op.outlier_separation.bos.cpp_v1": [
+      "op.outlier_separation.bos.cpp_v1"
+    ],
+    "op.bitpack_int.reference_v1": [
+      "op.bitpack_int.reference_v1"
+    ],
+    "op.bitpack_int.max_value_width.cpp_v1": [
+      "op.bitpack_int.ts_2diff.cpp_v1",
+      "op.bitpack_int.leco.cpp_v1",
+      "op.bitpack_int.alp.cpp_v1",
+      "op.bitpack_int.reger.cpp_v1",
+      "op.bitpack_int.max_value_width.uint64_le.cpp_v1"
+    ],
+    "op.bitpack_int.simple8b.cpp_v1": [
+      "op.bitpack_int.simple8b.cpp_v1"
+    ],
+    "op.bitpack_int.sprintz.cpp_v1": [
+      "op.bitpack_int.sprintz.unified_rle_tail.cpp_v2"
+    ],
+    "op.bitpack_int.delta_binary_packed.cpp_v1": [
+      "op.bitpack_int.delta_binary_packed.cpp_v1"
+    ],
+    "op.bitpack_int.bos.cpp_v1": [
+      "op.bitpack_int.bos.cpp_v1"
+    ],
+    "op.bitpack_int.bos64_adapter.cpp_v1": [
+      "op.bitpack_int.bos64_adapter.cpp_v1"
+    ],
+    "op.bitpack_int.fastpfor_pfor.cpp_v1": [
+      "op.bitpack_int.fastpfor_pfor.cpp_v1"
+    ],
+    "op.bitpack_int.buff.cpp_v1": [
+      "op.bitpack_int.buff.cpp_v1"
+    ],
+    "op.delta.previous_modular.cpp_v2": [
+      "op.delta.reference_v1",
+      "op.delta.stream_vbyte.cpp_v1",
+      "op.delta.delta_binary_packed.cpp_v1",
+      "op.delta.bos.cpp_v1",
+      "op.delta.reger_signed_residual.cpp_v2",
+      "op.delta.bos64_signed_residual.cpp_v2"
+    ],
+    "op.delta.ts_2diff.cpp_v1": [
+      "op.delta.ts_2diff.cpp_v1"
+    ],
+    "op.delta.rlbe.cpp_v1": [
+      "op.delta.rlbe.cpp_v1"
+    ],
+    "op.delta.sprintz.cpp_v1": [
+      "op.delta.sprintz.cpp_v1"
+    ],
+    "op.delta.spdp.cpp_v1": [
+      "op.delta.spdp.cpp_v1"
+    ],
+    "op.delta.fpzip.cpp_v1": [
+      "op.delta.fpzip.cpp_v1"
+    ],
+    "op.xor.previous_word.cpp_v2": [
+      "op.xor.reference_v1",
+      "op.xor.gorilla.cpp_v1",
+      "op.xor.pongo.cpp_v1"
+    ],
+    "op.xor.chimp_history128.cpp_v2": [
+      "op.xor.chimp_history128.reference_v1",
+      "op.xor.chimp128.cpp_v1"
+    ],
+    "op.xor.fpc.cpp_v1": [
+      "op.xor.fpc.cpp_v1"
+    ],
+    "op.xor.pfpc.cpp_v1": [
+      "op.xor.pfpc.cpp_v1"
+    ],
+    "op.xor.elf.cpp_v1": [
+      "op.xor.elf.cpp_v1"
+    ],
+    "op.xor.elf_plus.cpp_v1": [
+      "op.xor.elf_plus.cpp_v1"
+    ],
+    "op.xor.camel.cpp_v1": [
+      "op.xor.camel.cpp_v1"
+    ],
+    "op.xor.elf64_on_chimp.cpp_v1": [
+      "op.xor.elf64_on_chimp.cpp_v1"
+    ],
+    "op.xor.elf64_plus.cpp_v1": [
+      "op.xor.elf64_plus.cpp_v1"
+    ],
+    "op.trailing_zero_pack.reference_v1": [
+      "op.trailing_zero_pack.reference_v1"
+    ],
+    "op.trailing_zero_pack.xor_window.cpp_v2": [
+      "op.trailing_zero_pack.gorilla.cpp_v1",
+      "op.trailing_zero_pack.pongo.cpp_v1"
+    ],
+    "op.trailing_zero_pack.chimp128.cpp_v1": [
+      "op.trailing_zero_pack.chimp128.cpp_v1"
+    ],
+    "op.trailing_zero_pack.nibble_residual.cpp_v2": [
+      "op.trailing_zero_pack.fpc.cpp_v1",
+      "op.trailing_zero_pack.pfpc.cpp_v1"
+    ],
+    "op.dictionary.reference_v1": [
+      "op.dictionary.reference_v1"
+    ],
+    "op.dictionary.project_words64.cpp_v1": [
+      "op.dictionary.project_words64.cpp_v1"
+    ],
+    "op.dictionary.alp_rd.cpp_v1": [
+      "op.dictionary.alp_rd.cpp_v1"
+    ],
+    "op.dictionary.brotli_static_small.cpp_reference_v1": [
+      "op.dictionary.brotli_static_small.cpp_reference_v1"
+    ],
+    "op.dictionary.corad_tricklet_xor.cpp_v2": [
+      "op.dictionary.corad_tricklet_xor.cpp_v2"
+    ],
+    "op.zigzag.signed64.cpp_v2": [
+      "op.zigzag.reference_v1",
+      "op.zigzag.sprintz.cpp_v1",
+      "op.zigzag.delta_binary_packed.cpp_v1",
+      "op.zigzag.signed64.raw.cpp_v2",
+      "op.zigzag.leco_residual.cpp_v2",
+      "op.zigzag.reger_residual.cpp_v2",
+      "op.zigzag.bos64_residual.cpp_v2"
+    ],
+    "op.block_transform.reference_v1": [
+      "op.block_transform.reference_v1"
+    ],
+    "op.block_transform.spdp.cpp_v1": [
+      "op.block_transform.spdp.cpp_v1"
+    ],
+    "op.block_transform.buff_column_split.cpp_v1": [
+      "op.block_transform.buff_column_split.cpp_v1"
+    ],
+    "op.block_transform.byte_shuffle.cpp_v2": [
+      "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1",
+      "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1",
+      "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1"
+    ],
+    "op.block_transform.bzip2_bwt.cpp_reference_v1": [
+      "op.block_transform.bzip2_bwt.cpp_reference_v1"
+    ],
+    "op.block_transform.int64_lo_hi32.cpp_v1": [
+      "op.block_transform.int64_lo_hi32.cpp_v1"
+    ],
+    "op.block_transform.buff_native_word_order.cpp_v1": [
+      "op.block_transform.buff_native_word_order.cpp_v1"
+    ],
+    "op.symbol_recode.reference_v1": [
+      "op.symbol_recode.reference_v1"
+    ],
+    "op.symbol_recode.bzip2_mtf.cpp_reference_v1": [
+      "op.symbol_recode.bzip2_mtf.cpp_reference_v1"
+    ],
+    "op.run_length.byte_optimal.cpp_v1": [
+      "op.run_length.byte_optimal.words64.cpp_v1",
+      "op.run_length.byte_optimal.uint8.cpp_v1",
+      "op.run_length.byte_optimal.tsfile_scaled.cpp_v1",
+      "op.run_length.byte_optimal.rlbe_lengths.cpp_v1"
+    ],
+    "op.lz_match.reference_v1": [
+      "op.lz_match.reference_v1"
+    ],
+    "op.lz_match.native_lz.aligned8.cpp_v2": [
+      "op.lz_match.native_lz.aligned8.cpp_v2"
+    ],
+    "op.lz_match.brotli_lazy65535.cpp_reference_v1": [
+      "op.lz_match.brotli_lazy65535.cpp_reference_v1"
+    ],
+    "op.lz_match.zstd_lazy65535.cpp_reference_v1": [
+      "op.lz_match.zstd_lazy65535.cpp_reference_v1"
+    ],
+    "op.lz_match.blosclz.greedy.cpp_reference_v1": [
+      "op.lz_match.blosclz.greedy.cpp_reference_v1"
+    ],
+    "op.lz_match.deflate_lazy32768.cpp_reference_v1": [
+      "op.lz_match.deflate_lazy32768.cpp_reference_v1"
+    ],
+    "op.lz_match.xz_lazy16777216.cpp_reference_v1": [
+      "op.lz_match.xz_lazy16777216.cpp_reference_v1"
+    ],
+    "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1": [
+      "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1"
+    ],
+    "op.lz_match.snappy_snap_1_1_1.cpp_v1": [
+      "op.lz_match.snappy_snap_1_1_1.cpp_v1"
+    ],
+    "op.match_parse_policy.reference_v1": [
+      "op.match_parse_policy.reference_v1"
+    ],
+    "op.match_parse_policy.native_lz.aligned8_greedy": [
+      "op.match_parse_policy.native_lz.aligned8_greedy"
+    ],
+    "op.match_parse_policy.generic_packet.cpp_reference_v1": [
+      "op.match_parse_policy.generic_packet.cpp_reference_v1"
+    ],
+    "op.match_window_model.reference_v1": [
+      "op.match_window_model.reference_v1",
+      "op.block_state_control.reference_v1"
+    ],
+    "op.match_window_model.native_lz.window.cpp_v2": [
+      "op.match_window_model.native_lz.window.cpp_v2"
+    ],
+    "op.match_token_format.reference_v1": [
+      "op.match_token_format.reference_v1"
+    ],
+    "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3": [
+      "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3"
+    ],
+    "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4": [
+      "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4"
+    ],
+    "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2": [
+      "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5",
+      "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1"
+    ],
+    "op.match_token_format.snappy.cpp_v1": [
+      "op.match_token_format.snappy.cpp_v1"
+    ],
+    "op.match_token_format.lz4.cpp_v1": [
+      "op.match_token_format.lz4.cpp_v1"
+    ],
+    "op.match_token_format.blosclz.ctrl8.cpp_reference_v1": [
+      "op.match_token_format.blosclz.ctrl8.cpp_reference_v1"
+    ],
+    "op.integer_code.stream_vbyte.cpp_v1": [
+      "op.integer_code.stream_vbyte.cpp_v1"
+    ],
+    "op.integer_code.fastpfor_variablebyte.cpp_v1": [
+      "op.integer_code.fastpfor_variablebyte.cpp_v1"
+    ],
+    "op.integer_code.lz4.cpp_v1": [
+      "op.integer_code.lz4.cpp_v1"
+    ],
+    "op.bitstream_pack.reference_v1": [
+      "op.bitstream_pack.reference_v1"
+    ],
+    "op.bitstream_pack.camel.cpp_v1": [
+      "op.bitstream_pack.camel.cpp_v1"
+    ],
+    "op.entropy_huffman.reference_v1": [
+      "op.entropy_huffman.reference_v1"
+    ],
+    "op.entropy_huffman.project_bytes.cpp_v1": [
+      "op.entropy_huffman.project_bytes.cpp_v1"
+    ],
+    "op.entropy_range.reference_v1": [
+      "op.entropy_range.reference_v1"
+    ],
+    "op.entropy_range.project_bytes.cpp_v1": [
+      "op.entropy_range.project_bytes.cpp_v1"
+    ],
+    "op.entropy_range.fpzip.cpp_v1": [
+      "op.entropy_range.fpzip.cpp_v1"
+    ],
+    "op.entropy_fse.reference_v1": [
+      "op.entropy_fse.reference_v1"
+    ],
+    "op.entropy_fse.zstd_rans.cpp_reference_v1": [
+      "op.entropy_fse.zstd_rans.cpp_reference_v1"
+    ],
+    "op.entropy_special.reference_v1": [
+      "op.entropy_special.reference_v1"
+    ],
+    "op.entropy_special.spdp.cpp_v1": [
+      "op.entropy_special.spdp.cpp_v1"
+    ],
+    "op.literal_entropy.reference_v1": [
+      "op.literal_entropy.reference_v1"
+    ],
+    "op.literal_entropy.zstd_huffman.cpp_reference_v1": [
+      "op.literal_entropy.zstd_huffman.cpp_reference_v1"
+    ],
+    "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1": [
+      "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1": [
+      "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.alp_residual_core.cpp_v1": [
+      "op.block_state_control.alp_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.reger_residual_core.cpp_v1": [
+      "op.block_state_control.reger_residual_core.cpp_v1"
+    ],
+    "op.container_frame.magic_length.cpp_v3": [
+      "op.block_state_control.blosc1.cpp_reference_v1",
+      "op.block_state_control.blosc2.cpp_reference_v1",
+      "op.container_frame.gzip.cpp_reference_v1",
+      "op.container_frame.zlib.cpp_reference_v1",
+      "op.container_frame.xz.cpp_reference_v1",
+      "op.container_frame.corad_lossless.cpp_v2"
+    ],
+    "op.block_state_control.brotli_residual_core.cpp_v1": [
+      "op.block_state_control.brotli_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.zstd_residual_core.cpp_v1": [
+      "op.block_state_control.zstd_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.blosc1_residual_core.cpp_v2": [
+      "op.block_state_control.blosc1_residual_core.cpp_v2"
+    ],
+    "op.block_state_control.blosc2_residual_core.cpp_v2": [
+      "op.block_state_control.blosc2_residual_core.cpp_v2"
+    ],
+    "op.block_state_control.bzip2_residual_core.cpp_v1": [
+      "op.block_state_control.bzip2_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.deflate_residual_core.cpp_v2": [
+      "op.block_state_control.deflate_residual_core.gzip_prefix.cpp_v2",
+      "op.block_state_control.deflate_residual_core.zlib_prefix.cpp_v2",
+      "op.block_state_control.deflate_residual_core.corad_ctk2.cpp_v2"
+    ],
+    "op.block_state_control.xz_lzma2_residual_core.cpp_v1": [
+      "op.block_state_control.xz_lzma2_residual_core.cpp_v1"
+    ],
+    "op.block_state_control.reger_legacy_block_core.cpp_v1": [
+      "op.block_state_control.reger_legacy_block_core.cpp_v1"
+    ],
+    "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1": [
+      "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1"
+    ],
+    "op.container_frame.reference_v1": [
+      "op.container_frame.reference_v1"
+    ],
+    "op.container_frame.lz4.cpp_v1": [
+      "op.container_frame.lz4.cpp_v1"
+    ],
+    "op.container_frame.stored_parts.cpp_v2": [
+      "op.container_frame.gzip.cpp_v1",
+      "op.container_frame.zlib.cpp_v1",
+      "op.container_frame.xz.cpp_v1"
+    ],
+    "op.container_frame.legacy_numeric_limbs.cpp_v1": [
+      "op.container_frame.legacy_numeric_limbs.cpp_v1"
+    ],
+    "op.container_frame.alp2_legacy.cpp_v1": [
+      "op.container_frame.alp2_legacy.cpp_v1"
+    ],
+    "op.container_frame.reger3_legacy.cpp_v1": [
+      "op.container_frame.reger3_legacy.cpp_v1"
+    ],
+    "op.container_frame.buff_native_raw64.cpp_v1": [
+      "op.container_frame.buff_native_raw64.cpp_v1"
+    ],
+    "op.container_frame.blosc2_legacy_chunk.cpp_v1": [
+      "op.container_frame.blosc2_legacy_chunk.cpp_v1"
+    ],
+    "op.regression_predictor.leco_linear.cpp_v2": [
+      "op.regression_predictor.leco_linear.cpp_v2"
+    ],
+    "op.integer_code.uleb128_unsigned.cpp_v2": [
+      "op.integer_code.uleb128.reference_values.cpp_v2",
+      "op.integer_code.uleb128.dbp_residuals.cpp_v2",
+      "op.integer_code.uleb128.snappy_raw_size.cpp_v2"
+    ]
+  }
+}

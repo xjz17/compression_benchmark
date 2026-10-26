@@ -1,0 +1,2744 @@
+{
+  "version": "operator-taxonomy-30-v6",
+  "actions": [
+    {
+      "action_id": 0,
+      "name": "op.eraser.reference_v1",
+      "kind": "codec",
+      "operator_id": "eraser",
+      "mechanism": "op.eraser.reference_v1",
+      "io_variants": [
+        "op.eraser.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 0,
+      "legacy_operator_id": "eraser",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 1,
+      "name": "op.eraser.pongo.cpp_v1",
+      "kind": "codec",
+      "operator_id": "eraser",
+      "mechanism": "op.eraser.pongo.cpp_v1",
+      "io_variants": [
+        "op.eraser.pongo.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 1,
+      "legacy_operator_id": "eraser",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 2,
+      "name": "op.eraser.elf.cpp_v1",
+      "kind": "codec",
+      "operator_id": "eraser",
+      "mechanism": "op.eraser.elf.cpp_v1",
+      "io_variants": [
+        "op.eraser.elf.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 2,
+      "legacy_operator_id": "eraser",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 3,
+      "name": "op.eraser.camel.cpp_v1",
+      "kind": "codec",
+      "operator_id": "eraser",
+      "mechanism": "op.eraser.camel.cpp_v1",
+      "io_variants": [
+        "op.eraser.camel.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 3,
+      "legacy_operator_id": "eraser",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 4,
+      "name": "op.eraser.elf64.cpp_v1",
+      "kind": "codec",
+      "operator_id": "eraser",
+      "mechanism": "op.eraser.elf64.cpp_v1",
+      "io_variants": [
+        "op.eraser.elf64.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 4,
+      "legacy_operator_id": "eraser",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 5,
+      "name": "op.scaling.reference_v1",
+      "kind": "retired",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.reference_v1",
+      "io_variants": [
+        "op.scaling.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 5,
+      "legacy_operator_id": "scaling",
+      "default_available": false,
+      "availability_note": "Retired implementation or composite; migrate the old selector to an explicit current recipe.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 6,
+      "name": "op.scaling.tsfile_rle.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.tsfile_rle.cpp_v1",
+      "io_variants": [
+        "op.scaling.tsfile_rle.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 6,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 7,
+      "name": "op.scaling.exact_decimal.cpp_v2",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.exact_decimal.cpp_v2",
+      "io_variants": [
+        "op.scaling.ts_2diff.cpp_v1",
+        "op.scaling.simple8b.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 7,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 8,
+      "name": "op.scaling.delta_binary_packed.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.delta_binary_packed.cpp_v1",
+      "io_variants": [
+        "op.scaling.delta_binary_packed.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 8,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 9,
+      "name": "op.scaling.alp.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.alp.cpp_v1",
+      "io_variants": [
+        "op.scaling.alp.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 9,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 10,
+      "name": "op.scaling.buff.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.buff.cpp_v1",
+      "io_variants": [
+        "op.scaling.buff.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 10,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 11,
+      "name": "op.scaling.legacy_exact_decimal.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.legacy_exact_decimal.cpp_v1",
+      "io_variants": [
+        "op.scaling.legacy_exact_decimal.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 11,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 12,
+      "name": "op.scaling.alp_legacy_fe_exceptions.cpp_v1",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.alp_legacy_fe_exceptions.cpp_v1",
+      "io_variants": [
+        "op.scaling.alp_legacy_fe_exceptions.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 12,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 13,
+      "name": "op.scaling.corad_normalize_exact.cpp_v2",
+      "kind": "codec",
+      "operator_id": "scaling",
+      "mechanism": "op.scaling.corad_normalize_exact.cpp_v2",
+      "io_variants": [
+        "op.scaling.corad_normalize_exact.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 13,
+      "legacy_operator_id": "scaling",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 14,
+      "name": "op.frame_of_reference.minimum.cpp_v1",
+      "kind": "codec",
+      "operator_id": "frame_of_reference",
+      "mechanism": "op.frame_of_reference.minimum.cpp_v1",
+      "io_variants": [
+        "op.frame_of_reference.reference_v1",
+        "op.frame_of_reference.bos.cpp_v1",
+        "op.frame_of_reference.reger.cpp_v1",
+        "op.frame_of_reference.ts_2diff.cpp_v1",
+        "op.frame_of_reference.bos.post_outlier.cpp_v1",
+        "op.frame_of_reference.alp.cpp_v1",
+        "op.frame_of_reference.minimum.int64_uint64_le.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.frame_of_reference.whole_stream_min.cpp_v2"
+      ],
+      "legacy_policy_action_id": 14,
+      "legacy_operator_id": "frame_of_reference",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "minimum:int64/uint64[1] + offsets:uint64[N]; source adapters preserve outer metadata"
+    },
+    {
+      "action_id": 15,
+      "name": "op.value_reorder.stable_sort.cpp_v2",
+      "kind": "codec",
+      "operator_id": "value_reorder",
+      "mechanism": "op.value_reorder.stable_sort.cpp_v2",
+      "io_variants": [
+        "op.value_reorder.reference_v1",
+        "op.value_reorder.reger.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 15,
+      "legacy_operator_id": "value_reorder",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 16,
+      "name": "op.regression_predictor.reference_v1",
+      "kind": "codec",
+      "operator_id": "regression_predictor",
+      "mechanism": "op.regression_predictor.reference_v1",
+      "io_variants": [
+        "op.regression_predictor.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 16,
+      "legacy_operator_id": "regression_predictor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 17,
+      "name": "op.regression_predictor.leco_linear.cpp_v2",
+      "kind": "codec",
+      "operator_id": "regression_predictor",
+      "mechanism": "op.regression_predictor.leco_linear.cpp_v2",
+      "io_variants": [
+        "op.regression_predictor.leco_linear.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 17,
+      "legacy_operator_id": "regression_predictor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "values:int64[N]; LECO block profile",
+      "output_contract": "2 generated semantic streams: coefficients:float64[blocks,2], residuals:int64[N]; block lengths as recovery metadata"
+    },
+    {
+      "action_id": 18,
+      "name": "op.regression_predictor.reger.cpp_v1",
+      "kind": "retired",
+      "operator_id": "regression_predictor",
+      "mechanism": "op.regression_predictor.reger.cpp_v1",
+      "io_variants": [
+        "op.regression_predictor.reger.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 18,
+      "legacy_operator_id": "regression_predictor",
+      "default_available": false,
+      "availability_note": "Retired implementation or composite; migrate the old selector to an explicit current recipe.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 19,
+      "name": "op.outlier_separation.reference_v1",
+      "kind": "codec",
+      "operator_id": "outlier_separation",
+      "mechanism": "op.outlier_separation.reference_v1",
+      "io_variants": [
+        "op.outlier_separation.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 19,
+      "legacy_operator_id": "outlier_separation",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 20,
+      "name": "op.outlier_separation.bos.cpp_v1",
+      "kind": "codec",
+      "operator_id": "outlier_separation",
+      "mechanism": "op.outlier_separation.bos.cpp_v1",
+      "io_variants": [
+        "op.outlier_separation.bos.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 20,
+      "legacy_operator_id": "outlier_separation",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 21,
+      "name": "op.bitpack_int.reference_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.reference_v1",
+      "io_variants": [
+        "op.bitpack_int.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 21,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 22,
+      "name": "op.bitpack_int.max_value_width.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.max_value_width.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.ts_2diff.cpp_v1",
+        "op.bitpack_int.leco.cpp_v1",
+        "op.bitpack_int.alp.cpp_v1",
+        "op.bitpack_int.reger.cpp_v1",
+        "op.bitpack_int.max_value_width.uint64_le.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 22,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 23,
+      "name": "op.bitpack_int.simple8b.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.simple8b.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.simple8b.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 23,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 24,
+      "name": "op.bitpack_int.sprintz.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.sprintz.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.sprintz.unified_rle_tail.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 24,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 25,
+      "name": "op.integer_code.uleb128_unsigned.cpp_v2",
+      "kind": "codec",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.uleb128_unsigned.cpp_v2",
+      "io_variants": [
+        "op.integer_code.uleb128.reference_values.cpp_v2",
+        "op.integer_code.uleb128.dbp_residuals.cpp_v2",
+        "op.integer_code.uleb128.snappy_raw_size.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 25,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "unsigned values:uint64[N], or scalar uint32 length; carrier/profile explicit",
+      "output_contract": "1 generated semantic stream: encoded:bytes; incoming anchors/token streams bypass unchanged"
+    },
+    {
+      "action_id": 26,
+      "name": "op.bitpack_int.bos.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.bos.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.bos.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 26,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 27,
+      "name": "op.bitpack_int.bos64_adapter.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.bos64_adapter.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.bos64_adapter.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 27,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 28,
+      "name": "op.bitpack_int.fastpfor_pfor.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.fastpfor_pfor.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.fastpfor_pfor.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 28,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 29,
+      "name": "op.bitpack_int.buff.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitpack_int",
+      "mechanism": "op.bitpack_int.buff.cpp_v1",
+      "io_variants": [
+        "op.bitpack_int.buff.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 29,
+      "legacy_operator_id": "bitpack_int",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 30,
+      "name": "op.delta.previous_modular.cpp_v2",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.previous_modular.cpp_v2",
+      "io_variants": [
+        "op.delta.reference_v1",
+        "op.delta.stream_vbyte.cpp_v1",
+        "op.delta.delta_binary_packed.cpp_v1",
+        "op.delta.bos.cpp_v1",
+        "op.delta.reger_signed_residual.cpp_v2",
+        "op.delta.bos64_signed_residual.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 30,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 31,
+      "name": "op.delta.ts_2diff.cpp_v1",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.ts_2diff.cpp_v1",
+      "io_variants": [
+        "op.delta.ts_2diff.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 31,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 32,
+      "name": "op.delta.rlbe.cpp_v1",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.rlbe.cpp_v1",
+      "io_variants": [
+        "op.delta.rlbe.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 32,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 33,
+      "name": "op.delta.sprintz.cpp_v1",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.sprintz.cpp_v1",
+      "io_variants": [
+        "op.delta.sprintz.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 33,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 34,
+      "name": "op.delta.spdp.cpp_v1",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.spdp.cpp_v1",
+      "io_variants": [
+        "op.delta.spdp.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 34,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 35,
+      "name": "op.delta.bos64_adapter.cpp_v1",
+      "kind": "retired",
+      "operator_id": "delta",
+      "mechanism": "op.delta.bos64_adapter.cpp_v1",
+      "io_variants": [
+        "op.delta.bos64_adapter.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 35,
+      "legacy_operator_id": "delta",
+      "default_available": false,
+      "availability_note": "Retired implementation or composite; migrate the old selector to an explicit current recipe.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 36,
+      "name": "op.delta.fpzip.cpp_v1",
+      "kind": "codec",
+      "operator_id": "delta",
+      "mechanism": "op.delta.fpzip.cpp_v1",
+      "io_variants": [
+        "op.delta.fpzip.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 36,
+      "legacy_operator_id": "delta",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 37,
+      "name": "op.xor.previous_word.cpp_v2",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.previous_word.cpp_v2",
+      "io_variants": [
+        "op.xor.reference_v1",
+        "op.xor.gorilla.cpp_v1",
+        "op.xor.pongo.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 37,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 38,
+      "name": "op.xor.chimp_history128.cpp_v2",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.chimp_history128.cpp_v2",
+      "io_variants": [
+        "op.xor.chimp_history128.reference_v1",
+        "op.xor.chimp128.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 38,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 39,
+      "name": "op.xor.fpc.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.fpc.cpp_v1",
+      "io_variants": [
+        "op.xor.fpc.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 39,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 40,
+      "name": "op.xor.pfpc.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.pfpc.cpp_v1",
+      "io_variants": [
+        "op.xor.pfpc.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 40,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 41,
+      "name": "op.xor.elf.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.elf.cpp_v1",
+      "io_variants": [
+        "op.xor.elf.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 41,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 42,
+      "name": "op.xor.elf_plus.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.elf_plus.cpp_v1",
+      "io_variants": [
+        "op.xor.elf_plus.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 42,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 43,
+      "name": "op.xor.camel.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.camel.cpp_v1",
+      "io_variants": [
+        "op.xor.camel.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 43,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 44,
+      "name": "op.xor.elf64_on_chimp.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.elf64_on_chimp.cpp_v1",
+      "io_variants": [
+        "op.xor.elf64_on_chimp.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 44,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 45,
+      "name": "op.xor.elf64_plus.cpp_v1",
+      "kind": "codec",
+      "operator_id": "xor",
+      "mechanism": "op.xor.elf64_plus.cpp_v1",
+      "io_variants": [
+        "op.xor.elf64_plus.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 45,
+      "legacy_operator_id": "xor",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 46,
+      "name": "op.trailing_zero_pack.reference_v1",
+      "kind": "codec",
+      "operator_id": "trailing_zero_pack",
+      "mechanism": "op.trailing_zero_pack.reference_v1",
+      "io_variants": [
+        "op.trailing_zero_pack.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 46,
+      "legacy_operator_id": "trailing_zero_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 47,
+      "name": "op.trailing_zero_pack.xor_window.cpp_v2",
+      "kind": "codec",
+      "operator_id": "trailing_zero_pack",
+      "mechanism": "op.trailing_zero_pack.xor_window.cpp_v2",
+      "io_variants": [
+        "op.trailing_zero_pack.gorilla.cpp_v1",
+        "op.trailing_zero_pack.pongo.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 47,
+      "legacy_operator_id": "trailing_zero_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 48,
+      "name": "op.trailing_zero_pack.chimp128.cpp_v1",
+      "kind": "codec",
+      "operator_id": "trailing_zero_pack",
+      "mechanism": "op.trailing_zero_pack.chimp128.cpp_v1",
+      "io_variants": [
+        "op.trailing_zero_pack.chimp128.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 48,
+      "legacy_operator_id": "trailing_zero_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 49,
+      "name": "op.trailing_zero_pack.nibble_residual.cpp_v2",
+      "kind": "codec",
+      "operator_id": "trailing_zero_pack",
+      "mechanism": "op.trailing_zero_pack.nibble_residual.cpp_v2",
+      "io_variants": [
+        "op.trailing_zero_pack.fpc.cpp_v1",
+        "op.trailing_zero_pack.pfpc.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 49,
+      "legacy_operator_id": "trailing_zero_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 50,
+      "name": "op.dictionary.reference_v1",
+      "kind": "codec",
+      "operator_id": "dictionary",
+      "mechanism": "op.dictionary.reference_v1",
+      "io_variants": [
+        "op.dictionary.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 50,
+      "legacy_operator_id": "dictionary",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 51,
+      "name": "op.dictionary.project_words64.cpp_v1",
+      "kind": "codec",
+      "operator_id": "dictionary",
+      "mechanism": "op.dictionary.project_words64.cpp_v1",
+      "io_variants": [
+        "op.dictionary.project_words64.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 51,
+      "legacy_operator_id": "dictionary",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 52,
+      "name": "op.dictionary.alp_rd.cpp_v1",
+      "kind": "codec",
+      "operator_id": "dictionary",
+      "mechanism": "op.dictionary.alp_rd.cpp_v1",
+      "io_variants": [
+        "op.dictionary.alp_rd.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 52,
+      "legacy_operator_id": "dictionary",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 53,
+      "name": "op.dictionary.brotli_static_small.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "dictionary",
+      "mechanism": "op.dictionary.brotli_static_small.cpp_reference_v1",
+      "io_variants": [
+        "op.dictionary.brotli_static_small.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 53,
+      "legacy_operator_id": "dictionary",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 54,
+      "name": "op.dictionary.corad_tricklet_xor.cpp_v2",
+      "kind": "codec",
+      "operator_id": "dictionary",
+      "mechanism": "op.dictionary.corad_tricklet_xor.cpp_v2",
+      "io_variants": [
+        "op.dictionary.corad_tricklet_xor.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 54,
+      "legacy_operator_id": "dictionary",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 55,
+      "name": "op.zigzag.signed64.cpp_v2",
+      "kind": "codec",
+      "operator_id": "zigzag",
+      "mechanism": "op.zigzag.signed64.cpp_v2",
+      "io_variants": [
+        "op.zigzag.reference_v1",
+        "op.zigzag.sprintz.cpp_v1",
+        "op.zigzag.delta_binary_packed.cpp_v1",
+        "op.zigzag.signed64.raw.cpp_v2",
+        "op.zigzag.leco_residual.cpp_v2",
+        "op.zigzag.reger_residual.cpp_v2",
+        "op.zigzag.bos64_residual.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 55,
+      "legacy_operator_id": "zigzag",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "selected values or residuals:int64[N]; explicit I/O profile",
+      "output_contract": "1 transformed semantic stream: codes:uint64[N]; unselected recovery streams bypass unchanged"
+    },
+    {
+      "action_id": 56,
+      "name": "op.block_transform.reference_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.reference_v1",
+      "io_variants": [
+        "op.block_transform.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 56,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 57,
+      "name": "op.block_transform.spdp.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.spdp.cpp_v1",
+      "io_variants": [
+        "op.block_transform.spdp.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 57,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 58,
+      "name": "op.block_transform.buff_column_split.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.buff_column_split.cpp_v1",
+      "io_variants": [
+        "op.block_transform.buff_column_split.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 58,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 59,
+      "name": "op.block_transform.byte_shuffle.cpp_v2",
+      "kind": "codec",
+      "operator_id": "split_columns",
+      "mechanism": "columnize",
+      "io_variants": [
+        "op.block_transform.blosc_shuffle.typesize1.cpp_reference_v1",
+        "op.block_transform.blosc_shuffle.typesize4.cpp_reference_v1",
+        "op.block_transform.blosc_shuffle.typesize8.cpp_reference_v1"
+      ],
+      "modes": [
+        "transpose",
+        "split-struct"
+      ],
+      "aliases": [
+        "op.split_columns.columnize.cpp_v1"
+      ],
+      "legacy_policy_action_id": 59,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "column streams and inverse layout metadata"
+    },
+    {
+      "action_id": 60,
+      "name": "op.block_transform.bzip2_bwt.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.bzip2_bwt.cpp_reference_v1",
+      "io_variants": [
+        "op.block_transform.bzip2_bwt.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 60,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 61,
+      "name": "op.block_transform.int64_lo_hi32.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.int64_lo_hi32.cpp_v1",
+      "io_variants": [
+        "op.block_transform.int64_lo_hi32.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 61,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 62,
+      "name": "op.block_transform.buff_native_word_order.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_transform",
+      "mechanism": "op.block_transform.buff_native_word_order.cpp_v1",
+      "io_variants": [
+        "op.block_transform.buff_native_word_order.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 62,
+      "legacy_operator_id": "block_transform",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 63,
+      "name": "op.symbol_recode.reference_v1",
+      "kind": "codec",
+      "operator_id": "symbol_recode",
+      "mechanism": "op.symbol_recode.reference_v1",
+      "io_variants": [
+        "op.symbol_recode.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 63,
+      "legacy_operator_id": "symbol_recode",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 64,
+      "name": "op.symbol_recode.bzip2_mtf.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "symbol_recode",
+      "mechanism": "op.symbol_recode.bzip2_mtf.cpp_reference_v1",
+      "io_variants": [
+        "op.symbol_recode.bzip2_mtf.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 64,
+      "legacy_operator_id": "symbol_recode",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 65,
+      "name": "op.run_length.byte_optimal.cpp_v1",
+      "kind": "codec",
+      "operator_id": "run_length",
+      "mechanism": "op.run_length.byte_optimal.cpp_v1",
+      "io_variants": [
+        "op.run_length.byte_optimal.words64.cpp_v1",
+        "op.run_length.byte_optimal.uint8.cpp_v1",
+        "op.run_length.byte_optimal.tsfile_scaled.cpp_v1",
+        "op.run_length.byte_optimal.rlbe_lengths.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 65,
+      "legacy_operator_id": "run_length",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 66,
+      "name": "op.lz_match.reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.reference_v1",
+      "io_variants": [
+        "op.lz_match.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 66,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 67,
+      "name": "op.lz_match.native_lz.aligned8.cpp_v2",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.native_lz.aligned8.cpp_v2",
+      "io_variants": [
+        "op.lz_match.native_lz.aligned8.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.lz_match.native_lz.aligned8.min3.max110",
+        "op.lz_match.native_lz.aligned8.min3.max117",
+        "op.lz_match.native_lz.aligned8.min3.max125",
+        "op.lz_match.native_lz.aligned8.min3.max153",
+        "op.lz_match.native_lz.aligned8.min3.max164",
+        "op.lz_match.native_lz.aligned8.min3.max18",
+        "op.lz_match.native_lz.aligned8.min3.max203",
+        "op.lz_match.native_lz.aligned8.min3.max213",
+        "op.lz_match.native_lz.aligned8.min3.max251",
+        "op.lz_match.native_lz.aligned8.min3.max257",
+        "op.lz_match.native_lz.aligned8.min3.max35",
+        "op.lz_match.native_lz.aligned8.min3.max41",
+        "op.lz_match.native_lz.aligned8.min3.max64",
+        "op.lz_match.native_lz.aligned8.min3.max85",
+        "op.lz_match.native_lz.aligned8.min4.max119",
+        "op.lz_match.native_lz.aligned8.min4.max128",
+        "op.lz_match.native_lz.aligned8.min4.max160",
+        "op.lz_match.native_lz.aligned8.min4.max197",
+        "op.lz_match.native_lz.aligned8.min4.max208",
+        "op.lz_match.native_lz.aligned8.min4.max248",
+        "op.lz_match.native_lz.aligned8.min4.max31",
+        "op.lz_match.native_lz.aligned8.min4.max32",
+        "op.lz_match.native_lz.aligned8.min4.max53",
+        "op.lz_match.native_lz.aligned8.min4.max66",
+        "op.lz_match.native_lz.aligned8.min5.max186",
+        "op.lz_match.native_lz.aligned8.min5.max214",
+        "op.lz_match.native_lz.aligned8.min5.max248"
+      ],
+      "legacy_policy_action_id": 67,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 68,
+      "name": "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.brotli_lazy65535.cpp_reference_v1",
+      "io_variants": [
+        "op.lz_match.brotli_lazy65535.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 68,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 69,
+      "name": "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.zstd_lazy65535.cpp_reference_v1",
+      "io_variants": [
+        "op.lz_match.zstd_lazy65535.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 69,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 70,
+      "name": "op.lz_match.blosclz.greedy.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.blosclz.greedy.cpp_reference_v1",
+      "io_variants": [
+        "op.lz_match.blosclz.greedy.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 70,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 71,
+      "name": "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.deflate_lazy32768.cpp_reference_v1",
+      "io_variants": [
+        "op.lz_match.deflate_lazy32768.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 71,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 72,
+      "name": "op.lz_match.xz_lazy16777216.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.xz_lazy16777216.cpp_reference_v1",
+      "io_variants": [
+        "op.lz_match.xz_lazy16777216.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 72,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 73,
+      "name": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1",
+      "io_variants": [
+        "op.lz_match.native_lz_limb_batch.aligned8_greedy.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 73,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 74,
+      "name": "op.lz_match.snappy_snap_1_1_1.cpp_v1",
+      "kind": "codec",
+      "operator_id": "lz_match",
+      "mechanism": "op.lz_match.snappy_snap_1_1_1.cpp_v1",
+      "io_variants": [
+        "op.lz_match.snappy_snap_1_1_1.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 74,
+      "legacy_operator_id": "lz_match",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 75,
+      "name": "op.match_parse_policy.reference_v1",
+      "kind": "codec",
+      "operator_id": "match_parse_policy",
+      "mechanism": "op.match_parse_policy.reference_v1",
+      "io_variants": [
+        "op.match_parse_policy.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 75,
+      "legacy_operator_id": "match_parse_policy",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 76,
+      "name": "op.match_parse_policy.native_lz.aligned8_greedy",
+      "kind": "codec",
+      "operator_id": "match_parse_policy",
+      "mechanism": "op.match_parse_policy.native_lz.aligned8_greedy",
+      "io_variants": [
+        "op.match_parse_policy.native_lz.aligned8_greedy"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 76,
+      "legacy_operator_id": "match_parse_policy",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 77,
+      "name": "op.match_parse_policy.generic_packet.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "match_parse_policy",
+      "mechanism": "op.match_parse_policy.generic_packet.cpp_reference_v1",
+      "io_variants": [
+        "op.match_parse_policy.generic_packet.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 77,
+      "legacy_operator_id": "match_parse_policy",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 78,
+      "name": "op.match_window_model.reference_v1",
+      "kind": "codec",
+      "operator_id": "match_window_model",
+      "mechanism": "op.match_window_model.reference_v1",
+      "io_variants": [
+        "op.match_window_model.reference_v1",
+        "op.block_state_control.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 78,
+      "legacy_operator_id": "match_window_model",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 79,
+      "name": "op.match_window_model.native_lz.window.cpp_v2",
+      "kind": "codec",
+      "operator_id": "match_window_model",
+      "mechanism": "op.match_window_model.native_lz.window.cpp_v2",
+      "io_variants": [
+        "op.match_window_model.native_lz.window.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.match_window_model.native_lz.window12288",
+        "op.match_window_model.native_lz.window16384",
+        "op.match_window_model.native_lz.window19456",
+        "op.match_window_model.native_lz.window24576",
+        "op.match_window_model.native_lz.window28672",
+        "op.match_window_model.native_lz.window3072",
+        "op.match_window_model.native_lz.window32768",
+        "op.match_window_model.native_lz.window4096",
+        "op.match_window_model.native_lz.window40960",
+        "op.match_window_model.native_lz.window5120",
+        "op.match_window_model.native_lz.window53248",
+        "op.match_window_model.native_lz.window57344",
+        "op.match_window_model.native_lz.window65535",
+        "op.match_window_model.native_lz.window8192"
+      ],
+      "legacy_policy_action_id": 79,
+      "legacy_operator_id": "match_window_model",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 80,
+      "name": "op.match_token_format.reference_v1",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.reference_v1",
+      "io_variants": [
+        "op.match_token_format.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 80,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 81,
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3",
+      "io_variants": [
+        "op.match_token_format.native_lz.ctrl8_offset16_len8.bias3"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 81,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 82,
+      "name": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4",
+      "io_variants": [
+        "op.match_token_format.native_lz.ctrl8_offset16_len8.bias4"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 82,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 83,
+      "name": "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.native_lz.ctrl8_bias5.cpp_v2",
+      "io_variants": [
+        "op.match_token_format.native_lz.ctrl8_offset16_len8.bias5",
+        "op.match_token_format.native_lz_limb_batch.ctrl8.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 83,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 84,
+      "name": "op.match_token_format.snappy.cpp_v1",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.snappy.cpp_v1",
+      "io_variants": [
+        "op.match_token_format.snappy.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 84,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 85,
+      "name": "op.match_token_format.lz4.cpp_v1",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.lz4.cpp_v1",
+      "io_variants": [
+        "op.match_token_format.lz4.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 85,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 86,
+      "name": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "match_token_format",
+      "mechanism": "op.match_token_format.blosclz.ctrl8.cpp_reference_v1",
+      "io_variants": [
+        "op.match_token_format.blosclz.ctrl8.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 86,
+      "legacy_operator_id": "match_token_format",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 87,
+      "name": "op.integer_code.reference_v1",
+      "kind": "retired",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.reference_v1",
+      "io_variants": [
+        "op.integer_code.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 87,
+      "legacy_operator_id": "integer_code",
+      "default_available": false,
+      "availability_note": "Retired implementation or composite; migrate the old selector to an explicit current recipe.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 88,
+      "name": "op.integer_code.stream_vbyte.cpp_v1",
+      "kind": "codec",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.stream_vbyte.cpp_v1",
+      "io_variants": [
+        "op.integer_code.stream_vbyte.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 88,
+      "legacy_operator_id": "integer_code",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 89,
+      "name": "op.integer_code.fastpfor_variablebyte.cpp_v1",
+      "kind": "codec",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.fastpfor_variablebyte.cpp_v1",
+      "io_variants": [
+        "op.integer_code.fastpfor_variablebyte.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 89,
+      "legacy_operator_id": "integer_code",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 90,
+      "name": "op.integer_code.snappy.cpp_v1",
+      "kind": "retired",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.snappy.cpp_v1",
+      "io_variants": [
+        "op.integer_code.snappy.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 90,
+      "legacy_operator_id": "integer_code",
+      "default_available": false,
+      "availability_note": "Retired implementation or composite; migrate the old selector to an explicit current recipe.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 91,
+      "name": "op.integer_code.lz4.cpp_v1",
+      "kind": "codec",
+      "operator_id": "integer_code",
+      "mechanism": "op.integer_code.lz4.cpp_v1",
+      "io_variants": [
+        "op.integer_code.lz4.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 91,
+      "legacy_operator_id": "integer_code",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 92,
+      "name": "op.bitstream_pack.reference_v1",
+      "kind": "codec",
+      "operator_id": "bitstream_pack",
+      "mechanism": "op.bitstream_pack.reference_v1",
+      "io_variants": [
+        "op.bitstream_pack.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 92,
+      "legacy_operator_id": "bitstream_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 93,
+      "name": "op.bitstream_pack.camel.cpp_v1",
+      "kind": "codec",
+      "operator_id": "bitstream_pack",
+      "mechanism": "op.bitstream_pack.camel.cpp_v1",
+      "io_variants": [
+        "op.bitstream_pack.camel.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 93,
+      "legacy_operator_id": "bitstream_pack",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 94,
+      "name": "op.entropy_huffman.reference_v1",
+      "kind": "codec",
+      "operator_id": "entropy_huffman",
+      "mechanism": "op.entropy_huffman.reference_v1",
+      "io_variants": [
+        "op.entropy_huffman.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 94,
+      "legacy_operator_id": "entropy_huffman",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 95,
+      "name": "op.entropy_huffman.project_bytes.cpp_v1",
+      "kind": "codec",
+      "operator_id": "entropy_huffman",
+      "mechanism": "op.entropy_huffman.project_bytes.cpp_v1",
+      "io_variants": [
+        "op.entropy_huffman.project_bytes.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 95,
+      "legacy_operator_id": "entropy_huffman",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 96,
+      "name": "op.entropy_range.reference_v1",
+      "kind": "codec",
+      "operator_id": "entropy_range",
+      "mechanism": "op.entropy_range.reference_v1",
+      "io_variants": [
+        "op.entropy_range.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 96,
+      "legacy_operator_id": "entropy_range",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 97,
+      "name": "op.entropy_range.project_bytes.cpp_v1",
+      "kind": "codec",
+      "operator_id": "entropy_range",
+      "mechanism": "op.entropy_range.project_bytes.cpp_v1",
+      "io_variants": [
+        "op.entropy_range.project_bytes.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 97,
+      "legacy_operator_id": "entropy_range",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 98,
+      "name": "op.entropy_range.fpzip.cpp_v1",
+      "kind": "codec",
+      "operator_id": "entropy_range",
+      "mechanism": "op.entropy_range.fpzip.cpp_v1",
+      "io_variants": [
+        "op.entropy_range.fpzip.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 98,
+      "legacy_operator_id": "entropy_range",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 99,
+      "name": "op.entropy_fse.reference_v1",
+      "kind": "codec",
+      "operator_id": "entropy_fse",
+      "mechanism": "op.entropy_fse.reference_v1",
+      "io_variants": [
+        "op.entropy_fse.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 99,
+      "legacy_operator_id": "entropy_fse",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 100,
+      "name": "op.entropy_fse.zstd_rans.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "entropy_fse",
+      "mechanism": "op.entropy_fse.zstd_rans.cpp_reference_v1",
+      "io_variants": [
+        "op.entropy_fse.zstd_rans.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 100,
+      "legacy_operator_id": "entropy_fse",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 101,
+      "name": "op.entropy_special.reference_v1",
+      "kind": "codec",
+      "operator_id": "entropy_special",
+      "mechanism": "op.entropy_special.reference_v1",
+      "io_variants": [
+        "op.entropy_special.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 101,
+      "legacy_operator_id": "entropy_special",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 102,
+      "name": "op.entropy_special.spdp.cpp_v1",
+      "kind": "codec",
+      "operator_id": "entropy_special",
+      "mechanism": "op.entropy_special.spdp.cpp_v1",
+      "io_variants": [
+        "op.entropy_special.spdp.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 102,
+      "legacy_operator_id": "entropy_special",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 103,
+      "name": "op.literal_entropy.reference_v1",
+      "kind": "codec",
+      "operator_id": "literal_entropy",
+      "mechanism": "op.literal_entropy.reference_v1",
+      "io_variants": [
+        "op.literal_entropy.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 103,
+      "legacy_operator_id": "literal_entropy",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 104,
+      "name": "op.literal_entropy.zstd_huffman.cpp_reference_v1",
+      "kind": "codec",
+      "operator_id": "literal_entropy",
+      "mechanism": "op.literal_entropy.zstd_huffman.cpp_reference_v1",
+      "io_variants": [
+        "op.literal_entropy.zstd_huffman.cpp_reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 104,
+      "legacy_operator_id": "literal_entropy",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 105,
+      "name": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.snappy_matchfinder_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 105,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 106,
+      "name": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.lz4_matchfinder_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 106,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 107,
+      "name": "op.block_state_control.alp_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.alp_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.alp_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 107,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 108,
+      "name": "op.block_state_control.reger_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.reger_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.reger_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 108,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 109,
+      "name": "op.container_frame.magic_length.cpp_v3",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.magic_length.cpp_v3",
+      "io_variants": [
+        "op.block_state_control.blosc1.cpp_reference_v1",
+        "op.block_state_control.blosc2.cpp_reference_v1",
+        "op.container_frame.gzip.cpp_reference_v1",
+        "op.container_frame.zlib.cpp_reference_v1",
+        "op.container_frame.xz.cpp_reference_v1",
+        "op.container_frame.corad_lossless.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.block_state_control.magic_length.cpp_v2",
+        "op.container_frame.magic_length.cpp_v2"
+      ],
+      "legacy_policy_action_id": 109,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 110,
+      "name": "op.block_state_control.brotli_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.brotli_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.brotli_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 110,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 111,
+      "name": "op.block_state_control.zstd_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.zstd_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.zstd_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 111,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 112,
+      "name": "op.block_state_control.blosc1_residual_core.cpp_v2",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.blosc1_residual_core.cpp_v2",
+      "io_variants": [
+        "op.block_state_control.blosc1_residual_core.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.block_state_control.blosc1_residual_core_t1.cpp_v1",
+        "op.block_state_control.blosc1_residual_core_t4.cpp_v1",
+        "op.block_state_control.blosc1_residual_core_t8.cpp_v1"
+      ],
+      "legacy_policy_action_id": 112,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 113,
+      "name": "op.block_state_control.blosc2_residual_core.cpp_v2",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.blosc2_residual_core.cpp_v2",
+      "io_variants": [
+        "op.block_state_control.blosc2_residual_core.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.block_state_control.blosc2_residual_core_t1.cpp_v1",
+        "op.block_state_control.blosc2_residual_core_t4.cpp_v1",
+        "op.block_state_control.blosc2_residual_core_t8.cpp_v1"
+      ],
+      "legacy_policy_action_id": 113,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 114,
+      "name": "op.block_state_control.bzip2_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.bzip2_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.bzip2_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 114,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 115,
+      "name": "op.block_state_control.deflate_residual_core.cpp_v2",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.deflate_residual_core.cpp_v2",
+      "io_variants": [
+        "op.block_state_control.deflate_residual_core.gzip_prefix.cpp_v2",
+        "op.block_state_control.deflate_residual_core.zlib_prefix.cpp_v2",
+        "op.block_state_control.deflate_residual_core.corad_ctk2.cpp_v2"
+      ],
+      "modes": [],
+      "aliases": [
+        "op.block_state_control.gzip_deflate_residual_core.cpp_v1",
+        "op.block_state_control.zlib_deflate_residual_core.cpp_v1",
+        "op.block_state_control.corad_deflate9.cpp_v2"
+      ],
+      "legacy_policy_action_id": 115,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 116,
+      "name": "op.block_state_control.xz_lzma2_residual_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.xz_lzma2_residual_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.xz_lzma2_residual_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 116,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 117,
+      "name": "op.block_state_control.reger_legacy_block_core.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.reger_legacy_block_core.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.reger_legacy_block_core.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 117,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 118,
+      "name": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+      "kind": "codec",
+      "operator_id": "block_state_control",
+      "mechanism": "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1",
+      "io_variants": [
+        "op.block_state_control.blosc2_3_3_3_binding_macro.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 118,
+      "legacy_operator_id": "block_state_control",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 119,
+      "name": "op.container_frame.reference_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.reference_v1",
+      "io_variants": [
+        "op.container_frame.reference_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 119,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 120,
+      "name": "op.container_frame.lz4.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.lz4.cpp_v1",
+      "io_variants": [
+        "op.container_frame.lz4.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 120,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 121,
+      "name": "op.container_frame.stored_parts.cpp_v2",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.stored_parts.cpp_v2",
+      "io_variants": [
+        "op.container_frame.gzip.cpp_v1",
+        "op.container_frame.zlib.cpp_v1",
+        "op.container_frame.xz.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 121,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 122,
+      "name": "op.container_frame.legacy_numeric_limbs.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.legacy_numeric_limbs.cpp_v1",
+      "io_variants": [
+        "op.container_frame.legacy_numeric_limbs.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 122,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 123,
+      "name": "op.container_frame.alp2_legacy.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.alp2_legacy.cpp_v1",
+      "io_variants": [
+        "op.container_frame.alp2_legacy.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 123,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 124,
+      "name": "op.container_frame.reger3_legacy.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.reger3_legacy.cpp_v1",
+      "io_variants": [
+        "op.container_frame.reger3_legacy.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 124,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 125,
+      "name": "op.container_frame.buff_native_raw64.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.buff_native_raw64.cpp_v1",
+      "io_variants": [
+        "op.container_frame.buff_native_raw64.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 125,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 126,
+      "name": "op.container_frame.blosc2_legacy_chunk.cpp_v1",
+      "kind": "codec",
+      "operator_id": "container_frame",
+      "mechanism": "op.container_frame.blosc2_legacy_chunk.cpp_v1",
+      "io_variants": [
+        "op.container_frame.blosc2_legacy_chunk.cpp_v1"
+      ],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": 126,
+      "legacy_operator_id": "container_frame",
+      "default_available": true,
+      "availability_note": "Registered current split stage; runtime input and I/O profile checks still apply.",
+      "requires_opt_in": [],
+      "input_contract": "typed data stream",
+      "output_contract": "legacy typed/wire result"
+    },
+    {
+      "action_id": 127,
+      "name": "op.split_columns.float_deconstruct.cpp_v1",
+      "kind": "codec",
+      "operator_id": "split_columns",
+      "mechanism": "float_deconstruct",
+      "io_variants": [],
+      "modes": [
+        "fp16",
+        "bf16",
+        "fp32"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "No connected implementation is declared by this registry.",
+      "requires_opt_in": [],
+      "input_contract": "raw floating-point bit patterns",
+      "output_contract": "exponent and sign/fraction streams plus exact format metadata"
+    },
+    {
+      "action_id": 128,
+      "name": "op.split_columns.bitsplit.cpp_v1",
+      "kind": "codec",
+      "operator_id": "split_columns",
+      "mechanism": "bitsplit",
+      "io_variants": [],
+      "modes": [
+        "generic",
+        "top8",
+        "fp",
+        "bf16"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "No connected implementation is declared by this registry.",
+      "requires_opt_in": [],
+      "input_contract": "fixed-width raw numeric bit patterns",
+      "output_contract": "bit-field streams plus non-overlapping complete bit layout"
+    },
+    {
+      "action_id": 129,
+      "name": "op.split_columns.bitunpack.cpp_v1",
+      "kind": "codec",
+      "operator_id": "split_columns",
+      "mechanism": "bitunpack",
+      "io_variants": [],
+      "modes": [
+        "fixed-width"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "No connected implementation is declared by this registry.",
+      "requires_opt_in": [],
+      "input_contract": "packed bits with explicit bit width/order",
+      "output_contract": "unpacked values plus original valid-bit/padding metadata"
+    },
+    {
+      "action_id": 130,
+      "name": "op.prediction_probability.ppm.provider_v1",
+      "kind": "model_provider",
+      "operator_id": "prediction_probability",
+      "mechanism": "PPM",
+      "io_variants": [],
+      "modes": [
+        "causal"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "Declare causal getter availability separately from graph entropy selectability; this descriptor does not provide an encoder, a neural model, or a fallback.",
+      "requires_opt_in": [],
+      "input_contract": "symbols and decoder-reconstructible causal context",
+      "output_contract": "model resource consumed by model-conditioned entropy coding; not compressed bytes"
+    },
+    {
+      "action_id": 131,
+      "name": "op.prediction_probability.dmc.provider_v1",
+      "kind": "model_provider",
+      "operator_id": "prediction_probability",
+      "mechanism": "DMC",
+      "io_variants": [],
+      "modes": [
+        "causal"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "Declare causal getter availability separately from graph entropy selectability; this descriptor does not provide an encoder, a neural model, or a fallback.",
+      "requires_opt_in": [],
+      "input_contract": "symbols and decoder-reconstructible causal context",
+      "output_contract": "model resource consumed by model-conditioned entropy coding; not compressed bytes"
+    },
+    {
+      "action_id": 132,
+      "name": "op.prediction_probability.paq.provider_v1",
+      "kind": "model_provider",
+      "operator_id": "prediction_probability",
+      "mechanism": "PAQ",
+      "io_variants": [],
+      "modes": [
+        "causal"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "Declare causal getter availability separately from graph entropy selectability; this descriptor does not provide an encoder, a neural model, or a fallback.",
+      "requires_opt_in": [],
+      "input_contract": "symbols and decoder-reconstructible causal context",
+      "output_contract": "model resource consumed by model-conditioned entropy coding; not compressed bytes"
+    },
+    {
+      "action_id": 133,
+      "name": "op.prediction_probability.cmix.provider_v1",
+      "kind": "model_provider",
+      "operator_id": "prediction_probability",
+      "mechanism": "cmix",
+      "io_variants": [],
+      "modes": [
+        "causal"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "Declare causal getter availability separately from graph entropy selectability; this descriptor does not provide an encoder, a neural model, or a fallback.",
+      "requires_opt_in": [
+        "allow_large_memory"
+      ],
+      "input_contract": "symbols and decoder-reconstructible causal context",
+      "output_contract": "model resource consumed by model-conditioned entropy coding; not compressed bytes"
+    },
+    {
+      "action_id": 134,
+      "name": "op.prediction_probability.nncp.provider_v1",
+      "kind": "model_provider",
+      "operator_id": "prediction_probability",
+      "mechanism": "NNCP",
+      "io_variants": [],
+      "modes": [
+        "causal"
+      ],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "Declare causal getter availability separately from graph entropy selectability; this descriptor does not provide an encoder, a neural model, or a fallback.",
+      "requires_opt_in": [],
+      "input_contract": "symbols and decoder-reconstructible causal context",
+      "output_contract": "model resource consumed by model-conditioned entropy coding; not compressed bytes"
+    },
+    {
+      "action_id": 135,
+      "name": "stop",
+      "kind": "special",
+      "operator_id": null,
+      "mechanism": "stop",
+      "io_variants": [],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": true,
+      "availability_note": "Only legal when the graph is independently decodable and closed.",
+      "requires_opt_in": [],
+      "input_contract": "closed graph state",
+      "output_contract": "final independently decodable frame"
+    },
+    {
+      "action_id": 136,
+      "name": "concat",
+      "kind": "special",
+      "operator_id": null,
+      "mechanism": "concat",
+      "io_variants": [],
+      "modes": [],
+      "aliases": [],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "No connected implementation is declared by this registry.",
+      "requires_opt_in": [],
+      "input_contract": "explicit ordered stream IDs",
+      "output_contract": "joined stream and inverse boundaries"
+    },
+    {
+      "action_id": 137,
+      "name": "split_segments",
+      "kind": "special",
+      "operator_id": null,
+      "mechanism": "split_segments",
+      "io_variants": [],
+      "modes": [
+        "continuous",
+        "split_by_range"
+      ],
+      "aliases": [
+        "split_by_range"
+      ],
+      "legacy_policy_action_id": null,
+      "legacy_operator_id": null,
+      "default_available": false,
+      "availability_note": "No connected implementation is declared by this registry.",
+      "requires_opt_in": [],
+      "input_contract": "one stream and explicit or encoder-detected boundaries",
+      "output_contract": "segments and serialized exact inverse boundaries"
+    }
+  ]
+}

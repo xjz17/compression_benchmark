@@ -1,0 +1,17 @@
+filename	values_len	bytes_len
+col_bss_lz4_float_default.bin	64	112
+col_bss_lz4_float_empty.bin	0	15
+col_bss_planar_float_default.bin	64	256
+col_bss_planar_float_empty.bin	0	0
+delta_binary_packed_empty.bin	0	0
+delta_binary_packed_int32_default.bin	64	67
+delta_binary_packed_neg.bin	4	7
+col_dictionary_float_default.bin	64	520
+col_dictionary_float_dupes.bin	3	28
+col_dictionary_float_empty.bin	0	8
+col_dictionary_int32_default.bin	64	520
+col_dictionary_int32_dupes.bin	5	40
+col_dictionary_int32_empty.bin	0	8
+col_rle_int32_default.bin	64	320
+col_rle_int32_empty.bin	0	0
+col_rle_int32_runs.bin	5	10

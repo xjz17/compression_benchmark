@@ -1,0 +1,43 @@
+{
+  "schema": "native-lz-window-defaults-v1",
+  "parameters": {
+    "window_bytes": 65535
+  },
+  "fixed_parameters": {
+    "min_match": 8,
+    "max_match": 256,
+    "length_bias": 3,
+    "parser": "aligned8_greedy"
+  },
+  "search_domain": {
+    "window_bytes": [
+      3072,
+      4096,
+      5120,
+      8192,
+      12288,
+      16384,
+      19456,
+      24576,
+      28672,
+      32768,
+      40960,
+      53248,
+      57344,
+      65535
+    ],
+    "candidate_count": 14,
+    "valid_integer_range": [
+      1,
+      65535
+    ],
+    "candidate_source": "all 14 distinct historical native window variants, already including 65535"
+  },
+  "criterion": {
+    "objective": "minimize sum of complete calibration frame bytes over all 86 blocks",
+    "tie_break": "ascending window_bytes; choose smallest window among equal byte totals",
+    "timing_used_for_selection": false,
+    "frame_header_bytes": 36,
+    "frame_layout": "NLC1 + uint32le window/search_min/search_max/length_bias + uint64le raw_size/payload_size + ctrl8 payload"
+  }
+}

@@ -1,0 +1,1899 @@
+{
+  "description": "Papers associated with each dataset key.",
+  "datasets": [
+    {
+      "dataset": "AI4I-Maintenance",
+      "papers": [
+        {
+          "title": "Balanced K-Star: An Explainable Machine Learning Method for Internet-of-Things-Enabled Predictive Maintenance in Manufacturing",
+          "year": 2023,
+          "url": "https://doi.org/10.3390/machines11030322",
+          "venue": "Machines (MDPI)"
+        }
+      ]
+    },
+    {
+      "dataset": "Air-Quality",
+      "papers": [
+        {
+          "title": "RETRACTED: Interpretable machine learning framework for predicting Urban air quality",
+          "year": 2025,
+          "url": "https://doi.org/10.1371/journal.pone.0336241",
+          "venue": "PLOS ONE"
+        }
+      ]
+    },
+    {
+      "dataset": "Air-pressure-1min",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "Air-pressure-30min",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "Air-sensor",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Arade",
+      "papers": []
+    },
+    {
+      "dataset": "Bar-Crawl",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Bimbo",
+      "papers": []
+    },
+    {
+      "dataset": "Bird-migration",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Bitcoin-price",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "books",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "fb",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "rating",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "realtor",
+      "papers": []
+    },
+    {
+      "dataset": "Blockchain-tr",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "City-temp",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "CityMaxCapita",
+      "papers": []
+    },
+    {
+      "dataset": "Climate_Weather",
+      "papers": []
+    },
+    {
+      "dataset": "Comments",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "CMSprovider",
+      "papers": []
+    },
+    {
+      "dataset": "World-City",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "Cpu-usage",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Dewpoint-temp-1min",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "Dewpoint-temp-30min",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "Disk-usage",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "ercot",
+      "papers": []
+    },
+    {
+      "dataset": "exchange_rate",
+      "papers": []
+    },
+    {
+      "dataset": "Food-prices",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "HOUSE",
+      "papers": [
+        {
+          "title": "Individual Household Electric Power Consumption",
+          "year": 2006,
+          "url": "https://doi.org/10.24432/C58K54",
+          "venue": "UCI Machine Learning Repository (Hebrail & Berard)"
+        }
+      ]
+    },
+    {
+      "dataset": "IR-bio-temp-1minute",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "IR-bio-temp-30minute",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "linear",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "normal",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Mem-usage",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "m4_daily",
+      "papers": []
+    },
+    {
+      "dataset": "m4_hourly",
+      "papers": []
+    },
+    {
+      "dataset": "m4_monthly",
+      "papers": []
+    },
+    {
+      "dataset": "monash_australian_electricity",
+      "papers": []
+    },
+    {
+      "dataset": "Metro-Traffic",
+      "papers": [
+        {
+          "title": "Traffic Flow Prediction in 5G-Enabled Intelligent Transportation Systems Using Parameter Optimization and Adaptive Model Selection",
+          "year": 2024,
+          "url": "https://doi.org/10.3390/s24206529",
+          "venue": "Sensors (MDPI)"
+        }
+      ]
+    },
+    {
+      "dataset": "meteoblue",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "NYC_Yellow_Taxi_Trip",
+      "papers": []
+    },
+    {
+      "dataset": "PM10-dust-30minutes",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "PM10-dust-60minutes",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "poi",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "SSD-bench",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Stocks-DE",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Machete: An Efficient Lossy Floating-Point Compressor Designed for Time Series Databases",
+          "year": 2024,
+          "url": "https://doi.org/10.1109/DCC58796.2024.00061",
+          "venue": "IEEE Data Compression Conference (DCC)"
+        }
+      ]
+    },
+    {
+      "dataset": "Stocks-Germany",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Machete: An Efficient Lossy Floating-Point Compressor Designed for Time Series Databases",
+          "year": 2024,
+          "url": "https://doi.org/10.1109/DCC58796.2024.00061",
+          "venue": "IEEE Data Compression Conference (DCC)"
+        }
+      ]
+    },
+    {
+      "dataset": "Stocks-UK",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Machete: An Efficient Lossy Floating-Point Compressor Designed for Time Series Databases",
+          "year": 2024,
+          "url": "https://doi.org/10.1109/DCC58796.2024.00061",
+          "venue": "IEEE Data Compression Conference (DCC)"
+        }
+      ]
+    },
+    {
+      "dataset": "Stocks-USA",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Machete: An Efficient Lossy Floating-Point Compressor Designed for Time Series Databases",
+          "year": 2024,
+          "url": "https://doi.org/10.1109/DCC58796.2024.00061",
+          "venue": "IEEE Data Compression Conference (DCC)"
+        }
+      ]
+    },
+    {
+      "dataset": "UCR",
+      "papers": []
+    },
+    {
+      "dataset": "Uberlandia",
+      "papers": []
+    },
+    {
+      "dataset": "USCensus",
+      "papers": []
+    },
+    {
+      "dataset": "solar_wind",
+      "papers": []
+    },
+    {
+      "dataset": "vehicle-charge",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "wiki_ts",
+      "papers": [
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Wins",
+      "papers": []
+    },
+    {
+      "dataset": "Wind-speed",
+      "papers": [
+        {
+          "title": "Camel: Efficient Compression of Floating-Point Time Series",
+          "year": 2024,
+          "url": "https://doi.org/10.1145/3698802",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Elf: Erasing-based Lossless Floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.14778/3587136.3587149",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "ALP: Adaptive Lossless floating-Point Compression",
+          "year": 2023,
+          "url": "https://doi.org/10.1145/3626717",
+          "venue": "ACM SIGMOD Conference"
+        },
+        {
+          "title": "Beyond Compression: A Comprehensive Evaluation of Lossless Floating-Point Compression",
+          "year": 2025,
+          "url": "https://doi.org/10.14778/3749646.3749701",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        },
+        {
+          "title": "Chimp: Efficient Lossless Floating Point Compression for Time Series Databases",
+          "year": 2022,
+          "url": "https://doi.org/10.14778/3551793.3551852",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "YaleLanguages",
+      "papers": []
+    },
+    {
+      "dataset": "1year",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "DSL-StrongPasswordData",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "Rail_Insurance_Claims",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "adult",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "agaricus-lepiota.data",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "bank",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "credit_scoring_sample",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "credit_scoring_test",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "credit_scoring_train",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "ehresp_2014",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "flight_delays_test",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "flight_delays_train",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "hmeq",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "medium_posts",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "mlbootcamp5_train",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "prolongation_service_train",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "scores",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "spam",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "spooky_authors",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "spooky_writer_sample_submission",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "spooky_writer_test",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "spooky_writer_train",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "vgsales",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "video_games_sales",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "weights_heights",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "winequality-white",
+      "papers": [
+        {
+          "title": "mlcourse.ai – Open Machine Learning Course",
+          "year": 2020,
+          "url": "https://github.com/Yorko/mlcourse.ai",
+          "venue": "GitHub repository"
+        },
+        {
+          "title": "LECO: Learned Compression for Column Data",
+          "year": 2021,
+          "url": "https://doi.org/10.1145/3448016.3457233",
+          "venue": "ACM SIGMOD Conference"
+        }
+      ]
+    },
+    {
+      "dataset": "acs_wht_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "astro_mhd_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "astro_pt_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "h3d_temp_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "hdr_night_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "hst_wfc3_ir_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "hst_wfc3_uvis_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpcds_web_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpch_order_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "ts_gas_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "turbulence_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "wave_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "wesad_chest_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "g24_78_usb2_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "hdr_palermo_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "jw_mirimage_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "spitzer_irac_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "miranda3d_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "num_brain_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "num_control_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "rsim_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "jane_street_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "phone_gyro_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "spain_gas_price_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpcds_catalog_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpcds_store_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpch_lineitem_f32",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpcxbb_store_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "tpcxbb_web_f64",
+      "papers": [
+        {
+          "title": "FCBench: Cross-Domain Benchmarking of Lossless Compression for Floating-Point Data",
+          "year": 2024,
+          "url": "https://doi.org/10.14778/3648160.3648180",
+          "venue": "Proceedings of the VLDB Endowment (PVLDB)"
+        }
+      ]
+    },
+    {
+      "dataset": "CommonGovernment",
+      "papers": []
+    },
+    {
+      "dataset": "Corporations",
+      "papers": []
+    },
+    {
+      "dataset": "Eixo",
+      "papers": []
+    },
+    {
+      "dataset": "Euro2016",
+      "papers": []
+    },
+    {
+      "dataset": "Food",
+      "papers": []
+    },
+    {
+      "dataset": "Generico",
+      "papers": []
+    },
+    {
+      "dataset": "HashTags",
+      "papers": []
+    },
+    {
+      "dataset": "Hatred",
+      "papers": []
+    },
+    {
+      "dataset": "IGlocations1",
+      "papers": []
+    },
+    {
+      "dataset": "IGlocations2",
+      "papers": []
+    },
+    {
+      "dataset": "Medicare1",
+      "papers": []
+    },
+    {
+      "dataset": "Medicare2",
+      "papers": []
+    },
+    {
+      "dataset": "Medicare3",
+      "papers": []
+    },
+    {
+      "dataset": "MedPayment1",
+      "papers": []
+    },
+    {
+      "dataset": "MedPayment2",
+      "papers": []
+    },
+    {
+      "dataset": "Motos",
+      "papers": []
+    },
+    {
+      "dataset": "MulheresMil",
+      "papers": []
+    },
+    {
+      "dataset": "NYC",
+      "papers": []
+    },
+    {
+      "dataset": "PanCreactomy1",
+      "papers": []
+    },
+    {
+      "dataset": "PanCreactomy2",
+      "papers": []
+    },
+    {
+      "dataset": "Physicians",
+      "papers": []
+    },
+    {
+      "dataset": "Provider",
+      "papers": []
+    },
+    {
+      "dataset": "RealEstate1",
+      "papers": []
+    },
+    {
+      "dataset": "RealEstate2",
+      "papers": []
+    },
+    {
+      "dataset": "Redfin1",
+      "papers": []
+    },
+    {
+      "dataset": "Redfin2",
+      "papers": []
+    },
+    {
+      "dataset": "Redfin3",
+      "papers": []
+    },
+    {
+      "dataset": "Redfin4",
+      "papers": []
+    },
+    {
+      "dataset": "Rentabilidad",
+      "papers": []
+    },
+    {
+      "dataset": "Romance",
+      "papers": []
+    },
+    {
+      "dataset": "SalariesFrance",
+      "papers": []
+    },
+    {
+      "dataset": "TableroSistemaPenal",
+      "papers": []
+    },
+    {
+      "dataset": "Taxpayer",
+      "papers": []
+    },
+    {
+      "dataset": "Telco",
+      "papers": []
+    },
+    {
+      "dataset": "TrainsUK1",
+      "papers": []
+    },
+    {
+      "dataset": "TrainsUK2",
+      "papers": []
+    },
+    {
+      "dataset": "MLB",
+      "papers": []
+    }
+  ]
+}

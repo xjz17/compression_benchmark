@@ -1,0 +1,5 @@
+filename	values_len	bytes_len
+chimp32_float_n512.bin	512	869
+chimp32_float_n64.bin	64	112
+chimp32_int_n512.bin	512	650
+chimp32_int_n64.bin	64	88
