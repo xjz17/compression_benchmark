@@ -84,7 +84,7 @@ jobs:
       - name: Install toolchain
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake build-essential
+          sudo apt-get install -y cmake build-essential nlohmann-json3-dev
 
       - name: Configure (ENABLE_TSFILE_GOLDEN_TESTS)
         run: >

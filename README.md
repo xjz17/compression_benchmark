@@ -56,6 +56,12 @@ already been applied.
 
 ## Build the native benchmark
 
+On Debian or Ubuntu, install the native build prerequisites first:
+
+```bash
+sudo apt-get install cmake build-essential nlohmann-json3-dev
+```
+
 ```bash
 cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
 cmake --build cpp/build --parallel
