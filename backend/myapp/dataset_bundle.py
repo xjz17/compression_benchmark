@@ -6,10 +6,8 @@ import os
 
 from django.conf import settings
 
-# Optional large-dataset store outside the repo (override with env on other machines).
-_DEFAULT_EXTERNAL_DATASET_CSV_ROOT = r'E:/xjz/compression_benchmark/backend_dataset_csv'
+# Optional large-dataset stores outside the repository are configured explicitly.
 _EXTERNAL_DATASET_CSV_ROOT_ENV = 'COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT'
-_DEFAULT_EXTERNAL_DATASET_TSFILE_ROOT = r'E:/xjz/compression_benchmark/backend_dataset_tsfile'
 _EXTERNAL_DATASET_TSFILE_ROOT_ENV = 'COMPRESSION_BENCHMARK_EXTERNAL_DATASET_TSFILE_ROOT'
 
 
@@ -26,11 +24,12 @@ def external_dataset_csv_root() -> str | None:
     """
     External master CSV directory when configured and present on disk.
 
-    Default: ``E:/xjz/compression_benchmark/backend_dataset_csv``.
-    Override: ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT``.
+    Configure with ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT``.
     """
     raw = os.environ.get(_EXTERNAL_DATASET_CSV_ROOT_ENV, '').strip()
-    path = os.path.expanduser(raw) if raw else _DEFAULT_EXTERNAL_DATASET_CSV_ROOT
+    if not raw:
+        return None
+    path = os.path.expanduser(raw)
     return path if os.path.isdir(path) else None
 
 
@@ -75,11 +74,12 @@ def external_dataset_tsfile_root() -> str | None:
     """
     External TsFile bundle directory when configured and present on disk.
 
-    Default: ``E:/xjz/compression_benchmark/backend_dataset_tsfile``.
-    Override: ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_TSFILE_ROOT``.
+    Configure with ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_TSFILE_ROOT``.
     """
     raw = os.environ.get(_EXTERNAL_DATASET_TSFILE_ROOT_ENV, '').strip()
-    path = os.path.expanduser(raw) if raw else _DEFAULT_EXTERNAL_DATASET_TSFILE_ROOT
+    if not raw:
+        return None
+    path = os.path.expanduser(raw)
     return path if os.path.isdir(path) else None
 
 

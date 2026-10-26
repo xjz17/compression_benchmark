@@ -29,7 +29,7 @@ import jsonschema
 SCHEMA_VERSION = "dbp-native-float-audit-v1"
 RECEIPT_SCHEMA = "dbp-native-float-audit-build-v1"
 FROZEN_SCOPE_SCHEMA = "tscb-screened-paper-scope-v1"
-FROZEN_SCOPE_ID = "tscb-paper-realdata169-166-20261008-v1"
+FROZEN_SCOPE_ID = "tscb-paper-realdata169-evaluation-host-20261008-v1"
 CAMPAIGN_BINDING_SCHEMA = "dbp-float-e2e-final-campaign-binding-v1"
 GOLDEN_RECEIPT_SCHEMA = "dbp-float-e2e-169-controller-v1"
 CONTROLLER_RECEIPT_SCHEMA = "dbp-float-e2e-169-controller-v1"

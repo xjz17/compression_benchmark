@@ -63,6 +63,6 @@ auto explicit_tree = registry.compress_tree(column, tree_json, {1, 3});
 
 本版不拟合、不调参、不读取oracle标签。结果限已试候选与实测约束，不是135/3519完整推荐质量结论，也不是85算法×97算子的联合最优。冻结oracle的算法、公共Zstd3后端算子、已观测组合三类目标及历史计时边界继续独立保留。
 
-## 192隔离验证
+## 独立评估环境验证
 
-`scripts/run_unified_tree_loop_192_v1.py` 使用独立source/build/result目录，复用20261022已部署静态依赖，不重建或覆盖旧runtime。单worker、CPU62、SCHED_IDLE、nice19、idle I/O、2GiB地址空间、无GPU；前后核对旧二进制、依赖、catalog及仍存活进程的调度设置。NNCP和其他排除家族前向/逆向禁用；不停止、重启或调度现有实验。
+`scripts/run_unified_tree_loop_evaluation_v1.py` 使用独立source/build/result目录，复用20261022已部署静态依赖，不重建或覆盖旧runtime。单worker、CPU62、SCHED_IDLE、nice19、idle I/O、2GiB地址空间、无GPU；前后核对旧二进制、依赖、catalog及仍存活进程的调度设置。NNCP和其他排除家族前向/逆向禁用；不停止、重启或调度现有实验。

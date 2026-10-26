@@ -2,8 +2,8 @@
 """
 Prepare curated master CSVs from raw datasets in ``backend/dataset_temp/``.
 
-Output root: ``E:/xjz/compression_benchmark/backend_dataset_csv`` when that directory
-exists, else ``backend/dataset_csv/`` (see ``scripts/dataset_csv_source.py``).
+Output root: ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT`` when configured,
+else ``backend/dataset_csv/`` (see ``scripts/dataset_csv_source.py``).
 
 Design notes:
 - Pass ``--dataset <name>`` to run one known dataset handler.

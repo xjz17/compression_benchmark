@@ -35,8 +35,6 @@ _BACKEND = _REPO / "backend"
 DATASET_ROOT = _BACKEND / "dataset"
 METADATA_JSON = _REPO / "benchmark" / "reference" / "datasets" / "dataset_metadata.json"
 OUTPUT_CSV = _BACKEND / "temp" / "dataset_catalog_export.csv"
-_DEFAULT_EXTERNAL_CSV_ROOT = Path(r"E:/xjz/compression_benchmark/backend_dataset_csv")
-
 # Fixed catalog order; CSV rows are written in this sequence.
 DATASET_KEYS: tuple[str, ...] = (
     "1year",
@@ -239,8 +237,6 @@ def resolve_master_csv(key: str) -> Path | None:
         ext = Path(os.path.expanduser(env_root))
         if ext.is_dir():
             roots.append(ext)
-    elif _DEFAULT_EXTERNAL_CSV_ROOT.is_dir():
-        roots.append(_DEFAULT_EXTERNAL_CSV_ROOT)
     builtin = _BACKEND / "dataset_csv"
     if builtin.is_dir() and builtin not in roots:
         roots.append(builtin)

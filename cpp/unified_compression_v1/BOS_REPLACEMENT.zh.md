@@ -35,6 +35,6 @@
 
 版本绑定及上游SHA在 `bos_bfe_v2/README.md`。实现复用已审查算法体，不编译第二份通用baseline，也不覆盖旧依赖；隔离BOS2 namespace避免与旧BOS算子符号冲突。注册表仍为86算法+102算子+30组合，共218项。
 
-`bos_harness_integration_test` 覆盖新BOS2、旧整数冷解码、IEEE边界与NULL、空/全NULL、25013行多块、篡改拒绝、执行审计、选择闭环及禁用项。`--write-fixtures DIRECTORY` 原生导出10组CLI输入，用于192跨部署完整UCC1字节和独立冷解码对照。
+`bos_harness_integration_test` 覆盖新BOS2、旧整数冷解码、IEEE边界与NULL、空/全NULL、25013行多块、篡改拒绝、执行审计、选择闭环及禁用项。`--write-fixtures DIRECTORY` 原生导出10组CLI输入，用于跨评估环境完整UCC1字节和独立冷解码对照。
 
 所有独立部署在独立目录构建；新版本验收后才更新 `unified_tree_loop_current` 指针。旧218部署、独立BOS v2部署、运行中实验和冻结135/3519参考结果保留，不重跑150数据集大实验。NNCP及其他排除项继续禁用。

@@ -4,16 +4,14 @@ Resolve benchmark CSV / TsFile paths and enumerate catalog datasets.
 Regen **read** lookup for master CSVs (``resolve_benchmark_dataset_csv``,
 ``iter_catalog_benchmark_datasets``, etc.), in order:
 
-1. ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT`` or, by default,
-   ``E:/xjz/compression_benchmark/backend_dataset_csv`` (when the directory exists)
-2. ``/data/yn/compression_benchmark/backend_dataset_csv/`` (when the directory exists)
+1. ``COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT`` (when configured)
+2. ``COMPRESSION_BENCHMARK_REGEN_LOOKUP_DATASET_CSV_ROOT`` (when configured)
 3. ``backend/dataset_csv/``
 
 CSV **export/write** (``dataset_csv_root``, used by ``regenerate_dataset_csv.py``) still
-uses only (1) or the in-repo fallback — not the ``/data/yn/`` path.
+uses only (1) or the in-repo fallback, never the read-only regeneration lookup.
 
-TsFile bundles: external ``E:/xjz/compression_benchmark/backend_dataset_tsfile`` first,
-else ``backend/dataset_tsfile/``.
+TsFile bundles: the configured external root first, else ``backend/dataset_tsfile/``.
 
 Catalog sidecars (``column_info``, compression reports, charts, etc.) stay under
 ``backend/dataset/<slug>/``.
@@ -27,14 +25,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-_DEFAULT_EXTERNAL_DATASET_CSV_ROOT = Path(r"E:/xjz/compression_benchmark/backend_dataset_csv")
-_DEFAULT_REGEN_LOOKUP_DATASET_CSV_ROOT = Path(
-    "/data/yn/compression_benchmark/backend_dataset_csv"
-)
 _EXTERNAL_DATASET_CSV_ROOT_ENV = "COMPRESSION_BENCHMARK_EXTERNAL_DATASET_CSV_ROOT"
-_DEFAULT_EXTERNAL_DATASET_TSFILE_ROOT = Path(
-    r"E:/xjz/compression_benchmark/backend_dataset_tsfile"
-)
+_REGEN_LOOKUP_DATASET_CSV_ROOT_ENV = "COMPRESSION_BENCHMARK_REGEN_LOOKUP_DATASET_CSV_ROOT"
 _EXTERNAL_DATASET_TSFILE_ROOT_ENV = "COMPRESSION_BENCHMARK_EXTERNAL_DATASET_TSFILE_ROOT"
 
 
@@ -44,7 +36,9 @@ def builtin_dataset_csv_root(backend: Path) -> Path:
 
 def external_dataset_csv_root() -> Path | None:
     raw = os.environ.get(_EXTERNAL_DATASET_CSV_ROOT_ENV, "").strip()
-    path = Path(os.path.expanduser(raw)) if raw else _DEFAULT_EXTERNAL_DATASET_CSV_ROOT
+    if not raw:
+        return None
+    path = Path(os.path.expanduser(raw))
     return path if path.is_dir() else None
 
 
@@ -56,7 +50,10 @@ def dataset_csv_root(backend: Path) -> Path:
 
 def regen_lookup_dataset_csv_roots() -> list[Path]:
     """Read-only regen lookup roots (excluding export/write targets)."""
-    path = _DEFAULT_REGEN_LOOKUP_DATASET_CSV_ROOT
+    raw = os.environ.get(_REGEN_LOOKUP_DATASET_CSV_ROOT_ENV, "").strip()
+    if not raw:
+        return []
+    path = Path(os.path.expanduser(raw))
     return [path] if path.is_dir() else []
 
 
@@ -109,7 +106,9 @@ def builtin_dataset_tsfile_root(backend: Path) -> Path:
 
 def external_dataset_tsfile_root() -> Path | None:
     raw = os.environ.get(_EXTERNAL_DATASET_TSFILE_ROOT_ENV, "").strip()
-    path = Path(os.path.expanduser(raw)) if raw else _DEFAULT_EXTERNAL_DATASET_TSFILE_ROOT
+    if not raw:
+        return None
+    path = Path(os.path.expanduser(raw))
     return path if path.is_dir() else None
 
 

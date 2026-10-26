@@ -1,6 +1,6 @@
 # 统一数值列压缩接口 v1
 
-当前接口支持算法/算子名称、30个组合名称、显式算子树，以及推荐—实测—反馈预算闭环。执行与计时均为C++20。新增契约、示例、预算语义和192隔离验证见 [TREE_SELECTION.zh.md](TREE_SELECTION.zh.md)。普通 `compress` 仍执行指定方法，不隐式选型。
+当前接口支持算法/算子名称、30个组合名称、显式算子树，以及推荐—实测—反馈预算闭环。执行与计时均为C++20。新增契约、示例、预算语义和独立评估环境验证见 [TREE_SELECTION.zh.md](TREE_SELECTION.zh.md)。普通 `compress` 仍执行指定方法，不隐式选型。
 
 新增BOS实现及兼容、审计规则见 [BOS_REPLACEMENT.zh.md](BOS_REPLACEMENT.zh.md)。
 

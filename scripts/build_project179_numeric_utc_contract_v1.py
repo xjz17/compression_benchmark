@@ -125,7 +125,7 @@ def _file_binding(path: Path) -> dict[str, Any]:
 
 
 def _validate_scope(scope: Mapping[str, Any]) -> tuple[list[str], list[dict[str, Any]]]:
-    if scope.get("schema") != "web-compression-project-dataset-scope-v1":
+    if scope.get("schema") != "compression-benchmark-project-dataset-scope-v1":
         raise ContractError("unsupported project scope schema")
     core = scope.get("core_csv_datasets")
     timestamp = scope.get("timestamp_datasets")

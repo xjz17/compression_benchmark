@@ -32,7 +32,7 @@ from typing import Any, Iterator, Mapping, TextIO
 
 
 AUDIT_SCHEMA = "project179-core19-numeric-utc-cold-audit-v1"
-EXPECTED_SCOPE_SCHEMA = "web-compression-project-dataset-scope-v1"
+EXPECTED_SCOPE_SCHEMA = "compression-benchmark-project-dataset-scope-v1"
 EXPECTED_POLICY_SCHEMA = "project179-core19-utc-policy-v2"
 EXPECTED_TOP_SCHEMA = "project179-core19-numeric-utc-scope-v1"
 EXPECTED_DATASET_SCHEMA = "project179-core19-numeric-utc-dataset-v1"
@@ -1341,8 +1341,8 @@ def audit(
     auditor_binding = file_binding(absolute_unresolved(Path(__file__)))
     zstd_binding = file_binding(zstd_path)
     require(producer_binding["sha256"] == EXPECTED_PRODUCER_SHA256, "authority_producer_hash", "producer is not the pinned formal producer", expected=EXPECTED_PRODUCER_SHA256, actual=producer_binding["sha256"])
-    require(str(zstd_path) == EXPECTED_ZSTD_PATH, "authority_zstd_path", "zstd executable path is not the pinned 166 path", expected=EXPECTED_ZSTD_PATH, actual=str(zstd_path))
-    require(zstd_binding["sha256"] == EXPECTED_ZSTD_SHA256, "authority_zstd_hash", "zstd executable is not the pinned 166 binary", expected=EXPECTED_ZSTD_SHA256, actual=zstd_binding["sha256"])
+    require(str(zstd_path) == EXPECTED_ZSTD_PATH, "authority_zstd_path", "zstd executable path is not the pinned evaluation path", expected=EXPECTED_ZSTD_PATH, actual=str(zstd_path))
+    require(zstd_binding["sha256"] == EXPECTED_ZSTD_SHA256, "authority_zstd_hash", "zstd executable is not the pinned evaluation binary", expected=EXPECTED_ZSTD_SHA256, actual=zstd_binding["sha256"])
     control_bindings = [scope_binding, policy_binding, producer_binding, auditor_binding, zstd_binding]
     control_paths = [Path(str(row["path"])) for row in control_bindings]
     require(len(set(control_paths)) == len(control_paths), "input_alias", "control inputs and executable paths must be distinct")

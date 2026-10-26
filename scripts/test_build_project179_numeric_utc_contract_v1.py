@@ -231,7 +231,7 @@ class Project179NumericUtcContractTest(unittest.TestCase):
             )
 
     def test_runner_hard_pins_all_release_inputs_and_passes_fresh_gate_paths(self) -> None:
-        runner_path = ROOT / "scripts/run_project179_numeric_utc_166.sh"
+        runner_path = ROOT / "scripts/run_project179_numeric_utc_evaluation.sh"
         runner = runner_path.read_text(encoding="utf-8")
         expected = {
             "EXPECTED_SCOPE_SHA256": contract_module.DEFAULT_SCOPE,

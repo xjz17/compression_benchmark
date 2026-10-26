@@ -26,7 +26,7 @@ def sha256_file(path: Path) -> str:
 
 def load_project_dataset_scope(path: Path = DEFAULT_SCOPE_PATH) -> dict[str, Any]:
     scope = json.loads(path.read_text(encoding="utf-8"))
-    if scope.get("schema") != "web-compression-project-dataset-scope-v1":
+    if scope.get("schema") != "compression-benchmark-project-dataset-scope-v1":
         raise ValueError(f"unexpected project dataset scope schema in {path}")
     core = scope.get("core_csv_datasets")
     timestamp_rows = scope.get("timestamp_datasets")

@@ -120,7 +120,7 @@ def main() -> int:
         f"cd {ROOT} && "
         f"export COMPRESSION_BENCHMARK_COLUMN_CSV_CACHE_DIR={args.cache_dir} && "
         f"export COMPRESSION_BENCHMARK_CSV_PATCH_ROWS=10000 && "
-        f"{sys.executable} run_logs/run_missing_plan_no166.py "
+        f"{sys.executable} run_logs/run_missing_plan_evaluation.py "
         f"--plan {new_plan} --batch-size 999 --log-dir {args.new_log_dir} "
         f"2>&1 | tee {args.new_log_dir / 'tmux_stdout.log'}"
     )

@@ -206,7 +206,7 @@ class Core19AuditFixture:
         write_json(
             self.scope,
             {
-                "schema": "web-compression-project-dataset-scope-v1",
+                "schema": "compression-benchmark-project-dataset-scope-v1",
                 "scope_id": "fixture-core19",
                 "core_csv_dataset_count": 19,
                 "core_csv_datasets": self.datasets,

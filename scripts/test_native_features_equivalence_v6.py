@@ -15,16 +15,14 @@ import random
 import struct
 import subprocess
 import sys
+import tempfile
 from typing import Iterable
 
 
 WEB_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OLD = WEB_ROOT / "cpp/build-native-features-before-v6/native_features_cli"
 DEFAULT_NEW = WEB_ROOT / "cpp/build-native-features-v6/native_features_cli"
-DEFAULT_RECEIPT = (
-    WEB_ROOT.parent / "compression_RL/analysis_outputs/v13_nonenergy_20260922_v6"
-    / "native_features_equivalence_v6.json"
-)
+DEFAULT_RECEIPT = Path(tempfile.gettempdir()) / "native_features_equivalence_v6.json"
 FUZZ_SEED = 0x16620260922
 
 

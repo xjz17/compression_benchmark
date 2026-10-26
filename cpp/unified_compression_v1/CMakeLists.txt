@@ -81,7 +81,7 @@ target_link_libraries(unified_tree_selection_test PRIVATE unified_compression_v1
 add_test(NAME unified_tree_selection COMMAND unified_tree_selection_test)
 add_executable(unified_recommender_test recommender_test.cpp)
 target_link_libraries(unified_recommender_test PRIVATE unified_compression_v1)
-set(_ucc_frozen_model "${CMAKE_CURRENT_SOURCE_DIR}/../../analysis_outputs/operator_prepared135_192_20261020_v1/remote_evidence/models/MODEL_confirm.json")
+set(_ucc_frozen_model "${CMAKE_CURRENT_SOURCE_DIR}/../../analysis_outputs/operator_prepared135_evaluation_20261020_v1/remote_evidence/models/MODEL_confirm.json")
 set(_ucc_frozen_split "${CMAKE_CURRENT_SOURCE_DIR}/../../analysis_outputs/operator_selection_execution_20261020_v1/data_protocol/split_config.json")
 if(EXISTS "${_ucc_frozen_model}" AND EXISTS "${_ucc_frozen_split}")
   add_test(NAME unified_recommender COMMAND unified_recommender_test

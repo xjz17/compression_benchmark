@@ -1423,21 +1423,21 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "analysis_outputs/operator_selection_execution_20261020_v1/data_protocol/split_config.json"
     ))
     parser.add_argument("--columns", type=Path, default=locate_default(
-        "analysis_outputs/operator_prepared135_192_20261020_v1/COLUMNS.json"
+        "analysis_outputs/operator_prepared135_evaluation_20261020_v1/COLUMNS.json"
     ))
     parser.add_argument("--protocol", type=Path, default=locate_default(
-        "analysis_outputs/operator_prepared135_192_20261020_v1/PROTOCOL.json"
+        "analysis_outputs/operator_prepared135_evaluation_20261020_v1/PROTOCOL.json"
     ))
     parser.add_argument("--mapping-audit", type=Path, default=locate_default(
-        "analysis_outputs/operator_prepared135_192_20261020_v1/ORACLE_MAPPING_AUDIT.json"
+        "analysis_outputs/operator_prepared135_evaluation_20261020_v1/ORACLE_MAPPING_AUDIT.json"
     ))
     parser.add_argument("--system-reference-contract", type=Path, default=locate_default(
-        "analysis_outputs/operator_prepared135_192_20261020_v1/SYSTEM_REFERENCE_CONTRACT.json"
+        "analysis_outputs/operator_prepared135_evaluation_20261020_v1/SYSTEM_REFERENCE_CONTRACT.json"
     ))
     parser.add_argument("--models", type=Path,
                         help="MODELS.json; otherwise locate it beside --root")
     parser.add_argument("--training-rows", type=Path, default=locate_default(
-        "analysis_outputs/operator_recommend135_192_20261020_v1/remote_evidence/campaign/ROWS.json"
+        "analysis_outputs/operator_recommend135_evaluation_20261020_v1/remote_evidence/campaign/ROWS.json"
     ), help="frozen historical 360-row selector measurement source")
     return parser.parse_args(argv)
 
