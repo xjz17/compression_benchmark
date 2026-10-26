@@ -16,6 +16,8 @@ golden_paths=(
   external/compression/snappy
   external/compression/zlib
   external/compression/zstd
+  external/compression/lzbench
+  external/compression/cmix
   external/compression/FastPFor
   external/submodules/CLI11
   external/submodules/csv2
